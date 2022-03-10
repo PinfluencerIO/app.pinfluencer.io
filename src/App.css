@@ -1,0 +1,93 @@
+* {
+  font-family: "Comfortaa", cursive;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --space: 1.5em;
+  --space-lg: 2em;
+  --primary-color: #6da66a;
+  --secondary-color: #f4fbf3;
+  --alternative-color: #88d085;
+  --error-color: #d32f2f;
+  --ex-small-font: 0.7em;
+  --small-font: 0.9em;
+  --large-font: 1.6em;
+}
+
+.HolyGrail {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.HolyGrailBody {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.HolyGrailContent {
+  flex: 1;
+  padding: 0 2em;
+  padding: 0 var(--space-lg);
+  margin: 0;
+  margin-top: 1.5em;
+  margin-top: var(--space);
+}
+
+.HolyGrailNav,
+.HolyGrailSidebar {
+  /* 10em is the width of the columns */
+  flex: 0 0 10em;
+  padding: 1.5em;
+
+  background: var(--secondary-color);
+  flex: 0 0 12em;
+}
+
+.HolyGrailHeader {
+  padding: 1.5em;
+  background: var(--secondary-color);
+  text-align: center;
+  border-bottom: 1px solid khaki;
+  display: flex;
+  flex-direction: row;
+}
+
+.HolyGrailHeaderLogo {
+  display: flex;
+  align-items: baseline;
+  font-size: var(--large-font);
+}
+
+.HolyGrailHeaderActions {
+  flex: 1;
+  justify-content: flex-end;
+  font-size: var(--large-font);
+}
+
+.HolyGrailNav {
+  /* put the nav on the left */
+  order: -1;
+  border-right: 1px solid;
+}
+.HolyGrailSidebar {
+  border-left: 1px solid;
+}
+
+.HolyGrailFooter {
+  display: flex;
+  font-size: var(--small-font);
+  padding: 1.5em;
+  background: var(--secondary-color);
+  text-align: center;
+  border-top: 1px solid khaki;
+  justify-content: space-between;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}

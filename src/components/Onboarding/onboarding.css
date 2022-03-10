@@ -1,0 +1,14 @@
+.onboardingContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  justify-content: center;
+  /* border: 2px solid hotpink; */
+}
+
+.formikError {
+  font-size: var(--ex-small-font);
+  color: var(--error-color);
+  font-weight: 700;
+  width: fit-content;
+}
