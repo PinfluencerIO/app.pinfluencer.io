@@ -63,6 +63,9 @@ export const Onboarding = () => {
 
   const onFinalSubmit = () => {
     console.log("final submit", data);
+    alert(
+      "The data from each step will be sent to the backend for processing.\nThis part is not implemented yet...stay tuned"
+    );
   };
 
   return (

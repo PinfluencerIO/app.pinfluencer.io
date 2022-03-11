@@ -68,12 +68,21 @@ export const Values = ({
                 height: 200,
                 backgroundColor: "white",
                 border: "1px gray solid",
-                "& > :not(:first-child)": { m: 1 },
-                "& > *": { margin: 1 },
               }}
             >
               {data.values.map((v) => (
-                <Chip key={v} label={v} onDelete={onDelete(v)} />
+                <Chip
+                  key={v}
+                  label={v}
+                  onDelete={onDelete(v)}
+                  sx={{
+                    m: "10px",
+                    border: "1px solid var(--primary-color)",
+                    "& .MuiChip-deleteIcon": {
+                      color: "#B22222",
+                    },
+                  }}
+                />
               ))}
             </Box>
           </Box>
