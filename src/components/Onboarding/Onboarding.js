@@ -80,7 +80,11 @@ export const Onboarding = ({ user }) => {
       {active === 1 && (
         <AboutYou
           data={data}
-          readOnlyEmail={user.attributes.email && user.attributes.email !== ""}
+          readOnlyEmail={
+            user.attributes.identities &&
+            user.attributes.email &&
+            user.attributes.email !== ""
+          }
           onChangeField={onChangeField}
           onNextClick={onNextClick}
         />
