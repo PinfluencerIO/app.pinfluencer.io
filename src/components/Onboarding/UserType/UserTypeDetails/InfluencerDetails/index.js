@@ -65,6 +65,7 @@ export const InfluencerDetails = ({
           >
             <h3>Influencer</h3>
             <TextField
+              autoFocus
               onChange={(e) => {
                 handleChange(e);
                 onChangeField(e);

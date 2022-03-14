@@ -69,8 +69,16 @@
 
 .HolyGrailHeaderActions {
   flex: 1;
-  justify-content: flex-end;
   font-size: var(--large-font);
+  display: flex;
+}
+
+.HolyGrailHeaderActionsCenter {
+  width: 100%;
+}
+
+.HolyGrailHeaderActionsRight {
+  white-space: nowrap;
 }
 
 .HolyGrailNav {

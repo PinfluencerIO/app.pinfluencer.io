@@ -66,6 +66,7 @@ export const BrandDetails = ({
             onSubmit={handleSubmit}
           >
             <TextField
+              autoFocus
               onChange={(e) => {
                 handleChange(e);
                 onChangeField(e);

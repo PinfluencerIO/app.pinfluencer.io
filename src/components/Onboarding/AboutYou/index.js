@@ -4,39 +4,37 @@ import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-export const AboutYou = ({ data, onChangeField, onNextClick }) => {
-  const {
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    values,
-    errors,
-    touched,
-    isValid,
-  } = useFormik({
-    initialValues: {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-    },
-    validationSchema: Yup.object({
-      firstName: Yup.string()
-        .min(2, "Too short [2-80]")
-        .max(80, "Too long [2-80]")
-        .required("Required"),
-      lastName: Yup.string()
-        .min(2, "Too short [2-80]")
-        .max(80, "Too long [2-80]")
-        .required("Required"),
-      email: Yup.string()
-        .email("Correctly formated email address")
-        .required("Required"),
-    }),
-    onSubmit: (values) => {
-      console.log("onSubmit in formik ");
-      onNextClick();
-    },
-  });
+export const AboutYou = ({
+  data,
+  readOnlyEmail,
+  onChangeField,
+  onNextClick,
+}) => {
+  const { handleChange, handleBlur, handleSubmit, errors, touched, isValid } =
+    useFormik({
+      initialValues: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+      },
+      validationSchema: Yup.object({
+        firstName: Yup.string()
+          .min(2, "Too short [2-80]")
+          .max(80, "Too long [2-80]")
+          .required("Required"),
+        lastName: Yup.string()
+          .min(2, "Too short [2-80]")
+          .max(80, "Too long [2-80]")
+          .required("Required"),
+        email: Yup.string()
+          .email("Correctly formated email address")
+          .required("Required"),
+      }),
+      onSubmit: (values) => {
+        console.log("onSubmit in formik ");
+        onNextClick();
+      },
+    });
   return (
     <OnboardingFrame
       title="About You"
@@ -50,6 +48,7 @@ export const AboutYou = ({ data, onChangeField, onNextClick }) => {
           onSubmit={handleSubmit}
         >
           <TextField
+            autoFocus
             onChange={(e) => {
               handleChange(e);
               onChangeField(e);
@@ -93,7 +92,13 @@ export const AboutYou = ({ data, onChangeField, onNextClick }) => {
             type="email"
             value={data.email}
             margin="normal"
+            disabled={readOnlyEmail}
           />
+          {readOnlyEmail && (
+            <div className="smallMessage">
+              Provided by your social login provider, and cannot be changed
+            </div>
+          )}
           {touched.email && errors.email ? (
             <div className="formikError">{errors.email}</div>
           ) : null}

@@ -55,6 +55,7 @@ export const Values = ({
               renderTags={() => null}
               renderInput={(params) => (
                 <TextField
+                  autoFocus
                   {...params}
                   variant="outlined"
                   placeholder="Select up to 5 Values"

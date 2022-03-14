@@ -12,3 +12,8 @@
   font-weight: 700;
   width: fit-content;
 }
+
+.smallMessage {
+  font-size: var(--ex-small-font);
+  color: black;
+}
