@@ -2,10 +2,10 @@ import "./App.css";
 import { Onboarding } from "./components/Onboarding/Onboarding";
 import { PinfluencerMUITheme } from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
-import { Amplify } from "aws-amplify";
+// import { Amplify } from "aws-amplify";
 
-import { Authenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
+// import { Authenticator } from "@aws-amplify/ui-react";
+// import "@aws-amplify/ui-react/styles.css";
 
 // import awsExports from "./aws-exports";
 import { Button } from "@mui/material";
