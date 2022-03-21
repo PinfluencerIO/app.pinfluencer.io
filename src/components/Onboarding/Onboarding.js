@@ -8,7 +8,6 @@ import { UserTypeDetails } from "./UserType/UserTypeDetails";
 
 import { Categories } from "./Categories";
 import { Values } from "./Values";
-import { Auth } from "aws-amplify";
 
 export const Onboarding = ({ user }) => {
   console.log(user);
@@ -16,7 +15,7 @@ export const Onboarding = ({ user }) => {
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
-    email: user.attributes.email,
+    email: user && user.attributes && user.attributes.email,
     userType: "",
     businessDescription: "",
     businessWebsite: "",
@@ -89,6 +88,8 @@ export const Onboarding = ({ user }) => {
         <AboutYou
           data={data}
           readOnlyEmail={
+            user &&
+            user.attributes &&
             user.attributes.identities &&
             user.attributes.email &&
             user.attributes.email !== ""
