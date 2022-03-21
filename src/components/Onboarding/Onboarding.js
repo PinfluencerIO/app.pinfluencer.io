@@ -23,6 +23,14 @@ export const Onboarding = ({ user }) => {
     instaHandle: "",
     categories: [],
     values: [],
+    age13_17: 0,
+    age18_24: 0,
+    age25_34: 0,
+    age35_44: 0,
+    age45_54: 0,
+    age55_64: 0,
+    age65plus: 0,
+    audienceGenger: "",
   });
 
   const onStepClick = (e) => {
