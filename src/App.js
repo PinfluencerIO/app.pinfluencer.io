@@ -3,11 +3,11 @@ import { Onboarding } from "./components/Onboarding/Onboarding";
 import { PinfluencerMUITheme } from "./theme";
 import { ThemeProvider } from "@mui/material/styles";
 
-// import { Amplify } from "aws-amplify";
-// import { Authenticator } from "@aws-amplify/ui-react";
-// import "@aws-amplify/ui-react/styles.css";
-// import awsExports from "./aws-exports";
-// Amplify.configure(awsExports);
+import { Amplify } from "aws-amplify";
+import { Authenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
+import awsExports from "./aws-exports";
+Amplify.configure(awsExports);
 // import { Button } from "@mui/material";
 // import LogoutIcon from "@mui/icons-material/Logout";
 
