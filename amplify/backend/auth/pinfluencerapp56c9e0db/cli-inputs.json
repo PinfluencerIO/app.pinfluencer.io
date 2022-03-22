@@ -67,7 +67,8 @@
       "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://app.pinfluencer.io/\"],\"LogoutURLs\":[\"https://app.pinfluencer.io/\"]}",
-    "authProviders": []
+    "authProviders": [],
+    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\"}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://app.pinfluencer.io/\",\"http://localhost:3000/\"],\"LogoutURLs\":[\"https://app.pinfluencer.io/\",\"http://localhost:3000/\"]}"
   }
 }
