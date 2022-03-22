@@ -10,6 +10,11 @@
       "StackName": "amplify-pinfluencerapp-dev-200939",
       "StackId": "arn:aws:cloudformation:eu-west-2:324303852622:stack/amplify-pinfluencerapp-dev-200939/feb45a30-a96b-11ec-b529-0678f6aeab92",
       "AmplifyAppId": "d1c4iqujn7roc9"
+    },
+    "categories": {
+      "auth": {
+        "pinfluencerapp56c9e0db": {}
+      }
     }
   }
 }
