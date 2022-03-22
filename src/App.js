@@ -80,11 +80,11 @@ function withLocationDerivedRedirects(awsExports) {
       )
   );
 
-  // Assuming you have two redirect URIs, and the first is for localhost and second is for production
-  const [localRedirectSignIn, productionRedirectSignIn] =
+  // Assuming you have two redirect URIs, and the first is for hosted and second is for localhost
+  const [productionRedirectSignIn, localRedirectSignIn] =
     awsExports.oauth.redirectSignIn.split(",");
 
-  const [localRedirectSignOut, productionRedirectSignOut] =
+  const [productionRedirectSignOut, localRedirectSignOut] =
     awsExports.oauth.redirectSignOut.split(",");
 
   const updatedAwsConfig = {
