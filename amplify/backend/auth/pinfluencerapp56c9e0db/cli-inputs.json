@@ -33,16 +33,11 @@
     "resourceName": "pinfluencerapp56c9e0db",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "manual",
-    "hostedUI": true,
+    "hostedUI": false,
     "usernameAttributes": [
       "email"
     ],
     "triggers": {},
-    "hostedUIDomainName": "pinfluencerapp56c9e0db-56c9e0db",
-    "authProvidersUserPool": [
-      "Google"
-    ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
@@ -65,7 +60,6 @@
       "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://app.pinfluencer.io/signin\"],\"LogoutURLs\":[\"https://app.pinfluencer.io/signin\"]}",
     "userPoolGroups": false,
     "adminQueries": false,
     "thirdPartyAuth": false,
