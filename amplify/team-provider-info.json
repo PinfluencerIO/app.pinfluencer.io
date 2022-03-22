@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "pinfluencerapp56c9e0db": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1c4iqujn7roc9",
+          "type": "cicd"
+        }
       }
     }
   }
