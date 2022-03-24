@@ -12,43 +12,36 @@ export const BrandDetails = ({
   onNextClick,
   onPreviousClick,
 }) => {
-  const {
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    values,
-    errors,
-    touched,
-    isValid,
-  } = useFormik({
-    initialValues: {
-      businessName: data.businessName,
-      instaHandle: data.instaHandle,
-      businessDescription: data.businessDescription,
-      website: data.website,
-    },
-    validationSchema: Yup.object({
-      businessName: Yup.string()
-        .min(2, "Too short [2-120]")
-        .max(120, "Too long [2-120]")
-        .required("Required"),
-      instaHandle: Yup.string()
-        .min(2, "Too short [2-80]")
-        .max(80, "Too long [2-80]")
-        .required("Required"),
-      businessDescription: Yup.string()
-        .min(5, "Too short [5-500]")
-        .max(500, "Too long [5-500]")
-        .required("Required"),
-      website: Yup.string()
-        .url("Eg http://www.bbc.co.uk or https://www.bbc.co.uk ")
-        .required("Required"),
-    }),
-    onSubmit: (values) => {
-      console.log("onSubmit in formik ");
-      onNextClick();
-    },
-  });
+  const { handleChange, handleBlur, handleSubmit, errors, touched, isValid } =
+    useFormik({
+      initialValues: {
+        businessName: data.businessName,
+        instaHandle: data.instaHandle,
+        businessDescription: data.businessDescription,
+        businessWebsite: data.businessWebsite,
+      },
+      validationSchema: Yup.object({
+        businessName: Yup.string()
+          .min(2, "Too short [2-120]")
+          .max(120, "Too long [2-120]")
+          .required("Required"),
+        instaHandle: Yup.string()
+          .min(2, "Too short [2-80]")
+          .max(80, "Too long [2-80]")
+          .required("Required"),
+        businessDescription: Yup.string()
+          .min(5, "Too short [5-500]")
+          .max(500, "Too long [5-500]")
+          .required("Required"),
+        businessWebsite: Yup.string()
+          .url("Eg http://www.bbc.co.uk or https://www.bbc.co.uk ")
+          .required("Required"),
+      }),
+      onSubmit: (values) => {
+        console.log("onSubmit in formik ");
+        onNextClick();
+      },
+    });
   return (
     <OnboardingFrame
       title="Brand Details"
@@ -125,13 +118,13 @@ export const BrandDetails = ({
                 onChangeField(e);
               }}
               onBlur={handleBlur}
-              name="website"
+              name="businessWebsite"
               label="Website"
-              value={data.website}
+              value={data.businessWebsite}
               margin="normal"
             />
-            {touched.website && errors.website ? (
-              <div className="formikError">{errors.website}</div>
+            {touched.businessWebsite && errors.businessWebsite ? (
+              <div className="formikError">{errors.businessWebsite}</div>
             ) : null}
           </form>
         </>

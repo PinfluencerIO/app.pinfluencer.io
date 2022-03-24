@@ -10,13 +10,14 @@ import { Categories } from "./Categories";
 import { Values } from "./Values";
 
 export const Onboarding = ({ user }) => {
-  console.log(user);
+  console.log("onboarding components", user);
   const [active, setActive] = useState(1);
   const [data, setData] = useState({
     firstName: user && user.attributes && user.attributes.given_name,
     lastName: user && user.attributes && user.attributes.family_name,
     email: user && user.attributes && user.attributes.email,
     userType: "",
+    businessName: "",
     businessDescription: "",
     businessWebsite: "",
     instaHandle: "",
