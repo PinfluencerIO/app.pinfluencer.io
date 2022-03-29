@@ -8,9 +8,11 @@ import { UserTypeDetails } from "./UserType/UserTypeDetails";
 
 import { Categories } from "./Categories";
 import { Values } from "./Values";
+import { Auth } from "aws-amplify";
+import { useHistory } from "react-router-dom";
 
-export const Onboarding = ({ user }) => {
-  console.log("onboarding components", user);
+export const Onboarding = ({ user, setOnBoarded }) => {
+  const history = useHistory();
   const [active, setActive] = useState(1);
   const [data, setData] = useState({
     firstName: user && user.attributes && user.attributes.given_name,
@@ -73,9 +75,18 @@ export const Onboarding = ({ user }) => {
 
   const onFinalSubmit = () => {
     console.log("final submit", data);
-    alert(
-      "The data from each step will be sent to the backend for processing.\nThis part is not implemented yet...stay tuned"
-    );
+    const updateUserAttributes = async () => {
+      const userLoaded = await Auth.currentAuthenticatedUser({
+        bypassCache: true,
+      });
+      await Auth.updateUserAttributes(userLoaded, {
+        "custom:onboarded": "true",
+      });
+      setOnBoarded(true);
+      history.push("/dashboard");
+    };
+
+    updateUserAttributes();
   };
 
   return (

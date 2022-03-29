@@ -1,70 +1,54 @@
 import "./App.css";
-import { Onboarding } from "./components/Onboarding/Onboarding";
-import { PinfluencerMUITheme } from "./theme";
-import { ThemeProvider } from "@mui/material/styles";
+import { Onboarding } from "./components/Onboarding";
+import { Route, Switch, useLocation } from "react-router-dom";
+import { Layout } from "./components/Layout";
+import { PreOnboardingLayout } from "./components/Layout/PreOnBoarding";
+import Dashboard from "./pages/Dashboard";
+import Campaigns from "./pages/Campaigns";
+import Collaborations from "./pages/Collaborations";
+import NotFound from "./pages/NotFound";
 
-import { Amplify } from "aws-amplify";
-import { Authenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
-import awsExports from "./aws-exports";
-import { Avatar, Button } from "@mui/material";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { withLocationDerivedRedirects } from "./utils/AWSAuthRedirect";
+import { Redirect } from "react-router-dom";
+import { useState } from "react";
 
-Amplify.configure(withLocationDerivedRedirects(awsExports));
+function App({ signOut, user }) {
+  const location = useLocation();
+  const [onboarded, setOnBoarded] = useState(
+    "custom:onboarded" in user.attributes
+  );
 
-function App() {
-  return (
-    <Authenticator socialProviders={["google"]}>
-      {({ signOut, user }) => (
-        <ThemeProvider theme={PinfluencerMUITheme}>
-          <div className="HolyGrail">
-            <header>
-              <div className="HolyGrailHeader" role="banner">
-                <div className="HolyGrailHeaderLogo">LOGO</div>
-                <div className="HolyGrailHeaderActions">
-                  <div className="HolyGrailHeaderActionsCenter">
-                    Header Actions
-                  </div>
-                  <div className="HolyGrailHeaderActionsRight">
-                    {
-                      <Button onClick={signOut} endIcon={<LogoutIcon />}>
-                        <Avatar
-                          alt={
-                            user.attributes.given_name +
-                            " " +
-                            user.attributes.family_name
-                          }
-                          src={user.attributes.picture}
-                          sx={{ marginRight: 1 }}
-                        />{" "}
-                        Sign out
-                      </Button>
-                    }
-                  </div>
-                </div>
-              </div>
-            </header>
-            <main className="HolyGrailBody">
-              <article className="HolyGrailContent">
-                <Onboarding user={user} />
-              </article>
-              <nav className="HolyGrailNav">
-                <span>Navigation</span>
-              </nav>
-              <aside className="HolyGrailSidebar">
-                <span>Sidebar</span>
-              </aside>
-            </main>
-            <footer className="HolyGrailFooter">
-              <p>Footer items</p>
-              <p>&copy; 2022 Pinfluencer</p>
-              <p>Social links</p>
-            </footer>
-          </div>
-        </ThemeProvider>
-      )}
-    </Authenticator>
+  return location.pathname === "/" ? (
+    onboarded ? (
+      <Redirect to="/dashboard" />
+    ) : (
+      <Redirect to="/onboarding" />
+    )
+  ) : (
+    <Route
+      render={(props) => {
+        return onboarded ? (
+          <Layout user={user} signOut={signOut} {...props}>
+            <Switch>
+              <Route path="/dashboard" exact>
+                <Dashboard userType="brand" />
+              </Route>
+              <Route path="/campaigns" component={Campaigns} />
+              <Route path="/collaborations">
+                <Collaborations />
+              </Route>
+              <Route path="/onboarding">
+                <Redirect to="/dashboard" />
+              </Route>
+              <Route component={NotFound} />
+            </Switch>
+          </Layout>
+        ) : (
+          <PreOnboardingLayout signOut={signOut} user={user}>
+            <Onboarding user={user} setOnBoarded={setOnBoarded} />
+          </PreOnboardingLayout>
+        );
+      }}
+    />
   );
 }
 

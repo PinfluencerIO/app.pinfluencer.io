@@ -5,6 +5,7 @@
 }
 
 :root {
+  --space-sm: 0.5em;
   --space: 1.5em;
   --space-lg: 2em;
   --primary-color: #6da66a;
@@ -35,21 +36,19 @@
 
 .HolyGrailContent {
   flex: 1;
-  padding: 0 2em;
-  padding: 0 var(--space-lg);
+  padding: var(--space-sm) var(--space);
   margin: 0;
-  margin-top: 1.5em;
-  margin-top: var(--space);
+  overflow: auto;
+  max-height: 900px;
+  /* border: 1px solid; */
 }
 
-.HolyGrailNav,
-.HolyGrailSidebar {
+.HolyGrailNav {
   /* 10em is the width of the columns */
   flex: 0 0 10em;
   padding: 1.5em;
 
   background: var(--secondary-color);
-  flex: 0 0 12em;
 }
 
 .HolyGrailHeader {
