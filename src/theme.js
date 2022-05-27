@@ -6,5 +6,8 @@ export const PinfluencerMUITheme = createTheme({
       main: "#6DA66A",
       contrastText: "#fff",
     },
+    disabled: {
+      main: "#00000042",
+    },
   },
 });

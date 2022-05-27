@@ -11,7 +11,7 @@ import { Values } from "./Values";
 import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 
-export const Onboarding = ({ user, setOnBoarded }) => {
+export const Onboarding = ({ user, setOnboarded }) => {
   const history = useHistory();
   const [active, setActive] = useState(1);
   const [data, setData] = useState({
@@ -82,7 +82,7 @@ export const Onboarding = ({ user, setOnBoarded }) => {
       await Auth.updateUserAttributes(userLoaded, {
         "custom:onboarded": "true",
       });
-      setOnBoarded(true);
+      setOnboarded(true);
       history.push("/dashboard");
     };
 
