@@ -1,24 +1,27 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+
+import { Amplify, Authenticator } from "aws-amplify";
+import "@aws-amplify/ui-react/styles.css";
+
+import { withLocationDerivedRedirects } from "./utils/AWSAuthRedirect";
+import awsExports from "./aws-exports";
 
 import App from "./App";
-import { Amplify } from "aws-amplify";
-import { Authenticator } from "@aws-amplify/ui-react";
 import { PinfluencerMUITheme } from "./theme";
-import { ThemeProvider } from "@mui/material/styles";
-import { withLocationDerivedRedirects } from "./utils/AWSAuthRedirect";
-import "@aws-amplify/ui-react/styles.css";
-import awsExports from "./aws-exports";
+
 Amplify.configure(withLocationDerivedRedirects(awsExports));
 
-ReactDOM.render(
+render(
   <React.StrictMode>
     <ThemeProvider theme={PinfluencerMUITheme}>
       <BrowserRouter>
-        <Authenticator hideSignUp={true}>
+        {/* <Authenticator hideSignUp={true}>
           {({ signOut, user }) => <App signOut={signOut} user={user} />}
-        </Authenticator>
+        </Authenticator> */}
+        <App signOut={{}} user={{ attributes: {} }} />
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>,

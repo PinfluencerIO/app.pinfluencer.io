@@ -1,5 +1,6 @@
 import React from "react";
-import { Avatar, Button } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 export const Header = ({ signOut, user }) => {

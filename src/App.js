@@ -1,6 +1,9 @@
 import "./App.css";
+import { Auth } from "@aws-amplify/auth";
 import { Onboarding } from "./components/Onboarding";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { PreOnboardingLayout } from "./components/Layout/PreOnBoarding";
 import Dashboard from "./pages/Dashboard";
@@ -16,6 +19,16 @@ function App({ signOut, user }) {
   const [onboarded, setOnboarded] = useState(
     "custom:onboarded" in user.attributes
   );
+
+  const [token, setToken] = useState(null);
+
+  function getToken() {
+    return Auth.currentSession()
+      .then((session) => session)
+      .catch((err) => console.log(err));
+  }
+
+  getToken().then((userToken) => setToken(userToken.idToken.jwtToken));
 
   // if pre onboarded, redirect to onboarding no matter what the url is.
 
@@ -52,7 +65,7 @@ function App({ signOut, user }) {
   } else {
     return (
       <PreOnboardingLayout signOut={signOut} user={user}>
-        <Onboarding user={user} setOnboarded={setOnboarded} />
+        <Onboarding user={user} token={token} setOnboarded={setOnboarded} />
       </PreOnboardingLayout>
     );
   }

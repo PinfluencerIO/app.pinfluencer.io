@@ -6,11 +6,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import HomeIcon from "@mui/icons-material/Home";
-import { Add } from "@mui/icons-material";
+import Add from "@mui/icons-material/Add";
 
 function createData(title, description, prod_title, created, protein) {
   return { title, description, prod_title, created, protein };

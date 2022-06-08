@@ -108,12 +108,4 @@ export const AboutYou = ({
       disabledNext={!isValid}
     />
   );
-
-  function onSubmit() {
-    return (e) => {
-      console.log("submit");
-      e.preventDefault();
-      onNextClick();
-    };
-  }
 };

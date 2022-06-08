@@ -11,27 +11,29 @@ import { Values } from "./Values";
 import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 
-export const Onboarding = ({ user, setOnboarded }) => {
+import { createBrand } from "../../services/onboardBrand";
+
+export const Onboarding = ({ user, token, setOnboarded }) => {
   const history = useHistory();
   const [active, setActive] = useState(1);
   const [data, setData] = useState({
-    firstName: user && user.attributes && user.attributes.given_name,
-    lastName: user && user.attributes && user.attributes.family_name,
-    email: user && user.attributes && user.attributes.email,
+    firstName: user?.attributes?.given_name,
+    lastName: user?.attributes?.family_name,
+    email: user?.attributes?.email,
     userType: "",
-    businessName: "",
-    businessDescription: "",
-    businessWebsite: "",
+    brandName: "",
+    brandDescription: "",
+    website: "",
     instaHandle: "",
     categories: [],
     values: [],
-    age13_17: 0,
-    age18_24: 0,
-    age25_34: 0,
-    age35_44: 0,
-    age45_54: 0,
-    age55_64: 0,
-    age65plus: 0,
+    age13To17: 0,
+    age18To24: 0,
+    age25To34: 0,
+    age35To44: 0,
+    age45To54: 0,
+    age55To64: 0,
+    age65Plus: 0,
     audienceGenger: "",
   });
 
@@ -73,20 +75,30 @@ export const Onboarding = ({ user, setOnboarded }) => {
     setActive(active - 1);
   };
 
-  const onFinalSubmit = () => {
-    console.log("final submit", data);
-    const updateUserAttributes = async () => {
-      const userLoaded = await Auth.currentAuthenticatedUser({
-        bypassCache: true,
-      });
-      await Auth.updateUserAttributes(userLoaded, {
-        "custom:onboarded": "true",
-      });
-      setOnboarded(true);
-      history.push("/dashboard");
-    };
+  const updateUserAttributes = async () => {
+    const userLoaded = await Auth.currentAuthenticatedUser({
+      bypassCache: true,
+    });
+    await Auth.updateUserAttributes(userLoaded, {
+      "custom:onboarded": "true",
+    });
+    setOnboarded(true);
+    history.push("/dashboard");
+  };
 
-    updateUserAttributes();
+  const onFinalSubmit = () => {
+    console.log("final submit data", data);
+    // console.log("with token", token);
+
+    createBrand(token, data)
+      .then((json) => {
+        console.log("json response from post brand/me", json);
+        updateUserAttributes();
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
   };
 
   return (
@@ -100,11 +112,7 @@ export const Onboarding = ({ user, setOnboarded }) => {
         <AboutYou
           data={data}
           readOnlyEmail={
-            user &&
-            user.attributes &&
-            user.attributes.identities &&
-            user.attributes.email &&
-            user.attributes.email !== ""
+            user?.attributes?.identities && user?.attributes?.email !== ""
           }
           onChangeField={onChangeField}
           onNextClick={onNextClick}

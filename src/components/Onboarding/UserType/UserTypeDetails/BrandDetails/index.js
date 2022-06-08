@@ -2,7 +2,8 @@ import "./onboardingBrandDetails.css";
 import { OnboardingFrame } from "../../../OnboardingFrame/OnboardingFrame";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { InputAdornment, TextField } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
 
 import React from "react";
 
@@ -15,13 +16,13 @@ export const BrandDetails = ({
   const { handleChange, handleBlur, handleSubmit, errors, touched, isValid } =
     useFormik({
       initialValues: {
-        businessName: data.businessName,
+        brandName: data.brandName,
         instaHandle: data.instaHandle,
-        businessDescription: data.businessDescription,
-        businessWebsite: data.businessWebsite,
+        brandDescription: data.brandDescription,
+        website: data.website,
       },
       validationSchema: Yup.object({
-        businessName: Yup.string()
+        brandName: Yup.string()
           .min(2, "Too short [2-120]")
           .max(120, "Too long [2-120]")
           .required("Required"),
@@ -29,11 +30,11 @@ export const BrandDetails = ({
           .min(2, "Too short [2-80]")
           .max(80, "Too long [2-80]")
           .required("Required"),
-        businessDescription: Yup.string()
+        brandDescription: Yup.string()
           .min(5, "Too short [5-500]")
           .max(500, "Too long [5-500]")
           .required("Required"),
-        businessWebsite: Yup.string()
+        website: Yup.string()
           .url("Eg http://www.bbc.co.uk or https://www.bbc.co.uk ")
           .required("Required"),
       }),
@@ -65,13 +66,13 @@ export const BrandDetails = ({
                 onChangeField(e);
               }}
               onBlur={handleBlur}
-              name="businessName"
-              label="Business Name"
-              value={data.businessName}
+              name="brandName"
+              label="Brand Name"
+              value={data.brandName}
               margin="normal"
             />
-            {touched.businessName && errors.businessName ? (
-              <div className="formikError">{errors.businessName}</div>
+            {touched.brandName && errors.brandName ? (
+              <div className="formikError">{errors.brandName}</div>
             ) : null}
 
             <TextField
@@ -99,17 +100,17 @@ export const BrandDetails = ({
               multiline
               rows={4}
               placeholder="Describe your business"
-              name="businessDescription"
+              name="brandDescription"
               onChange={(e) => {
                 handleChange(e);
                 onChangeField(e);
               }}
               onBlur={handleBlur}
               margin="normal"
-              value={data.businessDescription}
+              value={data.brandDescription}
             />
-            {touched.businessDescription && errors.businessDescription ? (
-              <div className="formikError">{errors.businessDescription}</div>
+            {touched.businessDescription && errors.brandDescription ? (
+              <div className="formikError">{errors.brandDescription}</div>
             ) : null}
 
             <TextField
@@ -118,13 +119,13 @@ export const BrandDetails = ({
                 onChangeField(e);
               }}
               onBlur={handleBlur}
-              name="businessWebsite"
+              name="website"
               label="Website"
-              value={data.businessWebsite}
+              value={data.website}
               margin="normal"
             />
-            {touched.businessWebsite && errors.businessWebsite ? (
-              <div className="formikError">{errors.businessWebsite}</div>
+            {touched.website && errors.website ? (
+              <div className="formikError">{errors.website}</div>
             ) : null}
           </form>
         </>
