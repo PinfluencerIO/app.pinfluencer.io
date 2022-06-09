@@ -1,26 +1,53 @@
-import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { StrictMode } from "react/cjs/react.development";
 
 import App from "./App";
-import { Amplify } from "aws-amplify";
-import { Authenticator } from "@aws-amplify/ui-react";
-import { PinfluencerMUITheme } from "./theme";
-import { ThemeProvider } from "@mui/material/styles";
-import { withLocationDerivedRedirects } from "./utils/AWSAuthRedirect";
-import "@aws-amplify/ui-react/styles.css";
-import awsExports from "./aws-exports";
-Amplify.configure(withLocationDerivedRedirects(awsExports));
+import CollaborationsTable from "./components/CollaborationsTable";
+import CampaignsTable from "./components/CampaignsTable";
+import CampaignFlow from "./pages/CampaignFlow";
+import Campaigns from "./pages/Campaigns";
+import CampaignView from "./pages/CampaignView";
+import CollaborationFlow from "./pages/CollaborationFlow";
+import Collaborations from "./pages/Collaborations";
+import CollaborationView from "./pages/CollaborationView";
+import Main from "./pages/Main";
+import Onboard from "./pages/Onboard";
+import "./style.css";
+
+let rootElement = document.getElementById("root");
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ThemeProvider theme={PinfluencerMUITheme}>
+  <StrictMode>
+    <div className="page-wrap">
       <BrowserRouter>
-        <Authenticator hideSignUp={true}>
-          {({ signOut, user }) => <App signOut={signOut} user={user} />}
-        </Authenticator>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<Main />} />
+            <Route path="onboard" element={<Onboard />} />
+            <Route path="main" element={<Main />} />
+            <Route path="campaigns" element={<Campaigns />}>
+              <Route index element={<CampaignsTable />} />
+              <Route path="new" element={<CampaignFlow />} />
+              <Route path=":id" element={<CampaignView />} />
+            </Route>
+            <Route path="collaborations" element={<Collaborations />}>
+              <Route index element={<CollaborationsTable />} />
+              <Route path="new" element={<CollaborationFlow />} />
+              <Route path=":id" element={<CollaborationView />} />
+            </Route>
+            <Route
+              path="*"
+              element={
+                <main style={{ padding: "1rem" }}>
+                  <p>There&apos;s nothing here!</p>
+                </main>
+              }
+            />
+          </Route>
+        </Routes>
       </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+    </div>
+  </StrictMode>,
+  rootElement
 );
