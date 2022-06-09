@@ -1,0 +1,26 @@
+{
+  "me": {
+    "firstName": "Dominic",
+    "lastName": "Farr",
+    "email": "dom@pinfluencer.io",
+    "userType": "brand",
+    "brandName": "brand",
+    "brandDescription": "sdflk akjasd asd",
+    "website": "http://a.a",
+    "instaHandle": "asdfasdf",
+    "categories": [
+      "Category 1"
+    ],
+    "values": [
+      "Value 1"
+    ],
+    "age13To17": 0,
+    "age18To24": 0,
+    "age25To34": 0,
+    "age35To44": 0,
+    "age45To54": 0,
+    "age55To64": 0,
+    "age65Plus": 0,
+    "audienceGenger": ""
+  }
+}
