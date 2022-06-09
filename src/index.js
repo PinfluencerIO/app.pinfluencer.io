@@ -18,36 +18,34 @@ import "./style.css";
 let rootElement = document.getElementById("root");
 
 ReactDOM.render(
-  <StrictMode>
-    <div className="page-wrap">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route index element={<Main />} />
-            <Route path="onboard" element={<Onboard />} />
-            <Route path="main" element={<Main />} />
-            <Route path="campaigns" element={<Campaigns />}>
-              <Route index element={<CampaignsTable />} />
-              <Route path="new" element={<CampaignFlow />} />
-              <Route path=":id" element={<CampaignView />} />
-            </Route>
-            <Route path="collaborations" element={<Collaborations />}>
-              <Route index element={<CollaborationsTable />} />
-              <Route path="new" element={<CollaborationFlow />} />
-              <Route path=":id" element={<CollaborationView />} />
-            </Route>
-            <Route
-              path="*"
-              element={
-                <main style={{ padding: "1rem" }}>
-                  <p>There&apos;s nothing here!</p>
-                </main>
-              }
-            />
+  <div className="page-wrap">
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<Main />} />
+          <Route path="onboard" element={<Onboard />} />
+          <Route path="main" element={<Main />} />
+          <Route path="campaigns" element={<Campaigns />}>
+            <Route index element={<CampaignsTable />} />
+            <Route path="new" element={<CampaignFlow />} />
+            <Route path=":id" element={<CampaignView />} />
           </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  </StrictMode>,
+          <Route path="collaborations" element={<Collaborations />}>
+            <Route index element={<CollaborationsTable />} />
+            <Route path="new" element={<CollaborationFlow />} />
+            <Route path=":id" element={<CollaborationView />} />
+          </Route>
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There&apos;s nothing here!</p>
+              </main>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </div>,
   rootElement
 );
