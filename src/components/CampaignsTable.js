@@ -42,9 +42,17 @@ export default function CampaignsTable() {
                 })
                 .map((item) => (
                   <tr key={item.id}>
-                    <td>{item.title}</td>
-                    <td className="truncate">{item.description}</td>
-                    <td>{item.productTitle}</td>
+                    <td>{item.campaignTitle}</td>
+                    <td className="truncate">{item.campaignDescription}</td>
+                    <td>
+                      {item.productTitle}{" "}
+                      <img
+                        src={item.productImage1}
+                        height={20}
+                        width={20}
+                        alt="product"
+                      ></img>
+                    </td>
                     <td>{item.creationDate}</td>
                     <td>
                       <button

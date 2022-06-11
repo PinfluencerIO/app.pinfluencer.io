@@ -18,10 +18,10 @@
     "process": "^0.11.10"
   },
   "dependencies": {
+    "@types/react": "^18.0.12",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.3.0"
-
   },
   "scripts": {
     "start": "parcel",
@@ -33,7 +33,6 @@
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
     "deploy": "npm run build; aws --profile pinfluencer s3 sync dist s3://app.pinfluencer.io; aws --profile pinfluencer cloudfront create-invalidation --distribution-id EWGUPH07I0MKD --paths \"/*\" --no-cli-pager",
     "analyze": "source-map-explorer 'dist/static/js/*.js'"
-
   },
   "eslintConfig": {
     "extends": [

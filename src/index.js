@@ -1,6 +1,5 @@
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { StrictMode } from "react/cjs/react.development";
 
 import App from "./App";
 import CollaborationsTable from "./components/CollaborationsTable";
