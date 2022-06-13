@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import CloseCampaignConfirmationModal from "../components/CloseCampaignConfirmationModal";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 import PromiseModal from "../components/PromiseModal";
-import { getCampaigns } from "../fake_db/data";
+import { getAvailableActionsFor, getCampaigns } from "../fake_db/data";
+import EditCampaignButton from "../primatives/EditCampaignButton";
 
 export default function CampaignView() {
   const { id } = useParams();
@@ -19,6 +20,9 @@ export default function CampaignView() {
   const campaign = getCampaigns().find((x) => x.id === parseInt(id));
 
   if (!campaign) return <div>Ouch!</div>;
+
+  const actions = getAvailableActionsFor(campaign.status);
+  console.log("Actions for this campaign", actions);
 
   function launchCampaign() {
     const updateCampaign = { ...campaign, status: "Active" };
@@ -79,42 +83,49 @@ export default function CampaignView() {
 
   return (
     <>
+      {/* looping over required actions for this campaigns.status, rending the required buttons */}
       <div style={{ padding: "10px" }}>
-        <button
-          className="edit-btn"
-          onClick={() => {
-            navigate("/campaigns/edit/" + campaign.id.toString());
-          }}
-        >
-          Edit
-        </button>
-        {campaign.status === "Draft" ? (
-          <button
-            className="launch-btn"
-            onClick={() => setPromiseModalVisability(true)}
-          >
-            launch
-          </button>
-        ) : (
-          ""
-        )}
-
-        {campaign.status === "Active" ? (
-          <button
-            className="close-btn"
-            onClick={() => setCloseCampaignConfirmationModalVisability(true)}
-          >
-            Close
-          </button>
-        ) : (
-          <button
-            className="delete-btn"
-            onClick={() => setDeleteConfirmationModalVisability(true)}
-          >
-            delete
-          </button>
-        )}
+        {actions.map((action) => {
+          console.log("action", action);
+          if (action === "Edit") {
+            return <EditCampaignButton key={action} id={id.toString()} />;
+          } else if (action === "Launch") {
+            return (
+              <button
+                key={action}
+                s
+                className="launch-btn"
+                onClick={() => setPromiseModalVisability(true)}
+              >
+                launch
+              </button>
+            );
+          } else if (action === "Close") {
+            return (
+              <button
+                key={action}
+                className="close-btn"
+                onClick={() =>
+                  setCloseCampaignConfirmationModalVisability(true)
+                }
+              >
+                Close
+              </button>
+            );
+          } else if (action === "Delete") {
+            return (
+              <button
+                key={action}
+                className="delete-btn"
+                onClick={() => setDeleteConfirmationModalVisability(true)}
+              >
+                delete
+              </button>
+            );
+          }
+        })}
       </div>
+      {/* Modals */}
       <PromiseModal
         setPromiseAccepted={setPromiseAccepted}
         promiseAccepted={promiseAccepted}
@@ -136,6 +147,7 @@ export default function CampaignView() {
         }
         closeCampaign={closeCampaign}
       />
+      {/* Visible html elements */}
       <section className="view-section">
         <h2 className="view-section-title">Campaign details</h2>
         <div>Status: {campaign.status}</div>
