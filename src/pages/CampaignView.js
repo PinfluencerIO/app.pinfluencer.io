@@ -10,7 +10,7 @@ This is a big file.
 
 Don't panic future Dom...read the comments.
 
-Improvements are possible, but just not how. Luke, stay on target!
+Improvements are possible but just not now. Luke, stay on target!
 
 State for each modal window [launch, delete and close confirmations]
 Some onClick handlers for each modal
