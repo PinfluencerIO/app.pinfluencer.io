@@ -1,14 +1,99 @@
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCampaigns } from "../fake_db/data";
 
 export default function CampaignView() {
+  const [show, setShow] = useState(false);
+  const [promiseAccepted, setPromiseAccepted] = useState(false);
+
+  const showHideClassName = show ? "modal display-block" : "modal display-none";
+
   const { id } = useParams();
   const navigate = useNavigate();
 
   const campaign = getCampaigns().find((x) => x.id === parseInt(id));
   if (!campaign) return <div>Ouch!</div>;
+  const hideModal = () => {
+    setShow(false);
+  };
+  const showModal = () => {
+    setShow(true);
+  };
+
+  function launchCampaign() {
+    const updateCampaign = { ...campaign, status: "Active" };
+    fetch("http://localhost:3000/campaigns/" + id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateCampaign),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        navigate("/campaigns?id=" + data.id);
+        console.log("Nav to table:");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
   return (
     <>
+      <div className={showHideClassName}>
+        <section className="modal-main">
+          <h2 className="modal-main-heading">Pinfluencer Promise</h2>
+          <h4 className="modal-main-subheading">
+            To lunch a Campaigns an agreement to the Pinfluencer Promise is
+            needed
+          </h4>
+          <p>
+            There&apos;s an art to getting your way, and spitting olive pits
+            across the table isn&apos;t it.
+          </p>
+          <p>
+            He went back to the video to see what had been recorded and was
+            shocked at what he saw. Garlic ice-cream was her favorite.
+          </p>
+          <ul>
+            <li>
+              Lorem ipsum is a placeholder text commonly used to demonstrate the
+              visual text commonly used to demonstrate the visual
+            </li>
+            <li>
+              Ipsum deserunt cillum esse est sint consectetur laborum commodo
+              sit nostrud occaecat.
+            </li>
+            <li>
+              Enim culpa eu officia officia et duis labore proident aliqua ipsum
+              minim reprehenderit ut.
+            </li>
+          </ul>
+          <label htmlFor="promiseAcceptance">
+            <input
+              type="checkbox"
+              id="promiseAcceptance"
+              name="promiseAccetpance"
+              onChange={(e) => setPromiseAccepted(e.target.checked)}
+            />
+            {"  "}I accept the Prinfluencer Promise
+          </label>
+
+          <div className="promise-actions">
+            <button
+              className={promiseAccepted ? "launch-btn" : "launch-btn-disabled"}
+              disabled={!promiseAccepted}
+              onClick={launchCampaign}
+            >
+              launch
+            </button>
+            <button type="button" onClick={hideModal}>
+              Close
+            </button>
+          </div>
+        </section>
+      </div>
       <div style={{ padding: "10px" }}>
         <button
           className="edit-btn"
@@ -19,7 +104,9 @@ export default function CampaignView() {
           Edit
         </button>
         {campaign.status === "Draft" ? (
-          <button className="launch-btn">launch</button>
+          <button className="launch-btn" onClick={showModal}>
+            launch
+          </button>
         ) : (
           ""
         )}
