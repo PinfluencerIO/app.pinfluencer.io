@@ -95,9 +95,8 @@ export default function CampaignView() {
       {/* looping over required actions for this campaigns.status, rending the required buttons */}
       <div style={{ padding: "10px" }}>
         {actions.map((action) => {
-          console.log("action", action);
           if (action === "Edit") {
-            return <EditCampaignButton key={action} id={id.toString()} />;
+            return <EditCampaignButton key={action} id={id} />;
           } else if (action === "Launch") {
             return (
               <button

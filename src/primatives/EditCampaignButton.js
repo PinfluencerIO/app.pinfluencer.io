@@ -5,7 +5,7 @@ export default function EditCampaignButton({ id }) {
   return (
     <button
       className="edit-btn"
-      onClick={() => navigate(`/campaigns/edit/${id}`)}
+      onClick={() => navigate(`/campaigns/${id}/edit`)}
     >
       Edit
     </button>

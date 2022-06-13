@@ -29,7 +29,7 @@ ReactDOM.render(
             <Route index element={<CampaignsTable />} />
             <Route path="new" element={<CampaignFlow />} />
             <Route path=":id" element={<CampaignView />} />
-            <Route path="edit/:id" element={<CampaignEdit />} />
+            <Route path=":id/edit" element={<CampaignEdit />} />
           </Route>
           <Route path="collaborations" element={<Collaborations />}>
             <Route index element={<CollaborationsTable />} />
