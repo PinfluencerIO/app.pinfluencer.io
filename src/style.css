@@ -114,3 +114,34 @@ fieldset {
   display: flex;
   flex-direction: column;
 }
+
+.view-section {
+  border: 2px groove;
+  padding: 1em;
+  text-transform: none;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.view-section-title {
+  float: left;
+  margin: -1.7em 0 0;
+  padding: 0 0.5em;
+  background: #dcedc8;
+  font-size: 1em;
+  font-weight: normal;
+  text-transform: none;
+}
+.delete-btn {
+  background: #ea4335;
+  border-radius: 4px;
+}
+
+.edit-btn {
+  background: #2f80ed;
+  border-radius: 4px;
+}
+.launch-btn {
+  background: #6da66a;
+  border-radius: 4px;
+}

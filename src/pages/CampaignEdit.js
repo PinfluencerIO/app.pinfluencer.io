@@ -1,10 +1,45 @@
+import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getCampaigns } from "../fake_db/data";
 import formToObject from "./formToObject";
 
-export default function CampaignFlow() {
+export default function CampaignEdit() {
   const [imageSrc, setImageSrc] = useState();
+  const [campaign, setCampaign] = useState();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const onChangeField = (e) => {
+    let value = e.target.value;
+    if (e.target.type === "select-multiple") {
+      value = a(e.target.options);
+    }
+
+    setCampaign((currentState) => {
+      return { ...currentState, [e.target.name]: value };
+    });
+  };
+
+  function a(options) {
+    const selectedOptions = [];
+    const selectedValues = [];
+
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selectedOptions.push(options[i]);
+        selectedValues.push(options[i].value);
+      }
+    }
+    return selectedValues;
+  }
+
+  useEffect(() => {
+    console.log("effect");
+    const campaign = getCampaigns().find((x) => x.id === parseInt(id));
+    if (!campaign) return <div>Ouch!</div>;
+    setCampaign(campaign);
+  }, [id]);
 
   function previewFile() {
     const preview = document.getElementById("preview");
@@ -25,12 +60,12 @@ export default function CampaignFlow() {
       reader.readAsDataURL(file);
     }
   }
-  function post(obj) {
+  function put(obj) {
     obj.productImage1 = imageSrc;
-    obj.creationDate = new Date().toISOString().split("T")[0];
-    obj.status = "Draft";
-    fetch("http://localhost:3000/campaigns", {
-      method: "POST",
+    obj.status = campaign.status;
+    obj.creationDate = campaign.creationDate;
+    fetch("http://localhost:3000/campaigns/" + id, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -49,7 +84,7 @@ export default function CampaignFlow() {
 
   return (
     <div className="page-main">
-      <h2>Campaign flow</h2>
+      <h2>Campaign Edit</h2>
       <section style={{ paddingBottom: "1rem" }}>
         <div
           style={{
@@ -63,16 +98,18 @@ export default function CampaignFlow() {
             onSubmit={(e) => {
               e.preventDefault();
               const obj = formToObject(document.forms[0]);
-              post(obj);
+              put(obj);
             }}
           >
             <fieldset>
               <legend>Objectives</legend>
               <label htmlFor="objective">Select Objective</label>
-              <select id="objective" name="objective">
-                <option selected disabled>
-                  Select Objective
-                </option>
+              <select
+                id="objective"
+                name="objective"
+                value={campaign ? campaign?.objective : ""}
+                onChange={onChangeField}
+              >
                 <option value="new">
                   I&apos;m launching a new product or service
                 </option>
@@ -98,6 +135,8 @@ export default function CampaignFlow() {
                 cols="30"
                 id="successDescription"
                 name="successDescription"
+                value={campaign ? campaign?.successDescription : ""}
+                onChange={onChangeField}
               ></textarea>
             </fieldset>
             <fieldset>
@@ -107,6 +146,8 @@ export default function CampaignFlow() {
                 type="text"
                 id="campaignTitle"
                 name="campaignTitle"
+                value={campaign ? campaign?.campaignTitle : ""}
+                onChange={onChangeField}
               ></input>
               <label htmlFor="campaignDescription">Description</label>
               <textarea
@@ -114,12 +155,16 @@ export default function CampaignFlow() {
                 cols="30"
                 id="campaignDescription"
                 name="campaignDescription"
+                value={campaign ? campaign?.campaignDescription : ""}
+                onChange={onChangeField}
               ></textarea>
               <label htmlFor="objective">Categories</label>
               <select
                 id="campaignCategories"
                 name="campaignCategories"
                 multiple
+                value={campaign ? campaign?.campaignCategories : []}
+                onChange={onChangeField}
               >
                 {[
                   "Category 1",
@@ -150,7 +195,13 @@ export default function CampaignFlow() {
                 Select up to 5
               </span>
               <label htmlFor="objective">Values</label>
-              <select id="campaignValues" name="campaignValues" multiple>
+              <select
+                id="campaignValues"
+                name="campaignValues"
+                multiple
+                value={campaign ? campaign?.campaignValues : []}
+                onChange={onChangeField}
+              >
                 {[
                   "Value 1",
                   "Second Value",
@@ -184,6 +235,8 @@ export default function CampaignFlow() {
                 type="text"
                 id="campaignProductLink"
                 name="campaignProductLink"
+                value={campaign ? campaign?.campaignProductLink : ""}
+                onChange={onChangeField}
               ></input>
 
               <label htmlFor="campaignHashtag">Hashtag</label>
@@ -191,6 +244,8 @@ export default function CampaignFlow() {
                 type="text"
                 id="campaignHashtag"
                 name="campaignHashtag"
+                value={campaign ? campaign?.campaignHashtag : ""}
+                onChange={onChangeField}
               ></input>
 
               <label htmlFor="campaignDiscountCode">Discount code</label>
@@ -198,12 +253,20 @@ export default function CampaignFlow() {
                 type="text"
                 id="campaignDiscountCode"
                 name="campaignDiscountCode"
+                value={campaign ? campaign?.campaignDiscountCode : ""}
+                onChange={onChangeField}
               ></input>
             </fieldset>
             <fieldset>
               <legend>Product</legend>
               <label htmlFor="productTitle">Product Title</label>
-              <input type="text" id="productTitle" name="productTitle"></input>
+              <input
+                type="text"
+                id="productTitle"
+                name="productTitle"
+                value={campaign ? campaign?.productTitle : ""}
+                onChange={onChangeField}
+              ></input>
 
               <label htmlFor="productDescription">Product Description</label>
               <textarea
@@ -211,6 +274,8 @@ export default function CampaignFlow() {
                 cols="30"
                 id="productDescription"
                 name="productDescription"
+                value={campaign ? campaign?.productDescription : ""}
+                onChange={onChangeField}
               ></textarea>
               <label htmlFor="productDescription">Product Image 1</label>
               <input
@@ -222,10 +287,10 @@ export default function CampaignFlow() {
               ></input>
               <img
                 style={{
-                  visibility: imageSrc != undefined ? "visible" : "hidden",
+                  visibility: campaign ? "visible" : "hidden",
                 }}
                 id="preview"
-                src=""
+                src={campaign ? campaign?.productImage1 : ""}
                 height="40"
                 width="40"
                 alt="preview"

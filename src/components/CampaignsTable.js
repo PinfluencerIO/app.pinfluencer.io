@@ -41,7 +41,15 @@ export default function CampaignsTable() {
                   }
                 })
                 .map((item) => (
-                  <tr key={item.id}>
+                  <tr
+                    key={item.id}
+                    style={{
+                      color:
+                        searchParams.get("id") === item.id.toString()
+                          ? "lightskyblue"
+                          : "",
+                    }}
+                  >
                     <td>{item.campaignTitle}</td>
                     <td className="truncate">{item.campaignDescription}</td>
                     <td>

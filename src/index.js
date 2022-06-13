@@ -13,6 +13,7 @@ import CollaborationView from "./pages/CollaborationView";
 import Main from "./pages/Main";
 import Onboard from "./pages/Onboard";
 import "./style.css";
+import CampaignEdit from "./pages/CampaignEdit";
 
 let rootElement = document.getElementById("root");
 
@@ -28,6 +29,7 @@ ReactDOM.render(
             <Route index element={<CampaignsTable />} />
             <Route path="new" element={<CampaignFlow />} />
             <Route path=":id" element={<CampaignView />} />
+            <Route path="edit/:id" element={<CampaignEdit />} />
           </Route>
           <Route path="collaborations" element={<Collaborations />}>
             <Route index element={<CollaborationsTable />} />
