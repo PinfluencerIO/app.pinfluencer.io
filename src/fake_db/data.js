@@ -4,6 +4,10 @@ export function getCampaigns() {
   return db.campaigns;
 }
 
+export function getCampaign(id) {
+  return getCampaigns().find((x) => x.id === parseInt(id));
+}
+
 export function getAvailableActionsFor(status) {
   const actions = [
     {

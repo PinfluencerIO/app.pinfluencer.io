@@ -3,9 +3,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import CloseCampaignConfirmationModal from "../components/CloseCampaignConfirmationModal";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 import PromiseModal from "../components/PromiseModal";
-import { getAvailableActionsFor, getCampaigns } from "../fake_db/data";
+import { getAvailableActionsFor, getCampaign } from "../fake_db/data";
 import EditCampaignButton from "../primatives/EditCampaignButton";
+/*
+This is a big file. 
 
+Don't panic future Dom...read the comments.
+
+Improvements are possible, but just not how. Luke, stay on target!
+
+State for each modal window [launch, delete and close confirmations]
+Some onClick handlers for each modal
+*/
 export default function CampaignView() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -17,13 +26,13 @@ export default function CampaignView() {
     setCloseCampaignConfirmationModalVisability,
   ] = useState(false);
   const [promiseAccepted, setPromiseAccepted] = useState(false);
-  const campaign = getCampaigns().find((x) => x.id === parseInt(id));
+  const campaign = getCampaign(id);
 
-  if (!campaign) return <div>Ouch!</div>;
+  if (!campaign) return <div>Ouch - That Campaign is not known!</div>;
 
   const actions = getAvailableActionsFor(campaign.status);
-  console.log("Actions for this campaign", actions);
 
+  // onClick Actions
   function launchCampaign() {
     const updateCampaign = { ...campaign, status: "Active" };
     fetch("http://localhost:3000/campaigns/" + id, {
