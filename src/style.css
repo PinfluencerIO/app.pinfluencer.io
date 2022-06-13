@@ -144,6 +144,11 @@ fieldset {
   background: #6da66a;
   border-radius: 4px;
 }
+.close-btn {
+  background: black;
+  color: white;
+  border-radius: 4px;
+}
 
 .launch-btn-disabled {
   border-radius: 4px;

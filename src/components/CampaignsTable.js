@@ -34,7 +34,7 @@ export default function CampaignsTable() {
               {getCampaigns()
                 .filter((item) => {
                   const filter = searchParams.get("filter");
-                  if (!filter) {
+                  if (!filter && item.status !== "Deleted") {
                     return true;
                   } else {
                     return item.status == filter;
