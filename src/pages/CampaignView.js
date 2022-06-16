@@ -4,7 +4,7 @@ import CloseCampaignConfirmationModal from "../components/CloseCampaignConfirmat
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 import PromiseModal from "../components/PromiseModal";
 import { getAvailableActionsFor, getCampaign } from "../fake_db/data";
-import EditCampaignButton from "../primatives/EditCampaignButton";
+import EditCampaignButton from "../components/EditCampaignButton";
 /*
 This is a big file. 
 
@@ -33,9 +33,9 @@ export default function CampaignView() {
   const actions = getAvailableActionsFor(campaign.status);
 
   // onClick Actions
-  function launchCampaign() {
-    const updateCampaign = { ...campaign, status: "Active" };
-    fetch("http://localhost:3000/campaigns/" + id, {
+  function updateCampaignStatus(status) {
+    const updateCampaign = { ...campaign, status: status };
+    fetch("http://localhost:3001/campaigns/" + id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -44,46 +44,7 @@ export default function CampaignView() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         navigate("/campaigns?id=" + data.id);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-
-  function deleteCampaign() {
-    const updateCampaign = { ...campaign, status: "Deleted" };
-    fetch("http://localhost:3000/campaigns/" + id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateCampaign),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        navigate("/campaigns?");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-
-  function closeCampaign() {
-    const updateCampaign = { ...campaign, status: "Closed" };
-    fetch("http://localhost:3000/campaigns/" + id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateCampaign),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        navigate("/campaigns?");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -137,7 +98,7 @@ export default function CampaignView() {
       <PromiseModal
         setPromiseAccepted={setPromiseAccepted}
         promiseAccepted={promiseAccepted}
-        launchCampaign={launchCampaign}
+        launchCampaign={() => updateCampaignStatus("Active")}
         showPromiseModal={showPromiseModal}
         setPromiseModalVisability={setPromiseModalVisability}
       />
@@ -146,14 +107,14 @@ export default function CampaignView() {
         setDeleteConfirmationModalVisability={
           setDeleteConfirmationModalVisability
         }
-        deleteCampaign={deleteCampaign}
+        deleteCampaign={() => updateCampaignStatus("Delete")}
       />
       <CloseCampaignConfirmationModal
         showCloseCampaignConfirmationModal={showCloseCampaignConfirmationModal}
         setCloseCampaignConfirmationModalVisability={
           setCloseCampaignConfirmationModalVisability
         }
-        closeCampaign={closeCampaign}
+        closeCampaign={() => updateCampaignStatus("Close")}
       />
       {/* Visible html elements */}
       <section className="view-section">

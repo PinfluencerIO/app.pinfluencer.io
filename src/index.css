@@ -8,7 +8,6 @@ body {
   background: #e4e4e4;
   padding: 5px;
   height: 100vh;
-  text-transform: uppercase;
 }
 
 .page-wrap {
@@ -37,6 +36,8 @@ body {
 .page-header {
   grid-column: 1/-1;
   background: #ffcdd2;
+  display: flex;
+  justify-content: space-between;
 }
 
 .page-sidebar {
@@ -58,6 +59,8 @@ body {
 .page-footer {
   grid-column: 1/-1;
   background: #ffecb3;
+  display: flex;
+  justify-content: space-between;
 }
 
 details p {

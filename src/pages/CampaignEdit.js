@@ -35,7 +35,6 @@ export default function CampaignEdit() {
   }
 
   useEffect(() => {
-    console.log("effect");
     const campaign = getCampaigns().find((x) => x.id === parseInt(id));
     if (!campaign) return <div>Ouch!</div>;
     setCampaign(campaign);
@@ -64,7 +63,7 @@ export default function CampaignEdit() {
     obj.productImage1 = imageSrc;
     obj.status = campaign.status;
     obj.creationDate = campaign.creationDate;
-    fetch("http://localhost:3000/campaigns/" + id, {
+    fetch("http://localhost:3001/campaigns/" + id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -73,9 +72,7 @@ export default function CampaignEdit() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         navigate("/campaigns?id=" + data.id);
-        console.log("Nav to table:");
       })
       .catch((error) => {
         console.error("Error:", error);

@@ -29,7 +29,7 @@ export default function CampaignFlow() {
     obj.productImage1 = imageSrc;
     obj.creationDate = new Date().toISOString().split("T")[0];
     obj.status = "Draft";
-    fetch("http://localhost:3000/campaigns", {
+    fetch("http://localhost:3001/campaigns", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,9 +38,7 @@ export default function CampaignFlow() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
         navigate("/campaigns?id=" + data.id);
-        console.log("Nav to table:");
       })
       .catch((error) => {
         console.error("Error:", error);

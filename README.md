@@ -1,1 +1,1 @@
-# Pinfluencer App
+# Pinfluencer Front End

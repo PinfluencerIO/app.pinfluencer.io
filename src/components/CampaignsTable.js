@@ -1,6 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCampaigns } from "../fake_db/data";
-import CampaignFilterButtons from "../primatives/CampaignFilterButtons";
+import CampaignFilterButtons from "./CampaignFilterButtons";
 
 export default function CampaignsTable() {
   const navigate = useNavigate();
