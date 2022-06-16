@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import App from "./App";
+import Layout from "./Layout";
 import CollaborationsTable from "./components/CollaborationsTable";
 import CampaignsTable from "./components/CampaignsTable";
 import CampaignFlow from "./pages/CampaignFlow";
@@ -12,18 +12,20 @@ import Collaborations from "./pages/Collaborations";
 import CollaborationView from "./pages/CollaborationView";
 import Main from "./pages/Main";
 import Onboard from "./pages/Onboard";
-import "./style.css";
 import CampaignEdit from "./pages/CampaignEdit";
+import Profile from "./pages/Profile";
+import "./style.css";
+import { useEffect } from "react";
 
 let rootElement = document.getElementById("root");
-
 ReactDOM.render(
   <div className="page-wrap">
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="onboard" element={<Onboard />} />
+          <Route path="profile" element={<Profile />}></Route>
           <Route path="main" element={<Main />} />
           <Route path="campaigns" element={<Campaigns />}>
             <Route index element={<CampaignsTable />} />

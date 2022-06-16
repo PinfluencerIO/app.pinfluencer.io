@@ -3,7 +3,7 @@ import Footer from "./layout/Footer";
 import NavLinks from "./layout/NavLinks";
 import Topbar from "./layout/Topbar";
 
-export default function App() {
+export default function Layout() {
   return (
     <>
       <Topbar />
