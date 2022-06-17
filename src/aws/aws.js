@@ -48,7 +48,7 @@ const aws = {
   },
 };
 
-const config = configureRedirects(aws);
+export const config = configureRedirects(aws);
 
 Amplify.configure({
   Auth: config,
