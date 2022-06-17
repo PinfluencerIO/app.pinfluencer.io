@@ -12,7 +12,6 @@ export function UserProvider({ children }) {
   const [redirect, setRedirect] = useState();
   const signin = (url = null) => {
     const state = { customState: url };
-    console.log(state);
     Auth.federatedSignIn(state).catch((err) =>
       console.error("error signing in: ", err)
     );
@@ -25,7 +24,6 @@ export function UserProvider({ children }) {
     const current = await Auth.currentAuthenticatedUser({
       bypassCache: true,
     });
-    console.log(current);
     const response = await Auth.updateUserAttributes(current, {
       "custom:type": "brand",
     });
