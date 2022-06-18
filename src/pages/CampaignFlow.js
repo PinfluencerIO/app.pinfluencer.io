@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CategoriesSelect } from "../components/CategoriesSelect";
 import { ValuesSelect } from "../components/ValuesSelect";
+import { getToken } from "../context/UserContext";
 import formToObject from "./formToObject";
 
 export default function CampaignFlow() {
@@ -29,12 +30,12 @@ export default function CampaignFlow() {
   }
   function post(obj) {
     obj.productImage1 = imageSrc;
-    obj.creationDate = new Date().toISOString().split("T")[0];
     obj.status = "Draft";
     fetch("http://localhost:3001/campaigns", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + getToken(),
       },
       body: JSON.stringify(obj),
     })

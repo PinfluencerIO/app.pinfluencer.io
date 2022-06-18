@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import UserContext from "../context/UserContext";
+import UserContext, { getToken } from "../context/UserContext";
 import formToObject from "./formToObject";
 import { ValuesSelect } from "../components/ValuesSelect";
 import { CategoriesSelect } from "../components/CategoriesSelect";
@@ -330,6 +330,7 @@ export const Onboarding = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + getToken(),
       },
       body: JSON.stringify(obj),
     })
