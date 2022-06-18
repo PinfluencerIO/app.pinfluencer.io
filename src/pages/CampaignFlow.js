@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CategoriesSelect } from "../components/CategoriesSelect";
+import { ValuesSelect } from "../components/ValuesSelect";
 import formToObject from "./formToObject";
 
 export default function CampaignFlow() {
@@ -114,69 +116,14 @@ export default function CampaignFlow() {
                 name="campaignDescription"
               ></textarea>
               <label htmlFor="objective">Categories</label>
-              <select
+              <CategoriesSelect
                 id="campaignCategories"
                 name="campaignCategories"
-                multiple
-              >
-                {[
-                  "Category 1",
-                  "Second Category",
-                  "3rd Category",
-                  "Nothing Category",
-                  "Sutainable",
-                  "Ethical",
-                  "Fashion",
-                  "Food",
-                  "Pet",
-                  "Fitness",
-                ].map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-              <span
-                style={{
-                  textTransform: "none",
-                  textAlign: "left",
-                  fontSize: ".8rem",
-                  paddingTop: "3px",
-                  color: "gray",
-                }}
-              >
-                Select up to 5
-              </span>
+              />
+
               <label htmlFor="objective">Values</label>
-              <select id="campaignValues" name="campaignValues" multiple>
-                {[
-                  "Value 1",
-                  "Second Value",
-                  "3rd Value",
-                  "Nothing Value",
-                  "Important ",
-                  "Ethical",
-                  "Vegan",
-                  "Integrity",
-                  "Honesty",
-                  "Fairness",
-                ].map((value) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-              <span
-                style={{
-                  textTransform: "none",
-                  textAlign: "left",
-                  fontSize: ".8rem",
-                  paddingTop: "3px",
-                  color: "gray",
-                }}
-              >
-                Select up to 5
-              </span>
+              <ValuesSelect id="campaignValues" name="campaignValues" />
+
               <label htmlFor="campaignProductLink">Product Link</label>
               <input
                 type="text"

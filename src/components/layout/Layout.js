@@ -13,7 +13,7 @@ export default function Layout() {
     <>
       <Topbar />
 
-      {user ? (
+      {user && "custom:type" in user ? (
         <nav className="page-nav">
           <NavLink
             style={({ isActive }) => {

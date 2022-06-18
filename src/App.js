@@ -15,6 +15,7 @@ import CampaignEdit from "./pages/CampaignEdit";
 import Dashboard from "./pages/Dashboard";
 import UserContext from "./context/UserContext";
 import { Onboarding } from "./pages/Onboarding";
+import { Auth } from "./pages/Auth";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -45,6 +46,7 @@ function App() {
     <div className="page-wrap">
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path="/auth" element={<Auth />} />
           <Route path="onboarding" element={<Onboarding />} />
           <Route index element={<MainRootPanel />} />
           <Route
