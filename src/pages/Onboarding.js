@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import UserContext, { getToken } from "../context/UserContext";
-import formToObject from "./formToObject";
+import UserContext from "../context/UserContext";
 import { ValuesSelect } from "../components/ValuesSelect";
 import { CategoriesSelect } from "../components/CategoriesSelect";
+import processForm from "./formToObject";
+import { brandLogo, onboarding } from "../api/api";
 
 export const Onboarding = () => {
-  const { user } = useContext(UserContext);
+  const { user, onboard: cogupdate } = useContext(UserContext);
   const [imageSrc, setImageSrc] = useState();
+  const [processing, setProcessing] = useState(false);
   const [brandDetailsShow, setBrandDetailsShow] = useState(false);
   const [influencerDetailsShow, setInfluencerDetailsShow] = useState(false);
-  const navigate = useNavigate();
-
   const updateDetails = (e) => {
     console.log(e.target.value);
     setBrandDetailsShow(e.target.value === "brand");
@@ -24,13 +24,25 @@ export const Onboarding = () => {
     // if user is not logged in
     // or
     // redirect if user is available and that user has completed onboarding
-    if (user == null || (user && "custom:type" in user)) {
+    if (user == null || (user && "custom:usertype" in user)) {
       nav("/");
     }
   }, [user, nav]);
+
   return (
     <div className="page-main">
       <h2>Onboarding flow</h2>
+
+      <div
+        id="myModal"
+        className="modal"
+        style={{ display: processing ? "block" : "none" }}
+      >
+        <div className="modal-content">
+          <p>Processing...</p>
+        </div>
+      </div>
+
       <section style={{ paddingBottom: "1rem" }}>
         <div
           style={{
@@ -42,8 +54,30 @@ export const Onboarding = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              const obj = formToObject(document.forms[0]);
-              post(obj);
+              setProcessing(true);
+              const typeOfForm = document.querySelector(
+                'input[name = "type"]:checked'
+              ).value;
+              const payload = processForm(document.forms[0], typeOfForm);
+
+              onboarding(payload)
+                .then((response) => response.json())
+                .then((data) => {
+                  console.log("response from onboarding post", data);
+                  if (typeOfForm === "brand") {
+                    brandLogo(data.id, { image_bytes: imageSrc }).catch(
+                      (err) => {
+                        console.log("logo post failed", err);
+                      }
+                    );
+                  }
+                })
+                .then(() => {
+                  cogupdate(typeOfForm).then(() => setProcessing(false));
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                });
             }}
           >
             <fieldset>
@@ -53,7 +87,7 @@ export const Onboarding = () => {
                 {user?.given_name ? (
                   <span>{user.given_name}</span>
                 ) : (
-                  <input type="text" name="firstName" id="firstName" />
+                  <input type="text" name="firstName" data-type="shared" />
                 )}
               </label>
               <label htmlFor="lastName">
@@ -61,7 +95,7 @@ export const Onboarding = () => {
                 {user?.family_name ? (
                   <span>{user.family_name}</span>
                 ) : (
-                  <input type="text" name="lastName" id="lastName" />
+                  <input type="text" name="lastName" data-type="shared" />
                 )}
               </label>
               <label htmlFor="email">
@@ -69,7 +103,7 @@ export const Onboarding = () => {
                 {user?.email ? (
                   <span>{user.email}</span>
                 ) : (
-                  <input type="text" name="email" id="email" />
+                  <input type="text" name="email" data-type="shared" />
                 )}
               </label>
               <span>Privacy Policy</span>
@@ -84,7 +118,7 @@ export const Onboarding = () => {
               </span>
               <label htmlFor="privacy">
                 Check to agree to this policy
-                <input type="checkbox" name="privacy" id="privacy" />
+                <input type="checkbox" name="privacy" data-type="shared" />
               </label>
             </fieldset>
             <fieldset>
@@ -96,6 +130,7 @@ export const Onboarding = () => {
                   type="radio"
                   value="brand"
                   name="type"
+                  data-type="shared"
                 />
               </label>
               <label>
@@ -105,6 +140,7 @@ export const Onboarding = () => {
                   type="radio"
                   value="influencer"
                   name="type"
+                  data-type="shared"
                 />
               </label>
             </fieldset>
@@ -114,33 +150,33 @@ export const Onboarding = () => {
               }}
             >
               <legend>Brand Details</legend>
-              <label htmlFor="businessName">
-                Business Name
-                <input type="text" name="businessName" id="businessName" />
+              <label htmlFor="brandName">
+                Brand Name
+                <input type="text" name="brandName" data-type="brand" />
               </label>
               <label htmlFor="instaHandle">
                 Instagram Name
-                <input type="text" name="instaHandle" id="instaHandle" />
+                <input type="text" name="instaHandle" data-type="shared" />
               </label>
-              <label htmlFor="description">
-                Decription
+              <label htmlFor="brandDescription">
+                Description
                 <textarea
                   rows="10"
                   cols="30"
-                  name="description"
-                  id="description"
+                  name="brandDescription"
+                  data-type="brand"
                 />
               </label>
               <label htmlFor="website">
-                Website <input type="text" name="website" id="website" />
+                Website <input type="text" name="website" data-type="shared" />
               </label>
               <label htmlFor="businessLogo">Business Logo</label>
               <input
                 type="file"
-                id="businessLogo"
                 name="businessLogo"
                 onChange={previewFile}
                 style={{ paddingBottom: "10px" }}
+                data-type="brand"
               ></input>
               <img
                 style={{
@@ -159,103 +195,105 @@ export const Onboarding = () => {
               }}
             >
               <legend>Influencer Details</legend>
-              <label htmlFor="influencerInstaHandle">
+              <label htmlFor="instaHandle">
                 Instagram Name
-                <input
-                  type="text"
-                  name="influencerInstaHandle"
-                  id="influencerInstaHandle"
-                />
+                <input type="text" name="instaHandle" data-type="shared" />
               </label>
-              <label htmlFor="influencerWebsite">
+              <label htmlFor="website">
                 Website
-                <input
-                  type="text"
-                  name="influencerWebsite"
-                  id="influencerWebsite"
-                />
+                <input type="text" name="website" data-type="shared" />
               </label>
-              <label htmlFor="influencerBio">
+              <label htmlFor="bio">
                 Bio
                 <textarea
                   rows="10"
                   cols="30"
-                  name="influencerBio"
-                  id="influencerBio"
+                  name="bio"
+                  data-type="influencer"
                 />
               </label>
               <fieldset>
                 <legend>Audience</legend>
-                <label htmlFor="age13To17">
+                <label htmlFor="audienceA13To17Split">
                   13 - 17
                   <input
                     placeholder="%"
                     type="text"
-                    name="age13To17"
-                    id="age13To17"
+                    name="audienceA13To17Split"
+                    data-type="influencer"
                   />
                 </label>
-                <label htmlFor="age18To24">
+                <label htmlFor="audienceA18To24Split">
                   18 - 23
                   <input
                     placeholder="%"
                     type="text"
-                    name="age18To24"
-                    id="age18To24"
+                    name="audienceA18To24Split"
+                    data-type="influencer"
                   />
                 </label>
-                <label htmlFor="age25To34">
+                <label htmlFor="audienceA25To34Split">
                   25 - 34
                   <input
                     placeholder="%"
                     type="text"
-                    name="age25To34"
-                    id="age25To34"
+                    name="audienceA25To34Split"
+                    data-type="influencer"
                   />
                 </label>
-                <label htmlFor="age35To44">
+                <label htmlFor="audienceA35To44Split">
                   35 - 44
                   <input
                     placeholder="%"
                     type="text"
-                    name="age35To44"
-                    id="age35To44"
+                    name="audienceA35To44Split"
+                    data-type="influencer"
                   />
                 </label>
-                <label htmlFor="age45To54">
+                <label htmlFor="audienceA45To54Split">
                   45 - 54
                   <input
                     placeholder="%"
                     type="text"
-                    name="age45To54"
-                    id="age45To54"
+                    name="audienceA45To54Split"
+                    data-type="influencer"
                   />
                 </label>
-                <label htmlFor="age55To64">
+                <label htmlFor="audienceA55To64Split">
                   55 - 64
                   <input
                     placeholder="%"
                     type="text"
-                    name="age55To64"
-                    id="age55To64"
+                    name="audienceA55To64Split"
+                    data-type="influencer"
                   />
                 </label>
-                <label htmlFor="age65Plus">
+                <label htmlFor="audienceA65PlusSplit">
                   65+
                   <input
                     placeholder="%"
                     type="text"
-                    name="age65Plus"
-                    id="age65Plus"
+                    name="audienceA65PlusSplit"
+                    data-type="influencer"
                   />
                 </label>
-                <label htmlFor="femalePercentage">
+                <label htmlFor="audienceFemaleSplit">
                   Female percentage
-                  <input placeholder="%" type="input" name="femalePercentage" />
+                  <input
+                    placeholder="%"
+                    type="input"
+                    name="audienceFemaleSplit"
+                    data-type="influencer"
+                  />
                 </label>
-                <label htmlFor="malePercentage">
+                <label htmlFor="audienceMaleSplit">
                   Male percentage
-                  <input placeholder="%" type="input" name="malePercentage" />
+                  <input
+                    placeholder="%"
+                    type="input"
+                    name="audienceMaleSplit"
+                    data-type="audienceMaleSplit"
+                  />
                 </label>
               </fieldset>
             </fieldset>
@@ -267,40 +305,12 @@ export const Onboarding = () => {
               <legend>Value</legend>
 
               <ValuesSelect />
-              <span
-                style={{
-                  textTransform: "none",
-                  textAlign: "left",
-                  fontSize: ".8rem",
-                  paddingTop: "3px",
-                  color: "gray",
-                }}
-              >
-                Select up to 5
-              </span>
             </fieldset>
             <button type="submit">Submit</button>
           </form>
         </div>
       </section>
     </div>
-    // <div>
-    //   Onboarding{" "}
-    //   <div>
-    //     {!loading ? (
-    //       <button
-    //         onClick={() => {
-    //           setLoading(true);
-    //           onboard();
-    //         }}
-    //       >
-    //         on board this user
-    //       </button>
-    //     ) : (
-    //       <div>updating user please wait...</div>
-    //     )}
-    //   </div>
-    // </div>
   );
 
   //TODO this was copy/paste crime. Make a component
@@ -322,25 +332,5 @@ export const Onboarding = () => {
     if (file) {
       reader.readAsDataURL(file);
     }
-  }
-
-  function post(obj) {
-    obj.businessLogo = imageSrc;
-    fetch(`http://localhost:3001/${obj.type}/me`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + getToken(),
-      },
-      body: JSON.stringify(obj),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
   }
 };

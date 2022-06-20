@@ -1,6 +1,6 @@
 import { Amplify } from "aws-amplify";
 
-const isLocalhost = Boolean(
+export const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
     // [::1] is the IPv6 localhost address.
     window.location.hostname === "[::1]" ||

@@ -3,6 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import UserContext from "../../context/UserContext";
 import LogoHomeLink from "../LogoHomeLink";
+import { Link } from "react-router-dom";
 
 export default function Topbar() {
   const { user, signin, signout } = useContext(UserContext);
@@ -16,11 +17,14 @@ export default function Topbar() {
       <div>
         {user ? (
           <Stack direction="row" spacing={2}>
-            <Avatar
-              {...stringAvatar(user.given_name + " " + user.family_name)}
-              src={user.picture}
-              sx={{ width: 56, height: 56 }}
-            />
+            <Link to="/profile">
+              {" "}
+              <Avatar
+                {...stringAvatar(user.given_name + " " + user.family_name)}
+                src={user.picture}
+                sx={{ width: 56, height: 56 }}
+              />
+            </Link>
             <button
               onClick={() => {
                 localStorage.setItem("signout", true);

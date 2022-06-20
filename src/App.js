@@ -16,6 +16,8 @@ import Dashboard from "./pages/Dashboard";
 import UserContext from "./context/UserContext";
 import { Onboarding } from "./pages/Onboarding";
 import { Auth } from "./pages/Auth";
+import { BrandProfile } from "./pages/BrandProfile";
+import { InfluencerProfile } from "./pages/InfluencerProfile";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -33,7 +35,7 @@ function App() {
 
   useEffect(() => {
     //  redirect if user is available and that user has not completed onboarding
-    if (user && !("custom:type" in user)) {
+    if (user && !("custom:usertype" in user)) {
       nav("onboarding");
     } else if (user && redirect) {
       // if a user arrived pre authenticated to an authenticated route, redirect after authentication
@@ -46,7 +48,7 @@ function App() {
     <div className="page-wrap">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/auth" element={<Auth />} />
+          <Route path="auth" element={<Auth />} />
           <Route path="onboarding" element={<Onboarding />} />
           <Route index element={<MainRootPanel />} />
           <Route
@@ -67,6 +69,18 @@ function App() {
             element={
               <RequireAuth>
                 <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <RequireAuth>
+                {user && user["custom:usertype"] === "brand" ? (
+                  <BrandProfile />
+                ) : (
+                  <InfluencerProfile />
+                )}
               </RequireAuth>
             }
           />

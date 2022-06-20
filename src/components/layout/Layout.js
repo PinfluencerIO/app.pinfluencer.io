@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Outlet } from "react-router";
 import { NavLink } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
 import UserContext from "../../context/UserContext";
 
 import Footer from "./Footer";
@@ -13,8 +14,22 @@ export default function Layout() {
     <>
       <Topbar />
 
-      {user && "custom:type" in user ? (
+      {user && "custom:usertype" in user ? (
         <nav className="page-nav">
+          <NavLink
+            style={({ isActive }) => {
+              return {
+                position: "relative",
+                top: "5px",
+                color: isActive ? "red" : "",
+              };
+            }}
+            to="/"
+          >
+            {" "}
+            <HomeIcon />
+          </NavLink>
+          {" | "}
           <NavLink
             style={({ isActive }) => {
               return {
@@ -22,11 +37,30 @@ export default function Layout() {
                 color: isActive ? "red" : "",
               };
             }}
-            to="/campaigns"
+            to="/dashboard"
           >
-            Campaigns
-          </NavLink>{" "}
-          |{" "}
+            Dashboard
+          </NavLink>
+          {" | "}
+          {user["custom:usertype"] === "brand" ? (
+            <>
+              {" "}
+              <NavLink
+                style={({ isActive }) => {
+                  return {
+                    margin: "1rem 0",
+                    color: isActive ? "red" : "",
+                  };
+                }}
+                to="/campaigns"
+              >
+                Campaigns
+              </NavLink>{" "}
+              {" | "}
+            </>
+          ) : (
+            ""
+          )}
           <NavLink
             style={({ isActive }) => {
               return {

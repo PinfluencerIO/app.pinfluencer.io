@@ -20,17 +20,16 @@ export function UserProvider({ children }) {
     Auth.signOut().catch((err) => console.log("error signing out: ", err));
   };
 
-  async function onboard() {
+  async function onboard(type) {
     const current = await Auth.currentAuthenticatedUser({
       bypassCache: true,
     });
-    const response = await Auth.updateUserAttributes(current, {
-      "custom:type": "brand",
-    });
-    if (response === "SUCCESS") {
+    return Auth.updateUserAttributes(current, {
+      "custom:usertype": type,
+    }).then(() => {
       const updateUser = getUserDataFromStorage();
       setUser(updateUser);
-    }
+    });
   }
 
   // Use an effect to listen on Amplify event bus for Auth events
@@ -93,7 +92,7 @@ const parseUserToAtrributes = (user) => {
 };
 
 //Storage key: CognitoIdentityServiceProvider.userPoolWebClientId.LastAuthUser
-const lastAuth = () => {
+export const lastAuth = () => {
   return localStorage.getItem(`${authStoragePrefix()}.LastAuthUser`);
 };
 

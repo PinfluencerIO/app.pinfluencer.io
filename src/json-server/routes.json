@@ -1,4 +1,5 @@
 {
   "/brands/*": "/$1",
+  "/influencer/*": "/$1",
   "/campaigns/*": "/$1"
 }

@@ -5,7 +5,7 @@ export const ValuesSelect = ({ id = "values", name = "values" }) => {
   console.log(id);
   return (
     <>
-      <select id={id} name={name} multiple>
+      <select id={id} name={name} multiple data-type="shared">
         {VALUES.map((value) => (
           <option key={value} value={value}>
             {value[0].toUpperCase() + value.substring(1).toLowerCase()}

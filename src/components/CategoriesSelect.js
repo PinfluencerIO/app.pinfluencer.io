@@ -7,7 +7,7 @@ export const CategoriesSelect = ({
 }) => {
   return (
     <>
-      <select id={id} name={name} multiple>
+      <select id={id} name={name} multiple data-type="shared">
         {CATEGORIES.map((cat) => (
           <option key={cat} value={cat}>
             {cat[0].toUpperCase() + cat.substring(1).toLowerCase()}

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { newCampaing } from "../api/api";
 import { CategoriesSelect } from "../components/CategoriesSelect";
 import { ValuesSelect } from "../components/ValuesSelect";
-import { getToken } from "../context/UserContext";
 import formToObject from "./formToObject";
 
 export default function CampaignFlow() {
@@ -28,25 +28,6 @@ export default function CampaignFlow() {
       reader.readAsDataURL(file);
     }
   }
-  function post(obj) {
-    obj.productImage1 = imageSrc;
-    obj.status = "Draft";
-    fetch("http://localhost:3001/campaigns", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + getToken(),
-      },
-      body: JSON.stringify(obj),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        navigate("/campaigns?id=" + data.id);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
 
   return (
     <div className="page-main">
@@ -64,7 +45,17 @@ export default function CampaignFlow() {
             onSubmit={(e) => {
               e.preventDefault();
               const obj = formToObject(document.forms[0]);
-              post(obj);
+              obj.productImage1 = imageSrc;
+              obj.status = "Draft";
+              obj.userId = localStorage.getItem("userId");
+              newCampaing(obj)
+                .then((response) => response.json())
+                .then((data) => {
+                  navigate("/campaigns?id=" + data.id);
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                });
             }}
           >
             <fieldset>
