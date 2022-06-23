@@ -21,7 +21,13 @@ const ResponsiveAppBar = () => {
   const settings = {
     authenticated: [
       { key: "signout", label: "Sign Out", function: signout },
-      { key: "profile", label: "Profile", function: null },
+      {
+        key: "profile",
+        label: "Profile",
+        function: () => {
+          nav("Profile");
+        },
+      },
     ],
     unauthenticated: [{ key: "signin", label: "Sign In", function: signin }],
   };
