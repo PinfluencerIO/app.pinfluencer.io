@@ -123,7 +123,10 @@ const ResponsiveAppBar = () => {
             >
               {pagesForUserType().map((page) => (
                 <MenuItem
-                  selected={page === location.pathname.substring(1)}
+                  selected={
+                    page.toLowerCase() ===
+                    location.pathname.substring(1).toLowerCase()
+                  }
                   key={page.toString()}
                   onClick={() => handleCloseNavMenu(page)}
                   sx={{}}
@@ -180,7 +183,7 @@ const ResponsiveAppBar = () => {
                   <InitialsAvatar user={user} />
                 </IconButton>
               ) : (
-                <IconButton onClick={signin}>
+                <IconButton onClick={() => signin()}>
                   <LoginIcon
                     sx={{
                       color: theme.palette.pinfluencerGreen.main,
@@ -235,6 +238,7 @@ const ResponsiveAppBar = () => {
   function pagesForUserType(wideScreen) {
     if (user && "custom:usertype" in user)
       return pages.authenticated[user["custom:usertype"]];
+    if (user) return ["Onboarding"];
     return wideScreen ? [] : ["Sign In"];
   }
 };
