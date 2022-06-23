@@ -1,7 +1,8 @@
 import React from "react";
-import { Container, Grid, Paper } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import { Footer } from "./components/Footer";
+import { Outlet } from "react-router";
 
 export const Layout = () => {
   return (
@@ -16,7 +17,7 @@ export const Layout = () => {
         </Grid>
 
         <Grid item xs={12} ml={0.2} mt={2} mb={2}>
-          <Paper elevation={1}>MAIN PANEL</Paper>
+          <Outlet />
         </Grid>
         <Grid
           item

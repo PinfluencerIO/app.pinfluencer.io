@@ -4,6 +4,10 @@ import { useContext, useEffect } from "react";
 import "./aws/aws";
 import UserContext from "./context/UserContext";
 import { Layout } from "./Layout";
+import { Dashboard } from "./pages/Dashboard";
+import { HomePage } from "./pages/HomePage";
+import { Campaigns } from "./pages/Campaigns";
+import { Collaborations } from "./pages/Collaborations";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -32,6 +36,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/campaigns" element={<Campaigns />} />
+        <Route path="/collaborations" element={<Collaborations />} />
         <Route
           path="*"
           element={
