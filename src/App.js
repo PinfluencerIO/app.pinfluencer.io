@@ -8,6 +8,8 @@ import { Dashboard } from "./pages/Dashboard";
 import { HomePage } from "./pages/HomePage";
 import { Campaigns } from "./pages/Campaigns";
 import { Collaborations } from "./pages/Collaborations";
+import { Onboarding } from "./pages/Onboarding";
+import { Profile } from "./pages/Profile";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -37,6 +39,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/campaigns" element={<Campaigns />} />
         <Route path="/collaborations" element={<Collaborations />} />
