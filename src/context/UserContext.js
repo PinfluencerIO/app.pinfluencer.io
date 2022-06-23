@@ -100,37 +100,3 @@ export const lastAuth = () => {
 const authStoragePrefix = () => {
   return `CognitoIdentityServiceProvider.${config.userPoolWebClientId}`;
 };
-
-/* Example User attributes from Amplify Auth 
-{
-  "UserAttributes":[
-    {
-      "Name":"sub",
-      "Value":"0a834f86-0811-459e-a6cb-474b6c0d704f"
-    },
-    {
-      "Name":"identities",
-      "Value":"[{\"userId\":\"106146319509880568839\",\"providerName\":\"Google\",\"providerType\":\"Google\",\"issuer\":null,\"primary\":true,\"dateCreated\":1654535345973}]"
-    },
-    {
-      "Name":"email_verified",
-      "Value":"false"
-    },
-    {
-      "Name":"given_name",
-      "Value":"Dominic"
-    },
-    {
-      "Name":"family_name",
-      "Value":"Farr"
-    },
-    {
-      "Name":"email",
-      "Value":"dom@pinfluencer.io"
-    }
-  ],
-  "Username":"google_106146319509880568839"
-}
-
-
-*/
