@@ -14,6 +14,7 @@ import LogoHomeLink from "../components/LogoHomeLink";
 import { useTheme } from "@mui/material";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "./navLink.css";
+import LoginIcon from "@mui/icons-material/Login";
 const ResponsiveAppBar = () => {
   const { user, signin, signout } = React.useContext(UserContext);
   const nav = useNavigate();
@@ -51,7 +52,10 @@ const ResponsiveAppBar = () => {
 
   const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
-    console.log(page);
+    if (page === "Sign In") {
+      signin();
+      return;
+    }
     nav(page);
   };
 
@@ -148,7 +152,7 @@ const ResponsiveAppBar = () => {
             <LogoHomeLink />
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pagesForUserType().map((page) => (
+            {pagesForUserType(true).map((page) => (
               <NavLink
                 key={page.toString()}
                 to={page.toString()}
@@ -170,10 +174,21 @@ const ResponsiveAppBar = () => {
           {/* Full menu END*/}
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title={user ? "Profile and Messages" : "Sign in"}>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <InitialsAvatar user={user} />
-              </IconButton>
+            <Tooltip title={user ? "Profile and Messages" : "Sign In"}>
+              {user ? (
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <InitialsAvatar user={user} />
+                </IconButton>
+              ) : (
+                <IconButton onClick={signin}>
+                  <LoginIcon
+                    sx={{
+                      color: theme.palette.pinfluencerGreen.main,
+                      transform: { xs: "scale(1)", md: "scale(1.5)" },
+                    }}
+                  />
+                </IconButton>
+              )}
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}
@@ -217,10 +232,10 @@ const ResponsiveAppBar = () => {
     return settings.unauthenticated;
   }
 
-  function pagesForUserType() {
+  function pagesForUserType(wideScreen) {
     if (user && "custom:usertype" in user)
       return pages.authenticated[user["custom:usertype"]];
-    return [];
+    return wideScreen ? [] : ["Sign In"];
   }
 };
 
