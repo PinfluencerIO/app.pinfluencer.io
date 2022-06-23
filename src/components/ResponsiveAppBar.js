@@ -15,14 +15,20 @@ import LogoHomeLink from "../components/LogoHomeLink";
 import { useTheme } from "@mui/material";
 import { Button } from "./Button";
 
-const pages = ["Dashboard", "Campaigns", "Collaborations"];
-
 const ResponsiveAppBar = () => {
   const { user, signin, signout } = React.useContext(UserContext);
 
   const settings = {
     authenticated: [{ key: "signout", label: "Sign Out", function: signout }],
     unauthenticated: [{ key: "signin", label: "Sign In", function: signin }],
+  };
+
+  const pages = {
+    authenticated: {
+      brand: ["Dashboard", "Campaigns", "Collaborations"],
+      influencer: ["Dashboard", "Collaborations"],
+    },
+    unauthenticated: [],
   };
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -50,6 +56,7 @@ const ResponsiveAppBar = () => {
       position="static"
       sx={{
         backgroundColor: theme.palette.pinfluencerGreen.contrastText,
+        boxShadow: "none",
       }}
     >
       <Container maxWidth="xl">
@@ -92,7 +99,12 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {(user
+                ? user["custom:usertype"] === "brand"
+                  ? pages.authenticated.brand
+                  : pages.authenticated.influencer
+                : pages.unauthenticated
+              ).map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Box textAlign="center">{page}</Box>
                 </MenuItem>
@@ -111,7 +123,12 @@ const ResponsiveAppBar = () => {
             <LogoHomeLink />
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {(user
+              ? user["custom:usertype"] === "brand"
+                ? pages.authenticated.brand
+                : pages.authenticated.influencer
+              : pages.unauthenticated
+            ).map((page) => (
               <Button key={page} onClick={handleCloseNavMenu}>
                 {page}
               </Button>

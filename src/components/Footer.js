@@ -3,7 +3,7 @@ import React from "react";
 
 export const Footer = () => {
   return (
-    <Container sx={{ borderTop: "1px solid" }}>
+    <Container>
       <footer>
         <Grid container justifyContent={{ sm: "space-between", xs: "center" }}>
           <Grid
