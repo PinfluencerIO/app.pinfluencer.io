@@ -3,20 +3,28 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import UserContext from "../context/UserContext";
+import { InitialsAvatar } from "./InitialsAvatar";
+import LogoHomeLink from "../components/LogoHomeLink";
+import { useTheme } from "@mui/material";
+import { Button } from "./Button";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ["Dashboard", "Campaigns", "Collaborations"];
 
 const ResponsiveAppBar = () => {
+  const { user, signin, signout } = React.useContext(UserContext);
+
+  const settings = {
+    authenticated: [{ key: "signout", label: "Sign Out", function: signout }],
+    unauthenticated: [{ key: "signin", label: "Sign In", function: signin }],
+  };
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -28,35 +36,33 @@ const ResponsiveAppBar = () => {
   };
 
   const handleCloseNavMenu = () => {
+    console.log("handleCloseNavMenu");
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (setting) => {
     setAnchorElUser(null);
+    setting.function();
   };
-
+  const theme = useTheme();
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: theme.palette.pinfluencerGreen.contrastText,
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
+          <Box
             sx={{
               mr: 2,
+              pt: 1,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
             }}
           >
-            LOGO
-          </Typography>
+            <LogoHomeLink />
+          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -65,7 +71,6 @@ const ResponsiveAppBar = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
             >
               <MenuIcon />
             </IconButton>
@@ -89,37 +94,25 @@ const ResponsiveAppBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Box textAlign="center">{page}</Box>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
+
+          <Box
             sx={{
               mr: 2,
+              pt: 1,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
             }}
           >
-            LOGO
-          </Typography>
+            <LogoHomeLink />
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
+              <Button key={page} onClick={handleCloseNavMenu}>
                 {page}
               </Button>
             ))}
@@ -128,7 +121,7 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <InitialsAvatar user={user} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -147,11 +140,16 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {(user ? settings.authenticated : settings.unauthenticated).map(
+                (setting) => (
+                  <MenuItem
+                    key={setting}
+                    onClick={() => handleCloseUserMenu(setting)}
+                  >
+                    <Box textAlign="center">{setting.label}</Box>
+                  </MenuItem>
+                )
+              )}
             </Menu>
           </Box>
         </Toolbar>

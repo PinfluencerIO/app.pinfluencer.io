@@ -2,6 +2,7 @@ import { styled } from "@mui/material";
 import MUIButton from "@mui/material/Button";
 
 export const Button = styled(MUIButton)(({ variant, theme }) => {
+  variant = variant ?? "text";
   if (variant === "text") {
     return {
       color: theme.palette.pinfluencerGreen.main,
