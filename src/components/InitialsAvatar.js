@@ -9,14 +9,14 @@ export const InitialsAvatar = ({ user }) => {
         {...stringAvatar(user.given_name + " " + user.family_name, theme)}
         src={user.picture}
         sx={{
-          width: 48,
-          height: 48,
+          width: 40,
+          height: 40,
           bgcolor: theme.palette.pinfluencerGreen.main,
         }}
       />
     );
 
-  return <Avatar sx={{ width: 48, height: 48 }} />;
+  return <Avatar sx={{ width: 40, height: 40 }} />;
 };
 
 function stringAvatar(name) {
