@@ -43,28 +43,7 @@ export const Onboarding = () => {
         <Item background={"#FFF"} elevation={0}>
           <Stepper activeStep={1} alternativeLabel>
             {steps.map((label) => (
-              <Step
-                key={label}
-                // sx={{
-                //   "& .MuiStepLabel-root .Mui-completed": {
-                //     color: "pinfluencerGreen.main", // circle color (COMPLETED)
-                //   },
-                //   "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel":
-                //     {
-                //       color: "grey.500", // Just text label (COMPLETED)
-                //     },
-                //   "& .MuiStepLabel-root .Mui-active": {
-                //     color: "pinfluencerGreen.main", // circle color (ACTIVE)
-                //   },
-                //   "& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel":
-                //     {
-                //       color: "common.white", // Just text label (ACTIVE)
-                //     },
-                //   "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
-                //     fill: "common.white", // circle's number (ACTIVE)
-                //   },
-                // }}
-              >
+              <Step key={label}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
