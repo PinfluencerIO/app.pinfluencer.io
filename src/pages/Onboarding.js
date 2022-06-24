@@ -1,12 +1,4 @@
-import {
-  Grid,
-  Paper,
-  Step,
-  StepLabel,
-  Stepper,
-  styled,
-  useTheme,
-} from "@mui/material";
+import { Grid, Step, StepLabel, Stepper } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../context/UserContext";
@@ -23,35 +15,39 @@ export const Onboarding = () => {
     }
   }, [user, nav]);
 
-  const Item = styled(Paper)(({ theme, background, mb }) => ({
-    backgroundColor: background
-      ? background
-      : theme.palette.background.pinfluencerLightGreen,
-    ...theme.typography.body1,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    marginBottom: mb ? mb : 0,
-  }));
-
   const steps = ["About You", "Type", "Details", "Categories", "Values"];
-  const theme = useTheme();
-  console.log("theme", { theme });
+
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Item background={"#FFF"} elevation={0}>
-          <Stepper activeStep={1} alternativeLabel>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-        </Item>
+      <Grid item xs={12} sx={{ margin: "25px 0px" }}>
+        <Stepper activeStep={0} alternativeLabel>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
       </Grid>
-      <Grid item xs={12}>
-        <Item mb={20}>FORM</Item>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          backgroundColor: "background.pinfluencerLightGreen",
+        }}
+      >
+        <Grid
+          container
+          sx={{
+            border: "1px solid",
+            margin: "40px 0",
+            backgroundColor: "white",
+            width: "400px",
+          }}
+        >
+          <Grid item sx={{ margin: "auto;" }}>
+            FORM
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
