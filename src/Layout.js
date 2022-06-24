@@ -16,7 +16,7 @@ export const Layout = () => {
           <ResponsiveAppBar />
         </Grid>
 
-        <Grid item xs={12} ml={3} mt={2} mb={2}>
+        <Grid item xs={12}>
           <Outlet />
         </Grid>
         <Grid

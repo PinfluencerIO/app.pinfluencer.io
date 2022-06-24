@@ -177,7 +177,7 @@ const ResponsiveAppBar = () => {
           {/* Full menu END*/}
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title={user ? "Profile and Messages" : "Sign In"}>
+            <Tooltip title={determineTooltip()}>
               {user ? (
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <InitialsAvatar user={user} />
@@ -223,6 +223,18 @@ const ResponsiveAppBar = () => {
       </Container>
     </AppBar>
   );
+
+  function determineTooltip() {
+    // return user ? "Profile and Messages" : "Sign In";
+    if (user && "custom:usertype" in user) {
+      return "Profile and Messages";
+    }
+    if (user && !("custom:usertype" in user)) {
+      return "Sign Out";
+    }
+
+    return "Sign In";
+  }
 
   function menuForUserType() {
     if (user && "custom:usertype" in user) {

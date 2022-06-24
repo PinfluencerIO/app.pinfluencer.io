@@ -1,6 +1,34 @@
 import { createTheme } from "@mui/material";
 
+const pinfluencerGreen = "#6DA66A";
+//MuiStepLabel-label.Mui-active
 const baseTheme = createTheme({
+  components: {
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          "&.Mui-completed": {
+            color: pinfluencerGreen,
+          },
+          "&.Mui-active": {
+            color: pinfluencerGreen,
+          },
+          "&.Mui-active text": {
+            fontSize: "large",
+          },
+        },
+      },
+    },
+    MuiStepLabel: {
+      styleOverrides: {
+        label: {
+          "&.Mui-active": {
+            color: pinfluencerGreen,
+          },
+        },
+      },
+    },
+  },
   typography: {
     allVariants: {
       fontFamily:
@@ -10,7 +38,7 @@ const baseTheme = createTheme({
   },
   palette: {
     pinfluencerGreen: {
-      main: "#6DA66A",
+      main: pinfluencerGreen,
       contrastText: "#ffffff",
     },
     background: {
