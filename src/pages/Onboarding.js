@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../context/UserContext";
 import { AboutYou } from "./onboarding/AboutYou";
+import { TypeOfUser } from "./onboarding/TypeOfUser";
 
 export const Onboarding = () => {
   const { user } = useContext(UserContext);
@@ -58,8 +59,16 @@ export const Onboarding = () => {
           backgroundColor: "background.pinfluencerLightGreen",
         }}
       >
-        {activeStep >= 0 && (
+        {activeStep === 0 && (
           <AboutYou
+            numberOfSteps={steps.length}
+            activeStep={activeStep}
+            handleBack={handleBack}
+            handleNext={handleNext}
+          />
+        )}
+        {activeStep === 1 && (
+          <TypeOfUser
             numberOfSteps={steps.length}
             activeStep={activeStep}
             handleBack={handleBack}
