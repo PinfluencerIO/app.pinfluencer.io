@@ -10,12 +10,13 @@ import {
   TextField,
 } from "@mui/material";
 export const AboutYou = ({
+  data,
+  handleChange,
   numberOfSteps,
   activeStep,
   handleBack,
   handleNext,
 }) => {
-  console.log(numberOfSteps, activeStep, handleBack, handleNext);
   return (
     <Container maxWidth="sm" sx={{}}>
       <Paper sx={{ minWidth: 350 }}>
@@ -43,8 +44,11 @@ export const AboutYou = ({
               sx={{ maxWidth: { xs: 350, sm: 450, md: 450 } }}
               id="email"
               label="Email"
+              name="email"
               variant="outlined"
               autoComplete="false"
+              value={data.email}
+              onChange={(event) => handleChange(event)}
             />
             <Stack
               spacing={{ xs: 2 }}
@@ -55,15 +59,21 @@ export const AboutYou = ({
                 sx={{ width: { xs: 350, sm: 450, md: 225 } }}
                 id="firstName"
                 label="First Name"
+                name="firstName"
                 variant="outlined"
                 autoComplete="false"
+                value={data.firstName}
+                onChange={(event) => handleChange(event)}
               />
               <TextField
                 sx={{ width: { xs: 350, sm: 450, md: 225 } }}
                 id="LastName"
                 label="Last Name"
+                name="lastName"
                 variant="outlined"
                 autoComplete="false"
+                value={data.lastName}
+                onChange={(event) => handleChange(event)}
               />
             </Stack>
             <FormControlLabel
@@ -72,7 +82,13 @@ export const AboutYou = ({
                 maxWidth: { xs: 350, sm: 450 },
               }}
               labelPlacement="start"
-              control={<Checkbox />}
+              control={
+                <Checkbox
+                  name="privacy"
+                  checked={data.privacy}
+                  onChange={(event) => handleChange(event)}
+                />
+              }
               label="You have read and agree to our privacy policy"
             />
             <Box display="flex" justifyContent="space-between">
