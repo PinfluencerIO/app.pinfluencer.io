@@ -18,29 +18,18 @@ export const AboutYou = ({
   console.log(numberOfSteps, activeStep, handleBack, handleNext);
   return (
     <Container maxWidth="sm" sx={{}}>
-      <Paper sx={{ minWidth: 350 }}>
+      <Paper sx={{ minWidth: 295 }}>
         <Box
           maxWidth="sm"
           display="flex"
           justifyContent="center"
           alignItems="center"
-          p={{ xs: 2, md: 4 }}
-          m={{ xs: 2, md: 4 }}
+          p={5}
+          m={5}
         >
           <Stack spacing={{ xs: 2, sm: 2, md: 4 }}>
-            <Stack
-              spacing={1}
-              display={{ md: "block" }}
-              sx={{ maxWidth: { xs: 350, sm: 450, md: 450 } }}
-            >
-              <h3>Welcome to Pinfluencer</h3>
-              <p>
-                To get you started, please complete this quick onboarding
-                process
-              </p>
-            </Stack>
             <TextField
-              sx={{ maxWidth: { xs: 350, sm: 450, md: 450 } }}
+              sx={{ maxWidth: { xs: 295, sm: 450, md: 450 } }}
               id="email"
               label="Email"
               variant="outlined"
@@ -49,17 +38,17 @@ export const AboutYou = ({
             <Stack
               spacing={{ xs: 2 }}
               direction={{ xs: "column", sm: "row" }}
-              sx={{ maxWidth: { xs: 350, sm: 450, md: 450 } }}
+              sx={{ maxWidth: { xs: 295, sm: 450, md: 450 } }}
             >
               <TextField
-                sx={{ width: { xs: 350, sm: 450, md: 225 } }}
+                sx={{ width: { xs: 295, sm: 450, md: 225 } }}
                 id="firstName"
                 label="First Name"
                 variant="outlined"
                 autoComplete="false"
               />
               <TextField
-                sx={{ width: { xs: 350, sm: 450, md: 225 } }}
+                sx={{ width: { xs: 295, sm: 450, md: 225 } }}
                 id="LastName"
                 label="Last Name"
                 variant="outlined"
@@ -69,7 +58,7 @@ export const AboutYou = ({
             <FormControlLabel
               sx={{
                 justifyContent: "start",
-                maxWidth: { xs: 350, sm: 450 },
+                maxWidth: { xs: 295, sm: 450 },
               }}
               labelPlacement="start"
               control={<Checkbox />}
