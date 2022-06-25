@@ -2,6 +2,7 @@ import { Grid, Step, StepLabel, Stepper } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../context/UserContext";
+import { AboutYou } from "./onboarding/AboutYou";
 
 export const Onboarding = () => {
   const { user } = useContext(UserContext);
@@ -15,12 +16,34 @@ export const Onboarding = () => {
     }
   }, [user, nav]);
 
+  const [activeStep, setActiveStep] = React.useState(0);
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
   const steps = ["About You", "Type", "Details", "Categories", "Values"];
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} sx={{ margin: "25px 0px" }}>
-        <Stepper activeStep={0} alternativeLabel>
+    <Grid
+      container
+      spacing={0}
+      sx={{
+        backgroundColor: "background.pinfluencerLightGreen",
+        borderTop: 1,
+        borderBottom: 1,
+      }}
+    >
+      <Grid item xs={12} sx={{ marginTop: "25px" }}>
+        <Stepper
+          sx={{
+            backgroundColor: "background.pinfluencerLightGreen",
+          }}
+          activeStep={activeStep}
+          alternativeLabel
+        >
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -35,19 +58,14 @@ export const Onboarding = () => {
           backgroundColor: "background.pinfluencerLightGreen",
         }}
       >
-        <Grid
-          container
-          sx={{
-            border: "1px solid",
-            margin: "40px 0",
-            backgroundColor: "white",
-            width: "400px",
-          }}
-        >
-          <Grid item sx={{ margin: "auto;" }}>
-            FORM
-          </Grid>
-        </Grid>
+        {activeStep >= 0 && (
+          <AboutYou
+            numberOfSteps={steps.length}
+            activeStep={activeStep}
+            handleBack={handleBack}
+            handleNext={handleNext}
+          />
+        )}
       </Grid>
     </Grid>
   );
