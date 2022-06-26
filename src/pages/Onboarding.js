@@ -21,7 +21,8 @@ export const Onboarding = () => {
   const steps = ["About You", "Type", "Details", "Categories", "Values"];
   const [activeStep, setActiveStep] = React.useState(0);
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    activeStep !== steps.length - 1 &&
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -121,27 +122,42 @@ export const Onboarding = () => {
           backgroundColor: "background.pinfluencerLightGreen",
         }}
       >
-        {activeStep === 0 && (
-          <Frame
-            numberOfSteps={steps.length}
-            activeStep={activeStep}
-            handleBack={handleBack}
-            handleNext={handleNext}
-          >
-            <AboutYou data={data} handleChange={onChangeField} />
-          </Frame>
-        )}
-        {activeStep === 1 && (
-          <Frame
-            numberOfSteps={steps.length}
-            activeStep={activeStep}
-            handleBack={handleBack}
-            handleNext={handleNext}
-          >
-            <TypeOfUser data={data} handleChange={onChangeField} />
-          </Frame>
-        )}
+        <Frame
+          numberOfSteps={steps.length}
+          activeStep={activeStep}
+          handleBack={handleBack}
+          handleNext={handleNext}
+        >
+          {selectStepComponent()}
+        </Frame>
       </Grid>
     </Grid>
   );
+
+  function selectStepComponent() {
+    let step;
+    switch (activeStep) {
+      case 0:
+        step = <AboutYou data={data} handleChange={onChangeField} />;
+        break;
+      case 1:
+        step = <TypeOfUser data={data} handleChange={onChangeField} />;
+        break;
+      case 2:
+        step =
+          data.type === "brand" ? (
+            <div>brand details</div>
+          ) : (
+            <div>influencer details</div>
+          );
+        break;
+      case 3:
+        step = <div>categories</div>;
+        break;
+      case 4:
+        step = <div>values</div>;
+        break;
+    }
+    return step;
+  }
 };
