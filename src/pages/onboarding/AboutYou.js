@@ -16,7 +16,7 @@ export const AboutYou = ({ data, handleChange }) => {
         value={data.email}
         onChange={(event) => handleChange(event)}
       />
-      <Stack spacing={{ sm: 2 }} direction={{ sm: "column", md: "row" }}>
+      <Stack spacing={2} direction={{ xs: "column", sm: "column", md: "row" }}>
         <TextField
           id="firstName"
           label="First Name"
