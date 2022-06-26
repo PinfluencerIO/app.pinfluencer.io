@@ -1,11 +1,7 @@
 import React from "react";
 import {
-  Box,
-  Button,
   Card,
   CardContent,
-  Container,
-  Paper,
   Stack,
   ToggleButton,
   ToggleButtonGroup,
@@ -16,14 +12,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import brandIcon from "../../assets/brand-icon.jpg";
 import influencerIcon from "../../assets/influencer-icon.jpg";
-export const TypeOfUser = ({
-  data,
-  handleChange,
-  numberOfSteps,
-  activeStep,
-  handleBack,
-  handleNext,
-}) => {
+export const TypeOfUser = ({ data, handleChange }) => {
   const theme = useTheme();
 
   const brandCard = (
@@ -53,10 +42,12 @@ export const TypeOfUser = ({
         </Typography>
         {data.type === "brand" ? (
           <CheckCircleOutlineIcon
+            data-value="brand"
+            data-name="type"
             sx={{ color: theme.palette.pinfluencerGreen.main }}
           />
         ) : (
-          <CircleOutlinedIcon />
+          <CircleOutlinedIcon data-value="brand" data-name="type" />
         )}
       </CardContent>
     </React.Fragment>
@@ -89,88 +80,61 @@ export const TypeOfUser = ({
         </Typography>
         {data.type === "influencer" ? (
           <CheckCircleOutlineIcon
+            data-value="influencer"
+            data-name="type"
             sx={{ color: theme.palette.pinfluencerGreen.main }}
           />
         ) : (
-          <CircleOutlinedIcon />
+          <CircleOutlinedIcon data-value="influencer" data-name="type" />
         )}
       </CardContent>
     </React.Fragment>
   );
 
   return (
-    <Container maxWidth="sm">
-      <Paper sx={{ minWidth: 350 }}>
-        <Box
-          maxWidth="sm"
-          display="flex"
-          // justifyContent="space-between"
-          // alignItems="center"
-          p={{ xs: 2, md: 4 }}
-          m={{ xs: 2, md: 4 }}
+    <>
+      <Stack
+        spacing={1}
+        display={{ md: "block" }}
+        sx={{ maxWidth: { xs: 350 } }}
+      >
+        <h3>Which type of user are you</h3>
+      </Stack>
+      <Stack
+        direction={{ xs: "column", sm: "column" }}
+        spacing={{ xs: 2, sm: 2, md: 4 }}
+      >
+        <ToggleButtonGroup
+          sx={{ flexDirection: { xs: "column", sm: "column", md: "row" } }}
+          value={data.type}
+          name="type"
+          exclusive
+          onChange={handleChange}
+          aria-label="Type of user"
         >
-          <Stack spacing={{ xs: 2, sm: 2, md: 4 }}>
-            <Stack
-              spacing={1}
-              display={{ md: "block" }}
-              sx={{ maxWidth: { xs: 350, sm: 450, md: 350 } }}
-            >
-              <h3>Which type of user are you</h3>
-            </Stack>
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              spacing={{ xs: 2, sm: 2, md: 4 }}
-            >
-              <ToggleButtonGroup
-                sx={{ flexDirection: { xs: "column", sm: "row", md: "row" } }}
-                value={data.type}
-                name="type"
-                exclusive
-                onChange={handleChange}
-                aria-label="Type of user"
-              >
-                <ToggleButton
-                  value="brand"
-                  data-name="type"
-                  data-value="brand"
-                  sx={{ textTransform: "none" }}
-                >
-                  <Card data-value="brand" data-name="type" variant="outlined">
-                    {brandCard}
-                  </Card>
-                </ToggleButton>
-                <ToggleButton
-                  value="influencer"
-                  name="type"
-                  data-name="type"
-                  data-value="influencer"
-                  sx={{ textTransform: "none" }}
-                >
-                  <Card
-                    data-value="influencer"
-                    data-name="type"
-                    variant="outlined"
-                  >
-                    {influencerCard}
-                  </Card>
-                </ToggleButton>
-              </ToggleButtonGroup>
-            </Stack>
-            <Box display="flex" justifyContent="space-between">
-              <Button
-                onClick={handleBack}
-                disabled={activeStep === 0}
-                variant="outlined"
-              >
-                Back
-              </Button>
-              <Button onClick={handleNext} variant="outlined">
-                {activeStep === numberOfSteps - 1 ? "Finish" : "Next"}
-              </Button>
-            </Box>
-          </Stack>
-        </Box>
-      </Paper>
-    </Container>
+          <ToggleButton
+            value="brand"
+            data-name="type"
+            data-value="brand"
+            sx={{ textTransform: "none" }}
+          >
+            <Card data-value="brand" data-name="type" variant="outlined">
+              {brandCard}
+            </Card>
+          </ToggleButton>
+          <ToggleButton
+            value="influencer"
+            name="type"
+            data-name="type"
+            data-value="influencer"
+            sx={{ textTransform: "none" }}
+          >
+            <Card data-value="influencer" data-name="type" variant="outlined">
+              {influencerCard}
+            </Card>
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Stack>
+    </>
   );
 };

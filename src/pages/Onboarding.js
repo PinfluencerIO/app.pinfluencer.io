@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../context/UserContext";
 import { AboutYou } from "./onboarding/AboutYou";
+import { Frame } from "./onboarding/Frame";
 import { TypeOfUser } from "./onboarding/TypeOfUser";
 
 export const Onboarding = () => {
@@ -121,24 +122,24 @@ export const Onboarding = () => {
         }}
       >
         {activeStep === 0 && (
-          <AboutYou
-            data={data}
-            handleChange={onChangeField}
+          <Frame
             numberOfSteps={steps.length}
             activeStep={activeStep}
             handleBack={handleBack}
             handleNext={handleNext}
-          />
+          >
+            <AboutYou data={data} handleChange={onChangeField} />
+          </Frame>
         )}
         {activeStep === 1 && (
-          <TypeOfUser
-            data={data}
-            handleChange={onChangeField}
+          <Frame
             numberOfSteps={steps.length}
             activeStep={activeStep}
             handleBack={handleBack}
             handleNext={handleNext}
-          />
+          >
+            <TypeOfUser data={data} handleChange={onChangeField} />
+          </Frame>
         )}
       </Grid>
     </Grid>
