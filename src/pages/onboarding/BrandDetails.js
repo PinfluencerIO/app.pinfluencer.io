@@ -26,7 +26,6 @@ export const BrandDetails = ({ data, handleChange }) => {
       reader.readAsDataURL(file);
     }
   }
-  console.log(data);
   return (
     <React.Fragment>
       <Stack spacing={1} display={{ md: "column" }}>
@@ -39,6 +38,7 @@ export const BrandDetails = ({ data, handleChange }) => {
       </Stack>
       <Stack spacing={2} direction={{ xs: "column", sm: "column", md: "row" }}>
         <TextField
+          required
           id="brand.brandName"
           label="Brand Name"
           name="brand.brandName"
@@ -69,6 +69,7 @@ export const BrandDetails = ({ data, handleChange }) => {
         onChange={(event) => handleChange(event)}
       />
       <TextField
+        required
         id="brand.brandDescription"
         label="Brand Description"
         name="brand.brandDescription"

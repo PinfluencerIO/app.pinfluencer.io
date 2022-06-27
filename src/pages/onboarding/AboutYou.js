@@ -8,6 +8,7 @@ export const AboutYou = ({ data, handleChange }) => {
         <p>To get you started, please complete this quick onboarding process</p>
       </Stack>
       <TextField
+        required
         id="email"
         label="Email"
         name="email"
@@ -18,6 +19,7 @@ export const AboutYou = ({ data, handleChange }) => {
       />
       <Stack spacing={2} direction={{ xs: "column", sm: "column", md: "row" }}>
         <TextField
+          required
           id="firstName"
           label="First Name"
           name="firstName"
@@ -28,6 +30,7 @@ export const AboutYou = ({ data, handleChange }) => {
           sx={{ width: { sm: "100%", md: "50%" } }}
         />
         <TextField
+          required
           id="LastName"
           label="Last Name"
           name="lastName"
@@ -50,7 +53,7 @@ export const AboutYou = ({ data, handleChange }) => {
             onChange={(event) => handleChange(event)}
           />
         }
-        label="You have read and agree to our privacy policy"
+        label="You have read and agree to our privacy policy *"
       />
     </React.Fragment>
   );

@@ -1,11 +1,13 @@
-import { Grid, Step, StepLabel, Stepper } from "@mui/material";
+import { Alert, Grid, Step, StepLabel, Stepper } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../context/UserContext";
 import { AboutYou } from "./onboarding/AboutYou";
 import { BrandDetails } from "./onboarding/BrandDetails";
+import { Categories } from "./onboarding/Categories";
 import { Frame } from "./onboarding/Frame";
 import { TypeOfUser } from "./onboarding/TypeOfUser";
+import { Values } from "./onboarding/Values";
 
 export const Onboarding = () => {
   const { user } = useContext(UserContext);
@@ -21,12 +23,65 @@ export const Onboarding = () => {
 
   const steps = ["About You", "Type", "Details", "Categories", "Values"];
   const [activeStep, setActiveStep] = React.useState(0);
+  const [showError, setShowError] = React.useState();
   const handleNext = () => {
+    if (activeStep === 0) {
+      if (
+        data.firstName === "" ||
+        data.lastName === "" ||
+        data.email === "" ||
+        data.privacy === false
+      ) {
+        setShowError(true);
+        return;
+      }
+    }
+    if (activeStep === 1) {
+      if (data.type === "") {
+        setShowError(true);
+        return;
+      }
+    }
+    if (activeStep === 2 && data.type === "brand") {
+      if (data.brand.brandName === "" || data.brand.brandDescription === "") {
+        setShowError(true);
+        return;
+      }
+    }
+    if (activeStep === 2 && data.type === "influencer") {
+      if (
+        data.influencer.audienceA13To17Split === "" ||
+        data.influencer.audienceA18To24Split === "" ||
+        data.influencer.audienceA25To34Split === "" ||
+        data.influencer.audienceA35To44Split === "" ||
+        data.influencer.audienceA45To54Split === "" ||
+        data.influencer.audienceA55To64Split === "" ||
+        data.influencer.audienceA65PlusSplit === "" ||
+        data.influencer.audienceFemaleSplit === "" ||
+        data.influencer.audienceMaleSplit === "" ||
+        data.influencer.instaHandle === "" ||
+        data.influencer.bio === ""
+      ) {
+        setShowError(true);
+        return;
+      }
+    }
+    if (activeStep === 3 && data.categories.length === 0) {
+      setShowError(true);
+      return;
+    }
+    if (activeStep === 4 && data.values.length === 0) {
+      setShowError(true);
+      return;
+    }
+    console.log("privacy", data.privacy);
+    setShowError(false);
     activeStep !== steps.length - 1 &&
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
+    setShowError(false);
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
@@ -145,6 +200,17 @@ export const Onboarding = () => {
         >
           {selectStepComponent()}
         </Frame>
+
+        <Alert
+          id="error"
+          sx={{
+            justifyContent: "center",
+            display: showError ? "flex" : "none",
+          }}
+          severity="error"
+        >
+          All fields with * are required
+        </Alert>
       </Grid>
     </Grid>
   );
@@ -159,18 +225,21 @@ export const Onboarding = () => {
         step = <TypeOfUser data={data} handleChange={onChangeField} />;
         break;
       case 2:
-        step =
-          data.type === "brand" ? (
-            <BrandDetails data={data} handleChange={onChangeField} />
-          ) : (
-            <div>influencer details</div>
-          );
+        if (data.type === "brand") {
+          step = <BrandDetails data={data} handleChange={onChangeField} />;
+          break;
+        }
+        if (data.type === "influencer") {
+          step = <div>influencer details</div>;
+          break;
+        }
+        step = <div>Failed to select type...go back one step</div>;
         break;
       case 3:
-        step = <div>categories</div>;
+        step = <Categories data={data} handleChange={onChangeField} />;
         break;
       case 4:
-        step = <div>values</div>;
+        step = <Values data={data} handleChange={onChangeField} />;
         break;
     }
     return step;

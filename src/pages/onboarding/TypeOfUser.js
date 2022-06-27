@@ -98,7 +98,7 @@ export const TypeOfUser = ({ data, handleChange }) => {
         display={{ md: "block" }}
         sx={{ maxWidth: { xs: 350 } }}
       >
-        <h3>Which type of user are you</h3>
+        <h3>Which type of user are you *</h3>
       </Stack>
       <Stack
         direction={{ xs: "column", sm: "column" }}
