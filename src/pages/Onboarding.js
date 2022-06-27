@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../context/UserContext";
 import { AboutYou } from "./onboarding/AboutYou";
+import { BrandDetails } from "./onboarding/BrandDetails";
 import { Frame } from "./onboarding/Frame";
 import { TypeOfUser } from "./onboarding/TypeOfUser";
 
@@ -41,6 +42,7 @@ export const Onboarding = () => {
       brandDescription: "",
       website: "",
       brandLogo: "",
+      brandHeader: "",
     },
     influencer: {
       instaHandle: "",
@@ -84,6 +86,19 @@ export const Onboarding = () => {
     if (e.target.type === "checkbox") {
       console.log("Is checked", e.target.checked);
       value = e.target.checked;
+    }
+
+    if (name.includes(".")) {
+      const keys = name.split(".");
+      setData((currentState) => {
+        return {
+          ...currentState,
+          [keys[0]]: {
+            ...currentState[keys[0]],
+            [keys[1]]: value,
+          },
+        };
+      });
     }
     setData((currentState) => {
       return { ...currentState, [name]: value };
@@ -146,7 +161,7 @@ export const Onboarding = () => {
       case 2:
         step =
           data.type === "brand" ? (
-            <div>brand details</div>
+            <BrandDetails data={data} handleChange={onChangeField} />
           ) : (
             <div>influencer details</div>
           );
