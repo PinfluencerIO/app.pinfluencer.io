@@ -1,5 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { Outlet } from "react-router";
 
 export const Collaborations = () => {
-  return <div>Collaborations</div>;
+  return (
+    <Fragment>
+      <div>Collaborations</div>
+      <Outlet />
+    </Fragment>
+  );
 };

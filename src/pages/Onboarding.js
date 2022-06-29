@@ -8,141 +8,80 @@ import { Categories } from "./onboarding/Categories";
 import { Frame } from "./onboarding/Frame";
 import { TypeOfUser } from "./onboarding/TypeOfUser";
 import { Values } from "./onboarding/Values";
-
+import { onboardingChain } from "../api/api";
+import validation from "./onboarding/validationRules";
+const steps = ["About You", "Type", "Details", "Categories", "Values"];
+const validationError = {
+  severtity: "error",
+  message: "All fields with * are required",
+};
+const processing = { severtity: "info", message: "Processing..." };
+const backendIssue = {
+  severtity: "error",
+  message: "Failed to process. Call support team.",
+};
 export const Onboarding = () => {
-  const { user } = useContext(UserContext);
+  // authenticated user state
+  const { user, onboard } = useContext(UserContext);
+
+  // form data, can be filled for testing purposes via localstorage
+  const [data, setData] = useState(fill());
+
+  // onboarding is made up of multiple steps, this keeps track of which step
+  const [activeStep, setActiveStep] = useState(0);
+
+  // show or hide alert
+  const [showAlert, setShowAlert] = useState(null);
+
+  // only authenticated users that haven't onboarded can see this page
   const nav = useNavigate();
   useEffect(() => {
-    // if user is not logged in
-    // or
-    // redirect if user is available and that user has completed onboarding
     if (user == null || (user && "custom:usertype" in user)) {
       nav("/");
     }
   }, [user, nav]);
 
-  const steps = ["About You", "Type", "Details", "Categories", "Values"];
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [showError, setShowError] = React.useState();
+  // handle next button [validate before proceeding to next] or calling api
   const handleNext = () => {
-    if (activeStep === 0) {
-      if (
-        data.firstName === "" ||
-        data.lastName === "" ||
-        data.email === "" ||
-        data.privacy === false
-      ) {
-        setShowError(true);
-        return;
-      }
-    }
-    if (activeStep === 1) {
-      if (data.type === "") {
-        setShowError(true);
-        return;
-      }
-    }
-    if (activeStep === 2 && data.type === "brand") {
-      if (data.brand.brandName === "" || data.brand.brandDescription === "") {
-        setShowError(true);
-        return;
-      }
-    }
-    if (activeStep === 2 && data.type === "influencer") {
-      if (
-        data.influencer.audienceA13To17Split === "" ||
-        data.influencer.audienceA18To24Split === "" ||
-        data.influencer.audienceA25To34Split === "" ||
-        data.influencer.audienceA35To44Split === "" ||
-        data.influencer.audienceA45To54Split === "" ||
-        data.influencer.audienceA55To64Split === "" ||
-        data.influencer.audienceA65PlusSplit === "" ||
-        data.influencer.audienceFemaleSplit === "" ||
-        data.influencer.audienceMaleSplit === "" ||
-        data.influencer.instaHandle === "" ||
-        data.influencer.bio === ""
-      ) {
-        setShowError(true);
-        return;
-      }
-    }
-    if (activeStep === 3 && data.categories.length === 0) {
-      setShowError(true);
+    if (!validation(data, activeStep)) {
+      setShowAlert(validationError);
       return;
     }
-    if (activeStep === 4 && data.values.length === 0) {
-      setShowError(true);
-      return;
-    }
-    console.log("privacy", data.privacy);
-    setShowError(false);
-    activeStep !== steps.length - 1 &&
+    setShowAlert(null);
+    if (activeStep !== steps.length - 1) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      return;
+    }
+    setShowAlert(processing);
+    onboardingChain(data)
+      .then(() => {
+        onboard().then(() => {
+          setShowAlert(null);
+          nav("/dashboard");
+        });
+      })
+      .catch((err) => {
+        setShowAlert(backendIssue);
+        console.error("An error happened calling api", err);
+      });
   };
 
   const handleBack = () => {
-    setShowError(false);
+    setShowAlert(null);
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const formData = {
-    email: "",
-    firstName: "",
-    lastName: "",
-    type: "",
-    privacy: false,
-    brand: {
-      brandName: "",
-      instaHandle: "",
-      brandDescription: "",
-      website: "",
-      brandLogo: "",
-      brandHeader: "",
-    },
-    influencer: {
-      instaHandle: "",
-      website: "",
-      bio: "",
-      audienceA13To17Split: 0,
-      audienceA18To24Split: 0,
-      audienceA25To34Split: 0,
-      audienceA35To44Split: 0,
-      audienceA45To54Split: 0,
-      audienceA55To64Split: 0,
-      audienceA65PlusSplit: 0,
-      audienceFemaleSplit: 0,
-      audienceMaleSplit: 0,
-    },
-    categories: [],
-    values: [],
-  };
-  const [data, setData] = useState(formData);
-
-  // const onChangeCategory = (newValue) => {
-  //   console.log("onChangeCategory.OnBoarding", newValue);
-  //   setData((currentState) => {
-  //     return { ...currentState, categories: newValue };
-  //   });
-  // };
-
-  // const onChangeValues = (newValue) => {
-  //   console.log("onChangeValues.OnBoarding", newValue);
-  //   setData((currentState) => {
-  //     return { ...currentState, values: newValue };
-  //   });
-  // };
-
   const onChangeField = (e) => {
-    console.log("onChangeField ", e.target);
-
+    // get name and value from target or data attributes
     let name = e.target.dataset?.name || e.target.name;
     let value = e.target.dataset?.value || e.target.value;
 
+    // checkbox value comes from target.checked attribute
     if (e.target.type === "checkbox") {
-      console.log("Is checked", e.target.checked);
       value = e.target.checked;
     }
 
+    // handle nested types [brand | influencer] assignments, and return
     if (name.includes(".")) {
       const keys = name.split(".");
       setData((currentState) => {
@@ -155,6 +94,7 @@ export const Onboarding = () => {
         };
       });
     }
+    // non-nested assignments
     setData((currentState) => {
       return { ...currentState, [name]: value };
     });
@@ -197,19 +137,19 @@ export const Onboarding = () => {
           activeStep={activeStep}
           handleBack={handleBack}
           handleNext={handleNext}
+          disableButtons={showAlert}
         >
           {selectStepComponent()}
         </Frame>
 
         <Alert
-          id="error"
           sx={{
             justifyContent: "center",
-            display: showError ? "flex" : "none",
+            display: showAlert ? "flex" : "none",
           }}
-          severity="error"
+          severity={showAlert?.severtity}
         >
-          All fields with * are required
+          {showAlert?.message}
         </Alert>
       </Grid>
     </Grid>
@@ -243,5 +183,45 @@ export const Onboarding = () => {
         break;
     }
     return step;
+  }
+
+  // testing can use this function to complete the onboarding steps
+  function fill() {
+    const fill = localStorage.getItem("fill");
+    if (fill) {
+      return JSON.parse(fill);
+    }
+
+    return {
+      email: "",
+      firstName: "",
+      lastName: "",
+      type: "",
+      privacy: false,
+      brand: {
+        brandName: "",
+        instaHandle: "",
+        brandDescription: "",
+        website: "",
+        brandLogo: "",
+        brandHeader: "",
+      },
+      influencer: {
+        instaHandle: "",
+        website: "",
+        bio: "",
+        audienceA13To17Split: 0,
+        audienceA18To24Split: 0,
+        audienceA25To34Split: 0,
+        audienceA35To44Split: 0,
+        audienceA45To54Split: 0,
+        audienceA55To64Split: 0,
+        audienceA65PlusSplit: 0,
+        audienceFemaleSplit: 0,
+        audienceMaleSplit: 0,
+      },
+      categories: [],
+      values: [],
+    };
   }
 };

@@ -21,7 +21,6 @@ const ResponsiveAppBar = () => {
   const location = useLocation();
   const settings = {
     authenticated: [
-      { key: "signout", label: "Sign Out", function: signout },
       {
         key: "profile",
         label: "Profile",
@@ -29,6 +28,7 @@ const ResponsiveAppBar = () => {
           nav("Profile");
         },
       },
+      { key: "signout", label: "Sign Out", function: signout },
     ],
     unauthenticated: [{ key: "signin", label: "Sign In", function: signin }],
   };
@@ -69,7 +69,7 @@ const ResponsiveAppBar = () => {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: theme.palette.pinfluencerGreen.contrastText,
+        backgroundColor: theme.palette.background.pinfluencerLightGreen,
         boxShadow: "none",
       }}
     >
@@ -162,10 +162,24 @@ const ResponsiveAppBar = () => {
                 style={({ isActive }) => {
                   return {
                     backgroundColor: isActive ? "rgba(109, 166, 106, .1)" : "",
-                    borderRadius: isActive ? "10px" : "",
+                    borderRadius: isActive ? "10px" : "1px",
                     color: theme.palette.pinfluencerGreen.main,
                     cursor: isActive ? "default" : "pointer",
-                    border: isActive ? "3px solid white" : "",
+                    borderTop: isActive
+                      ? "3px solid" + theme.palette.pinfluencerGreen.main
+                      : "3px solid" +
+                        theme.palette.background.pinfluencerLightGreen,
+                    borderBottom: isActive
+                      ? "3px solid" + theme.palette.pinfluencerGreen.main
+                      : "3px solid" + theme.palette.pinfluencerGreen.main,
+                    borderLeft: isActive
+                      ? "3px solid" + theme.palette.pinfluencerGreen.main
+                      : "3px solid" +
+                        theme.palette.background.pinfluencerLightGreen,
+                    borderRight: isActive
+                      ? "3px solid" + theme.palette.pinfluencerGreen.main
+                      : "3px solid" +
+                        theme.palette.background.pinfluencerLightGreen,
                   };
                 }}
                 className="navLink"

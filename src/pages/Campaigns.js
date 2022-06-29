@@ -1,5 +1,5 @@
-import React from "react";
+import { Outlet } from "react-router";
 
 export const Campaigns = () => {
-  return <div>Campaigns</div>;
+  return <Outlet />;
 };

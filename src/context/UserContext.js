@@ -20,16 +20,12 @@ export function UserProvider({ children }) {
     Auth.signOut().catch((err) => console.log("error signing out: ", err));
   };
 
-  async function onboard(type) {
-    const current = await Auth.currentAuthenticatedUser({
+  async function onboard() {
+    await Auth.currentAuthenticatedUser({
       bypassCache: true,
     });
-    return Auth.updateUserAttributes(current, {
-      "custom:usertype": type,
-    }).then(() => {
-      const updateUser = getUserDataFromStorage();
-      setUser(updateUser);
-    });
+    const updateUser = getUserDataFromStorage();
+    setUser(updateUser);
   }
 
   // Use an effect to listen on Amplify event bus for Auth events
@@ -65,8 +61,17 @@ export function UserProvider({ children }) {
 export default UserContext;
 
 //Storage key: CognitoIdentityServiceProvider.userPoolWebClientId.lastAuthId.idToken
-export const getToken = () => {
-  return localStorage.getItem(`${authStoragePrefix()}.${lastAuth()}.idToken`);
+export const getToken = async () => {
+  const jwt = getAccessJwtToken();
+  return jwt;
+};
+
+const getAccessJwtToken = async () => {
+  // Auth.currentSession() checks if token is expired and refreshes with Cognito if needed automatically
+  const session = await Auth.currentSession();
+  const jwt = session.getAccessToken().getJwtToken();
+
+  return jwt;
 };
 
 /*
@@ -92,7 +97,7 @@ const parseUserToAtrributes = (user) => {
 };
 
 //Storage key: CognitoIdentityServiceProvider.userPoolWebClientId.LastAuthUser
-export const lastAuth = () => {
+const lastAuth = () => {
   return localStorage.getItem(`${authStoragePrefix()}.LastAuthUser`);
 };
 

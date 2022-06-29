@@ -39,11 +39,20 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/campaigns" element={<Campaigns />} />
-        <Route path="/collaborations" element={<Collaborations />} />
+        <Route path="onboarding" element={<Onboarding />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="campaigns" element={<Campaigns />}>
+          <Route index element={<div>Campaigns Table Goes Here</div>} />
+          <Route path="new" element={"New Campaign Flow "} />
+          <Route path=":id" element={"View Campaign"} />
+          <Route path=":id/edit" element={"Edit Campaign"} />
+        </Route>
+        <Route path="collaborations" element={<Collaborations />}>
+          <Route index element={"<CollaborationsTable />"} />
+          <Route path="new" element={"New Collaboration"} />
+          <Route path=":id" element={"View Collaboration"} />
+        </Route>
         <Route
           path="*"
           element={

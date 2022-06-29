@@ -41,7 +41,6 @@ export const Categories = ({ data, handleChange }) => {
             sx={{ width: "255px" }}
             renderTags={() => null} // stop chip inside of dropdown
             onChange={(e, newValue) => {
-              console.log("onchange", { e, newValue });
               handleChange({
                 target: { name: "categories", value: newValue },
               });

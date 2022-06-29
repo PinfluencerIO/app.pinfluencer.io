@@ -6,6 +6,7 @@ export const Frame = ({
   handleBack,
   handleNext,
   children,
+  disableButtons,
 }) => {
   return (
     <Container maxWidth="lg">
@@ -23,7 +24,7 @@ export const Frame = ({
             <Box display="flex" justifyContent="space-between">
               <Button
                 onClick={handleBack}
-                disabled={activeStep === 0}
+                disabled={activeStep === 0 || disableButtons !== null}
                 variant="outlined"
               >
                 Back
