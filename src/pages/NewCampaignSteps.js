@@ -8,6 +8,13 @@ import { ProductFrame } from "./campaignFrames/ProductFrame";
 
 export function NewCampaignSteps() {
   const steps = ["Objective", "Campaign", "Product"];
+  // form data, can be filled for testing purposes via localstorage
+  const [data, setData] = useState(fill());
+  const onChangeField = (e) => {
+    setData((currentState) => {
+      return { ...currentState, [e.target.name]: e.target.value };
+    });
+  };
 
   // onboarding is made up of multiple steps, this keeps track of which step
   const [activeStep, setActiveStep] = useState(0);
@@ -74,16 +81,22 @@ export function NewCampaignSteps() {
     let step;
     switch (activeStep) {
       case 0:
-        step = <ObjectivesFrame />;
+        step = <ObjectivesFrame data={data} handleChange={onChangeField} />;
         break;
       case 1:
-        step = <CampaignFrame />;
+        step = <CampaignFrame data={data} handleChange={onChangeField} />;
         break;
       case 2:
-        step = <ProductFrame />;
+        step = <ProductFrame data={data} handleChange={onChangeField} />;
         break;
     }
     return step;
+  }
+
+  function fill() {
+    return {
+      objective: "",
+    };
   }
 }
 
