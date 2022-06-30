@@ -25,19 +25,30 @@ export const VALUES = [
 ];
 
 export const OBJECTIVES = [
-  { key: "NEW", label: "I'm launching a new product or service" },
+  {
+    key: "NEW",
+    label: "I'm launching a new product or service",
+    shortLabel: "New Product/Service",
+  },
   {
     key: "AWARENESS",
     label: "I'm aiming to drive awareness about my product or service",
+    shortLabel: "Awareness of Product/Service",
   },
-  { key: "BASELINE", label: "I'm looking to develop baseline metrics" },
+  {
+    key: "BASELINE",
+    label: "I'm looking to develop baseline metrics",
+    shortLabel: "Baseline Metrics",
+  },
   {
     key: "SOURCING",
     label: "I'm sourcing content to use in my own channels",
+    shortLabel: "Own Channel Sourcing",
   },
   {
     key: "PINFLUENCER",
     label: "I'm trialing influencer marketing or Pinfluencer",
+    shortLabel: "Pinfluencer Trial",
   },
-  { key: "OTHER", label: "Other" },
+  { key: "OTHER", label: "Other", shortLabel: "" },
 ];

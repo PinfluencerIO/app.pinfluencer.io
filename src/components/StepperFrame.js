@@ -6,7 +6,6 @@ export const StepperFrame = ({
   handleBack,
   handleNext,
   children,
-  disableButtons,
 }) => {
   return (
     <Container maxWidth="lg">
@@ -24,16 +23,12 @@ export const StepperFrame = ({
             <Box display="flex" justifyContent="space-between">
               <Button
                 onClick={handleBack}
-                disabled={activeStep === 0 || disableButtons !== null}
+                disabled={activeStep === 0}
                 variant="outlined"
               >
                 Back
               </Button>
-              <Button
-                onClick={handleNext}
-                disabled={disableButtons !== null}
-                variant="outlined"
-              >
+              <Button onClick={handleNext} variant="outlined">
                 {activeStep === numberOfSteps - 1 ? "Finish" : "Next"}
               </Button>
             </Box>

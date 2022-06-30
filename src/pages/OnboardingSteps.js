@@ -134,7 +134,6 @@ export const OnboardingSteps = () => {
           activeStep={activeStep}
           handleBack={handleBack}
           handleNext={handleNext}
-          disableButtons={showAlert}
         >
           {selectStepComponent()}
         </StepperFrame>

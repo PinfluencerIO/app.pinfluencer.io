@@ -1,10 +1,11 @@
 import { Alert, Box, Step, StepLabel, Stepper } from "@mui/material";
 import { useState } from "react";
-import { processing } from "../components/Alerts";
+import { processing, validationError } from "../components/Alerts";
 import { StepperFrame } from "../components/StepperFrame";
 import { CampaignFrame } from "./campaignFrames/CampaignFrame";
 import { ObjectivesFrame } from "./campaignFrames/ObjectivesFrame";
 import { ProductFrame } from "./campaignFrames/ProductFrame";
+import isFormDataValid from "./campaignFrames/validationRules";
 
 export function NewCampaignSteps() {
   const steps = ["Objective", "Campaign", "Product"];
@@ -22,6 +23,10 @@ export function NewCampaignSteps() {
   const [showAlert, setShowAlert] = useState(null);
   // handle next button [validate before proceeding to next] or calling api
   const handleNext = () => {
+    if (!isFormDataValid(data, activeStep)) {
+      setShowAlert(validationError);
+      return;
+    }
     setShowAlert(null);
     if (activeStep !== steps.length - 1) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -60,7 +65,6 @@ export function NewCampaignSteps() {
           handleBack={handleBack}
           handleNext={handleNext}
           numberOfSteps={steps.length}
-          disableButtons={showAlert}
           activeStep={activeStep}
         >
           {selectStepComponent()}
@@ -96,6 +100,7 @@ export function NewCampaignSteps() {
   function fill() {
     return {
       objective: "",
+      successDescription: "",
     };
   }
 }
