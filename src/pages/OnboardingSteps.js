@@ -2,25 +2,22 @@ import { Alert, Grid, Step, StepLabel, Stepper } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../context/UserContext";
-import { AboutYou } from "./onboarding/AboutYou";
-import { BrandDetails } from "./onboarding/BrandDetails";
-import { Categories } from "./onboarding/Categories";
-import { Frame } from "./onboarding/Frame";
-import { TypeOfUser } from "./onboarding/TypeOfUser";
-import { Values } from "./onboarding/Values";
+import { AboutYou } from "./onboardingFrames/AboutYou";
+import { BrandDetails } from "./onboardingFrames/BrandDetails";
+import { Categories } from "./onboardingFrames/Categories";
+import { TypeOfUser } from "./onboardingFrames/TypeOfUser";
+import { Values } from "./onboardingFrames/Values";
 import { onboardingChain } from "../api/api";
-import validation from "./onboarding/validationRules";
+import validation from "./onboardingFrames/validationRules";
+import {
+  backendIssue,
+  processing,
+  validationError,
+} from "../components/Alerts";
+import { StepperFrame } from "../components/StepperFrame";
 const steps = ["About You", "Type", "Details", "Categories", "Values"];
-const validationError = {
-  severtity: "error",
-  message: "All fields with * are required",
-};
-const processing = { severtity: "info", message: "Processing..." };
-const backendIssue = {
-  severtity: "error",
-  message: "Failed to process. Call support team.",
-};
-export const Onboarding = () => {
+
+export const OnboardingSteps = () => {
   // authenticated user state
   const { user, onboard } = useContext(UserContext);
 
@@ -37,7 +34,7 @@ export const Onboarding = () => {
   const nav = useNavigate();
   useEffect(() => {
     if (user == null || (user && "custom:usertype" in user)) {
-      nav("/");
+      false && nav("/");
     }
   }, [user, nav]);
 
@@ -132,7 +129,7 @@ export const Onboarding = () => {
           backgroundColor: "background.pinfluencerLightGreen",
         }}
       >
-        <Frame
+        <StepperFrame
           numberOfSteps={steps.length}
           activeStep={activeStep}
           handleBack={handleBack}
@@ -140,7 +137,7 @@ export const Onboarding = () => {
           disableButtons={showAlert}
         >
           {selectStepComponent()}
-        </Frame>
+        </StepperFrame>
 
         <Alert
           sx={{

@@ -8,6 +8,7 @@ import { useTheme } from "@emotion/react";
 
 const breadcrumbNameMap = {
   "/dashboard": "Dashboard",
+  "/onboarding": "Onboarding",
   "/profile": "Profile",
   "/campaigns": "Campaigns",
   "/campaigns/new": "New",

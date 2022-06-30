@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Container, Paper, Stack } from "@mui/material";
-export const Frame = ({
+export const StepperFrame = ({
   numberOfSteps,
   activeStep,
   handleBack,
@@ -29,7 +29,11 @@ export const Frame = ({
               >
                 Back
               </Button>
-              <Button onClick={handleNext} variant="outlined">
+              <Button
+                onClick={handleNext}
+                disabled={disableButtons !== null}
+                variant="outlined"
+              >
                 {activeStep === numberOfSteps - 1 ? "Finish" : "Next"}
               </Button>
             </Box>

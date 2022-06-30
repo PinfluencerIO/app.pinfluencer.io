@@ -37,6 +37,10 @@ const baseTheme = createTheme({
     fontFamily: "Comfortaa,Arial, Helvetica, Verdana, Trebuchet MS, Gill Sans",
   },
   palette: {
+    primary: {
+      main: pinfluencerGreen,
+      contrastText: "#FFF",
+    },
     pinfluencerGreen: {
       main: pinfluencerGreen,
       contrastText: "#ffffff",

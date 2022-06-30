@@ -99,3 +99,17 @@ export async function getBrand() {
   const json = await data.json();
   return json;
 }
+
+export async function getCampaigns() {
+  const token = await getToken();
+  const data = await fetch(`${remote}/brands/me/campaigns`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "applicatin/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  const json = await data.json();
+  return json;
+}

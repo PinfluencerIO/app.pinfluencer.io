@@ -8,8 +8,10 @@ import { Dashboard } from "./pages/Dashboard";
 import { HomePage } from "./pages/HomePage";
 import { Campaigns } from "./pages/Campaigns";
 import { Collaborations } from "./pages/Collaborations";
-import { Onboarding } from "./pages/Onboarding";
 import { Profile } from "./pages/Profile";
+import { CampaignsTable } from "./pages/CampaignsTable";
+import { OnboardingSteps } from "./pages/OnboardingSteps";
+import { NewCampaignSteps } from "./pages/NewCampaignSteps";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -39,12 +41,12 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="onboarding" element={<Onboarding />} />
+        <Route path="onboarding" element={<OnboardingSteps />} />
         <Route path="profile" element={<Profile />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="campaigns" element={<Campaigns />}>
-          <Route index element={<div>Campaigns Table Goes Here</div>} />
-          <Route path="new" element={"New Campaign Flow "} />
+          <Route index element={<CampaignsTable />} />
+          <Route path="new" element={<NewCampaignSteps />} />
           <Route path=":id" element={"View Campaign"} />
           <Route path=":id/edit" element={"Edit Campaign"} />
         </Route>

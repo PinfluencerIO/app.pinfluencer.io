@@ -15,11 +15,7 @@ export const Profile = () => {
 
   function getHeaderOrPlacement() {
     if (brand.headerImage) {
-      return (
-        "url(https://pinfluencer-product-images.s3.eu-west-2.amazonaws.com/" +
-        brand.headerImage +
-        ")  center center no-repeat"
-      );
+      return "url(" + brand.headerImage + ")  center center no-repeat";
     } else {
       return "url(" + placeholdHeader + ")  center center no-repeat";
     }
@@ -27,10 +23,7 @@ export const Profile = () => {
 
   function getLogoOrPlacement() {
     if (brand.logo) {
-      return (
-        "https://pinfluencer-product-images.s3.eu-west-2.amazonaws.com/" +
-        brand.logo
-      );
+      return brand.logo;
     } else {
       return placeholderLogo;
     }
