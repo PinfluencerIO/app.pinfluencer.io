@@ -10,7 +10,7 @@ import PreviewIcon from "@mui/icons-material/Preview";
 
 export const CampaignsTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams);
+  false && console.log(searchParams);
   const nav = useNavigate();
   const [rows] = useState([
     {
@@ -24,7 +24,7 @@ export const CampaignsTable = () => {
   ]);
 
   useEffect(() => {
-    console.log(rows, getCampaigns());
+    false && console.log(rows, getCampaigns());
     // getCampaigns().then((d) => setRows(d));
   }, [rows]);
 

@@ -1,25 +1,19 @@
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  TextField,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, MenuItem, TextField, useMediaQuery } from "@mui/material";
 import React, { Fragment } from "react";
 import { OBJECTIVES } from "../../api/data";
 
 export const ObjectivesFrame = ({ data, handleChange }) => {
   const matches = useMediaQuery("(min-width:600px)");
-  console.log(matches);
+
   return (
     <Fragment>
-      <Box sx={{ py: 2 }}>
+      <Box sx={{ py: 2, marginBottom: "-30px" }}>
         <h3>Objectives</h3>
-        <p>To get you started, please complete this quick onboarding process</p>
+        <p>Set your objectives and success criteria</p>
       </Box>
-      <InputLabel id="select-label">Select Objective</InputLabel>
       <TextField
+        required
+        sx={{}}
         select
         id="objective"
         name="objective"
@@ -33,22 +27,20 @@ export const ObjectivesFrame = ({ data, handleChange }) => {
           </MenuItem>
         ))}
       </TextField>
-      <FormControl>
-        <TextField
-          required
-          id="successDescription"
-          label={
-            matches ? "What does success look like?" : "Describe your success"
-          }
-          name="successDescription"
-          variant="outlined"
-          autoComplete="false"
-          value={data.successDescription}
-          onChange={(event) => handleChange(event)}
-          multiline
-          rows={8}
-        />
-      </FormControl>
+      <TextField
+        required
+        id="successDescription"
+        label={
+          matches ? "What does success look like?" : "Describe your success"
+        }
+        name="successDescription"
+        variant="outlined"
+        autoComplete="false"
+        value={data.successDescription}
+        onChange={(event) => handleChange(event)}
+        multiline
+        rows={8}
+      />
     </Fragment>
   );
 };

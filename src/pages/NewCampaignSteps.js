@@ -12,6 +12,8 @@ export function NewCampaignSteps() {
   // form data, can be filled for testing purposes via localstorage
   const [data, setData] = useState(fill());
   const onChangeField = (e) => {
+    // console.log(e.target.name);
+    // console.log(e.target.value);
     setData((currentState) => {
       return { ...currentState, [e.target.name]: e.target.value };
     });
@@ -32,6 +34,8 @@ export function NewCampaignSteps() {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       return;
     } else {
+      delete data.productImage1;
+      console.log(JSON.stringify(data));
       setShowAlert(processing);
     }
   };
@@ -98,9 +102,26 @@ export function NewCampaignSteps() {
   }
 
   function fill() {
+    const testData = localStorage.getItem("campaign");
+    if (testData) {
+      return JSON.parse(testData);
+    }
+
     return {
       objective: "",
       successDescription: "",
+      campaignTitle: "",
+      campaignDescription: "",
+      campaignCategories: [],
+      campaignValues: [],
+      productLink: "",
+      discountCode: "",
+      hashtag: "",
+      productTitle: "",
+      productDescription: "",
+      productImage1: "",
+      productImage2: "",
+      productImage3: "",
     };
   }
 }
