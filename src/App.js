@@ -6,12 +6,15 @@ import UserContext from "./context/UserContext";
 import { Layout } from "./Layout";
 import { Dashboard } from "./pages/Dashboard";
 import { HomePage } from "./pages/HomePage";
-import { Campaigns } from "./pages/Campaigns";
+import { Campaigns } from "./pages/campaigns/Campaigns";
 import { Collaborations } from "./pages/Collaborations";
 import { Profile } from "./pages/Profile";
-import { CampaignsTable } from "./pages/CampaignsTable";
-import { OnboardingSteps } from "./pages/OnboardingSteps";
-import { NewCampaignSteps } from "./pages/NewCampaignSteps";
+import { OnboardingSteps } from "./pages/onboarding/OnboardingSteps";
+import { NewCampaignSteps } from "./pages/campaigns/NewCampaignSteps";
+import { BadUrl } from "./pages/BadUrl";
+import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
+import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
+import { EditCampaign } from "./pages/campaigns/EditCampaign";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -47,27 +50,15 @@ function App() {
         <Route path="campaigns" element={<Campaigns />}>
           <Route index element={<CampaignsTable />} />
           <Route path="new" element={<NewCampaignSteps />} />
-          <Route path=":id" element={"View Campaign"} />
-          <Route path=":id/edit" element={"Edit Campaign"} />
+          <Route path=":id" element={<ViewCampaign />} />
+          <Route path=":id/edit" element={<EditCampaign />} />
         </Route>
         <Route path="collaborations" element={<Collaborations />}>
           <Route index element={"<CollaborationsTable />"} />
           <Route path="new" element={"New Collaboration"} />
           <Route path=":id" element={"View Collaboration"} />
         </Route>
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: "1rem" }}>
-              <p>There&apos;s nothing here! </p>
-              <p>The feature you wanted might not be ready yet </p>
-              <p>
-                Not to worry, click the Pinfluencer logo to go to the home page
-                😉
-              </p>
-            </main>
-          }
-        />
+        <Route path="*" element={<BadUrl />} />
       </Route>
     </Routes>
   );

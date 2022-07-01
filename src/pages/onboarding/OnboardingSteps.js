@@ -1,20 +1,20 @@
 import { Alert, Grid, Step, StepLabel, Stepper } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import UserContext from "../context/UserContext";
-import { AboutYou } from "./onboardingFrames/AboutYou";
-import { BrandDetails } from "./onboardingFrames/BrandDetails";
-import { Categories } from "./onboardingFrames/Categories";
-import { TypeOfUser } from "./onboardingFrames/TypeOfUser";
-import { Values } from "./onboardingFrames/Values";
-import { onboardingChain } from "../api/api";
-import validation from "./onboardingFrames/validationRules";
+import UserContext from "../../context/UserContext";
+import { AboutYou } from "./AboutYou";
+import { BrandDetails } from "./BrandDetails";
+import { Categories } from "./Categories";
+import { TypeOfUser } from "./TypeOfUser";
+import { Values } from "./Values";
+import { onboardingChain } from "../../api/api";
+import validation from "./validationRules";
 import {
   backendIssue,
   processing,
   validationError,
-} from "../components/Alerts";
-import { StepperFrame } from "../components/StepperFrame";
+} from "../../components/Alerts";
+import { StepperFrame } from "../../components/StepperFrame";
 const steps = ["About You", "Type", "Details", "Categories", "Values"];
 
 export const OnboardingSteps = () => {

@@ -5,6 +5,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { useLocation } from "react-router";
 import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import isValidUUID from "./uuidUtils";
 
 const breadcrumbNameMap = {
   "/dashboard": "Dashboard",
@@ -38,7 +39,7 @@ export const BreadcrumbComponent = () => {
         const last = index === pathnames.length - 1;
         const slice = pathnames.slice(0, index + 1);
         const updated = slice.map((i) => {
-          if (parseInt(i)) {
+          if (isValidUUID(i, false)) {
             return ":id";
           }
           return i;
@@ -50,18 +51,20 @@ export const BreadcrumbComponent = () => {
             {breadcrumbNameMap[to.toLowerCase()]}
           </Typography>
         ) : (
-          <Link
-            style={{
-              textDecoration: "none",
-              color: theme.palette.pinfluencerGreen.main,
-            }}
-            underline="hover"
-            color="inherit"
-            to={slice.join("/")}
-            key={to}
-          >
-            {breadcrumbNameMap[to.toLowerCase()]}
-          </Link>
+          breadcrumbNameMap[to.toLowerCase()] && (
+            <Link
+              style={{
+                textDecoration: "none",
+                color: theme.palette.pinfluencerGreen.main,
+              }}
+              underline="hover"
+              color="inherit"
+              to={slice.join("/")}
+              key={to}
+            >
+              {breadcrumbNameMap[to.toLowerCase()]}
+            </Link>
+          )
         );
       })}
     </Breadcrumbs>

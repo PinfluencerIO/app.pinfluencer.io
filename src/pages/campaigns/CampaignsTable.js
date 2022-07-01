@@ -2,9 +2,9 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import React, { Fragment } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import CampaignFilterButtons from "../components/CampaignFilterButtons";
+import CampaignFilterButtons from "../../components/CampaignFilterButtons";
 import { useEffect } from "react";
-import { getCampaigns } from "../api/api";
+import { getCampaigns } from "../../api/api";
 import { useState } from "react";
 import PreviewIcon from "@mui/icons-material/Preview";
 

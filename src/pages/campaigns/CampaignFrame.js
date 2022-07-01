@@ -47,17 +47,17 @@ export const CampaignFrame = ({ data, handleChange }) => {
       <Box display="flex" flexDirection={{ sm: "column", md: "row" }}>
         <TextField
           sx={{ flexGrow: 1, mr: { sm: 0, md: 5 }, mb: { sm: 2, md: 0 } }}
-          id="productLink"
-          name="productLink"
-          value={data.productLink}
+          id="campaignProductLink"
+          name="campaignProductLink"
+          value={data.campaignProductLink}
           label="Product Link"
           onChange={handleChange}
         />
         <TextField
           sx={{ flexGrow: 1 }}
-          id="discountCode"
-          name="discountCode"
-          value={data.discountCode}
+          id="campaignDiscountCode"
+          name="campaignDiscountCode"
+          value={data.campaignDiscountCode}
           label="DiscountCode"
           onChange={handleChange}
         />
@@ -65,10 +65,10 @@ export const CampaignFrame = ({ data, handleChange }) => {
       <TextField
         required
         sx={{}}
-        id="hashtag"
-        name="hashtag"
-        value={data.hashtag}
-        label="hashtag"
+        id="campaignHashtag"
+        name="campaignHashtag"
+        value={data.campaignHashtag}
+        label="Hashtag"
         onChange={handleChange}
       />
     </Fragment>
