@@ -1,11 +1,16 @@
 import { styled } from "@mui/material";
 import MUIButton from "@mui/material/Button";
 
-export const Button = styled(MUIButton)(({ variant, theme }) => {
+//TODO
+// deprecated: this is so messy
+// fyi: rgba(109, 166, 106, .1) == pinfluencerGreen.main
+// fyi: #517d4f slightly dark shade of pinfuencerGreen.main
+export const Button = styled(MUIButton)(({ variant, theme, color }) => {
   variant = variant ?? "text";
+  color = color ?? theme.palette.pinfluencerGreen.main;
   if (variant === "text") {
     return {
-      color: theme.palette.pinfluencerGreen.main,
+      color: color,
       "&:hover": {
         backgroundColor: "rgba(109, 166, 106, .1)",
         boxShadow: "none",
@@ -20,7 +25,7 @@ export const Button = styled(MUIButton)(({ variant, theme }) => {
     };
   } else if (variant === "contained") {
     return {
-      backgroundColor: theme.palette.pinfluencerGreen.main,
+      backgroundColor: color,
       "&:hover": {
         backgroundColor: "#517d4f",
         borderColor: theme.palette.pinfluencerGreen.main,
@@ -37,7 +42,7 @@ export const Button = styled(MUIButton)(({ variant, theme }) => {
     return {
       borderColor: theme.palette.pinfluencerGreen.main,
       border: "1px solid",
-      color: theme.palette.pinfluencerGreen.main,
+      color: color,
       "&:hover": {
         borderColor: theme.palette.pinfluencerGreen.main,
         border: "1px solid",
