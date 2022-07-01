@@ -162,3 +162,10 @@ export async function productImage(img, id, token) {
 
   console.log("product image for campaign id" + id, response);
 }
+
+export async function getCampaign(campaignId) {
+  console.log(campaignId);
+  const result = JSON.parse(localStorage.getItem("campaign"));
+  console.log(result);
+  return result;
+}

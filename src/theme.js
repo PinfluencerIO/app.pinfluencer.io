@@ -51,6 +51,7 @@ const baseTheme = createTheme({
     secondary: {
       main: "#1976d2",
     },
+    lightText: "gray",
   },
 });
 
