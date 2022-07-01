@@ -1,3 +1,4 @@
+//TODO Improve these with progress bar type component
 export const validationError = {
   severtity: "error",
   message: "All fields with * are required",
