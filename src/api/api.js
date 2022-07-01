@@ -110,6 +110,10 @@ export async function getCampaigns() {
     },
   });
 
+  if (data.status !== 200) {
+    throw Error(await data.text());
+  }
+
   const json = await data.json();
   return json;
 }

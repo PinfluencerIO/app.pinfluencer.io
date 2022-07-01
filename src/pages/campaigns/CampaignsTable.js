@@ -8,24 +8,19 @@ import { getCampaigns } from "../../api/api";
 import { useState } from "react";
 import PreviewIcon from "@mui/icons-material/Preview";
 
+//TODO replace data grid 💤 with cards that are sortable 👏 🔥
 export const CampaignsTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   false && console.log(searchParams);
   const nav = useNavigate();
-  const [rows] = useState([
-    {
-      id: "uuid",
-      title: "The Red Shoe Campaign",
-      description:
-        "Mollit consequat cupidatat magna nisi laboris enim eu officia officia deserunt qui deserunt in. Sit est elit quis et quis esse Lorem elit Lorem nisi quis nisi. Duis minim nulla Lorem deserunt dolor nisi quis amet velit ullamco nostrud veniam ex deserunt. Velit quis ex aliqua esse exercitation est nostrud qui excepteur sunt. Veniam aliqua veniam laborum do et voluptate tempor consequat reprehenderit. Laboris ex Lorem Lorem anim minim consequat in ut nulla quis adipisicing. Quis dolor quis magna labore minim fugiat labore sit nulla sunt veniam consectetur.",
-      productTitle: "Awesome Red Shoes",
-      creationDate: "14/05/2022:15:38:30",
-    },
-  ]);
+  const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    false && console.log(rows, getCampaigns());
-    // getCampaigns().then((d) => setRows(d));
+    getCampaigns()
+      .then((d) => setRows(d))
+      .catch((err) => {
+        console.error(err);
+      });
   }, [rows]);
 
   const columnsLg = [
