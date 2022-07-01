@@ -34,7 +34,7 @@ export const OnboardingSteps = () => {
   const nav = useNavigate();
   useEffect(() => {
     if (user == null || (user && "custom:usertype" in user)) {
-      false && nav("/");
+      nav("/");
     }
   }, [user, nav]);
 

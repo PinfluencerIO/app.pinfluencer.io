@@ -21,15 +21,15 @@ export const CampaignsTable = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, [rows]);
+  }, []);
 
   const columnsLg = [
     { field: "id", headerName: "id", width: 200 },
-    { field: "title", headerName: "Title", width: 200 },
-    { field: "description", headerName: "Description", width: 330 },
+    { field: "campaignTitle", headerName: "Title", width: 200 },
+    { field: "campaignDescription", headerName: "Description", width: 330 },
     { field: "productTitle", headerName: "Produt Title", width: 230 },
     {
-      field: "creationDate",
+      field: "created",
       headerName: "Creation Date",
       width: 200,
       type: "dateTime",
