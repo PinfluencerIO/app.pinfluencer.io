@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import isValidUUID from "./uuidUtils";
 
+// TODO How to directly use routes in App?? Breaks DRY
 const breadcrumbNameMap = {
   "/dashboard": "Dashboard",
   "/onboarding": "Onboarding",
@@ -22,7 +23,15 @@ export const BreadcrumbComponent = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
   return (
-    <Breadcrumbs aria-label="breadcrumb">
+    <Breadcrumbs
+      sx={{
+        marginTop: "20px",
+        marginBottom: "5px",
+        marginLeft: "20px",
+        minHeight: "45px",
+      }}
+      aria-label="breadcrumb"
+    >
       <Link
         underline="hover"
         sx={{ display: "flex", alignItems: "center" }}
@@ -51,6 +60,8 @@ export const BreadcrumbComponent = () => {
             {breadcrumbNameMap[to.toLowerCase()]}
           </Typography>
         ) : (
+          // only include configured routes.
+          // page will display BadUrl component
           breadcrumbNameMap[to.toLowerCase()] && (
             <Link
               style={{

@@ -1,6 +1,6 @@
 import { Box, MenuItem, TextField, useMediaQuery } from "@mui/material";
 import React, { Fragment } from "react";
-import { OBJECTIVES } from "../../api/data";
+import { OBJECTIVES } from "../../../api/data";
 
 export const ObjectivesFrame = ({ data, handleChange }) => {
   const matches = useMediaQuery("(min-width:600px)");

@@ -1,7 +1,7 @@
 import { Box, TextField } from "@mui/material";
 import React, { Fragment } from "react";
-import { CATEGORIES, VALUES } from "../../api/data";
-import { ChipSelectInput } from "../../components/ChipSelectInput";
+import { CATEGORIES, VALUES } from "../../../api/data";
+import { ChipSelectInput } from "../../../components/ChipSelectInput";
 
 export const CampaignFrame = ({ data, handleChange }) => {
   return (
@@ -43,7 +43,15 @@ export const CampaignFrame = ({ data, handleChange }) => {
         id="campaignValues"
         label="Values *"
       />
-
+      <TextField
+        required
+        sx={{}}
+        id="campaignHashtag"
+        name="campaignHashtag"
+        value={data.campaignHashtag}
+        label="Hashtag"
+        onChange={handleChange}
+      />
       <Box display="flex" flexDirection={{ sm: "column", md: "row" }}>
         <TextField
           sx={{ flexGrow: 1, mr: { sm: 0, md: 5 }, mb: { sm: 2, md: 0 } }}
@@ -62,15 +70,6 @@ export const CampaignFrame = ({ data, handleChange }) => {
           onChange={handleChange}
         />
       </Box>
-      <TextField
-        required
-        sx={{}}
-        id="campaignHashtag"
-        name="campaignHashtag"
-        value={data.campaignHashtag}
-        label="Hashtag"
-        onChange={handleChange}
-      />
     </Fragment>
   );
 };

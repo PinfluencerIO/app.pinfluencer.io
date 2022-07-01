@@ -1,6 +1,6 @@
 import { Box, TextField } from "@mui/material";
 import React, { Fragment } from "react";
-import { ImageUpload } from "../../components/ImageUpload";
+import { ImageUpload } from "../../../components/ImageUpload";
 
 export const ProductFrame = ({ data, handleChange }) => {
   return (

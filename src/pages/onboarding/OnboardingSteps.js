@@ -1,5 +1,5 @@
-import { Alert, Grid, Step, StepLabel, Stepper } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import { Alert, Paper, Step, StepLabel, Stepper } from "@mui/material";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../../context/UserContext";
 import { AboutYou } from "./AboutYou";
@@ -79,6 +79,7 @@ export const OnboardingSteps = () => {
     }
 
     // handle nested types [brand | influencer] assignments, and return
+    // look at data object for more info. brand and influener are nested
     if (name.includes(".")) {
       const keys = name.split(".");
       setData((currentState) => {
@@ -98,57 +99,35 @@ export const OnboardingSteps = () => {
   };
 
   return (
-    <Grid
-      container
-      spacing={0}
-      sx={{
-        backgroundColor: "background.pinfluencerLightGreen",
-        borderTop: 1,
-        borderBottom: 1,
-      }}
-    >
-      <Grid item xs={12} sx={{ marginTop: "25px" }}>
-        <Stepper
-          sx={{
-            backgroundColor: "background.pinfluencerLightGreen",
-          }}
-          activeStep={activeStep}
-          alternativeLabel
-        >
+    <Fragment>
+      <Paper sx={{ my: 2, py: 2 }}>
+        <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
             </Step>
           ))}
         </Stepper>
-      </Grid>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          backgroundColor: "background.pinfluencerLightGreen",
-        }}
+      </Paper>
+      <StepperFrame
+        numberOfSteps={steps.length}
+        activeStep={activeStep}
+        handleBack={handleBack}
+        handleNext={handleNext}
       >
-        <StepperFrame
-          numberOfSteps={steps.length}
-          activeStep={activeStep}
-          handleBack={handleBack}
-          handleNext={handleNext}
-        >
-          {selectStepComponent()}
-        </StepperFrame>
+        {selectStepComponent()}
+      </StepperFrame>
 
-        <Alert
-          sx={{
-            justifyContent: "center",
-            display: showAlert ? "flex" : "none",
-          }}
-          severity={showAlert?.severtity}
-        >
-          {showAlert?.message}
-        </Alert>
-      </Grid>
-    </Grid>
+      <Alert
+        sx={{
+          justifyContent: "center",
+          display: showAlert ? "flex" : "none",
+        }}
+        severity={showAlert?.severtity}
+      >
+        {showAlert?.message}
+      </Alert>
+    </Fragment>
   );
 
   function selectStepComponent() {
@@ -188,6 +167,10 @@ export const OnboardingSteps = () => {
       return JSON.parse(fill);
     }
 
+    // nested brand and influencer are dropped from api
+    // payload depending on why type of user onboards
+    // the data associated with the user type is moved
+    // from nest into root before POSTing to api
     return {
       email: "",
       firstName: "",

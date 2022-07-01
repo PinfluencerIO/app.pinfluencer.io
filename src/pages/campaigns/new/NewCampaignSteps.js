@@ -1,9 +1,9 @@
-import { Alert, Box, Step, StepLabel, Stepper } from "@mui/material";
-import { useState } from "react";
+import { Alert, Paper, Step, StepLabel, Stepper } from "@mui/material";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router";
-import { newCampaignChain } from "../../api/api";
-import { processing, validationError } from "../../components/Alerts";
-import { StepperFrame } from "../../components/StepperFrame";
+import { newCampaignChain } from "../../../api/api";
+import { processing, validationError } from "../../../components/Alerts";
+import { StepperFrame } from "../../../components/StepperFrame";
 import { CampaignFrame } from "./CampaignFrame";
 import { ObjectivesFrame } from "./ObjectivesFrame";
 import { ProductFrame } from "./ProductFrame";
@@ -16,8 +16,6 @@ export function NewCampaignSteps() {
   // form data, can be filled for testing purposes via localstorage
   const [data, setData] = useState(fill());
   const onChangeField = (e) => {
-    // console.log(e.target.name);
-    // console.log(e.target.value);
     setData((currentState) => {
       return { ...currentState, [e.target.name]: e.target.value };
     });
@@ -53,18 +51,8 @@ export function NewCampaignSteps() {
     }
   };
   return (
-    <Box
-      spacing={0}
-      sx={{
-        backgroundColor: "background.pinfluencerLightGreen",
-        borderTop: 1,
-        borderBottom: 1,
-      }}
-    >
-      <button className="css-9oggol-MuiButtonBase-root-MuiButton-root">
-        my button
-      </button>
-      <Box sx={{ marginTop: "25px" }}>
+    <Fragment>
+      <Paper sx={{ my: 2, py: 2 }}>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
             <Step key={label}>
@@ -72,17 +60,15 @@ export function NewCampaignSteps() {
             </Step>
           ))}
         </Stepper>
-      </Box>
-      <Box>
-        <StepperFrame
-          handleBack={handleBack}
-          handleNext={handleNext}
-          numberOfSteps={steps.length}
-          activeStep={activeStep}
-        >
-          {selectStepComponent()}
-        </StepperFrame>
-      </Box>
+      </Paper>
+      <StepperFrame
+        handleBack={handleBack}
+        handleNext={handleNext}
+        numberOfSteps={steps.length}
+        activeStep={activeStep}
+      >
+        {selectStepComponent()}
+      </StepperFrame>
       <Alert
         sx={{
           justifyContent: "center",
@@ -92,8 +78,9 @@ export function NewCampaignSteps() {
       >
         {showAlert?.message}
       </Alert>
-    </Box>
+    </Fragment>
   );
+
   function selectStepComponent() {
     let step;
     switch (activeStep) {
