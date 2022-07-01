@@ -25,9 +25,7 @@ export const BreadcrumbComponent = () => {
   return (
     <Breadcrumbs
       sx={{
-        marginTop: "20px",
-        marginBottom: "5px",
-        marginLeft: "20px",
+        mx: "24px",
         minHeight: "45px",
       }}
       aria-label="breadcrumb"

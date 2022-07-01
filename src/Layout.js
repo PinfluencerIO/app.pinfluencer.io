@@ -16,6 +16,7 @@ export const Layout = () => {
       <Grid
         item
         sx={{
+          mx: "24px",
           minHeight: "50vh",
           marginBottom: "20px",
         }}

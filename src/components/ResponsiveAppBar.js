@@ -71,14 +71,14 @@ const ResponsiveAppBar = () => {
       sx={{
         backgroundColor: theme.palette.background.pinfluencerLightGreen,
         boxShadow: "none",
+        // pl: { xs: "0px", sm: "0px", md: "0px", lg: "0px" },
+        ml: { xs: "-4px", sm: "-12px", md: "-4px" },
       }}
     >
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar disableGutters>
           <Box
             sx={{
-              mr: 2,
-              pt: 1,
               display: { xs: "none", md: "flex" },
             }}
           >

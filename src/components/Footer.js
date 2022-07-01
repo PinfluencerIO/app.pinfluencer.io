@@ -4,7 +4,15 @@ import "./footer.css";
 export const Footer = () => {
   return (
     <footer>
-      <Box flexDirection="row" display="flex" justifyContent="space-between">
+      <Box
+        sx={{
+          mx: "24px",
+          pb: 3,
+        }}
+        flexDirection="row"
+        display="flex"
+        justifyContent="space-between"
+      >
         <p>Footer items</p>
         <p>&copy; 2022 Pinfluencer</p>
         <p>Social links</p>
