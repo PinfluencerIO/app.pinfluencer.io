@@ -3,6 +3,7 @@ import {
   Button,
   Chip,
   Grid,
+  IconButton,
   Paper,
   Stack,
   Typography,
@@ -30,9 +31,11 @@ export const ViewCampaign = () => {
     console.log(nav, campaign, Button, Chip, Paper, Stack, Typography, Box);
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} sm={12} md={8}>
+      {/* Top Right Grid*/}
+      <Grid item xs={12} sm={12} md={8} display="flex">
         <Paper
           sx={{
+            alignSelf: "stretch",
             padding: "24px",
             "& p:not(:first-child)": { mt: "10px" },
           }}
@@ -45,11 +48,64 @@ export const ViewCampaign = () => {
           <Typography sx={{ color: "lightText" }}>
             {campaign?.campaignDescription}
           </Typography>
+          <Stack mt="10px" direction="row" spacing={6}>
+            <Stack>
+              <Typography>Product Link</Typography>
+              <Typography sx={{ color: "lightText" }} component="span">
+                {campaign?.campaignProductLink}
+              </Typography>
+            </Stack>
+            <Stack>
+              <Typography>Discount code</Typography>
+              <Typography sx={{ color: "lightText" }} component="span">
+                {campaign?.campaignDiscountCode}
+              </Typography>
+            </Stack>
+            <Stack>
+              <Typography>Hashtag</Typography>
+              <Typography sx={{ color: "lightText" }} component="span">
+                {campaign?.campaignHashtag}
+              </Typography>
+            </Stack>
+          </Stack>
+
+          <Typography component="p" sx={{ color: "lightText", mt: "24px" }}>
+            Categories
+          </Typography>
+          {campaign?.campaignCategories.map((c) => {
+            return (
+              <Chip
+                key={c}
+                label={c}
+                sx={{
+                  m: "10px",
+                  border: "1px solid ",
+                }}
+              />
+            );
+          })}
+          <Typography component="p" sx={{ color: "lightText" }}>
+            Values
+          </Typography>
+          {campaign?.campaignValues.map((v) => {
+            return (
+              <Chip
+                key={v}
+                label={v}
+                sx={{
+                  m: "10px",
+                  border: "1px solid ",
+                }}
+              />
+            );
+          })}
         </Paper>
       </Grid>
-      <Grid item xs={12} sm={12} md={4}>
+      {/* Top Left Grid*/}
+      <Grid item xs={12} sm={12} md={4} display="flex">
         <Paper
           sx={{
+            alignSelf: "stretch",
             padding: "24px",
             "& p:not(:first-child)": { mt: "10px" },
           }}
@@ -66,6 +122,7 @@ export const ViewCampaign = () => {
           </Typography>
         </Paper>
       </Grid>
+      {/* Bottom Grid*/}
       <Grid item xs={12}>
         <Paper
           sx={{
@@ -74,94 +131,53 @@ export const ViewCampaign = () => {
           }}
         >
           <Typography sx={{ color: "lightText" }}>Product</Typography>
+          <Typography sx={{ fontSize: "1.5rem" }}>
+            {campaign?.productTitle}
+          </Typography>
+          <Typography sx={{}}>Description</Typography>
+          <Typography sx={{ color: "lightText" }}>
+            {campaign?.productDescription}
+          </Typography>
+          <Stack mt="10px" direction="row" spacing={5}>
+            <IconButton
+              aria-label="Product Image 1"
+              sx={{
+                border: "1px solid",
+                borderRadius: "5px",
+                background:
+                  " url(" +
+                  campaign?.productImage1 +
+                  ") center center no-repeat",
+                backgroundSize: "contain",
+              }}
+            />
+            <IconButton
+              aria-label="Product Image 2"
+              sx={{
+                border: "1px solid",
+                borderRadius: "5px",
+                background:
+                  " url(" +
+                  campaign?.productImage1 +
+                  ") center center no-repeat",
+                backgroundSize: "contain",
+              }}
+            />
+            <IconButton
+              aria-label="Product Image 3"
+              sx={{
+                border: "1px solid",
+                borderRadius: "5px",
+                background:
+                  " url(" +
+                  campaign?.productImage1 +
+                  ") center center no-repeat",
+                backgroundSize: "contain",
+              }}
+            />
+          </Stack>
         </Paper>
       </Grid>
     </Grid>
   );
-
-  // (
-
-  // <Stack spacing={2} border={1}>
-  //   <Box display="flex" flexDirection="row" justifyContent="end">
-  //     <Button
-  //       variant="contained"
-  //       color="secondary"
-  //       onClick={() => {
-  //         nav("edit");
-  //       }}
-  //     >
-  //       Edit
-  //     </Button>
-  //   </Box>
-  //   <Stack spacing={2} direction="row" border={1}>
-  //     <Paper sx={{ padding: "24px", lineHeight: "1rem" }}>
-  //       <Typography sx={{ color: "lightText" }}>Campaign Details</Typography>
-  //       <Typography>{campaign?.campaignTitle}</Typography>
-  //       <Typography>Campaign Details</Typography>
-  //       <Box overflow="auto">
-  //         <Typography sx={{ color: "lightText" }}>
-  //           {campaign?.campaignDescription}
-  //         </Typography>
-  //       </Box>
-  //       <Stack direction="row" spacing={10}>
-  //         <Stack>
-  //           <Typography>Product Link</Typography>
-  //           <Typography sx={{ color: "lightText" }} component="span">
-  //             {campaign?.campaignProductLink}
-  //           </Typography>
-  //         </Stack>
-  //         <Stack>
-  //           <Typography>Discount code</Typography>
-  //           <Typography sx={{ color: "lightText" }} component="span">
-  //             {campaign?.campaignDiscountCode}
-  //           </Typography>
-  //         </Stack>
-  //         <Stack>
-  //           <Typography>Hashtag</Typography>
-  //           <Typography sx={{ color: "lightText" }} component="span">
-  //             {campaign?.campaignHashtag}
-  //           </Typography>
-  //         </Stack>
-  //       </Stack>
-  //       <Typography component="p" sx={{ color: "lightText", mt: "24px" }}>
-  //         Categories
-  //       </Typography>
-  //       {campaign?.campaignCategories.map((c) => {
-  //         return (
-  //           <Chip
-  //             key={c}
-  //             label={c}
-  //             sx={{
-  //               m: "10px",
-  //               border: "1px solid ",
-  //             }}
-  //           />
-  //         );
-  //       })}
-  //       <Typography component="p" sx={{ color: "lightText" }}>
-  //         Values
-  //       </Typography>
-  //       {campaign?.campaignValues.map((v) => {
-  //         return (
-  //           <Chip
-  //             key={v}
-  //             label={v}
-  //             sx={{
-  //               m: "10px",
-  //               border: "1px solid ",
-  //             }}
-  //           />
-  //         );
-  //       })}
-  //     </Paper>
-  //     <Paper sx={{ padding: "24px" }}>
-  //       <Typography component="p" sx={{ color: "lightText" }}>
-  //         Campaign Objectives
-  //       </Typography>
-  //       <Typography>{campaign?.campaignTitle}</Typography>
-  //     </Paper>
-  //   </Stack>
-  //   <Paper sx={{ padding: "24px" }}>Product</Paper>
-  // </Stack>
-  // );
 };
