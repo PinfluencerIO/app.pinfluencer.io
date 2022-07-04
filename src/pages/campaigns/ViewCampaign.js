@@ -2,13 +2,14 @@ import { Button, Chip, Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { getAvailableActionsFor, getCampaign } from "../../api/api";
 import { OBJECTIVES } from "../../api/data";
 import isValidUUID from "../../components/uuidUtils";
 import { BadUrl } from "../BadUrl";
 
 export const ViewCampaign = () => {
+  const nav = useNavigate();
   const { id } = useParams();
   const validId = isValidUUID(id);
   const [campaign, setCampaign] = useState();
@@ -55,6 +56,7 @@ export const ViewCampaign = () => {
               key={action.label}
               variant={action.variant}
               color={action.color}
+              onClick={() => onClickForStatus(action.label)}
             >
               {action.label}
             </Button>
@@ -62,6 +64,24 @@ export const ViewCampaign = () => {
         })}
       </Grid>
     );
+  }
+  //TODO this breaks DRY
+  function onClickForStatus(action) {
+    console.log(action);
+    switch (action) {
+      case "Edit":
+        nav("edit");
+        break;
+      case "Launch":
+        console.log("Launch");
+        break;
+      case "Delete":
+        console.log("delete");
+        break;
+      case "Close":
+        console.log("close");
+        break;
+    }
   }
   function topLeftGrid() {
     return (

@@ -206,7 +206,11 @@ export function getAvailableActionsFor(status) {
     {
       status: "DRAFT",
       actions: [
-        { label: "Edit", color: "secondary", variant: "contained" },
+        {
+          label: "Edit",
+          color: "secondary",
+          variant: "contained",
+        },
         { label: "Launch", color: "primary", variant: "contained" },
         { label: "Delete", color: "red", variant: "outlined" },
       ],
