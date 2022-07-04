@@ -1,4 +1,5 @@
 import { getToken } from "../context/UserContext";
+import { campaigns, image } from "./fake-api";
 
 const remote = "https://3dgldh8a18.execute-api.eu-west-2.amazonaws.com";
 
@@ -47,17 +48,16 @@ function omit(obj, omitKey) {
   }, {});
 }
 
-function onboarding(payloadObject) {
-  return getToken().then((token) =>
-    fetch(`${remote}/${payloadObject.type}s/me`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(payloadObject),
-    })
-  );
+async function onboarding(payloadObject) {
+  const token = await getToken();
+  return await fetch(`${remote}/${payloadObject.type}s/me`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify(payloadObject),
+  });
 }
 
 export async function brandLogo(payload) {
@@ -87,85 +87,144 @@ export async function brandHeader(payload) {
 }
 
 export async function getBrand() {
-  const token = await getToken();
-  const data = await fetch(`${remote}/brands/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
+  if (localStorage.getItem("offline")) {
+    return campaigns;
+  } else {
+    const token = await getToken();
+    const data = await fetch(`${remote}/brands/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
 
-  const json = await data.json();
-  return json;
+    const json = await data.json();
+    return json;
+  }
 }
 
 export async function getCampaigns() {
-  const token = await getToken();
-  const data = await fetch(`${remote}/brands/me/campaigns`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
+  if (localStorage.getItem("offline")) {
+    return campaigns;
+  } else {
+    const token = await getToken();
+    const data = await fetch(`${remote}/brands/me/campaigns`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
 
-  if (data.status !== 200) {
-    throw Error(await data.text());
+    if (data.status !== 200) {
+      throw Error(await data.text());
+    }
+
+    const json = await data.json();
+    return json;
   }
-
-  const json = await data.json();
-  return json;
 }
 
 export async function newCampaignChain(data) {
-  const productImages = [
-    data.productImage1,
-    data.productImage2,
-    data.productImage3,
-  ];
-  delete data.productImage1;
-  delete data.productImage2;
-  delete data.productImage3;
-  false && console.log(data, productImages);
-  const payload = JSON.stringify(data);
-  console.log("payload", payload);
-  const token = await getToken();
-  //brands/me/campaigns
-  const response = await fetch(`${remote}/brands/me/campaigns`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: payload,
-  });
+  if (localStorage.getItem("offline")) {
+    data.id = self.crypto.randomUUID();
+    return campaigns.push(data);
+  } else {
+    const { productImage1, productImage2, productImage3, ...without } = data;
+    const productImages = [productImage1, productImage2, productImage3];
+    const payload = JSON.stringify(without);
+    const token = await getToken();
+    //brands/me/campaigns
+    const response = await fetch(`${remote}/brands/me/campaigns`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: payload,
+    });
 
-  const json = await response.json();
-  // productImages.forEach((img) => {
-  //   productImage(img, json.id, token);
-  // });
+    if (response.status === 201) {
+      const json = await response.json();
+      let i = 1;
+      await Promise.all(
+        productImages.map(async (img) => {
+          await productImage(img, json.id, token, "product-image" + i++);
+        })
+      );
 
-  return json;
+      return json;
+    } else {
+      throw Error(await response.text());
+    }
+  }
 }
 
-export async function productImage(img, id, token) {
-  console.log("prod img", id);
-  const response = await fetch(`${remote}/brands/me/campaigns/${id}`, {
+export async function productImage(img, id, token, ref) {
+  const response = await fetch(`${remote}/brands/me/campaigns/${id}/${ref}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     },
-    body: JSON.stringify({ imageBytes: img }),
+    body: JSON.stringify({ imageBytes: img.split(",")[1] }),
   });
 
-  console.log("product image for campaign id" + id, response);
+  console.log(
+    "product image " + ref + " for campaign id" + id,
+    response.statusText
+  );
 }
 
 export async function getCampaign(campaignId) {
-  console.log(campaignId);
-  const result = JSON.parse(localStorage.getItem("campaign"));
-  console.log(result);
-  return result;
+  if (localStorage.getItem("offline")) {
+    const result = campaigns.find((campaign) => campaignId === campaign.id);
+    result.productImage1 = image.bytes;
+    result.productImage2 = image.bytes;
+    result.productImage3 = image.bytes;
+    result.status = "DRAFT";
+    return result;
+  } else {
+    const token = await getToken();
+    const response = await fetch(`${remote}/campaigns/${campaignId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    return await response.json();
+  }
+}
+
+export function getAvailableActionsFor(status) {
+  if (status === undefined) return [];
+
+  const actions = [
+    {
+      status: "DRAFT",
+      actions: [
+        { label: "Edit", color: "secondary", variant: "contained" },
+        { label: "Launch", color: "primary", variant: "contained" },
+        { label: "Delete", color: "red", variant: "outlined" },
+      ],
+    },
+    {
+      status: "ACTIVE",
+      actions: [
+        { label: "Edit", color: "secondary", variant: "contained" },
+        { label: "Close", color: "black", variant: "contained" },
+      ],
+    },
+    {
+      status: "CLOSED",
+      actions: [{ label: "Delete", color: "red", variant: "outlined" }],
+    },
+  ];
+  const response = actions.find((i) => {
+    return i.status === status;
+  });
+  return response.actions;
 }

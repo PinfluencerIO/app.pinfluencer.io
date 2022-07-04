@@ -11,17 +11,22 @@ import PreviewIcon from "@mui/icons-material/Preview";
 //TODO replace data grid 💤 with cards that are sortable 👏 🔥
 export const CampaignsTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [loading, setLoading] = useState(true);
   false && console.log(searchParams);
   const nav = useNavigate();
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     getCampaigns()
-      .then((d) => setRows(d))
+      .then((d) => {
+        console.log("getCampaigns retrieved");
+        setRows(d);
+        setLoading(false);
+      })
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [rows]);
 
   const columnsLg = [
     { field: "id", headerName: "id", width: 200 },
@@ -49,6 +54,10 @@ export const CampaignsTable = () => {
       ],
     },
   ];
+
+  if (loading === true) {
+    return <Box>Loading...{loading}</Box>;
+  }
 
   return (
     <Fragment>

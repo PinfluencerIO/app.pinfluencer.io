@@ -1,183 +1,203 @@
-import {
-  Box,
-  Button,
-  Chip,
-  Grid,
-  IconButton,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-import React, { useState } from "react";
+import { Button, Chip, Grid, Paper, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
-import { getCampaign } from "../../api/api";
+import { useParams } from "react-router";
+import { getAvailableActionsFor, getCampaign } from "../../api/api";
 import { OBJECTIVES } from "../../api/data";
 import isValidUUID from "../../components/uuidUtils";
 import { BadUrl } from "../BadUrl";
 
 export const ViewCampaign = () => {
-  const nav = useNavigate();
   const { id } = useParams();
-  let campaignId = isValidUUID(id);
+  const validId = isValidUUID(id);
   const [campaign, setCampaign] = useState();
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    getCampaign(campaignId).then((c) => setCampaign(c));
-  }, [campaignId]);
-  if (!campaignId) {
+    getCampaign(id).then((c) => {
+      setCampaign(c);
+      setLoading(false);
+    });
+  }, [id]);
+  if (!validId) {
     return <BadUrl />;
   }
-  false &&
-    console.log(nav, campaign, Button, Chip, Paper, Stack, Typography, Box);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={3}>
+      {/* Buttons */}
+      {actionButtons()}
+      {/* Top Left Grid*/}
+      {topLeftGrid()}
       {/* Top Right Grid*/}
-      <Grid item xs={12} sm={12} md={8} display="flex">
-        <Paper
-          sx={{
-            alignSelf: "stretch",
-            padding: "24px",
-            "& p:not(:first-child)": { mt: "10px" },
-          }}
-        >
-          <Typography sx={{ color: "lightText" }}>Campaign Details</Typography>
-          <Typography sx={{ fontSize: "1.5rem" }}>
-            {campaign?.campaignTitle}
-          </Typography>
-          <Typography sx={{}}>Description</Typography>
-          <Typography sx={{ color: "lightText" }}>
+      {topRightGrid()}
+      {/* Bottom Grid*/}
+      {bottomGrid()}
+    </Grid>
+  );
+
+  function actionButtons() {
+    return (
+      <Grid
+        item
+        lg={12}
+        display="flex"
+        justifyContent="flex-end"
+        sx={{ "& button": { ml: "15px" } }}
+      >
+        {getAvailableActionsFor(campaign?.status).map((action) => {
+          return (
+            <Button
+              key={action.label}
+              variant={action.variant}
+              color={action.color}
+            >
+              {action.label}
+            </Button>
+          );
+        })}
+      </Grid>
+    );
+  }
+  function topLeftGrid() {
+    return (
+      <Grid item display="flex" lg={8}>
+        <Paper sx={paperStyle()}>
+          <Typography className="lightLabel">Campaign Details</Typography>
+          <Typography variant="h5">{campaign?.campaignTitle}</Typography>
+          <Typography>Description</Typography>
+          <Typography className="lightLabel">
             {campaign?.campaignDescription}
           </Typography>
-          <Stack mt="10px" direction="row" spacing={6}>
-            <Stack>
-              <Typography>Product Link</Typography>
-              <Typography sx={{ color: "lightText" }} component="span">
-                {campaign?.campaignProductLink}
-              </Typography>
-            </Stack>
-            <Stack>
-              <Typography>Discount code</Typography>
-              <Typography sx={{ color: "lightText" }} component="span">
-                {campaign?.campaignDiscountCode}
-              </Typography>
-            </Stack>
-            <Stack>
-              <Typography>Hashtag</Typography>
-              <Typography sx={{ color: "lightText" }} component="span">
-                {campaign?.campaignHashtag}
-              </Typography>
-            </Stack>
-          </Stack>
 
-          <Typography component="p" sx={{ color: "lightText", mt: "24px" }}>
-            Categories
-          </Typography>
-          {campaign?.campaignCategories.map((c) => {
-            return (
-              <Chip
-                key={c}
-                label={c}
-                sx={{
-                  m: "10px",
-                  border: "1px solid ",
-                }}
-              />
-            );
-          })}
-          <Typography component="p" sx={{ color: "lightText" }}>
-            Values
-          </Typography>
-          {campaign?.campaignValues.map((v) => {
-            return (
-              <Chip
-                key={v}
-                label={v}
-                sx={{
-                  m: "10px",
-                  border: "1px solid ",
-                }}
-              />
-            );
-          })}
+          {linksTagsCodes()}
+
+          {chips("Categories", campaign?.campaignCategories)}
+          {chips("Values", campaign?.campaignValues)}
         </Paper>
       </Grid>
-      {/* Top Left Grid*/}
-      <Grid item xs={12} sm={12} md={4} display="flex">
-        <Paper
-          sx={{
-            alignSelf: "stretch",
-            padding: "24px",
-            "& p:not(:first-child)": { mt: "10px" },
-          }}
-        >
-          <Typography component="p" sx={{ color: "lightText" }}>
-            Campaign Objectives
-          </Typography>
-          <Typography sx={{ fontSize: "1.5rem" }}>
+    );
+  }
+  function topRightGrid() {
+    return (
+      <Grid item display="flex" lg={4}>
+        <Paper sx={paperStyle()}>
+          <Typography className="lightLabel">Campaign Objectives</Typography>
+          <Typography variant="h5">
             {OBJECTIVES.find((o) => o.key === campaign?.objective)?.label}
           </Typography>
-          <Typography component="p">What does success look like?</Typography>
-          <Typography sx={{ color: "lightText" }}>
+          <Typography>What does success look like?</Typography>
+          <Typography className="lightLabel">
             {campaign?.successDescription}
           </Typography>
         </Paper>
       </Grid>
-      {/* Bottom Grid*/}
-      <Grid item xs={12}>
-        <Paper
-          sx={{
-            padding: "24px",
-            "& p:not(:first-child)": { mt: "10px" },
-          }}
-        >
-          <Typography sx={{ color: "lightText" }}>Product</Typography>
-          <Typography sx={{ fontSize: "1.5rem" }}>
-            {campaign?.productTitle}
+    );
+  }
+  function linksTagsCodes() {
+    return (
+      <Grid container>
+        <Grid item lg={12} my={3}>
+          <Typography>Product Link</Typography>
+          <Typography className="lightLabel">
+            {campaign?.campaignProductLink}
           </Typography>
-          <Typography sx={{}}>Description</Typography>
-          <Typography sx={{ color: "lightText" }}>
+        </Grid>
+        <Grid item lg={6}>
+          <Typography>Discount code</Typography>
+          <Typography className="lightLabel">
+            {campaign?.campaignDiscountCode}
+          </Typography>
+        </Grid>
+        <Grid item lg={6}>
+          <Typography>Hashtag</Typography>
+          <Typography className="lightLabel">
+            {campaign?.campaignHashtag}
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  }
+  function chips(heading, items = []) {
+    return (
+      <Fragment>
+        <Box marginY={3}>
+          <Typography>{heading}</Typography>
+          <Grid container>
+            <Grid item>
+              {items.map((item) => {
+                return (
+                  <Chip
+                    key={item}
+                    label={item}
+                    sx={{
+                      m: "10px",
+                      border: "1px solid ",
+                    }}
+                  />
+                );
+              })}
+            </Grid>
+          </Grid>
+        </Box>
+      </Fragment>
+    );
+  }
+  function bottomGrid() {
+    return (
+      <Grid item lg={12}>
+        <Paper sx={paperStyle()}>
+          <Typography className="lightLabel">Product</Typography>
+          <Typography variant="h5">{campaign?.productTitle}</Typography>
+          <Typography>Description</Typography>
+          <Typography className="lightLabel">
             {campaign?.productDescription}
           </Typography>
-          <Stack mt="10px" direction="row" spacing={5}>
-            <IconButton
-              aria-label="Product Image 1"
-              sx={{
-                border: "1px solid",
-                borderRadius: "5px",
-                background:
-                  " url(" +
-                  campaign?.productImage1 +
-                  ") center center no-repeat",
-                backgroundSize: "contain",
-              }}
-            />
-            <IconButton
-              aria-label="Product Image 2"
-              sx={{
-                border: "1px solid",
-                borderRadius: "5px",
-                background:
-                  " url(" +
-                  campaign?.productImage1 +
-                  ") center center no-repeat",
-                backgroundSize: "contain",
-              }}
-            />
-            <IconButton
-              aria-label="Product Image 3"
-              sx={{
-                border: "1px solid",
-                borderRadius: "5px",
-                background:
-                  " url(" +
-                  campaign?.productImage1 +
-                  ") center center no-repeat",
-                backgroundSize: "contain",
-              }}
-            />
-          </Stack>
+          <Grid container spacing={3} mt={3}>
+            <Grid item>
+              <img
+                alt="Product 1"
+                src={campaign?.productImage1}
+                width="150px"
+                height="150px"
+              />
+            </Grid>
+            <Grid item>
+              <img
+                alt="Product 2"
+                src={campaign?.productImage2}
+                width="150px"
+                height="150px"
+              />
+            </Grid>
+            <Grid item>
+              <img
+                alt="Product 3"
+                src={campaign?.productImage3}
+                width="150px"
+                height="150px"
+              />
+            </Grid>
+          </Grid>
         </Paper>
       </Grid>
-    </Grid>
-  );
+    );
+  }
+  function paperStyle() {
+    return {
+      alignSelf: "stretch",
+      padding: "24px",
+      "& p": {
+        marginTop: "10px",
+      },
+      "& h5": {
+        marginY: "25px",
+      },
+      "& .lightLabel": { color: "lightText" },
+    };
+  }
 };

@@ -38,7 +38,6 @@ export function NewCampaignSteps() {
     } else {
       setShowAlert(processing);
       newCampaignChain(data).then((campaign) => {
-        console.log(campaign);
         nav("/campaigns/" + campaign.id);
       });
     }

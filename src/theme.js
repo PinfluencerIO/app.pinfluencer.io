@@ -52,6 +52,8 @@ const baseTheme = createTheme({
       main: "#1976d2",
     },
     lightText: "gray",
+    red: { main: "rgb(255, 0, 0)" },
+    black: { main: "rgb(0, 0, 0)", contrastText: "#FFF" },
   },
 });
 
