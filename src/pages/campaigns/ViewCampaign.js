@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
-import { getAvailableActionsFor, getCampaign } from "../../api/api";
+import { getCampaign } from "../../api/api";
 import { OBJECTIVES } from "../../api/data";
 import isValidUUID from "../../components/uuidUtils";
 import { BadUrl } from "../BadUrl";
@@ -45,7 +45,7 @@ export const ViewCampaign = () => {
     return (
       <Grid
         item
-        lg={12}
+        xs={12}
         display="flex"
         justifyContent="flex-end"
         sx={{ "& button": { ml: "15px" } }}
@@ -56,7 +56,7 @@ export const ViewCampaign = () => {
               key={action.label}
               variant={action.variant}
               color={action.color}
-              onClick={() => onClickForStatus(action.label)}
+              onClick={action.onClick}
             >
               {action.label}
             </Button>
@@ -65,23 +65,51 @@ export const ViewCampaign = () => {
       </Grid>
     );
   }
-  //TODO this breaks DRY
-  function onClickForStatus(action) {
-    console.log(action);
-    switch (action) {
-      case "Edit":
-        nav("edit");
-        break;
-      case "Launch":
-        console.log("Launch");
-        break;
-      case "Delete":
-        console.log("delete");
-        break;
-      case "Close":
-        console.log("close");
-        break;
-    }
+  function getAvailableActionsFor(status) {
+    if (status === undefined) return [];
+
+    const edit = {
+      label: "Edit",
+      color: "secondary",
+      variant: "contained",
+      onClick: () => nav("edit"),
+    };
+    const draft = {
+      label: "Launch",
+      color: "primary",
+      variant: "contained",
+      onClick: () => nav("launch"),
+    };
+    const deleteAction = {
+      label: "Delete",
+      color: "red",
+      variant: "outlined",
+      onClick: () => nav("delete"),
+    };
+    const close = {
+      label: "Close",
+      color: "black",
+      variant: "contained",
+      onClick: () => nav("close"),
+    };
+    const actions = [
+      {
+        status: "DRAFT",
+        actions: [edit, draft, deleteAction],
+      },
+      {
+        status: "ACTIVE",
+        actions: [edit, close],
+      },
+      {
+        status: "CLOSED",
+        actions: [close],
+      },
+    ];
+    const response = actions.find((i) => {
+      return i.status === status;
+    });
+    return response.actions;
   }
   function topLeftGrid() {
     return (

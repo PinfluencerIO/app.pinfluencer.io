@@ -198,37 +198,3 @@ export async function getCampaign(campaignId) {
     return await response.json();
   }
 }
-
-export function getAvailableActionsFor(status) {
-  if (status === undefined) return [];
-
-  const actions = [
-    {
-      status: "DRAFT",
-      actions: [
-        {
-          label: "Edit",
-          color: "secondary",
-          variant: "contained",
-        },
-        { label: "Launch", color: "primary", variant: "contained" },
-        { label: "Delete", color: "red", variant: "outlined" },
-      ],
-    },
-    {
-      status: "ACTIVE",
-      actions: [
-        { label: "Edit", color: "secondary", variant: "contained" },
-        { label: "Close", color: "black", variant: "contained" },
-      ],
-    },
-    {
-      status: "CLOSED",
-      actions: [{ label: "Delete", color: "red", variant: "outlined" }],
-    },
-  ];
-  const response = actions.find((i) => {
-    return i.status === status;
-  });
-  return response.actions;
-}
