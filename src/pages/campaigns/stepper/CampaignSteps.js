@@ -1,26 +1,26 @@
 import { Alert, Paper, Step, StepLabel, Stepper } from "@mui/material";
+import { useEffect } from "react";
 import { Fragment, useState } from "react";
-import { useNavigate } from "react-router";
-import { newCampaignChain } from "../../../api/api";
+import { useNavigate, useParams } from "react-router";
+import {
+  getCampaign,
+  newCampaignChain,
+  updateCampaign,
+} from "../../../api/api";
 import { processing, validationError } from "../../../components/Alerts";
 import { StepperFrame } from "../../../components/StepperFrame";
+import isValidUUID from "../../../components/uuidUtils";
+import { BadUrl } from "../../BadUrl";
 import { CampaignFrame } from "./CampaignFrame";
 import { ObjectivesFrame } from "./ObjectivesFrame";
 import { ProductFrame } from "./ProductFrame";
 import isFormDataValid from "./validationRules";
 
-export function NewCampaignSteps() {
+const steps = ["Objective", "Campaign", "Product"];
+
+export function CampaignSteps() {
   const nav = useNavigate();
-
-  const steps = ["Objective", "Campaign", "Product"];
-  // form data, can be filled for testing purposes via localstorage
-  const [data, setData] = useState(fill());
-  const onChangeField = (e) => {
-    setData((currentState) => {
-      return { ...currentState, [e.target.name]: e.target.value };
-    });
-  };
-
+  const [loading, setLoading] = useState(true);
   // onboarding is made up of multiple steps, this keeps track of which step
   const [activeStep, setActiveStep] = useState(0);
   // show or hide alert
@@ -37,9 +37,15 @@ export function NewCampaignSteps() {
       return;
     } else {
       setShowAlert(processing);
-      newCampaignChain(data).then((campaign) => {
-        nav("/campaigns/" + campaign.id);
-      });
+      if (id) {
+        updateCampaign(data).then((campaign) => {
+          nav("/campaigns/" + campaign.id);
+        });
+      } else {
+        newCampaignChain(data).then((campaign) => {
+          nav("/campaigns/" + campaign.id);
+        });
+      }
     }
   };
   const handleBack = () => {
@@ -49,6 +55,28 @@ export function NewCampaignSteps() {
       return;
     }
   };
+  const { id } = useParams();
+  const validId = isValidUUID(id);
+  // form data, can be filled for testing purposes via localstorage
+  const [data, setData] = useState(fill(id, validId));
+  const onChangeField = (e) => {
+    setData((currentState) => {
+      return { ...currentState, [e.target.name]: e.target.value };
+    });
+  };
+  useEffect(() => {
+    // call api
+    getCampaign(id).then((campaign) => {
+      setData(campaign);
+      setLoading(false);
+    });
+  }, [id]);
+  if (!validId) {
+    return <BadUrl />;
+  }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <Fragment>
       <Paper sx={{ my: 2, py: 2 }}>
@@ -96,27 +124,32 @@ export function NewCampaignSteps() {
     return step;
   }
 
-  function fill() {
+  function fill(id, validId) {
     const testData = localStorage.getItem("campaign");
-    if (testData) {
-      return JSON.parse(testData);
-    }
 
-    return {
-      objective: "",
-      successDescription: "",
-      campaignTitle: "",
-      campaignDescription: "",
-      campaignCategories: [],
-      campaignValues: [],
-      campaignProductLink: "",
-      campaignDiscountCode: "",
-      campaignHashtag: "",
-      productTitle: "",
-      productDescription: "",
-      productImage1: "",
-      productImage2: "",
-      productImage3: "",
-    };
+    if ((id && validId) || !testData) {
+      const data = {
+        objective: "",
+        successDescription: "",
+        campaignTitle: "",
+        campaignDescription: "",
+        campaignCategories: [],
+        campaignValues: [],
+        campaignProductLink: "",
+        campaignDiscountCode: "",
+        campaignHashtag: "",
+        productTitle: "",
+        productDescription: "",
+        productImageUpdate: [],
+        productImage1: "",
+        productImage2: "",
+        productImage3: "",
+      };
+      if (id && validId) {
+        data.productImageUpdate = [];
+      }
+      return data;
+    }
+    return JSON.parse(testData);
   }
 }

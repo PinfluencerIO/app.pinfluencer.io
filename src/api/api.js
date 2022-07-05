@@ -126,16 +126,55 @@ export async function getCampaigns() {
   }
 }
 
-export async function newCampaignChain(data) {
+//TODO too much copy/paste from newcampaign
+export async function updateCampaign(data) {
   if (localStorage.getItem("offline")) {
-    data.id = self.crypto.randomUUID();
-    return campaigns.push(data);
+    const camapign = campaigns.find((c) => c.id === data.id);
+    Object.assign(camapign, data);
+    return data;
   } else {
     const { productImage1, productImage2, productImage3, ...without } = data;
     const productImages = [productImage1, productImage2, productImage3];
     const payload = JSON.stringify(without);
     const token = await getToken();
-    //brands/me/campaigns
+    const response = await fetch(`${remote}/brands/me/campaigns/${data.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: payload,
+    });
+    if (response.status === 201 && data.productImageUpdate.length > 0) {
+      const json = await response.json();
+      let i = 1;
+      await Promise.all(
+        productImages.map(async (img) => {
+          if (data.productImageUpdate.includes(i)) {
+            console.log("update image " + i);
+            await productImage(img, json.id, token, "product-image" + i++);
+          }
+        })
+      );
+
+      return json;
+    } else {
+      throw Error(await response.text());
+    }
+  }
+}
+
+//TODO too much copy/paste from updatecampaign
+export async function newCampaignChain(data) {
+  if (localStorage.getItem("offline")) {
+    data.id = self.crypto.randomUUID();
+    return campaigns.push(data);
+  } else {
+    //no-unused-vars
+    const { productImage1, productImage2, productImage3, ...without } = data;
+    const productImages = [productImage1, productImage2, productImage3];
+    const payload = JSON.stringify(without);
+    const token = await getToken();
     const response = await fetch(`${remote}/brands/me/campaigns`, {
       method: "POST",
       headers: {

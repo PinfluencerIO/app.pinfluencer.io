@@ -10,11 +10,10 @@ import { Campaigns } from "./pages/campaigns/Campaigns";
 import { Collaborations } from "./pages/collaborations/Collaborations";
 import { Profile } from "./pages/Profile";
 import { OnboardingSteps } from "./pages/onboarding/OnboardingSteps";
-import { NewCampaignSteps } from "./pages/campaigns/new/NewCampaignSteps";
+import { CampaignSteps } from "./pages/campaigns/stepper/CampaignSteps";
 import { BadUrl } from "./pages/BadUrl";
 import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
 import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
-import { EditCampaign } from "./pages/campaigns/EditCampaign";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -50,9 +49,9 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="campaigns" element={<Campaigns />}>
           <Route index element={<CampaignsTable />} />
-          <Route path="new" element={<NewCampaignSteps />} />
+          <Route path="new" element={<CampaignSteps />} />
           <Route path=":id" element={<ViewCampaign />} />
-          <Route path=":id/edit" element={<EditCampaign />} />
+          <Route path=":id/edit" element={<CampaignSteps />} />
         </Route>
         <Route path="collaborations" element={<Collaborations />}>
           <Route index element={"<CollaborationsTable />"} />
