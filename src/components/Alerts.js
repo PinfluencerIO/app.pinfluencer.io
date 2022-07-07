@@ -8,3 +8,7 @@ export const backendIssue = {
   severtity: "error",
   message: "Failed to process. Speak with the support team.",
 };
+export const imageError = {
+  severtity: "error",
+  message: "Image too large, 2MB max",
+};

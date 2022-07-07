@@ -6,21 +6,23 @@ const remote = "https://3dgldh8a18.execute-api.eu-west-2.amazonaws.com";
 // standardise token based header
 async function authenticatedHeader() {
   const token = await getToken();
-  return {
+  const headers = {
     "Content-Type": "application/json",
     Authorization: "Bearer " + token,
   };
+  return headers;
 }
 
 // standardised request with optional payload
 async function actionRequest(action, payload) {
+  const headers = await authenticatedHeader();
   const request = {
     method: action,
-    headers: await authenticatedHeader(),
+    headers: headers,
   };
 
   if (payload) {
-    request.payload = payload;
+    request.body = payload;
   }
 
   return request;
@@ -38,9 +40,10 @@ async function executeFetch(url, action) {
 
 async function onboarding(payloadObject) {
   const payload = JSON.stringify(payloadObject);
+  const requestAction = await actionRequest("POST", payload);
   return await executeFetch(
     `${remote}/${payloadObject.type}s/me`,
-    actionRequest("POST", payload)
+    requestAction
   );
 }
 
@@ -88,28 +91,22 @@ function omit(obj, omitKey) {
 
 export async function brandLogo(data) {
   const payload = JSON.stringify(data);
-  return await executeFetch(
-    `${remote}/brands/me/logo`,
-    actionRequest("POST", payload)
-  );
+  const requestAction = await actionRequest("POST", payload);
+  return await executeFetch(`${remote}/brands/me/logo`, requestAction);
 }
 
 export async function brandHeader(data) {
   const payload = JSON.stringify(data);
-  return await executeFetch(
-    `${remote}/brands/me/header-image`,
-    actionRequest("POST", payload)
-  );
+  const requestAction = await actionRequest("POST", payload);
+  return await executeFetch(`${remote}/brands/me/header-image`, requestAction);
 }
 
 export async function getBrand() {
   if (localStorage.getItem("offline")) {
     return campaigns;
   } else {
-    const response = await executeFetch(
-      `${remote}/brands/me`,
-      actionRequest("GET")
-    );
+    const requestAction = await actionRequest("GET");
+    const response = await executeFetch(`${remote}/brands/me`, requestAction);
     const json = await response.json();
     return json;
   }
@@ -119,9 +116,10 @@ export async function getCampaigns() {
   if (localStorage.getItem("offline")) {
     return campaigns;
   } else {
+    const requestAction = await actionRequest("GET");
     const response = await executeFetch(
       `${remote}/brands/me/campaigns`,
-      actionRequest("GET")
+      requestAction
     );
 
     const json = await response.json();
@@ -138,10 +136,17 @@ export async function updateCampaign(data) {
   } else {
     const { productImage1, productImage2, productImage3, ...without } = data;
     const productImages = [productImage1, productImage2, productImage3];
+    console.log("before", productImages);
+    const updateImages = productImages.filter(
+      (img) => !img.startsWith("https")
+    );
+    console.log("after", updateImages);
+    data.productImageUpdate = updateImages;
     const payload = JSON.stringify(without);
+    const requestAction = await actionRequest("PUT", payload);
     const response = await executeFetch(
       `${remote}/brands/me/campaigns/${data.id}`,
-      actionRequest("PUT", payload)
+      requestAction
     );
     const json = await response.json();
     let i = 1;
@@ -175,15 +180,17 @@ export async function newCampaignChain(data) {
     const { productImage1, productImage2, productImage3, ...without } = data;
     const productImages = [productImage1, productImage2, productImage3];
     const payload = JSON.stringify(without);
+    const requestAction = await actionRequest("POST", payload);
+    console.log(requestAction);
     const response = await executeFetch(
       `${remote}/brands/me/campaigns`,
-      actionRequest("POST", payload)
+      requestAction
     );
     const json = await response.json();
     let i = 1;
     await Promise.all(
       productImages.map(async (img) => {
-        await productImage(img, json.id, "product-image" + i++);
+        if (img) await productImage(img, json.id, "product-image" + i++);
       })
     );
 
@@ -192,9 +199,13 @@ export async function newCampaignChain(data) {
 }
 
 export async function productImage(img, id, ref) {
+  const requestAction = await actionRequest(
+    "POST",
+    JSON.stringify({ imageBytes: img.split(",")[1] })
+  );
   const response = await executeFetch(
     `${remote}/brands/me/campaigns/${id}/${ref}`,
-    actionRequest("POST", JSON.stringify({ imageBytes: img.split(",")[1] }))
+    requestAction
   );
 
   console.log(
@@ -213,9 +224,10 @@ export async function getCampaign(campaignId) {
     result.status = "DRAFT";
     return result;
   } else {
+    const requestAction = await actionRequest("GET");
     const response = await executeFetch(
       `${remote}/campaigns/${campaignId}`,
-      actionRequest("GET")
+      requestAction
     );
 
     return await response.json();

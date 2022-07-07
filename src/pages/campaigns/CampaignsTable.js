@@ -1,12 +1,20 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Stack,
+  Typography,
+} from "@mui/material";
+// import { GridActionsCellItem } from "@mui/x-data-grid";
 import React, { Fragment } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import CampaignFilterButtons from "../../components/CampaignFilterButtons";
 import { useEffect } from "react";
 import { getCampaigns } from "../../api/api";
 import { useState } from "react";
-import PreviewIcon from "@mui/icons-material/Preview";
+// import PreviewIcon from "@mui/icons-material/Preview";
 
 //TODO replace data grid 💤 with cards that are sortable 👏 🔥
 export const CampaignsTable = () => {
@@ -14,51 +22,59 @@ export const CampaignsTable = () => {
   const [loading, setLoading] = useState(true);
   const nav = useNavigate();
   const [rows, setRows] = useState([]);
-
   useEffect(() => {
     getCampaigns()
       .then((d) => {
         console.log("getCampaigns retrieved");
-        setRows(d);
+        if (searchParams) {
+          setRows(
+            d.filter((row) => {
+              row.status === searchParams;
+            })
+          );
+        } else {
+          console.log(d);
+          setRows(d);
+        }
         setLoading(false);
       })
       .catch((err) => {
         //TODO handle error sign posting to user
         console.error(err);
       });
-  }, [rows]);
+  }, [searchParams]);
 
-  const columnsLg = [
-    { field: "id", headerName: "id", width: 200 },
-    { field: "campaignTitle", headerName: "Title", width: 200 },
-    { field: "campaignDescription", headerName: "Description", width: 330 },
-    { field: "productTitle", headerName: "Produt Title", width: 230 },
-    {
-      field: "created",
-      headerName: "Creation Date",
-      width: 200,
-      type: "dateTime",
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      type: "actions",
-      getActions: (params) => [
-        <GridActionsCellItem
-          icon={<PreviewIcon />}
-          label="View Campaign"
-          onClick={() => nav(params.id)}
-          key={params.id}
-          showInMenu
-        />,
-      ],
-    },
-  ];
+  // const columnsLg = [
+  //   { field: "id", headerName: "id", width: 200 },
+  //   { field: "campaignTitle", headerName: "Title", width: 200 },
+  //   { field: "campaignDescription", headerName: "Description", width: 330 },
+  //   { field: "productTitle", headerName: "Produt Title", width: 230 },
+  //   {
+  //     field: "created",
+  //     headerName: "Creation Date",
+  //     width: 200,
+  //     type: "dateTime",
+  //   },
+  //   {
+  //     field: "actions",
+  //     headerName: "Actions",
+  //     type: "actions",
+  //     getActions: (params) => [
+  //       <GridActionsCellItem
+  //         icon={<PreviewIcon />}
+  //         label="View Campaign"
+  //         onClick={() => nav(params.id)}
+  //         key={params.id}
+  //         showInMenu
+  //       />,
+  //     ],
+  //   },
+  // ];
 
   if (loading === true) {
     return <Box>Loading...{loading}</Box>;
   }
-
+  false && console.log(searchParams);
   return (
     <Fragment>
       <Stack
@@ -78,30 +94,29 @@ export const CampaignsTable = () => {
           setSearchParams={setSearchParams}
         />
       </Stack>
-      <Box sx={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columnsLg}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          getRowClassName={(params) =>
-            params.id === searchParams.get("id") ? "hi" : ""
-          }
-          sx={{
-            "& .hi": {
-              bgcolor: "green",
-            },
-          }}
-          initialState={{
-            columns: {
-              columnVisibilityModel: {
-                id: false,
-              },
-            },
-          }}
-        />
-      </Box>
+      {rows.map((row, index) => (
+        <Card key={index} sx={{ minWidth: 275 }}>
+          <CardContent>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              {row.campaignTitle}
+            </Typography>
+            <Typography variant="h5" component="div">
+              {row.campaignDescription}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              {row.productTitle}
+            </Typography>
+            <Typography variant="body2">{row.productDescription}</Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small">View</Button>
+          </CardActions>
+        </Card>
+      ))}
     </Fragment>
   );
 };

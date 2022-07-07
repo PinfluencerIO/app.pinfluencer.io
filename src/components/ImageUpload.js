@@ -2,7 +2,13 @@ import { IconButton, Stack, Typography } from "@mui/material";
 import React, { Fragment, useState } from "react";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 
-export const ImageUpload = ({ data, elementId, label, sizeLabel }) => {
+export const ImageUpload = ({
+  data,
+  elementId,
+  label,
+  sizeLabel,
+  tooLargeAlert,
+}) => {
   const [imageSrc, setImageSrc] = useState(get(data, elementId));
 
   return (
@@ -28,12 +34,17 @@ export const ImageUpload = ({ data, elementId, label, sizeLabel }) => {
         style={{ margin: "-20px 0", visibility: "hidden" }}
         name={elementId}
         id={elementId}
-        onChange={() => previewImage(elementId, setImageSrc)}
+        onChange={() => previewImage(elementId, setImageSrc, tooLargeAlert)}
       ></input>
     </Fragment>
   );
-  function previewImage(elementId, updateStateFunction) {
+  function previewImage(elementId, updateStateFunction, tooLargeAlert) {
     const file = document.getElementById(elementId).files[0];
+    if (file?.size > 2097152) {
+      tooLargeAlert();
+      document.getElementById(elementId).value = null;
+      return;
+    }
     const reader = new FileReader();
 
     reader.addEventListener(

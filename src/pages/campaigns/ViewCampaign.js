@@ -126,7 +126,7 @@ export const ViewCampaign = () => {
   }
   function topLeftGrid() {
     return (
-      <Grid item display="flex" lg={8}>
+      <Grid item display="flex" lg={8} xs={12}>
         <Paper sx={paperStyle()}>
           <Typography className="lightLabel">Campaign Details</Typography>
           <Typography variant="h5">{campaign?.campaignTitle}</Typography>
@@ -145,7 +145,7 @@ export const ViewCampaign = () => {
   }
   function topRightGrid() {
     return (
-      <Grid item display="flex" lg={4}>
+      <Grid item display="flex" lg={4} xs={12}>
         <Paper sx={paperStyle()}>
           <Typography className="lightLabel">Campaign Objectives</Typography>
           <Typography variant="h5">
@@ -210,7 +210,7 @@ export const ViewCampaign = () => {
   }
   function bottomGrid() {
     return (
-      <Grid item lg={12}>
+      <Grid item lg={12} xs={12}>
         <Paper sx={paperStyle()}>
           <Typography className="lightLabel">Product</Typography>
           <Typography variant="h5">{campaign?.productTitle}</Typography>
@@ -251,6 +251,7 @@ export const ViewCampaign = () => {
   function paperStyle() {
     return {
       alignSelf: "stretch",
+      flexGrow: 1,
       padding: "24px",
       "& p": {
         marginTop: "10px",

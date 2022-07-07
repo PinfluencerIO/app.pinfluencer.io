@@ -2,7 +2,7 @@ import { Box, TextField } from "@mui/material";
 import React, { Fragment } from "react";
 import { ImageUpload } from "../../../components/ImageUpload";
 
-export const ProductFrame = ({ data, handleChange }) => {
+export const ProductFrame = ({ data, handleChange, tooLargeAlert }) => {
   return (
     <Fragment>
       <Box sx={{ py: 2, marginBottom: "-30px" }}>
@@ -34,19 +34,22 @@ export const ProductFrame = ({ data, handleChange }) => {
           data={data}
           elementId={"productImage1"}
           label={"Product Image 1"}
-          sizeLabel={"300 (w) x 300 (h) pixels"}
+          sizeLabel={"Best 300 (w) x 300 (h) pixels"}
+          tooLargeAlert={tooLargeAlert}
         />
         <ImageUpload
           data={data}
           elementId={"productImage2"}
           label={"Product Image 2"}
-          sizeLabel={"300 (w) x 300 (h) pixels"}
+          sizeLabel={"Best 300 (w) x 300 (h) pixels"}
+          tooLargeAlert={tooLargeAlert}
         />
         <ImageUpload
           data={data}
           elementId={"productImage3"}
           label={"Product Image 3"}
-          sizeLabel={"300 (w) x 300 (h) pixels"}
+          sizeLabel={"Best 300 (w) x 300 (h) pixels"}
+          tooLargeAlert={tooLargeAlert}
         />
       </Box>
     </Fragment>
