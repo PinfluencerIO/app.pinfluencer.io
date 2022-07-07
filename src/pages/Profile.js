@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { getBrand } from "../api/api";
 export const Profile = () => {
   const [brand, setBrand] = useState({});
+  //TODO handle error
   useEffect(() => {
     getBrand().then((brand) => setBrand(brand));
   }, []);

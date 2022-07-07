@@ -12,7 +12,6 @@ import PreviewIcon from "@mui/icons-material/Preview";
 export const CampaignsTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
-  false && console.log(searchParams);
   const nav = useNavigate();
   const [rows, setRows] = useState([]);
 
@@ -24,6 +23,7 @@ export const CampaignsTable = () => {
         setLoading(false);
       })
       .catch((err) => {
+        //TODO handle error sign posting to user
         console.error(err);
       });
   }, [rows]);
@@ -85,6 +85,14 @@ export const CampaignsTable = () => {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
+          getRowClassName={(params) =>
+            params.id === searchParams.get("id") ? "hi" : ""
+          }
+          sx={{
+            "& .hi": {
+              bgcolor: "green",
+            },
+          }}
           initialState={{
             columns: {
               columnVisibilityModel: {

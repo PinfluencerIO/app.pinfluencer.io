@@ -3,6 +3,48 @@ import { campaigns, image } from "./fake-api";
 
 const remote = "https://3dgldh8a18.execute-api.eu-west-2.amazonaws.com";
 
+// standardise token based header
+async function authenticatedHeader() {
+  const token = await getToken();
+  return {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token,
+  };
+}
+
+// standardised request with optional payload
+async function actionRequest(action, payload) {
+  const request = {
+    method: action,
+    headers: await authenticatedHeader(),
+  };
+
+  if (payload) {
+    request.payload = payload;
+  }
+
+  return request;
+}
+
+// fetch call that only returns ok response, otherwise throws an exception
+async function executeFetch(url, action) {
+  const response = await fetch(url, action);
+
+  if (response.ok) {
+    return response;
+  }
+  throw Error(await response.text());
+}
+
+async function onboarding(payloadObject) {
+  const payload = JSON.stringify(payloadObject);
+  return await executeFetch(
+    `${remote}/${payloadObject.type}s/me`,
+    actionRequest("POST", payload)
+  );
+}
+
+// send type data, then chain images
 export async function onboardingChain(data) {
   // remove opposite type from object
   const ofType = omit(data, data.type === "brand" ? "influencer" : "brand");
@@ -23,11 +65,7 @@ export async function onboardingChain(data) {
     delete withoutNest["brandHeader"];
 
     const response = await onboarding(withoutNest);
-    if (response.status === 500) {
-      const text = await response.text();
 
-      throw Error(text);
-    }
     const newBrand = await response.json();
     if (logoSrc) await brandLogo({ imageBytes: logoSrc.split(",")[1] });
     if (headerSrc) await brandHeader({ imageBytes: headerSrc.split(",")[1] });
@@ -48,41 +86,19 @@ function omit(obj, omitKey) {
   }, {});
 }
 
-async function onboarding(payloadObject) {
-  const token = await getToken();
-  return await fetch(`${remote}/${payloadObject.type}s/me`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify(payloadObject),
-  });
-}
-
-export async function brandLogo(payload) {
-  return getToken().then((token) =>
-    fetch(`${remote}/brands/me/logo`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(payload),
-    })
+export async function brandLogo(data) {
+  const payload = JSON.stringify(data);
+  return await executeFetch(
+    `${remote}/brands/me/logo`,
+    actionRequest("POST", payload)
   );
 }
 
-export async function brandHeader(payload) {
-  return getToken().then((token) =>
-    fetch(`${remote}/brands/me/header-image`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify(payload),
-    })
+export async function brandHeader(data) {
+  const payload = JSON.stringify(data);
+  return await executeFetch(
+    `${remote}/brands/me/header-image`,
+    actionRequest("POST", payload)
   );
 }
 
@@ -90,16 +106,11 @@ export async function getBrand() {
   if (localStorage.getItem("offline")) {
     return campaigns;
   } else {
-    const token = await getToken();
-    const data = await fetch(`${remote}/brands/me`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
-
-    const json = await data.json();
+    const response = await executeFetch(
+      `${remote}/brands/me`,
+      actionRequest("GET")
+    );
+    const json = await response.json();
     return json;
   }
 }
@@ -108,20 +119,12 @@ export async function getCampaigns() {
   if (localStorage.getItem("offline")) {
     return campaigns;
   } else {
-    const token = await getToken();
-    const data = await fetch(`${remote}/brands/me/campaigns`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+    const response = await executeFetch(
+      `${remote}/brands/me/campaigns`,
+      actionRequest("GET")
+    );
 
-    if (data.status !== 200) {
-      throw Error(await data.text());
-    }
-
-    const json = await data.json();
+    const json = await response.json();
     return json;
   }
 }
@@ -136,32 +139,30 @@ export async function updateCampaign(data) {
     const { productImage1, productImage2, productImage3, ...without } = data;
     const productImages = [productImage1, productImage2, productImage3];
     const payload = JSON.stringify(without);
-    const token = await getToken();
-    const response = await fetch(`${remote}/brands/me/campaigns/${data.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: payload,
-    });
-    if (response.status === 201 && data.productImageUpdate.length > 0) {
-      const json = await response.json();
-      let i = 1;
-      await Promise.all(
-        productImages.map(async (img) => {
-          if (data.productImageUpdate.includes(i)) {
-            console.log("update image " + i);
-            await productImage(img, json.id, token, "product-image" + i++);
-          }
-        })
-      );
+    const response = await executeFetch(
+      `${remote}/brands/me/campaigns/${data.id}`,
+      actionRequest("PUT", payload)
+    );
+    const json = await response.json();
+    let i = 1;
+    await Promise.all(
+      productImages.map(async (img) => {
+        if (data.productImageUpdate.includes(i)) {
+          await productImage(img, json.id, "product-image" + i++);
+        }
+      })
+    );
 
-      return json;
-    } else {
-      throw Error(await response.text());
-    }
+    return json;
   }
+}
+
+export async function updateCampaignState(id, state) {
+  const response = await executeFetch(
+    `${remote}/brands/me/campaigns/${id}/state`,
+    actionRequest("POST", { state: state })
+  );
+  return await response.json();
 }
 
 //TODO too much copy/paste from updatecampaign
@@ -174,41 +175,27 @@ export async function newCampaignChain(data) {
     const { productImage1, productImage2, productImage3, ...without } = data;
     const productImages = [productImage1, productImage2, productImage3];
     const payload = JSON.stringify(without);
-    const token = await getToken();
-    const response = await fetch(`${remote}/brands/me/campaigns`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: payload,
-    });
+    const response = await executeFetch(
+      `${remote}/brands/me/campaigns`,
+      actionRequest("POST", payload)
+    );
+    const json = await response.json();
+    let i = 1;
+    await Promise.all(
+      productImages.map(async (img) => {
+        await productImage(img, json.id, "product-image" + i++);
+      })
+    );
 
-    if (response.status === 201) {
-      const json = await response.json();
-      let i = 1;
-      await Promise.all(
-        productImages.map(async (img) => {
-          await productImage(img, json.id, token, "product-image" + i++);
-        })
-      );
-
-      return json;
-    } else {
-      throw Error(await response.text());
-    }
+    return json;
   }
 }
 
-export async function productImage(img, id, token, ref) {
-  const response = await fetch(`${remote}/brands/me/campaigns/${id}/${ref}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify({ imageBytes: img.split(",")[1] }),
-  });
+export async function productImage(img, id, ref) {
+  const response = await executeFetch(
+    `${remote}/brands/me/campaigns/${id}/${ref}`,
+    actionRequest("POST", JSON.stringify({ imageBytes: img.split(",")[1] }))
+  );
 
   console.log(
     "product image " + ref + " for campaign id" + id,
@@ -219,20 +206,17 @@ export async function productImage(img, id, token, ref) {
 export async function getCampaign(campaignId) {
   if (localStorage.getItem("offline")) {
     const result = campaigns.find((campaign) => campaignId === campaign.id);
+    // for offline replace url images is local placeholder bytes
     result.productImage1 = image.bytes;
     result.productImage2 = image.bytes;
     result.productImage3 = image.bytes;
     result.status = "DRAFT";
     return result;
   } else {
-    const token = await getToken();
-    const response = await fetch(`${remote}/campaigns/${campaignId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+    const response = await executeFetch(
+      `${remote}/campaigns/${campaignId}`,
+      actionRequest("GET")
+    );
 
     return await response.json();
   }

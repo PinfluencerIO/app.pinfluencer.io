@@ -65,7 +65,7 @@ export function CampaignSteps() {
     });
   };
   useEffect(() => {
-    // call api
+    //TODO handle error
     getCampaign(id).then((campaign) => {
       setData(campaign);
       setLoading(false);

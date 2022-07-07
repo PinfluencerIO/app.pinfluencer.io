@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import React, { Fragment, useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
-import { getCampaign } from "../../api/api";
+import { getCampaign, updateCampaignState } from "../../api/api";
 import { OBJECTIVES } from "../../api/data";
 import isValidUUID from "../../components/uuidUtils";
 import { BadUrl } from "../BadUrl";
@@ -14,8 +14,10 @@ export const ViewCampaign = () => {
   const validId = isValidUUID(id);
   const [campaign, setCampaign] = useState();
   const [loading, setLoading] = useState(false);
+  //TODO handle error
   useEffect(() => {
     getCampaign(id).then((c) => {
+      if (!c.status) c.status = "DRAFT";
       setCampaign(c);
       setLoading(false);
     });
@@ -50,22 +52,24 @@ export const ViewCampaign = () => {
         justifyContent="flex-end"
         sx={{ "& button": { ml: "15px" } }}
       >
-        {getAvailableActionsFor(campaign?.status).map((action) => {
-          return (
-            <Button
-              key={action.label}
-              variant={action.variant}
-              color={action.color}
-              onClick={action.onClick}
-            >
-              {action.label}
-            </Button>
-          );
-        })}
+        {getAvailableActionsFor(campaign?.id, campaign?.status).map(
+          (action) => {
+            return (
+              <Button
+                key={action.label}
+                variant={action.variant}
+                color={action.color}
+                onClick={action.onClick}
+              >
+                {action.label}
+              </Button>
+            );
+          }
+        )}
       </Grid>
     );
   }
-  function getAvailableActionsFor(status) {
+  function getAvailableActionsFor(id, status) {
     if (status === undefined) return [];
 
     const edit = {
@@ -78,19 +82,28 @@ export const ViewCampaign = () => {
       label: "Launch",
       color: "primary",
       variant: "contained",
-      onClick: () => nav("launch"),
+      onClick: () => {
+        updateCampaignState(id, "ACTIVE");
+        nav("/Campaigns?id=" + id);
+      },
     };
     const deleteAction = {
       label: "Delete",
       color: "red",
       variant: "outlined",
-      onClick: () => nav("delete"),
+      onClick: () => {
+        updateCampaignState(id, "DELETED");
+        nav("/campaings");
+      },
     };
     const close = {
       label: "Close",
       color: "black",
       variant: "contained",
-      onClick: () => nav("close"),
+      onClick: () => {
+        updateCampaignState(id, "CLOSED");
+        nav("/campaings");
+      },
     };
     const actions = [
       {
