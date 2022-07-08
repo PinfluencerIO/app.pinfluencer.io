@@ -32,12 +32,15 @@ export const ImageUpload = ({
           </Stack>
         </IconButton>
 
-        <IconButton aria-label="delete image" color="red">
+        <IconButton
+          aria-label="delete image"
+          color="red"
+          onClick={() => {
+            document.getElementById(elementId).value = null;
+            setImageSrc(null);
+          }}
+        >
           <HighlightOffIcon
-            onClick={() => {
-              document.getElementById(elementId).value = null;
-              setImageSrc(null);
-            }}
             sx={{
               visibility:
                 imageSrc && !imageSrc.includes("default_product_image")

@@ -9,8 +9,9 @@ export default function CampaignFilterButtons({ values, setSearchParams }) {
         textDecoration: "none",
         color: location.search.includes(i.replace(" ", "")) ? "red" : "",
       }}
-      disabled={location.search.includes(i.replace(" ", ""))}
+      // disabled={location.search.includes(i.replace(" ", ""))}
       onClick={(event) => {
+        console.log(event);
         const filter = event.target.innerText.replace(" ", "");
         if (filter) {
           setSearchParams({ filter });

@@ -6,7 +6,6 @@ import UserContext from "./context/UserContext";
 import { Layout } from "./Layout";
 import { Dashboard } from "./pages/Dashboard";
 import { HomePage } from "./pages/HomePage";
-import { Campaigns } from "./pages/campaigns/Campaigns";
 import { Collaborations } from "./pages/collaborations/Collaborations";
 import { Profile } from "./pages/Profile";
 import { OnboardingSteps } from "./pages/onboarding/OnboardingSteps";
@@ -14,6 +13,7 @@ import { CampaignSteps } from "./pages/campaigns/stepper/CampaignSteps";
 import { BadUrl } from "./pages/BadUrl";
 import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
 import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
+import { Campaigns } from "./pages/campaigns/Campaigns";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);

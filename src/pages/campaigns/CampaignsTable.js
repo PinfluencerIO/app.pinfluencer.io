@@ -1,40 +1,40 @@
 import {
-  Box,
   Button,
   Card,
   CardActions,
   CardContent,
-  Stack,
+  Grid,
   Typography,
 } from "@mui/material";
-// import { GridActionsCellItem } from "@mui/x-data-grid";
-import React, { Fragment } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import CampaignFilterButtons from "../../components/CampaignFilterButtons";
+import React from "react";
 import { useEffect } from "react";
-import { getCampaigns } from "../../api/api";
 import { useState } from "react";
-// import PreviewIcon from "@mui/icons-material/Preview";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getCampaigns } from "../../api/api";
+import CampaignFilterButtons from "../../components/CampaignFilterButtons";
+import { ImgOrBlank } from "../../components/ImgOrBlank";
 
 //TODO replace data grid 💤 with cards that are sortable 👏 🔥
 export const CampaignsTable = () => {
+  const [rows, setRows] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const nav = useNavigate();
-  const [rows, setRows] = useState([]);
   useEffect(() => {
     getCampaigns()
-      .then((d) => {
-        console.log("getCampaigns retrieved");
-        if (searchParams) {
+      .then((data) => {
+        if (searchParams.get("filter")) {
           setRows(
-            d.filter((row) => {
-              row.status === searchParams;
+            data.filter((row) => {
+              return (
+                row.campaignState.toLowerCase() ===
+                searchParams.get("filter").toLowerCase()
+              );
             })
           );
         } else {
-          console.log(d);
-          setRows(d);
+          console.log("data", { data });
+          setRows(data);
         }
         setLoading(false);
       })
@@ -44,79 +44,119 @@ export const CampaignsTable = () => {
       });
   }, [searchParams]);
 
-  // const columnsLg = [
-  //   { field: "id", headerName: "id", width: 200 },
-  //   { field: "campaignTitle", headerName: "Title", width: 200 },
-  //   { field: "campaignDescription", headerName: "Description", width: 330 },
-  //   { field: "productTitle", headerName: "Produt Title", width: 230 },
-  //   {
-  //     field: "created",
-  //     headerName: "Creation Date",
-  //     width: 200,
-  //     type: "dateTime",
-  //   },
-  //   {
-  //     field: "actions",
-  //     headerName: "Actions",
-  //     type: "actions",
-  //     getActions: (params) => [
-  //       <GridActionsCellItem
-  //         icon={<PreviewIcon />}
-  //         label="View Campaign"
-  //         onClick={() => nav(params.id)}
-  //         key={params.id}
-  //         showInMenu
-  //       />,
-  //     ],
-  //   },
-  // ];
-
-  if (loading === true) {
-    return <Box>Loading...{loading}</Box>;
+  if (loading) {
+    return "Loading...";
   }
-  false && console.log(searchParams);
+
   return (
-    <Fragment>
-      <Stack
-        direction={{ xs: "column", sm: "column", md: "row" }}
-        justifyContent="space-between"
-      >
-        <Typography fontSize={{ xs: "1rem", sm: "1.5rem", md: "2rem" }}>
-          All Campaigns
-        </Typography>
-        <Button variant="contained" color="primary" onClick={() => nav("new")}>
-          Create New Campaing
-        </Button>
-      </Stack>
-      <Stack direction="row">
-        <CampaignFilterButtons
-          values={["Active", "Draft", "Closed"]}
-          setSearchParams={setSearchParams}
-        />
-      </Stack>
-      {rows.map((row, index) => (
-        <Card key={index} sx={{ minWidth: 275 }}>
+    <Grid container>
+      <Grid container item>
+        <Grid container item direction="row" justifyContent="space-between">
+          <Typography variant="h4" mt={1}>
+            All Campaigns
+          </Typography>
+          <Button variant="contained">Create New Campaign</Button>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3} mt={5} direction="column">
+        <Grid item>
+          <CampaignFilterButtons
+            values={["Draft", "Active", "Closed"]}
+            setSearchParams={setSearchParams}
+          />
+        </Grid>
+        {rows.length === 0 ? emptyRows() : populatedRows()}
+      </Grid>
+    </Grid>
+  );
+  function emptyRows() {
+    return (
+      <Grid item>
+        <Card>
+          <CardContent>
+            <Typography variant="h5">No campaigns</Typography>
+            <Typography variant="h6">
+              Try a different filter or create a new campaign
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    );
+  }
+
+  function populatedRows() {
+    return rows.map((row) => (
+      <Grid key={row.id} item>
+        <Card>
           <CardContent>
             <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
+              sx={{
+                width: "400px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+              variant="h5"
             >
               {row.campaignTitle}
             </Typography>
-            <Typography variant="h5" component="div">
+            <Typography sx={{ marginTop: "10px" }}>
               {row.campaignDescription}
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography
+              sx={{
+                width: "400px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                marginTop: "20px",
+              }}
+              variant="h6"
+            >
               {row.productTitle}
             </Typography>
-            <Typography variant="body2">{row.productDescription}</Typography>
+            <Typography sx={{ marginTop: "10px" }}>
+              {row.productDescription}
+            </Typography>
+
+            <Grid container spacing={3} mt={1}>
+              <Grid item>
+                <ImgOrBlank
+                  imageSrc={row.productImage1}
+                  altLabel="Product 1"
+                  width="150px"
+                  height="150px"
+                />
+              </Grid>
+              <Grid item>
+                <ImgOrBlank
+                  imageSrc={row.productImage2}
+                  altLabel="Product 2"
+                  width="150px"
+                  height="150px"
+                />
+              </Grid>
+              <Grid item>
+                <ImgOrBlank
+                  imageSrc={row.productImage3}
+                  altLabel="Product 3"
+                  width="150px"
+                  height="150px"
+                />
+              </Grid>
+            </Grid>
           </CardContent>
-          <CardActions>
-            <Button size="small">View</Button>
+          <CardActions sx={{ ml: "8px" }}>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => nav(row.id)}
+            >
+              View
+            </Button>
           </CardActions>
         </Card>
-      ))}
-    </Fragment>
-  );
+      </Grid>
+    ));
+  }
 };

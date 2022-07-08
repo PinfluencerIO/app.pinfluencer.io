@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { getCampaign, updateCampaignState } from "../../api/api";
 import { OBJECTIVES } from "../../api/data";
+import { ImgOrBlank } from "../../components/ImgOrBlank";
 import isValidUUID from "../../components/uuidUtils";
 import { BadUrl } from "../BadUrl";
 
@@ -220,25 +221,25 @@ export const ViewCampaign = () => {
           </Typography>
           <Grid container spacing={3} mt={3}>
             <Grid item>
-              <img
-                alt="Product 1"
-                src={campaign?.productImage1}
+              <ImgOrBlank
+                imageSrc={campaign?.productImage1}
+                altLabel="Product 1"
                 width="150px"
                 height="150px"
               />
             </Grid>
             <Grid item>
-              <img
-                alt="Product 2"
-                src={campaign?.productImage2}
+              <ImgOrBlank
+                imageSrc={campaign?.productImage2}
+                altLabel="Product 2"
                 width="150px"
                 height="150px"
               />
             </Grid>
             <Grid item>
-              <img
-                alt="Product 3"
-                src={campaign?.productImage3}
+              <ImgOrBlank
+                imageSrc={campaign?.productImage3}
+                altLabel="Product 3"
                 width="150px"
                 height="150px"
               />
