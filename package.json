@@ -29,7 +29,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
-    "deploy": "npm run build; aws --profile pinfluencer s3 sync build s3://app.pinfluencer.io; aws --profile pinfluencer cloudfront create-invalidation --distribution-id EWGUPH07I0MKD --paths \"/*\" --no-cli-pager"
+    "deploy": "npm run build; aws --profile pinfluencer s3 sync build s3://app.pinfluencer.io; aws --profile pinfluencer cloudfront create-invalidation --distribution-id E48VRO6CJWL2W --paths \"/*\" --no-cli-pager"
   },
   "eslintConfig": {
     "extends": [
