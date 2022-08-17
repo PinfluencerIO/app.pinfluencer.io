@@ -112,6 +112,73 @@ export async function getBrand() {
   }
 }
 
+export async function getCollaborations() {
+  return [
+    {
+      id: 1,
+      collaborationState: "requested",
+      campaignId: 300,
+      campaignTitle: "Aliquip laboris",
+      influencerId: 600,
+      influencerName: "Jessie Boone",
+      influencerAddress: null,
+      collaborationRequestId: 800,
+      collaborationRequestDetails:
+        "Exercitation do non duis labore duis excepteur adipisicing nostrud.",
+    },
+    {
+      id: 2,
+      collaborationState: "approved",
+      campaignId: 302,
+      campaignTitle: "Pariatur eu consequat",
+      influencerId: 602,
+      influencerName: "Frank Allen",
+      influencerAddress: null,
+      collaborationRequestId: 802,
+      collaborationRequestDetails:
+        "Ullamco tempor aliquip fugiat culpa fugiat fugiat dolor pariatur incididunt in exercitation tempor esse.",
+    },
+    {
+      id: 3,
+      collaborationState: "completed",
+      campaignId: 303,
+      campaignTitle: "Esse dolor voluptate elit aliqua",
+      influencerId: 603,
+      influencerName: "Hettie Bryant",
+      influencerAddress:
+        "Hettie Bryant, 100 Gilbon Ave, St. Pierre & Miquelon, chulmleigh, Devon, EX187BJ",
+      collaborationRequestId: 803,
+      collaborationRequestDetails: "Reprehenderit magna cupidatat quis nulla.",
+      contentImage: "https://picsum.photos/200",
+    },
+    {
+      id: 5,
+      collaborationState: "approved",
+      campaignId: 305,
+      campaignTitle: "Lamp perfectly source rather distant stranger",
+      influencerId: 605,
+      influencerName: "Terry Ferguson",
+      influencerAddress: "70 How Road, Sudanvill, Oxford, OX29 9ER",
+      collaborationRequestId: 805,
+      collaborationRequestDetails:
+        "With moon cap usual die camp topic chicken ",
+      contentImage: "https://picsum.photos/200",
+    },
+    {
+      id: 4,
+      collaborationState: "rejected",
+      campaignId: 304,
+      campaignTitle: "Duis duis qui quis elit amet",
+      influencerId: 604,
+      influencerName: "Phoebe Conner",
+      influencerAddress: null,
+      collaborationRequestId: 804,
+      collaborationRequestDetails:
+        "Duis labore incididunt adipisicing amet occaecat mollit labore dolor enim.",
+    },
+  ];
+}
+
 export async function getCampaigns() {
   if (localStorage.getItem("offline")) {
     return campaigns;

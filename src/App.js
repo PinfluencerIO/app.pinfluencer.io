@@ -14,6 +14,7 @@ import { BadUrl } from "./pages/BadUrl";
 import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
 import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
 import { Campaigns } from "./pages/campaigns/Campaigns";
+import { CollaborationsTable } from "./pages/collaborations/CollaborationsTable";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -54,7 +55,7 @@ function App() {
           <Route path=":id/edit" element={<CampaignSteps />} />
         </Route>
         <Route path="collaborations" element={<Collaborations />}>
-          <Route index element={"<CollaborationsTable />"} />
+          <Route index element={<CollaborationsTable />} />
           <Route path="new" element={"New Collaboration"} />
           <Route path=":id" element={"View Collaboration"} />
         </Route>

@@ -24,7 +24,7 @@ const steps = ["Objective", "Campaign", "Product"];
 
 export function CampaignSteps() {
   const [loading, setLoading] = useState(true);
-  // onboarding is made up of multiple steps, this keeps track of which step
+  // new campaign is made up of multiple steps, this keeps track of which step
   const [activeStep, setActiveStep] = useState(0);
   // show or hide alert
   const [showAlert, setShowAlert] = useState(null);

@@ -53,9 +53,11 @@ export const CampaignsTable = () => {
       <Grid container item>
         <Grid container item direction="row" justifyContent="space-between">
           <Typography variant="h4" mt={1}>
-            All Campaigns
+            Campaigns
           </Typography>
-          <Button variant="contained">Create New Campaign</Button>
+          <Button variant="contained" onClick={() => nav("new")}>
+            Create New Campaign
+          </Button>
         </Grid>
       </Grid>
       <Grid container spacing={3} mt={5} direction="column">
