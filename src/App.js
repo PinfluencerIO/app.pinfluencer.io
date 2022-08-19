@@ -32,7 +32,7 @@ function App() {
   useEffect(() => {
     //  redirect if user is available and that user has not completed onboarding
     if (user && !("custom:usertype" in user)) {
-      console.log(user);
+      // console.log(user);
       nav("Onboarding");
     } else if (user && redirect) {
       // if a user arrived pre authenticated to an authenticated route, redirect after authentication

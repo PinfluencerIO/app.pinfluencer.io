@@ -3,7 +3,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  Divider,
   Grid,
   Typography,
 } from "@mui/material";
@@ -12,18 +11,20 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCampaigns } from "../../api/api";
-import CampaignFilterButtons from "../../components/CampaignFilterButtons";
+import FilterButtons from "../../components/FilterButtons";
 import { ImgOrBlank } from "../../components/ImgOrBlank";
 
 //TODO replace data grid 💤 with cards that are sortable 👏 🔥
 export const CampaignsTable = () => {
   const [rows, setRows] = useState([]);
+  const [data, setData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const nav = useNavigate();
   useEffect(() => {
     getCampaigns()
       .then((data) => {
+        setData(data);
         if (searchParams.get("filter")) {
           setRows(
             data.filter((row) => {
@@ -34,7 +35,6 @@ export const CampaignsTable = () => {
             })
           );
         } else {
-          console.log("data", { data });
           setRows(data);
         }
         setLoading(false);
@@ -50,27 +50,23 @@ export const CampaignsTable = () => {
   }
 
   return (
-    <Grid container>
-      <Grid container item>
-        <Grid container item direction="row" justifyContent="space-between">
-          <Typography variant="h4" mt={1}>
-            Campaigns
-          </Typography>
-          <Button variant="contained" onClick={() => nav("new")}>
-            Create New Campaign
-          </Button>
-        </Grid>
+    <Grid container spacing={3}>
+      <Grid container item direction="row" justifyContent="space-between">
+        <Typography variant="h4" mt={1}>
+          Campaigns
+        </Typography>
+        <Button variant="contained" onClick={() => nav("new")}>
+          Create New Campaign
+        </Button>
       </Grid>
-      <Grid container spacing={3} mt={5} direction="column">
-        <Grid item>
-          <CampaignFilterButtons
-            values={["Draft", "Active", "Closed"]}
-            setSearchParams={setSearchParams}
-          />
-        </Grid>
-        <Divider sx={{ mt: 1, ml: 3 }} />
-        {rows.length === 0 ? emptyRows() : populatedRows()}
-      </Grid>
+      <FilterButtons
+        data={data}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+        filterNames={["active", "draft", "closed"]}
+        filterKey="campaignState"
+      />
+      {rows.length === 0 ? emptyRows() : populatedRows()}
     </Grid>
   );
   function emptyRows() {

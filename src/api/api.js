@@ -211,11 +211,11 @@ export async function updateCampaign(data) {
   } else {
     const { productImage1, productImage2, productImage3, ...without } = data;
     const productImages = [productImage1, productImage2, productImage3];
-    console.log("before", productImages);
+    // console.log("before", productImages);
     const updateImages = productImages.filter(
       (img) => !img.startsWith("https")
     );
-    console.log("after", updateImages);
+    // console.log("after", updateImages);
     data.productImageUpdate = updateImages;
     const payload = JSON.stringify(without);
     const requestAction = await actionRequest("PUT", payload);
@@ -256,7 +256,7 @@ export async function newCampaignChain(data) {
     const productImages = [productImage1, productImage2, productImage3];
     const payload = JSON.stringify(without);
     const requestAction = await actionRequest("POST", payload);
-    console.log(requestAction);
+    // console.log(requestAction);
     const response = await executeFetch(
       `${remote}/brands/me/campaigns`,
       requestAction

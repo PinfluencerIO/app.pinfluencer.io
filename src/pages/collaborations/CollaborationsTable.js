@@ -5,7 +5,6 @@ import {
   Card,
   // CardActions,
   CardContent,
-  Divider,
   Grid,
   Modal,
   Stack,
@@ -18,7 +17,7 @@ import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import React, { Fragment, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import CampaignFilterButtons from "../../components/CampaignFilterButtons";
+import FilterButtons from "../../components/FilterButtons";
 import { getCollaborations } from "../../api/api";
 
 const style = {
@@ -35,7 +34,7 @@ const style = {
 
 export const CollaborationsTable = () => {
   const [rows, setRows] = useState([]);
-  const [counts, setCounts] = useState([]);
+  const [data, setData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -52,22 +51,7 @@ export const CollaborationsTable = () => {
   useEffect(() => {
     getCollaborations()
       .then((data) => {
-        const counts = { requested: 0, approved: 0, completed: 0, rejected: 0 };
-        data.forEach((row) => {
-          if (row.collaborationState === "requested") {
-            counts.requested++;
-          }
-          if (row.collaborationState === "approved") {
-            counts.approved++;
-          }
-          if (row.collaborationState === "completed") {
-            counts.completed++;
-          }
-          if (row.collaborationState === "rejected") {
-            counts.rejected++;
-          }
-        });
-        setCounts(counts);
+        setData(data);
         if (searchParams.get("filter")) {
           setRows(
             data.filter((row) => {
@@ -97,20 +81,14 @@ export const CollaborationsTable = () => {
       <Grid item xs={12}>
         <Typography variant="h4">Collaborations</Typography>
       </Grid>
-      <Grid item>
-        <CampaignFilterButtons
-          values={[
-            `Requested (${counts.requested})`,
-            `Approved (${counts.approved})`,
-            `Completed (${counts.completed})`,
-            `Rejected (${counts.rejected})`,
-          ]}
-          setSearchParams={setSearchParams}
-        />
-      </Grid>
-      <Grid item xs={12} sx={{ mt: "-24px" }}>
-        <Divider />
-      </Grid>
+
+      <FilterButtons
+        data={data}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+        filterNames={["requested", "approved", "completed", "rejected"]}
+        filterKey="collaborationState"
+      />
       {rows.length === 0 ? emptyRows() : populatedRows()}
       {viewContentModal()}
     </Grid>

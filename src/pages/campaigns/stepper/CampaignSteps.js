@@ -87,7 +87,6 @@ export function CampaignSteps() {
   function tooLargeAlert() {
     setShowAlert(imageError);
     setTimeout(() => {
-      console.log("clear error msg");
       setShowAlert();
     }, 1000 * 2);
   }
