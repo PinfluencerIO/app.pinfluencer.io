@@ -1,24 +1,73 @@
 import {
+  Badge,
+  Box,
   Button,
   Card,
-  CardActions,
+  // CardActions,
   CardContent,
+  Divider,
   Grid,
+  Modal,
+  Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import React, { Fragment, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import CampaignFilterButtons from "../../components/CampaignFilterButtons";
 import { getCollaborations } from "../../api/api";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 export const CollaborationsTable = () => {
   const [rows, setRows] = useState([]);
+  const [counts, setCounts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [content, setContent] = useState(null);
+  const handleOpen = (row) => {
+    setContent(row.contentImage);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setContent(null);
+    setOpen(false);
+  };
 
   useEffect(() => {
     getCollaborations()
       .then((data) => {
+        const counts = { requested: 0, approved: 0, completed: 0, rejected: 0 };
+        data.forEach((row) => {
+          if (row.collaborationState === "requested") {
+            counts.requested++;
+          }
+          if (row.collaborationState === "approved") {
+            counts.approved++;
+          }
+          if (row.collaborationState === "completed") {
+            counts.completed++;
+          }
+          if (row.collaborationState === "rejected") {
+            counts.rejected++;
+          }
+        });
+        setCounts(counts);
         if (searchParams.get("filter")) {
           setRows(
             data.filter((row) => {
@@ -29,7 +78,6 @@ export const CollaborationsTable = () => {
             })
           );
         } else {
-          console.log("data", { data });
           setRows(data);
         }
         setLoading(false);
@@ -45,30 +93,55 @@ export const CollaborationsTable = () => {
   }
 
   return (
-    <Grid container>
-      <Grid container item direction="row" justifyContent="space-between">
-        <Typography variant="h4" mt={1}>
-          Collaborations
-        </Typography>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Typography variant="h4">Collaborations</Typography>
       </Grid>
-      <Grid container spacing={3} mt={5} direction="column">
-        <Grid item>
-          <CampaignFilterButtons
-            values={["Requested", "Approved", "Completed", "Rejected"]}
-            setSearchParams={setSearchParams}
-          />
-        </Grid>
-        {rows.length === 0 ? emptyRows() : populatedRows()}
+      <Grid item>
+        <CampaignFilterButtons
+          values={[
+            `Requested (${counts.requested})`,
+            `Approved (${counts.approved})`,
+            `Completed (${counts.completed})`,
+            `Rejected (${counts.rejected})`,
+          ]}
+          setSearchParams={setSearchParams}
+        />
       </Grid>
+      <Grid item xs={12} sx={{ mt: "-24px" }}>
+        <Divider />
+      </Grid>
+      {rows.length === 0 ? emptyRows() : populatedRows()}
+      {viewContentModal()}
     </Grid>
   );
+  function viewContentModal() {
+    return (
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Content created
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Details of where this content can be found outside of Pinfluencer
+          </Typography>
+          <img src={content} alt="Created content" />
+        </Box>
+      </Modal>
+    );
+  }
+
   function emptyRows() {
     return (
-      <Grid item>
+      <Grid item xs={12}>
         <Card>
           <CardContent>
-            <Typography variant="h5">No collaborations</Typography>
-            <Typography variant="h6">Try a different filter</Typography>
+            {headerAndValue("No collaborations", "Try a different filter")}
           </CardContent>
         </Card>
       </Grid>
@@ -76,48 +149,130 @@ export const CollaborationsTable = () => {
   }
   function populatedRows() {
     return rows.map((row) => (
-      <Grid item key={row.id}>
+      <Grid item key={row.id} xs={12}>
         <Card>
           <CardContent>
-            <Typography variant="h5">{row.campaignTitle}</Typography>
-            <Typography variant="h6">{row.collaborationState}</Typography>
-            <Typography variant="h6">
-              {row.collaborationRequestDetails}
-            </Typography>
-            <Typography variant="h6">{row.influencerName}</Typography>
-            <Typography variant="h6">{row.influencerAddress}</Typography>
+            <Grid container justifyContent="space-between">
+              {headerAndValue("Campaign", row.campaignTitle)}
+
+              <Grid item>
+                <Typography variant="h6">
+                  {renderStateIcon(row.collaborationState)}
+                </Typography>
+              </Grid>
+            </Grid>
+            <img
+              width="150"
+              height="150"
+              src={row.productImage}
+              alt="Product"
+              style={{ paddingBottom: "20px" }}
+            />
+            {headerAndValue("Request details", row.collaborationRequestDetails)}
+            {headerAndValue("Influencer", row.influencerName)}
+            {headerAndValue("Influencer Address", row.influencerAddress)}
           </CardContent>
-          <CardActions>
-            {row.collaborationState === "requested" && (
-              <Fragment>
-                <Button size="small" color="primary" variant="outlined">
-                  Accept
-                </Button>
-                <Button size="small" color="red" variant="outlined">
-                  Reject
-                </Button>
-              </Fragment>
-            )}
-            {row.collaborationState === "approved" && (
-              <Fragment>
-                <Button size="small" color="primary" variant="outlined">
-                  Complete
-                </Button>
-              </Fragment>
-            )}
-            {row.contentImage && (
-              <Fragment>
-                <Button size="small" color="secondary" variant="outlined">
-                  View content
-                </Button>
-              </Fragment>
-            )}
-            <Button size="small" color="black" variant="outlined">
-              Message
-            </Button>
-          </CardActions>
+          {actionButtons(row)}
         </Card>
       </Grid>
     ));
+  }
+  //todo extract this out for wider use
+  function headerAndValue(header, value) {
+    if (value)
+      return (
+        <Grid item sx={{ pb: "20px" }}>
+          <Typography
+            sx={{
+              color: "lightText",
+              display: { xs: "none", sm: "block" },
+            }}
+          >
+            {header}
+          </Typography>
+          <Typography variant="h5">{value}</Typography>
+        </Grid>
+      );
+  }
+  function actionButtons(row) {
+    return (
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ padding: "10px" }}
+      >
+        <Box sx={{ mr: "5px" }}>
+          {row.notifications > 0 ? (
+            <Badge badgeContent={row.notifications} color="primary">
+              <Button size="small" color="black" variant="outlined">
+                Message
+              </Button>
+            </Badge>
+          ) : (
+            <Button size="small" color="black" variant="outlined">
+              Message
+            </Button>
+          )}
+        </Box>
+        <Stack spacing={1} direction="row">
+          {row.collaborationState === "requested" && (
+            <Fragment>
+              <Button size="small" color="primary" variant="outlined">
+                Accept
+              </Button>
+              <Button size="small" color="red" variant="outlined">
+                Reject
+              </Button>
+            </Fragment>
+          )}
+          {row.collaborationState === "approved" && (
+            <Button size="small" color="primary" variant="outlined">
+              Complete
+            </Button>
+          )}
+          {row.contentImage && (
+            <Button
+              size="small"
+              color="secondary"
+              variant="outlined"
+              onClick={() => handleOpen(row)}
+            >
+              View content
+            </Button>
+          )}
+        </Stack>
+      </Stack>
+    );
+  }
+  function renderStateIcon(state) {
+    switch (state) {
+      case "requested":
+        return (
+          <Tooltip title="Collaboration Requested" placement="top" arrow>
+            <NotificationAddIcon />
+          </Tooltip>
+        );
+      case "approved":
+        return (
+          <Tooltip title="Collaboration Approved" placement="top" arrow>
+            <ThumbUpOffAltIcon />
+          </Tooltip>
+        );
+      case "completed":
+        return (
+          <Tooltip title="Collaboration Completed" placement="top" arrow>
+            <TaskAltIcon />
+          </Tooltip>
+        );
+      case "rejected":
+        return (
+          <Tooltip title="Collaboration Rejected" placement="top" arrow>
+            <ThumbDownOffAltIcon />
+          </Tooltip>
+        );
+      default:
+        return state;
+    }
   }
 };

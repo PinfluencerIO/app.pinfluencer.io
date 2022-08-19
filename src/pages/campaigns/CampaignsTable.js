@@ -3,6 +3,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Divider,
   Grid,
   Typography,
 } from "@mui/material";
@@ -67,6 +68,7 @@ export const CampaignsTable = () => {
             setSearchParams={setSearchParams}
           />
         </Grid>
+        <Divider sx={{ mt: 1, ml: 3 }} />
         {rows.length === 0 ? emptyRows() : populatedRows()}
       </Grid>
     </Grid>
