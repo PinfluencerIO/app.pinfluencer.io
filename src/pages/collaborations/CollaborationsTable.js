@@ -37,15 +37,31 @@ export const CollaborationsTable = () => {
   const [data, setData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
+  const [openContent, setOpenContent] = useState(false);
+  const [openCheckReject, setOpenCheckReject] = useState(false);
   const [content, setContent] = useState(null);
-  const handleOpen = (row) => {
+  const [rejectId, setRejectId] = useState(null);
+  const handleOpenContent = (row) => {
     setContent(row.contentImage);
-    setOpen(true);
+    setOpenContent(true);
   };
-  const handleClose = () => {
+  const handleCloseContent = () => {
     setContent(null);
-    setOpen(false);
+    setOpenContent(false);
+  };
+  const handleOpenCheckReject = (id) => {
+    setRejectId(id);
+    setOpenCheckReject(true);
+  };
+  const handleCloseCheckReject = () => {
+    setRejectId(null);
+    setOpenCheckReject(false);
+  };
+
+  const rejectCollaboration = () => {
+    //todo all api
+    console.log("call api and reject ", rejectId);
+    handleCloseCheckReject();
   };
 
   useEffect(() => {
@@ -90,14 +106,15 @@ export const CollaborationsTable = () => {
         filterKey="collaborationState"
       />
       {rows.length === 0 ? emptyRows() : populatedRows()}
-      {viewContentModal()}
+      {contentModal()}
+      {checkRejectModal()}
     </Grid>
   );
-  function viewContentModal() {
+  function contentModal() {
     return (
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openContent}
+        onClose={handleCloseContent}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -109,6 +126,31 @@ export const CollaborationsTable = () => {
             Details of where this content can be found outside of Pinfluencer
           </Typography>
           <img src={content} alt="Created content" />
+        </Box>
+      </Modal>
+    );
+  }
+  function checkRejectModal() {
+    return (
+      <Modal
+        open={openCheckReject}
+        onClose={handleCloseCheckReject}
+        aria-labelledby="modal-check-reject-modal-title"
+        aria-describedby="modal-check-reject-modal-description"
+      >
+        <Box sx={style}>
+          <Typography
+            id="modal-check-reject-modal-title"
+            variant="h6"
+            component="h2"
+          >
+            Are you sure?
+          </Typography>
+          <Typography id="modal-check-rejectmodal-description" sx={{ mt: 2 }}>
+            You want to reject this collaboration request
+          </Typography>
+          <Button onClick={() => setOpenCheckReject(false)}>No</Button>
+          <Button onClick={rejectCollaboration}>Yes</Button>
         </Box>
       </Modal>
     );
@@ -199,7 +241,12 @@ export const CollaborationsTable = () => {
               <Button size="small" color="primary" variant="outlined">
                 Accept
               </Button>
-              <Button size="small" color="red" variant="outlined">
+              <Button
+                size="small"
+                color="red"
+                variant="outlined"
+                onClick={() => handleOpenCheckReject(row.id)}
+              >
                 Reject
               </Button>
             </Fragment>
@@ -214,7 +261,7 @@ export const CollaborationsTable = () => {
               size="small"
               color="secondary"
               variant="outlined"
-              onClick={() => handleOpen(row)}
+              onClick={() => handleOpenContent(row)}
             >
               View content
             </Button>

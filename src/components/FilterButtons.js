@@ -21,8 +21,6 @@ export default function FilterButtons({
     counts[item[filterKey].toLowerCase()]++;
   });
 
-  console.log("Counts", counts);
-
   return (
     <Grid container item>
       <Grid item>
@@ -39,7 +37,7 @@ export default function FilterButtons({
                   const filter = event.target.parentNode.dataset.filter;
                   setSearchParams({ filter });
                 }}
-                key={i.id}
+                key={i}
               >
                 <ListItemText
                   data-filter={i}
