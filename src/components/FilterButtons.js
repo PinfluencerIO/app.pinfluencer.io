@@ -5,51 +5,113 @@ import {
   Divider,
   ListItemText,
   Grid,
+  ListItemButton,
+  ListItemIcon,
+  Typography,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 
 export default function FilterButtons({
   data,
-  filterNames,
+  filters,
   searchParams,
   setSearchParams,
   filterKey,
 }) {
+  const theme = useTheme();
+  const smScreen = useMediaQuery(theme.breakpoints.up("md"));
+
   const counts = {};
-  filterNames.forEach((filter) => (counts[filter] = 0));
+  filters.forEach((filter) => (counts[filter.label] = 0));
 
   data.forEach((item) => {
     counts[item[filterKey].toLowerCase()]++;
   });
-
+  false && console.log(Typography);
   return (
     <Grid container item>
       <Grid item>
+        {!smScreen && (
+          <Typography sx={{ ml: "5px" }} variant="span">
+            Filters:
+          </Typography>
+        )}
         <Tooltip title="Filter Results" placement="top" arrow>
           <Stack
-            direction={{ xs: "column", sm: "row" }}
+            direction="row"
             divider={<Divider orientation="vertical" flexItem />}
           >
-            {filterNames.map((i) => (
+            {filters.map((i) => (
               <ListItem
-                data-filter={i}
-                button
+                key={i.label}
+                disablePadding
                 onClick={(event) => {
                   const filter = event.target.parentNode.dataset.filter;
                   setSearchParams({ filter });
                 }}
-                key={i}
               >
-                <ListItemText
-                  data-filter={i}
-                  sx={{
-                    my: 0,
-                    whiteSpace: "nowrap",
-                    textTransform: "capitalize",
-                  }}
-                  primary={i + ` (${counts[i]})`}
-                  primaryTypographyProps={getColor(i)}
-                />
+                {smScreen && (
+                  <ListItemButton
+                    sx={{
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {i.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      sx={{
+                        whiteSpace: "nowrap",
+                        textTransform: "capitalize",
+                        ml: "-24px",
+                      }}
+                      primary={i.label + ` (${counts[i.label]})`}
+                      primaryTypographyProps={getColor(i.label)}
+                    />
+                  </ListItemButton>
+                )}
+                {!smScreen && (
+                  <ListItemButton
+                    sx={{
+                      display: { xs: "block", md: "none" },
+                      fontSize: "40",
+                    }}
+                  >
+                    <ListItemIcon sx={{ fontSize: "40" }}>
+                      {i.icon}
+                      <Typography sx={{ ml: "5px", color: "blue" }}>
+                        ({counts[i.label]})
+                      </Typography>
+                    </ListItemIcon>
+                  </ListItemButton>
+                )}
               </ListItem>
+
+              // <ListItem
+              //   data-filter={i.label}
+              //   button
+              //   onClick={(event) => {
+              //     const filter = event.target.parentNode.dataset.filter;
+              //     setSearchParams({ filter });
+              //   }}
+              //   key={i}
+              // >
+              //   <ListItemText
+              //     data-filter={i.label}
+              //     sx={{
+              //       my: 0,
+              //       whiteSpace: "nowrap",
+              //       textTransform: "capitalize",
+              //     }}
+              //     primary={i.label + ` (${counts[i.label]})`}
+              //     primaryTypographyProps={getColor(i.label)}
+              //   />
+              // </ListItem>
             ))}
           </Stack>
         </Tooltip>

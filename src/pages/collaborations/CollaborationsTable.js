@@ -3,45 +3,35 @@ import {
   Box,
   Button,
   Card,
-  // CardActions,
   CardContent,
   Grid,
-  Modal,
   Stack,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+
 import React, { Fragment, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import FilterButtons from "../../components/FilterButtons";
 import { getCollaborations } from "../../api/api";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import ShowContent from "../../components/ShowContent";
+import HeaderAndValue from "../../components/HeaderAndValue";
+import EmptyRows from "../../components/EmptyRows";
+import StateIconSelector, {
+  stateToIcon,
+} from "../../components/StateIconSelector";
+import AreYouSureDialog from "../../components/AreYouSureDialog";
 
 export const CollaborationsTable = () => {
   const [rows, setRows] = useState([]);
   const [data, setData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
+
+  // View Content State
   const [openContent, setOpenContent] = useState(false);
-  const [openCheckReject, setOpenCheckReject] = useState(false);
   const [content, setContent] = useState(null);
-  const [rejectId, setRejectId] = useState(null);
   const handleOpenContent = (row) => {
+    console.log(row.id);
     setContent(row.contentImage);
     setOpenContent(true);
   };
@@ -49,19 +39,40 @@ export const CollaborationsTable = () => {
     setContent(null);
     setOpenContent(false);
   };
+
+  // Are you sure dialogs
+  const [actionRowId, setActionRowId] = useState(null);
+
+  // Reject Collaboration State
+  const [openCheckReject, setOpenCheckReject] = useState(false);
   const handleOpenCheckReject = (id) => {
-    setRejectId(id);
+    setActionRowId(id);
     setOpenCheckReject(true);
   };
   const handleCloseCheckReject = () => {
-    setRejectId(null);
+    setActionRowId(null);
     setOpenCheckReject(false);
   };
-
   const rejectCollaboration = () => {
     //todo all api
-    console.log("call api and reject ", rejectId);
+    console.log("call api and REJECT ", actionRowId);
     handleCloseCheckReject();
+  };
+
+  // Accept Collaboration State
+  const [openCheckAccept, setOpenCheckAccept] = useState(false);
+  const handleOpenCheckAccept = (id) => {
+    setActionRowId(id);
+    setOpenCheckAccept(true);
+  };
+  const handleCloseCheckAccept = () => {
+    setActionRowId(null);
+    setOpenCheckAccept(false);
+  };
+  const acceptCollaboration = () => {
+    //todo all api
+    console.log("call api and ACCEPT ", actionRowId);
+    handleCloseCheckAccept();
   };
 
   useEffect(() => {
@@ -102,82 +113,54 @@ export const CollaborationsTable = () => {
         data={data}
         searchParams={searchParams}
         setSearchParams={setSearchParams}
-        filterNames={["requested", "approved", "completed", "rejected"]}
+        filters={[
+          { label: "requested", icon: stateToIcon("requested") },
+          { label: "approved", icon: stateToIcon("approved") },
+          { label: "completed", icon: stateToIcon("completed") },
+          { label: "rejected", icon: stateToIcon("rejected") },
+        ]}
         filterKey="collaborationState"
       />
-      {rows.length === 0 ? emptyRows() : populatedRows()}
-      {contentModal()}
-      {checkRejectModal()}
+      {rows.length === 0 ? (
+        <EmptyRows header="No collaborations" value="Try a different filter" />
+      ) : (
+        populatedRows()
+      )}
+      <ShowContent
+        show={openContent}
+        setShow={handleCloseContent}
+        content={content}
+      />
+      <AreYouSureDialog
+        header="Are you sure."
+        description="Do you want to reject this collaboration request?"
+        open={openCheckReject}
+        close={handleCloseCheckReject}
+        cancel={handleCloseCheckReject}
+        action={rejectCollaboration}
+      />
+      <AreYouSureDialog
+        header="Are you sure."
+        description="Do you want to accept this collaboration request?"
+        open={openCheckAccept}
+        close={handleCloseCheckAccept}
+        cancel={handleCloseCheckAccept}
+        action={acceptCollaboration}
+      />
     </Grid>
   );
-  function contentModal() {
-    return (
-      <Modal
-        open={openContent}
-        onClose={handleCloseContent}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Content created
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Details of where this content can be found outside of Pinfluencer
-          </Typography>
-          <img src={content} alt="Created content" />
-        </Box>
-      </Modal>
-    );
-  }
-  function checkRejectModal() {
-    return (
-      <Modal
-        open={openCheckReject}
-        onClose={handleCloseCheckReject}
-        aria-labelledby="modal-check-reject-modal-title"
-        aria-describedby="modal-check-reject-modal-description"
-      >
-        <Box sx={style}>
-          <Typography
-            id="modal-check-reject-modal-title"
-            variant="h6"
-            component="h2"
-          >
-            Are you sure?
-          </Typography>
-          <Typography id="modal-check-rejectmodal-description" sx={{ mt: 2 }}>
-            You want to reject this collaboration request
-          </Typography>
-          <Button onClick={() => setOpenCheckReject(false)}>No</Button>
-          <Button onClick={rejectCollaboration}>Yes</Button>
-        </Box>
-      </Modal>
-    );
-  }
 
-  function emptyRows() {
-    return (
-      <Grid item xs={12}>
-        <Card>
-          <CardContent>
-            {headerAndValue("No collaborations", "Try a different filter")}
-          </CardContent>
-        </Card>
-      </Grid>
-    );
-  }
   function populatedRows() {
     return rows.map((row) => (
       <Grid item key={row.id} xs={12}>
         <Card>
           <CardContent>
             <Grid container justifyContent="space-between">
-              {headerAndValue("Campaign", row.campaignTitle)}
+              <HeaderAndValue header="Campaign" value={row.campaignTitle} />
 
               <Grid item>
                 <Typography variant="h6">
-                  {renderStateIcon(row.collaborationState)}
+                  <StateIconSelector state={row.collaborationState} />
                 </Typography>
               </Grid>
             </Grid>
@@ -188,32 +171,22 @@ export const CollaborationsTable = () => {
               alt="Product"
               style={{ paddingBottom: "20px" }}
             />
-            {headerAndValue("Request details", row.collaborationRequestDetails)}
-            {headerAndValue("Influencer", row.influencerName)}
-            {headerAndValue("Influencer Address", row.influencerAddress)}
+            <HeaderAndValue
+              header="Request details"
+              value={row.collaborationRequestDetails}
+            />
+            <HeaderAndValue header="Influencer" value={row.influencerName} />
+            <HeaderAndValue
+              header="Influencer Address"
+              value={row.influencerAddress}
+            />
           </CardContent>
           {actionButtons(row)}
         </Card>
       </Grid>
     ));
   }
-  //todo extract this out for wider use
-  function headerAndValue(header, value) {
-    if (value)
-      return (
-        <Grid item sx={{ pb: "20px" }}>
-          <Typography
-            sx={{
-              color: "lightText",
-              display: { xs: "none", sm: "block" },
-            }}
-          >
-            {header}
-          </Typography>
-          <Typography variant="h5">{value}</Typography>
-        </Grid>
-      );
-  }
+
   function actionButtons(row) {
     return (
       <Stack
@@ -238,7 +211,12 @@ export const CollaborationsTable = () => {
         <Stack spacing={1} direction="row">
           {row.collaborationState === "requested" && (
             <Fragment>
-              <Button size="small" color="primary" variant="outlined">
+              <Button
+                size="small"
+                color="primary"
+                variant="outlined"
+                onClick={() => handleOpenCheckAccept(row.id)}
+              >
                 Accept
               </Button>
               <Button
@@ -269,35 +247,5 @@ export const CollaborationsTable = () => {
         </Stack>
       </Stack>
     );
-  }
-  function renderStateIcon(state) {
-    switch (state) {
-      case "requested":
-        return (
-          <Tooltip title="Collaboration Requested" placement="top" arrow>
-            <NotificationAddIcon />
-          </Tooltip>
-        );
-      case "approved":
-        return (
-          <Tooltip title="Collaboration Approved" placement="top" arrow>
-            <ThumbUpOffAltIcon />
-          </Tooltip>
-        );
-      case "completed":
-        return (
-          <Tooltip title="Collaboration Completed" placement="top" arrow>
-            <TaskAltIcon />
-          </Tooltip>
-        );
-      case "rejected":
-        return (
-          <Tooltip title="Collaboration Rejected" placement="top" arrow>
-            <ThumbDownOffAltIcon />
-          </Tooltip>
-        );
-      default:
-        return state;
-    }
   }
 };
