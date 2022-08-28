@@ -42,8 +42,12 @@ const aws = {
   oauth: {
     domain: "pinfluencer.auth.eu-west-2.amazoncognito.com",
     scope: ["email", "openid", "profile", "aws.cognito.signin.user.admin"],
-    redirectSignIn: "http://localhost:3000/,https://app.pinfluencer.io/",
-    redirectSignOut: "http://localhost:3000/,https://app.pinfluencer.io/",
+    // redirectSignIn: "http://localhost:3000/,https://app.pinfluencer.io/",
+    // redirectSignOut: "http://localhost:3000/,https://app.pinfluencer.io/",
+    redirectSignIn:
+      "http://localhost:3000/,http://app.pinfluencer.io.s3-website.eu-west-2.amazonaws.com",
+    redirectSignOut:
+      "http://localhost:3000/,http://app.pinfluencer.io.s3-website.eu-west-2.amazonaws.com",
     responseType: "code",
   },
 };
