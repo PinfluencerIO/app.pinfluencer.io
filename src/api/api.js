@@ -1,7 +1,8 @@
 import { getToken } from "../context/UserContext";
 import { campaigns, image } from "./fake-api";
 
-const remote = "https://3dgldh8a18.execute-api.eu-west-2.amazonaws.com";
+const remote = "https://api.pinfluencer.link";
+// const remote = "https://3dgldh8a18.execute-api.eu-west-2.amazonaws.com";
 
 // standardise token based header
 async function authenticatedHeader() {
