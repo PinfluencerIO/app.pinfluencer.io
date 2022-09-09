@@ -49,23 +49,23 @@ export const BrandDetails = ({ data, handleChange }) => {
           sx={{ width: { sm: "100%", md: "50%" } }}
         />
         <TextField
-          id="brand.instahandle"
+          id="instahandle"
           label="Instagram Name"
-          name="brand.instaHandle"
+          name="instaHandle"
           variant="outlined"
           autoComplete="false"
-          value={data.brand.instaHandle}
+          value={data.instaHandle}
           onChange={(event) => handleChange(event)}
           sx={{ width: { sm: "100%", md: "50%" } }}
         />
       </Stack>
       <TextField
-        id="brand.website"
+        id="website"
         label="Website"
-        name="brand.website"
+        name="website"
         variant="outlined"
         autoComplete="false"
-        value={data.brand.website}
+        value={data.website}
         onChange={(event) => handleChange(event)}
       />
       <TextField

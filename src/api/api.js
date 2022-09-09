@@ -50,6 +50,7 @@ async function onboarding(payloadObject) {
 
 // send type data, then chain images
 export async function onboardingChain(data) {
+  console.log("onboard original data", data);
   // remove opposite type from object
   const ofType = omit(data, data.type === "brand" ? "influencer" : "brand");
 

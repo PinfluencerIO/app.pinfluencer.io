@@ -15,6 +15,7 @@ import {
   validationError,
 } from "../../components/Alerts";
 import { StepperFrame } from "../../components/StepperFrame";
+import { InfluenerDetails } from "./InfluencerDetails";
 const steps = ["About You", "Type", "Details", "Categories", "Values"];
 
 export const OnboardingSteps = () => {
@@ -40,8 +41,18 @@ export const OnboardingSteps = () => {
 
   // handle next button [validate before proceeding to next] or calling api
   const handleNext = () => {
-    if (!validation(data, activeStep)) {
+    let valid = validation(data, activeStep);
+    console.log(valid);
+    console.log(typeof valid);
+    if (typeof valid === "boolean" && valid == false) {
       setShowAlert(validationError);
+      return;
+    }
+    if (typeof valid == "object" && valid.result === false) {
+      setShowAlert({
+        severtity: "error",
+        message: valid.message,
+      });
       return;
     }
     setShowAlert(null);
@@ -73,6 +84,8 @@ export const OnboardingSteps = () => {
     let name = e.target.dataset?.name || e.target.name;
     let value = e.target.dataset?.value || e.target.value;
 
+    console.log(`${name} - ${value}`);
+
     // checkbox value comes from target.checked attribute
     if (e.target.type === "checkbox") {
       value = e.target.checked;
@@ -91,6 +104,7 @@ export const OnboardingSteps = () => {
           },
         };
       });
+      return;
     }
     // non-nested assignments
     setData((currentState) => {
@@ -145,7 +159,7 @@ export const OnboardingSteps = () => {
           break;
         }
         if (data.type === "influencer") {
-          step = <div>influencer details</div>;
+          step = <InfluenerDetails data={data} handleChange={onChangeField} />;
           break;
         }
         step = <div>Failed to select type...go back one step</div>;
@@ -168,7 +182,7 @@ export const OnboardingSteps = () => {
     }
 
     // nested brand and influencer are dropped from api
-    // payload depending on why type of user onboards
+    // payload depending on what type of user onboards
     // the data associated with the user type is moved
     // from nest into root before POSTing to api
     return {
@@ -177,17 +191,15 @@ export const OnboardingSteps = () => {
       lastName: "",
       type: "",
       privacy: false,
+      instaHandle: "",
+      website: "",
       brand: {
         brandName: "",
-        instaHandle: "",
         brandDescription: "",
-        website: "",
         brandLogo: "",
         brandHeader: "",
       },
       influencer: {
-        instaHandle: "",
-        website: "",
         bio: "",
         audienceA13To17Split: 0,
         audienceA18To24Split: 0,

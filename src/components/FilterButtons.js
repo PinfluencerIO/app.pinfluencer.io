@@ -28,7 +28,6 @@ export default function FilterButtons({
   data.forEach((item) => {
     counts[item[filterKey].toLowerCase()]++;
   });
-  false && console.log(Typography);
   return (
     <Grid container item>
       <Grid item>
