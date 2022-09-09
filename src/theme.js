@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material";
 
 const pinfluencerGreen = "#6DA66A";
 //MuiStepLabel-label.Mui-active
@@ -65,4 +65,4 @@ const lightTheme = createTheme({
   },
 });
 
-export default lightTheme;
+export default responsiveFontSizes(lightTheme);

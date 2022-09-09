@@ -1,8 +1,7 @@
-import { Box, Divider, Grid, Stack, TextField } from "@mui/material";
+import { Stack, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
-import { AudienceAgePercentages } from "../../components/AudienceAgePercentages";
-import { AudienceGenderPercentages } from "../../components/AudienceGenderPercentages";
+import { AudienceDetails } from "../../components/AudienceDetails";
 
 export const InfluenerDetails = ({ data, handleChange }) => {
   const [bioFocus, setBioFocus] = useState(false);
@@ -12,27 +11,14 @@ export const InfluenerDetails = ({ data, handleChange }) => {
   const onAddressFocus = () => setAddressFocus(true);
   const onAddressBlur = () => setAddressFocus(false);
 
-  /*
-bio
-audienceA13To17Split: 0,
-audienceA18To24Split: 0,
-audienceA25To34Split: 0,
-audienceA35To44Split: 0,
-audienceA45To54Split: 0,
-audienceA55To64Split: 0,
-audienceA65PlusSplit: 0,
-audienceFemaleSplit: 0,
-audienceMaleSplit: 0,
-*/
-
   return (
     <React.Fragment>
       <Stack spacing={1} display={{ md: "column" }}>
-        <h3>Influencer Details</h3>
-        <p>
+        <Typography variant="h4">Influencer Details</Typography>
+        <Typography variant="p">
           Give details of your creators account, so that brands can understand
           who you are.
-        </p>
+        </Typography>
       </Stack>
       <Stack spacing={2} direction={{ xs: "column", sm: "column", md: "row" }}>
         <TextField
@@ -55,7 +41,7 @@ audienceMaleSplit: 0,
           rows={8}
           onFocus={onBioFocus}
           onBlur={onBioBlur}
-          fullWidth="true"
+          fullWidth={true}
         />
         <TextField
           sx={{ "& label": { whiteSpace: "pre-wrap" } }}
@@ -77,7 +63,7 @@ audienceMaleSplit: 0,
           rows={8}
           onFocus={onAddressFocus}
           onBlur={onAddressBlur}
-          fullWidth="true"
+          fullWidth={true}
         />
       </Stack>
       <TextField
@@ -98,25 +84,7 @@ audienceMaleSplit: 0,
         value={data.website}
         onChange={(event) => handleChange(event)}
       />
-      <Divider />
-      <h3>Audience Details</h3>
-      <Grid container>
-        <Grid item sm={6}>
-          <Box>
-            <h4>Audience age percentages</h4>
-            <AudienceAgePercentages data={data} handleChange={handleChange} />
-          </Box>
-        </Grid>
-        <Grid item sm={6}>
-          <Box>
-            <h4>Audience gender percentages</h4>
-            <AudienceGenderPercentages
-              data={data}
-              handleChange={handleChange}
-            />
-          </Box>
-        </Grid>
-      </Grid>
+      <AudienceDetails data={data} handleChange={handleChange} />
     </React.Fragment>
   );
 };

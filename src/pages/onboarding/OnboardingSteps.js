@@ -61,6 +61,7 @@ export const OnboardingSteps = () => {
       return;
     }
     setShowAlert(processing);
+
     onboardingChain(data)
       .then(() => {
         onboard().then(() => {
@@ -83,8 +84,6 @@ export const OnboardingSteps = () => {
     // get name and value from target or data attributes
     let name = e.target.dataset?.name || e.target.name;
     let value = e.target.dataset?.value || e.target.value;
-
-    console.log(`${name} - ${value}`);
 
     // checkbox value comes from target.checked attribute
     if (e.target.type === "checkbox") {
