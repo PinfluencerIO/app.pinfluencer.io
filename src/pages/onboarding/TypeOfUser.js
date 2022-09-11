@@ -6,86 +6,47 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
-  useTheme,
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
-import brandIcon from "../../assets/brand-icon.jpg";
-import influencerIcon from "../../assets/influencer-icon.jpg";
+import StorefrontTwoToneIcon from "@mui/icons-material/StorefrontTwoTone";
+import LiveTvTwoToneIcon from "@mui/icons-material/LiveTvTwoTone";
 export const TypeOfUser = ({ data, handleChange }) => {
-  const theme = useTheme();
-
-  const brandCard = (
+  const cardDetails = (
+    dataValue,
+    dataName,
+    icon,
+    title,
+    description = "Id nostrud anim eu excepteur ex nisi non nostrud magna."
+  ) => (
     <React.Fragment>
-      <CardContent data-value="brand" data-name="type">
-        <img
-          data-value="brand"
-          data-name="type"
-          src={brandIcon}
-          alt="brand"
-        ></img>
+      <CardContent data-value={dataValue} data-name={dataName}>
+        {/* <img
+          data-value={dataValue}
+          data-name={dataName}
+          src={icon}
+          alt={alt}
+        ></img> */}
+        {icon}
         <Typography
-          data-value="brand"
-          data-name="type"
-          variant="h5"
-          component="div"
+          data-value={dataValue}
+          data-name={dataName}
+          sx={{ typography: { sm: "h6", xs: "subtitle1" } }}
         >
-          Brand
+          {title}
         </Typography>
         <Typography
-          data-value="brand"
-          data-name="type"
-          sx={{ mb: 1.5 }}
-          color="text.secondary"
+          variant="p"
+          data-value={dataValue}
+          data-name={dataName}
+          sx={{ mb: 1.5, display: { xs: "none", sm: "block" } }}
         >
-          Id nostrud anim eu excepteur ex nisi non nostrud magna.
+          {description}
         </Typography>
-        {data.type === "brand" ? (
-          <CheckCircleOutlineIcon
-            data-value="brand"
-            data-name="type"
-            sx={{ color: theme.palette.pinfluencerGreen.main }}
-          />
+        {data.type === dataValue ? (
+          <CheckCircleOutlineIcon data-value={dataValue} data-name={dataName} />
         ) : (
-          <CircleOutlinedIcon data-value="brand" data-name="type" />
-        )}
-      </CardContent>
-    </React.Fragment>
-  );
-
-  const influencerCard = (
-    <React.Fragment>
-      <CardContent data-value="influencer" data-name="type">
-        <img
-          data-value="influencer"
-          data-name="type"
-          src={influencerIcon}
-          alt="influencer"
-        ></img>
-        <Typography
-          data-value="influencer"
-          data-name="type"
-          variant="h5"
-          component="div"
-        >
-          Influencer
-        </Typography>
-        <Typography
-          data-value="influencer"
-          data-name="type"
-          sx={{ mb: 1.5 }}
-          color="text.secondary"
-        >
-          Veniam cupidatat mollit commodo sit irure adipisicing sit.
-        </Typography>
-        {data.type === "influencer" ? (
-          <CheckCircleOutlineIcon
-            data-value="influencer"
-            data-name="type"
-            sx={{ color: theme.palette.pinfluencerGreen.main }}
-          />
-        ) : (
-          <CircleOutlinedIcon data-value="influencer" data-name="type" />
+          <CircleOutlinedIcon data-value={dataValue} data-name={dataName} />
         )}
       </CardContent>
     </React.Fragment>
@@ -93,19 +54,13 @@ export const TypeOfUser = ({ data, handleChange }) => {
 
   return (
     <>
-      <Stack
-        spacing={1}
-        display={{ md: "block" }}
-        sx={{ maxWidth: { xs: 350 } }}
-      >
-        <h3>Which type of user are you *</h3>
-      </Stack>
-      <Stack
-        direction={{ xs: "column", sm: "column" }}
-        spacing={{ xs: 2, sm: 2, md: 4 }}
-      >
+      <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
+        <Typography variant="h4">Which type of user are you *</Typography>
         <ToggleButtonGroup
-          sx={{ flexDirection: { xs: "column", sm: "column", md: "row" } }}
+          sx={{
+            justifyContent: "space-evenly",
+            justifyItems: "center",
+          }}
           value={data.type}
           name="type"
           exclusive
@@ -116,10 +71,25 @@ export const TypeOfUser = ({ data, handleChange }) => {
             value="brand"
             data-name="type"
             data-value="brand"
-            sx={{ textTransform: "none" }}
+            sx={{ textTransform: "none", border: "0px", maxWidth: "40%" }}
           >
-            <Card data-value="brand" data-name="type" variant="outlined">
-              {brandCard}
+            <Card
+              data-value="brand"
+              data-name="type"
+              variant="outlined"
+              sx={{ minWidth: "110px" }}
+            >
+              {cardDetails(
+                "brand",
+                "type",
+                <StorefrontTwoToneIcon
+                  sx={{ fontSize: { xs: 40, sm: 70, md: 100 } }}
+                  data-name="type"
+                  data-value="brand"
+                />,
+                "Brand",
+                "Id nostrud anim eu excepteur ex nisi non nostrud magna."
+              )}
             </Card>
           </ToggleButton>
           <ToggleButton
@@ -127,10 +97,25 @@ export const TypeOfUser = ({ data, handleChange }) => {
             name="type"
             data-name="type"
             data-value="influencer"
-            sx={{ textTransform: "none" }}
+            sx={{ textTransform: "none", border: "0px", maxWidth: "40%" }}
           >
-            <Card data-value="influencer" data-name="type" variant="outlined">
-              {influencerCard}
+            <Card
+              data-value="influencer"
+              data-name="type"
+              variant="outlined"
+              sx={{ minWidth: "110px" }}
+            >
+              {cardDetails(
+                "influencer",
+                "type",
+                <LiveTvTwoToneIcon
+                  sx={{ fontSize: { xs: 40, sm: 70, md: 100 } }}
+                  data-name="type"
+                  data-value="influencer"
+                />,
+                "Influencer",
+                "Veniam cupidatat mollit commodo sit irure adipisicing sit."
+              )}
             </Card>
           </ToggleButton>
         </ToggleButtonGroup>

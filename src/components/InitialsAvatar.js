@@ -1,17 +1,23 @@
-import { Avatar, useTheme } from "@mui/material";
+import { Avatar } from "@mui/material";
 import React from "react";
 
 export const InitialsAvatar = ({ user }) => {
-  const theme = useTheme();
+  console.log(user);
   if (user)
-    return (
+    return user.picture ? (
       <Avatar
-        {...stringAvatar(user.given_name + " " + user.family_name, theme)}
         src={user.picture}
         sx={{
           width: 40,
           height: 40,
-          bgcolor: theme.palette.pinfluencerGreen.main,
+        }}
+      />
+    ) : (
+      <Avatar
+        {...stringAvatar(user.given_name + " " + user.family_name)}
+        sx={{
+          width: 40,
+          height: 40,
         }}
       />
     );

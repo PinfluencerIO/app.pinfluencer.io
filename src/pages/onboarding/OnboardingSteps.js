@@ -1,5 +1,5 @@
-import { Alert, Paper, Step, StepLabel, Stepper } from "@mui/material";
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import { Step, StepLabel, Stepper } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import UserContext from "../../context/UserContext";
 import { AboutYou } from "./AboutYou";
@@ -82,8 +82,23 @@ export const OnboardingSteps = () => {
 
   const onChangeField = (e) => {
     // get name and value from target or data attributes
-    let name = e.target.dataset?.name || e.target.name;
-    let value = e.target.dataset?.value || e.target.value;
+    let name;
+    if (e.currentTarget.dataset && e.currentTarget.dataset.name) {
+      name = e.currentTarget.dataset.name;
+    } else if (e.target.dataset && e.target.dataset.name) {
+      name = e.target.dataset.name;
+    } else {
+      name = e.target.name;
+    }
+
+    let value;
+    if (e.currentTarget.dataset && e.currentTarget.dataset.value) {
+      value = e.currentTarget.dataset.value;
+    } else if (e.target.dataset && e.target.dataset.value) {
+      value = e.target.dataset.value;
+    } else {
+      value = e.target.value;
+    }
 
     // checkbox value comes from target.checked attribute
     if (e.target.type === "checkbox") {
@@ -112,35 +127,24 @@ export const OnboardingSteps = () => {
   };
 
   return (
-    <Fragment>
-      <Paper sx={{ my: 2, py: 2 }}>
-        <Stepper activeStep={activeStep} alternativeLabel>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </Paper>
+    <React.Fragment>
+      <Stepper activeStep={activeStep} alternativeLabel sx={{ my: 3 }}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
       <StepperFrame
         numberOfSteps={steps.length}
         activeStep={activeStep}
         handleBack={handleBack}
         handleNext={handleNext}
+        showAlert={showAlert}
       >
         {selectStepComponent()}
       </StepperFrame>
-
-      <Alert
-        sx={{
-          justifyContent: "center",
-          display: showAlert ? "flex" : "none",
-        }}
-        severity={showAlert?.severtity}
-      >
-        {showAlert?.message}
-      </Alert>
-    </Fragment>
+    </React.Fragment>
   );
 
   function selectStepComponent() {
@@ -200,13 +204,14 @@ export const OnboardingSteps = () => {
       },
       influencer: {
         bio: "",
-        audienceA13To17Split: 0,
-        audienceA18To24Split: 0,
-        audienceA25To34Split: 0,
-        audienceA35To44Split: 0,
-        audienceA45To54Split: 0,
-        audienceA55To64Split: 0,
-        audienceA65PlusSplit: 0,
+        address: "",
+        audienceAge13To17Split: 0,
+        audienceAge18To24Split: 0,
+        audienceAge25To34Split: 0,
+        audienceAge35To44Split: 0,
+        audienceAge45To54Split: 0,
+        audienceAge55To64Split: 0,
+        audienceAge65PlusSplit: 0,
         audienceFemaleSplit: 0,
         audienceMaleSplit: 0,
       },

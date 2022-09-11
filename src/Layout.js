@@ -1,29 +1,59 @@
-import React from "react";
-import { Container, Grid } from "@mui/material";
-import ResponsiveAppBar from "./components/ResponsiveAppBar";
-import { Footer } from "./components/Footer";
-import { Outlet } from "react-router";
-import { BreadcrumbComponent } from "./components/Breadcrumbs";
+import { Box } from "@mui/system";
 
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { ElevatedScoll } from "./components/ElevatedScoll";
+import { Footer } from "./components/Footer";
+import { SideDrawer } from "./components/SideDrawer";
+import UserContext from "./context/UserContext";
+
+const pages = {
+  authenticated: {
+    brand: ["Dashboard", "Campaigns", "Collaborations"],
+    influencer: ["Dashboard", "Collaborations"],
+  },
+};
 export const Layout = () => {
+  const { user } = React.useContext(UserContext);
+
+  function pagesForUserType() {
+    //authented and onboarded
+    if (user && "custom:usertype" in user) {
+      return pages.authenticated[user["custom:usertype"]];
+    }
+    //authenticated not onboarded
+    if (user) {
+      return ["Onboarding"];
+    }
+    // unauthenticated
+    return [];
+  }
+
+  // menu drawer - pops out of side via hamburger on small screens
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
-    <Container
-      maxWidth="lg"
-      sx={{ backgroundColor: "background.pinfluencerLightGreen" }}
-    >
-      <ResponsiveAppBar />
-      <BreadcrumbComponent />
-      <Grid
-        item
-        sx={{
-          mx: "24px",
-          minHeight: "50vh",
-          marginBottom: "20px",
-        }}
-      >
+    <React.Fragment>
+      <ElevatedScoll
+        navItems={pagesForUserType()}
+        handleDrawerToggle={handleDrawerToggle}
+      />
+
+      <SideDrawer
+        navItems={pagesForUserType()}
+        mobileOpen={mobileOpen}
+        handleDrawerToggle={handleDrawerToggle}
+      />
+
+      {/* Main body section */}
+      <Box sx={{ my: 2, mx: { sm: 3, xs: 1.5 } }}>
         <Outlet />
-      </Grid>
+      </Box>
+
       <Footer />
-    </Container>
+    </React.Fragment>
   );
 };

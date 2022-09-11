@@ -1,20 +1,16 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React from "react";
 import { VALUES } from "../../api/data";
 import { ChipSelectInput } from "../../components/ChipSelectInput";
 
 export const Values = ({ data, handleChange }) => {
   return (
-    <React.Fragment>
-      <Stack spacing={1} display={{ md: "column" }}>
-        <h3>Values *</h3>
-        <p>
-          Aliqua aliqua veniam consectetur anim magna cupidatat cillum eiusmod
-          ea tempor nisi. Reprehenderit ex occaecat sint ex. Tempor duis nulla
-          et eiusmod id. Ipsum cupidatat voluptate culpa cupidatat cillum qui
-          fugiat ipsum nostrud velit.
-        </p>
-      </Stack>
+    <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
+      <Typography variant="h4">Values *</Typography>
+      <Typography variant="p">
+        Aliqua aliqua veniam consectetur anim magna cupidatat cillum eiusmod ea
+        tempor nisi.
+      </Typography>
       <ChipSelectInput
         data={data}
         handleChange={handleChange}
@@ -22,6 +18,6 @@ export const Values = ({ data, handleChange }) => {
         id="values"
         label="Values"
       />
-    </React.Fragment>
+    </Stack>
   );
 };

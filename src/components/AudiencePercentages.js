@@ -27,6 +27,7 @@ export function AudiencePercentages({
     if (event.target.value === "")
       handleChange({
         target: { name: event.target.name, value: 0 },
+        currentTarget: { name: event.target.name, value: 0 },
         dataset: {},
       });
   };

@@ -1,12 +1,19 @@
 import React from "react";
-import { Checkbox, FormControlLabel, Stack, TextField } from "@mui/material";
+import {
+  Checkbox,
+  FormControlLabel,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 export const AboutYou = ({ data, handleChange }) => {
   return (
-    <React.Fragment>
-      <Stack spacing={1} display={{ md: "block" }}>
-        <h3>Welcome to Pinfluencer</h3>
-        <p>To get you started, please complete this quick onboarding process</p>
-      </Stack>
+    <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
+      <Typography variant="h4">Welcome to Pinfluencer</Typography>
+      <Typography variant="p">
+        To get you started, please complete this quick onboarding process
+      </Typography>
+
       <TextField
         required
         id="email"
@@ -17,7 +24,7 @@ export const AboutYou = ({ data, handleChange }) => {
         value={data.email}
         onChange={(event) => handleChange(event)}
       />
-      <Stack spacing={2} direction={{ xs: "column", sm: "column", md: "row" }}>
+      <Stack spacing={3} direction={{ xs: "column", sm: "row", md: "row" }}>
         <TextField
           required
           id="firstName"
@@ -41,6 +48,7 @@ export const AboutYou = ({ data, handleChange }) => {
           sx={{ width: { sm: "100%", md: "50%" } }}
         />
       </Stack>
+
       <FormControlLabel
         sx={{
           justifyContent: "start",
@@ -55,6 +63,6 @@ export const AboutYou = ({ data, handleChange }) => {
         }
         label="You have read and agree to our privacy policy *"
       />
-    </React.Fragment>
+    </Stack>
   );
 };

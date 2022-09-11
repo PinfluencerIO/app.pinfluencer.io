@@ -12,14 +12,13 @@ export const InfluenerDetails = ({ data, handleChange }) => {
   const onAddressBlur = () => setAddressFocus(false);
 
   return (
-    <React.Fragment>
-      <Stack spacing={1} display={{ md: "column" }}>
-        <Typography variant="h4">Influencer Details</Typography>
-        <Typography variant="p">
-          Give details of your creators account, so that brands can understand
-          who you are.
-        </Typography>
-      </Stack>
+    <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
+      <Typography variant="h4">Influencer Details</Typography>
+      <Typography variant="p">
+        Give details of your creators account, so that brands can understand who
+        you are.
+      </Typography>
+
       <Stack spacing={2} direction={{ xs: "column", sm: "column", md: "row" }}>
         <TextField
           sx={{ "& label": { whiteSpace: "pre-wrap" } }}
@@ -38,7 +37,7 @@ export const InfluenerDetails = ({ data, handleChange }) => {
           value={data.influencer.bio}
           onChange={(event) => handleChange(event)}
           multiline
-          rows={8}
+          rows={6}
           onFocus={onBioFocus}
           onBlur={onBioBlur}
           fullWidth={true}
@@ -60,10 +59,9 @@ export const InfluenerDetails = ({ data, handleChange }) => {
           value={data.influencer.address}
           onChange={(event) => handleChange(event)}
           multiline
-          rows={8}
+          rows={6}
           onFocus={onAddressFocus}
           onBlur={onAddressBlur}
-          fullWidth={true}
         />
       </Stack>
       <TextField
@@ -85,6 +83,6 @@ export const InfluenerDetails = ({ data, handleChange }) => {
         onChange={(event) => handleChange(event)}
       />
       <AudienceDetails data={data} handleChange={handleChange} />
-    </React.Fragment>
+    </Stack>
   );
 };
