@@ -15,8 +15,9 @@ import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
 import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
 import { Campaigns } from "./pages/campaigns/Campaigns";
 import { CollaborationsTable } from "./pages/collaborations/CollaborationsTable";
-import { ExternalDashboardLinks } from "./components/v2/ExternalDashboardLinks";
 
+import { Box, Stack } from "@mui/material";
+import { BaseComponent } from "./pages/BaseComponent";
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
   const nav = useNavigate();
@@ -45,7 +46,31 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="dev" element={<ExternalDashboardLinks />} />
+        <Route
+          path="dev"
+          element={
+            <Stack
+              direction={{ xs: "column", sm: "column", md: "row" }}
+              sx={{ border: "0px solid blue" }}
+            >
+              <Box flex={{ xs: 0, md: 1 }}>
+                <BaseComponent heading="About us">Text</BaseComponent>
+              </Box>
+              <Box flex={{ xs: 0, md: 2 }}>
+                <BaseComponent heading="Matching">
+                  <Stack direction="column">
+                    <BaseComponent disableBorder heading="Categories">
+                      Chips for categoires
+                    </BaseComponent>
+                    <BaseComponent disableBorder heading="Categories">
+                      Chips for categoires
+                    </BaseComponent>
+                  </Stack>
+                </BaseComponent>
+              </Box>
+            </Stack>
+          }
+        />
         <Route path="onboarding" element={<OnboardingSteps />} />
         <Route path="profile" element={<Profile />} />
         <Route path="dashboard" element={<Dashboard />} />

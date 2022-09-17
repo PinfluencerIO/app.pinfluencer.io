@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getBrand } from "../api/api";
 import { Loading } from "../components/Loading";
 import { ExternalDashboardLinks } from "../components/v2/ExternalDashboardLinks";
+import { NameAndEmail } from "../components/v2/NameAndEmail";
 import { BaseComponent } from "./BaseComponent.js";
 
 export const Profile = () => {
@@ -24,13 +25,10 @@ export const Profile = () => {
   return (
     <>
       <Box flex={{ xs: 0, md: 2 }}>
-        <BaseComponent>
-          <Stack
-            direction={{ xs: "column", sm: "column", md: "row" }}
-            sx={{ border: "0px solid blue" }}
-          >
-            <Box flex={{ xs: 0, md: 2 }}>
-              <BaseComponent disableBorder heading="Business Name">
+        <BaseComponent heading="Images">
+          <Stack direction={{ xs: "column", sm: "column", md: "row" }}>
+            <Box flex={{ xs: 0, md: 2 }} mr={{ xs: 0, sm: 0, md: 10 }}>
+              <BaseComponent heading="Business Name" disableBorder>
                 Brand Description Non velit ea sit magna commodo reprehenderit.
                 Sit laborum velit anim laborum sit aute proident culpa id amet
                 nulla exercitation mollit. Aute in nisi officia et ex ullamco
@@ -45,20 +43,22 @@ export const Profile = () => {
           </Stack>
         </BaseComponent>
       </Box>
-      <Stack
-        direction={{ xs: "column", sm: "column", md: "row" }}
-        sx={{ border: "0px solid blue" }}
-      >
+      <Stack direction={{ xs: "column", sm: "column", md: "row" }}>
         <Box flex={{ xs: 0, md: 1 }}>
-          <BaseComponent>
-            Some info may be visible to other people using Pinfluenccer
-            services.
+          <BaseComponent heading="About us">
+            <NameAndEmail />
           </BaseComponent>
         </Box>
         <Box flex={{ xs: 0, md: 2 }}>
-          <BaseComponent>
-            Some info may be visible to other people using Pinfluenccer
-            services.
+          <BaseComponent heading="Matching">
+            <Stack direction="column">
+              <BaseComponent heading="Categories" disableBorder>
+                Chips for categoires
+              </BaseComponent>
+              <BaseComponent heading="Categories" disableBorder>
+                Chips for categoires
+              </BaseComponent>
+            </Stack>
           </BaseComponent>
         </Box>
       </Stack>

@@ -10,10 +10,12 @@ export const BaseComponent = ({ heading, disableBorder = false, children }) => {
       component="section"
       border={0}
       borderColor="green"
-      my={1}
+      my={disableBorder ? 0 : 1}
       mr={2}
       flex={1}
       height="100%"
+      marginBottom={2}
+      marginTop={2}
     >
       <Box width="100%" display="flex" flexDirection="column" height="100%">
         <Box
@@ -26,18 +28,16 @@ export const BaseComponent = ({ heading, disableBorder = false, children }) => {
           overflow="hidden"
           height="100%"
         >
-          <Box minHeight={1}>
+          <Box>
             <Box
-              py={disableBorder ? "10px" : "24px"}
+              py={disableBorder ? "0px" : "24px"}
               mx={disableBorder ? "0px" : "24px"}
-              marginRight="25px"
             >
               <Box component="header" diplay="flex">
                 <Box display="flex" flexDirection="column" flex="1 1 0">
                   <Typography
-                    variant="h6"
-                    fontWeight={700}
-                    minHeight={heading ? "0px" : disableBorder ? "30px" : "0px"}
+                    variant={disableBorder ? "h6" : "h4"}
+                    color="primary"
                   >
                     {heading}
                   </Typography>
