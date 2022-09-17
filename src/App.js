@@ -16,7 +16,7 @@ import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
 import { Campaigns } from "./pages/campaigns/Campaigns";
 import { CollaborationsTable } from "./pages/collaborations/CollaborationsTable";
 import { BaseComponent } from "./pages/BaseComponent";
-import { Link, Stack } from "@mui/material";
+import { Link } from "@mui/material";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -49,22 +49,10 @@ function App() {
         <Route
           path="dev"
           element={
-            <>
-              <Stack direction={{ xs: "column", sm: "column", md: "row" }}>
-                <BaseComponent>
-                  Some info may be visible to other people using Google
-                  services. <Link href="#">Find out more</Link>
-                </BaseComponent>
-                <BaseComponent>
-                  Some info may be visible to other people using Google
-                  services. <Link href="#">Find out more</Link>
-                </BaseComponent>
-              </Stack>
-              <BaseComponent>
-                Some info may be visible to other people using Google services.{" "}
-                <Link href="#">Find out more</Link>
-              </BaseComponent>
-            </>
+            <BaseComponent>
+              Some info may be visible to other people using Google services.{" "}
+              <Link href="#">Find out more</Link>
+            </BaseComponent>
           }
         />
         <Route path="onboarding" element={<OnboardingSteps />} />

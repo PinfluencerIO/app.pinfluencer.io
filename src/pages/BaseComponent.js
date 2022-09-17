@@ -6,25 +6,25 @@ export const BaseComponent = ({ heading = "Basic Info", children }) => {
   return (
     <Box
       display="flex"
-      alignItems="stretch"
       flexWrap="wrap"
       component="section"
       border={0}
       borderColor="green"
       my={1}
       mr={2}
+      flex={1}
+      height="100%"
     >
-      <Box width="100%" display="flex" flexDirection="column">
+      <Box width="100%" display="flex" flexDirection="column" height="100%">
         <Box
           display="flex"
-          flexGrow={1}
-          flexShrink={1}
           bgcolor="#fff"
           borderRadius={4}
           border={1}
           borderColor="rgb(218,220,224)"
           boxSizing="border-box"
           overflow="hidden"
+          height="100%"
         >
           <Box minHeight={1}>
             <Box py="24px" mx="24px">
