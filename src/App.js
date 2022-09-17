@@ -15,8 +15,7 @@ import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
 import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
 import { Campaigns } from "./pages/campaigns/Campaigns";
 import { CollaborationsTable } from "./pages/collaborations/CollaborationsTable";
-import { BaseComponent } from "./pages/BaseComponent";
-import { Link } from "@mui/material";
+import { ExternalDashboardLinks } from "./components/v2/ExternalDashboardLinks";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -46,15 +45,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route
-          path="dev"
-          element={
-            <BaseComponent>
-              Some info may be visible to other people using Google services.{" "}
-              <Link href="#">Find out more</Link>
-            </BaseComponent>
-          }
-        />
+        <Route path="dev" element={<ExternalDashboardLinks />} />
         <Route path="onboarding" element={<OnboardingSteps />} />
         <Route path="profile" element={<Profile />} />
         <Route path="dashboard" element={<Dashboard />} />

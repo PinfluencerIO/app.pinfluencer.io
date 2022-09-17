@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { getBrand } from "../api/api";
 import { Loading } from "../components/Loading";
+import { ExternalDashboardLinks } from "../components/v2/ExternalDashboardLinks";
 import { BaseComponent } from "./BaseComponent.js";
 
 export const Profile = () => {
@@ -21,21 +22,47 @@ export const Profile = () => {
   }
 
   return (
-    <Stack
-      direction={{ xs: "column", sm: "column", md: "row" }}
-      sx={{ border: "0px solid blue" }}
-    >
-      <Box flex={{ xs: 0, md: 1 }}>
-        <BaseComponent>
-          Some info may be visible to other people using Pinfluenccer services.
-        </BaseComponent>
-      </Box>
+    <>
       <Box flex={{ xs: 0, md: 2 }}>
         <BaseComponent>
-          Some info may be visible to other people using Pinfluenccer services.
+          <Stack
+            direction={{ xs: "column", sm: "column", md: "row" }}
+            sx={{ border: "0px solid blue" }}
+          >
+            <Box flex={{ xs: 0, md: 2 }}>
+              <BaseComponent disableBorder heading="Business Name">
+                Brand Description Non velit ea sit magna commodo reprehenderit.
+                Sit laborum velit anim laborum sit aute proident culpa id amet
+                nulla exercitation mollit. Aute in nisi officia et ex ullamco
+                sunt tempor anim et elit do excepteur anim.
+              </BaseComponent>
+            </Box>
+            <Box flex={{ xs: 0, md: 1 }}>
+              <BaseComponent disableBorder>
+                <ExternalDashboardLinks />
+              </BaseComponent>
+            </Box>
+          </Stack>
         </BaseComponent>
       </Box>
-    </Stack>
+      <Stack
+        direction={{ xs: "column", sm: "column", md: "row" }}
+        sx={{ border: "0px solid blue" }}
+      >
+        <Box flex={{ xs: 0, md: 1 }}>
+          <BaseComponent>
+            Some info may be visible to other people using Pinfluenccer
+            services.
+          </BaseComponent>
+        </Box>
+        <Box flex={{ xs: 0, md: 2 }}>
+          <BaseComponent>
+            Some info may be visible to other people using Pinfluenccer
+            services.
+          </BaseComponent>
+        </Box>
+      </Stack>
+    </>
   );
 };
 // <Grid container spacing={1} marginX={2}>

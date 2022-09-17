@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 
-export const BaseComponent = ({ heading = "Basic Info", children }) => {
+export const BaseComponent = ({ heading, disableBorder = false, children }) => {
   return (
     <Box
       display="flex"
@@ -20,17 +20,25 @@ export const BaseComponent = ({ heading = "Basic Info", children }) => {
           display="flex"
           bgcolor="#fff"
           borderRadius={4}
-          border={1}
+          border={disableBorder ? 0 : 1}
           borderColor="rgb(218,220,224)"
           boxSizing="border-box"
           overflow="hidden"
           height="100%"
         >
           <Box minHeight={1}>
-            <Box py="24px" mx="24px">
+            <Box
+              py={disableBorder ? "10px" : "24px"}
+              mx={disableBorder ? "0px" : "24px"}
+              marginRight="25px"
+            >
               <Box component="header" diplay="flex">
                 <Box display="flex" flexDirection="column" flex="1 1 0">
-                  <Typography variant="h6" fontWeight={700}>
+                  <Typography
+                    variant="h6"
+                    fontWeight={700}
+                    minHeight={heading ? "0px" : disableBorder ? "30px" : "0px"}
+                  >
                     {heading}
                   </Typography>
                   <Box
