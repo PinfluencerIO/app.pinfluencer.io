@@ -1,16 +1,19 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { getBrand } from "../api/api";
 import { Loading } from "../components/Loading";
+import { ChipDisplay } from "../components/v2/ChipDisplay";
 import { ExternalDashboardLinks } from "../components/v2/ExternalDashboardLinks";
 import { NameAndEmail } from "../components/v2/NameAndEmail";
 import { BaseComponent } from "./BaseComponent.js";
+import headerPlaceholder from "../assets/placeholder-header.jpg";
 
 export const Profile = () => {
   const [brand, setBrand] = useState({});
   const [loading, setLoading] = React.useState(true);
-  false && brand;
+  const externalHeaderPlaceHolder =
+    "https://dummyimage.com/1200x200/de18de/222a99.jpg&text=Header+Placeholder";
   //TODO handle error
   useEffect(() => {
     getBrand()
@@ -21,26 +24,51 @@ export const Profile = () => {
   if (loading) {
     return <Loading />;
   }
-
   return (
     <>
       <Box flex={{ xs: 0, md: 2 }} mb={3}>
-        <BaseComponent heading="Images">
+        <Box display="flex" justifyContent="end" marginBottom={2}>
+          <Button sx={{ width: 30 }} variant="contained">
+            Edit
+          </Button>
+        </Box>
+        <BaseComponent>
+          <Box
+            sx={{
+              border: "0px solid",
+              mb: 3,
+              backgroundRepeat: "no-repeat",
+              backgroundImage: externalHeaderPlaceHolder
+                ? `url(${externalHeaderPlaceHolder})`
+                : `url(${headerPlaceholder})`,
+              backgroundSize: "cover",
+              "& .logoImg": {
+                width: { xs: 40, sm: 50, md: 60, lg: 80 },
+                height: { xs: 40, sm: 50, md: 60, lg: 80 },
+                borderRadius: "5px",
+                top: 30,
+                left: 10,
+                position: "relative",
+              },
+            }}
+          >
+            <img
+              className="logoImg"
+              alt="logo"
+              src="https://dummyimage.com/300x300/22de18/e02f5c.jpg&text=Logo"
+            />
+          </Box>
           <Stack direction={{ xs: "column", sm: "column", md: "row" }}>
             <Box flex={{ xs: 0, md: 2 }} mr={{ xs: 0, sm: 0, md: 10 }}>
-              <BaseComponent heading="Business Name" disableBorder>
+              <BaseComponent heading={brand.brandName} disableBorder>
                 <BaseComponent disableBorder>
-                  Brand Description Non velit ea sit magna commodo
-                  reprehenderit. Sit laborum velit anim laborum sit aute
-                  proident culpa id amet nulla exercitation mollit. Aute in nisi
-                  officia et ex ullamco sunt tempor anim et elit do excepteur
-                  anim.
+                  {brand.brandDescription}
                 </BaseComponent>
               </BaseComponent>
             </Box>
             <Box flex={{ xs: 0, md: 1 }}>
               <BaseComponent disableBorder heading="External Links">
-                <ExternalDashboardLinks />
+                <ExternalDashboardLinks brand={brand} />
               </BaseComponent>
             </Box>
           </Stack>
@@ -49,17 +77,17 @@ export const Profile = () => {
       <Stack direction={{ xs: "column", sm: "column", md: "row" }} spacing={3}>
         <Box flex={{ xs: 0, md: 1 }}>
           <BaseComponent heading="About us">
-            <NameAndEmail />
+            <NameAndEmail brand={brand} />
           </BaseComponent>
         </Box>
         <Box flex={{ xs: 0, md: 2 }}>
           <BaseComponent heading="Matching">
             <Stack direction="column">
               <BaseComponent heading="Categories" disableBorder>
-                Chips for categoires
+                <ChipDisplay items={brand.categories} />
               </BaseComponent>
-              <BaseComponent heading="Categories" disableBorder>
-                Chips for categoires
+              <BaseComponent heading="Values" disableBorder>
+                <ChipDisplay items={brand.values} />
               </BaseComponent>
             </Stack>
           </BaseComponent>
@@ -68,6 +96,38 @@ export const Profile = () => {
     </>
   );
 };
+
+{
+  /* <Box
+            sx={{
+              height: { xs: "10vh", sm: "12vh", md: "14vh", lg: "16vh" },
+
+              background:
+                "url(https://dummyimage.com/1400x200/09f/&text=long-header)",
+              backgroundSize: "100%",
+              backgroundRepeat: "no-repeat",
+              borderRadius: "5px",
+              border: "0px solid",
+            }}
+          ></Box>
+          <Box
+            sx={{
+              height: { xs: "50px", sm: "65px", md: "80px" },
+              width: { xs: "50px", sm: "65px", md: "80px" },
+              ml: { xs: "25px", sm: "30px", md: "35px", lg: "40px" },
+              mt: { xs: "-35px", sm: "-40px", md: "-45px", lg: "-50px" },
+
+              borderRadius: "5px",
+              border: "0px solid",
+            }}
+          >
+            <img
+              style={{ maxWidth: "100%", height: "auto" }}
+              src="https://dummyimage.com/300x300/&text=brand-logo"
+              alt="brand-logo"
+            ></img>
+          </Box> */
+}
 // <Grid container spacing={1} marginX={2}>
 //   <TopActions>
 //     <Button variant="contained">Edit</Button>

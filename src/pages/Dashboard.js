@@ -1,8 +1,8 @@
-import { Stack } from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
 import { useEffect } from "react";
 import { getDetails } from "../api/api";
-import HeaderAndValue from "../components/HeaderAndValue";
+import { BaseComponent } from "./BaseComponent";
 
 export const Dashboard = () => {
   const [details, setDetails] = React.useState({ name: "null", brand: "null" });
@@ -19,22 +19,19 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <Stack spacing={3}>
-      <HeaderAndValue
-        header="Your Pinfluencer Dashboard"
-        value={
-          <React.Fragment>
-            <p>
-              Hi {details.name} - This is details of what is going on with your
-              Pinfluencer account
-            </p>
-            <p>
-              Widgets with metrics on your campaigns and progress on
-              Collaborations for {details.brand}
-            </p>
-          </React.Fragment>
-        }
-      />
-    </Stack>
+    <BaseComponent
+      heading="Your Pinfluencer Dashboard"
+      disableBorder
+      variant="h3"
+    >
+      <Typography variant="body1">
+        Hi {details.name} - This is details of what is going on with your
+        Pinfluencer account
+      </Typography>
+      <Typography bvariant="body1">
+        Widgets with metrics on your campaigns and progress on Collaborations
+        for {details.brand}
+      </Typography>
+    </BaseComponent>
   );
 };

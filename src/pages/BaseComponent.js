@@ -2,7 +2,12 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 
-export const BaseComponent = ({ heading, disableBorder = false, children }) => {
+export const BaseComponent = ({
+  heading,
+  disableBorder = false,
+  variant,
+  children,
+}) => {
   return (
     <Box
       display="flex"
@@ -31,7 +36,7 @@ export const BaseComponent = ({ heading, disableBorder = false, children }) => {
               <Box component="header" diplay="flex">
                 <Box display="flex" flexDirection="column" flex="1 1 0">
                   <Typography
-                    variant={disableBorder ? "h6" : "h4"}
+                    variant={variant ? variant : disableBorder ? "h6" : "h4"}
                     color="primary"
                   >
                     {heading}
