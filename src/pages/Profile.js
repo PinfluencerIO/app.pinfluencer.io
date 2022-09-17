@@ -24,26 +24,29 @@ export const Profile = () => {
 
   return (
     <>
-      <Box flex={{ xs: 0, md: 2 }}>
+      <Box flex={{ xs: 0, md: 2 }} mb={3}>
         <BaseComponent heading="Images">
           <Stack direction={{ xs: "column", sm: "column", md: "row" }}>
             <Box flex={{ xs: 0, md: 2 }} mr={{ xs: 0, sm: 0, md: 10 }}>
               <BaseComponent heading="Business Name" disableBorder>
-                Brand Description Non velit ea sit magna commodo reprehenderit.
-                Sit laborum velit anim laborum sit aute proident culpa id amet
-                nulla exercitation mollit. Aute in nisi officia et ex ullamco
-                sunt tempor anim et elit do excepteur anim.
+                <BaseComponent disableBorder>
+                  Brand Description Non velit ea sit magna commodo
+                  reprehenderit. Sit laborum velit anim laborum sit aute
+                  proident culpa id amet nulla exercitation mollit. Aute in nisi
+                  officia et ex ullamco sunt tempor anim et elit do excepteur
+                  anim.
+                </BaseComponent>
               </BaseComponent>
             </Box>
             <Box flex={{ xs: 0, md: 1 }}>
-              <BaseComponent disableBorder>
+              <BaseComponent disableBorder heading="External Links">
                 <ExternalDashboardLinks />
               </BaseComponent>
             </Box>
           </Stack>
         </BaseComponent>
       </Box>
-      <Stack direction={{ xs: "column", sm: "column", md: "row" }}>
+      <Stack direction={{ xs: "column", sm: "column", md: "row" }} spacing={3}>
         <Box flex={{ xs: 0, md: 1 }}>
           <BaseComponent heading="About us">
             <NameAndEmail />
