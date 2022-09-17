@@ -42,8 +42,7 @@ export const OnboardingSteps = () => {
   // handle next button [validate before proceeding to next] or calling api
   const handleNext = () => {
     let valid = validation(data, activeStep);
-    console.log(valid);
-    console.log(typeof valid);
+
     if (typeof valid === "boolean" && valid == false) {
       setShowAlert(validationError);
       return;

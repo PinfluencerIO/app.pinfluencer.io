@@ -31,7 +31,6 @@ export const CollaborationsTable = () => {
   const [openContent, setOpenContent] = useState(false);
   const [content, setContent] = useState(null);
   const handleOpenContent = (row) => {
-    console.log(row.id);
     setContent(row.contentImage);
     setOpenContent(true);
   };
@@ -197,13 +196,13 @@ export const CollaborationsTable = () => {
       >
         <Box sx={{ mr: "5px" }}>
           {row.notifications > 0 ? (
-            <Badge badgeContent={row.notifications} color="primary">
-              <Button size="small" color="black" variant="outlined">
+            <Badge badgeContent={row.notifications}>
+              <Button size="small" variant="outlined">
                 Message
               </Button>
             </Badge>
           ) : (
-            <Button size="small" color="black" variant="outlined">
+            <Button size="small" variant="outlined">
               Message
             </Button>
           )}
@@ -213,7 +212,6 @@ export const CollaborationsTable = () => {
             <Fragment>
               <Button
                 size="small"
-                color="primary"
                 variant="outlined"
                 onClick={() => handleOpenCheckAccept(row.id)}
               >
@@ -221,7 +219,6 @@ export const CollaborationsTable = () => {
               </Button>
               <Button
                 size="small"
-                color="red"
                 variant="outlined"
                 onClick={() => handleOpenCheckReject(row.id)}
               >
@@ -230,14 +227,13 @@ export const CollaborationsTable = () => {
             </Fragment>
           )}
           {row.collaborationState === "approved" && (
-            <Button size="small" color="primary" variant="outlined">
+            <Button size="small" variant="outlined">
               Complete
             </Button>
           )}
           {row.contentImage && (
             <Button
               size="small"
-              color="secondary"
               variant="outlined"
               onClick={() => handleOpenContent(row)}
             >

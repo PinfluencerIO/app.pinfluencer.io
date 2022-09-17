@@ -14,7 +14,7 @@ export const InfluenerDetails = ({ data, handleChange }) => {
   return (
     <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
       <Typography variant="h4">Influencer Details</Typography>
-      <Typography variant="p">
+      <Typography variant="body1">
         Give details of your creators account, so that brands can understand who
         you are.
       </Typography>

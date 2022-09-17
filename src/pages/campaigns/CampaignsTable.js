@@ -1,30 +1,42 @@
+import { useTheme } from "@emotion/react";
 import {
+  Box,
   Button,
   Card,
   CardActions,
   CardContent,
+  Chip,
   Grid,
-  Typography,
+  Stack,
+  Tab,
+  Tabs,
+  useMediaQuery,
 } from "@mui/material";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCampaigns } from "../../api/api";
-import FilterButtons from "../../components/FilterButtons";
+import HeaderAndValue from "../../components/HeaderAndValue";
 import { ImgOrBlank } from "../../components/ImgOrBlank";
 
-//TODO replace data grid 💤 with cards that are sortable 👏 🔥
+const filters = ["all", "active", "draft", "closed"];
 export const CampaignsTable = () => {
+  const theme = useTheme();
+
+  const isSmall = useMediaQuery("(max-width:625px)");
+  const isXSmall = useMediaQuery("(max-width:560px)");
+
   const [rows, setRows] = useState([]);
-  const [data, setData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
+
+  const [value, setValue] = React.useState(0);
+
   const nav = useNavigate();
   useEffect(() => {
     getCampaigns()
       .then((data) => {
-        setData(data);
         if (searchParams.get("filter")) {
           setRows(
             data.filter((row) => {
@@ -49,35 +61,88 @@ export const CampaignsTable = () => {
     return "Loading...";
   }
 
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  }
+
+  const handleChange = (event, newValue) => {
+    console.log("Fired!");
+    const filter = event.target.dataset.filter;
+    if (filter === "all") {
+      setSearchParams({});
+    } else {
+      setSearchParams({ filter });
+    }
+    setValue(newValue);
+  };
+
   return (
-    <Grid container spacing={3}>
-      <Grid container item direction="row" justifyContent="space-between">
-        <Typography variant="h4" mt={1}>
-          Campaigns
-        </Typography>
-        <Button variant="contained" onClick={() => nav("new")}>
-          Create New Campaign
+    <Box>
+      <Box
+        sx={{
+          borderBottom: isXSmall ? 0 : 1,
+          borderColor: "divider",
+          flexDirection: isXSmall ? "column" : "row",
+          display: "flex",
+          justifyContent: isXSmall ? "flex-start" : "space-between",
+          mb: 3,
+          pb: 0,
+        }}
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          {filters.map((f) => (
+            <Tab
+              key={f}
+              label={f}
+              {...a11yProps(f)}
+              data-filter={f}
+              sx={{
+                "&.Mui-selected ": {
+                  color: theme.palette.active.main,
+                  fontWeight: "900",
+                  borderColor: theme.palette.active.main,
+                },
+                minWidth: isSmall ? 63 : 90,
+              }}
+            />
+          ))}
+        </Tabs>
+        <Button
+          variant="contained"
+          onClick={() => nav("new")}
+          sx={{
+            bottom: isXSmall ? 3 : -3,
+            top: isXSmall ? 3 : -3,
+          }}
+        >
+          {buttonLabel()}
         </Button>
+      </Box>
+      <Grid container spacing={3}>
+        {rows.length === 0 ? emptyRows() : populatedRows()}
       </Grid>
-      <FilterButtons
-        data={data}
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-        filterNames={["active", "draft", "closed"]}
-        filterKey="campaignState"
-      />
-      {rows.length === 0 ? emptyRows() : populatedRows()}
-    </Grid>
+    </Box>
   );
+  function buttonLabel() {
+    if (isSmall) return "New Campaign";
+    return "Create New Campaign";
+  }
   function emptyRows() {
     return (
       <Grid item>
-        <Card>
+        <Card elevation={3} sx={{ width: 333 }}>
           <CardContent>
-            <Typography variant="h5">No campaigns</Typography>
-            <Typography variant="h6">
-              Try a different filter or create a new campaign
-            </Typography>
+            <HeaderAndValue
+              header="No campaigns"
+              value="Try a different filter or create a new campaign"
+            />
           </CardContent>
         </Card>
       </Grid>
@@ -86,67 +151,27 @@ export const CampaignsTable = () => {
 
   function populatedRows() {
     return rows.map((row) => (
-      <Grid key={row.id} item>
-        <Card>
+      <Grid item key={row.id}>
+        <Card elevation={3} sx={{ width: 333 }}>
           <CardContent>
-            <Typography
-              sx={{
-                width: "400px",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-              variant="h5"
-            >
-              {row.campaignTitle}
-            </Typography>
-            <Typography sx={{ marginTop: "10px" }}>
-              {row.campaignDescription}
-            </Typography>
-            <Typography
-              sx={{
-                width: "400px",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                marginTop: "20px",
-              }}
-              variant="h6"
-            >
-              {row.productTitle}
-            </Typography>
-            <Typography sx={{ marginTop: "10px" }}>
-              {row.productDescription}
-            </Typography>
-
-            <Grid container spacing={3} mt={1}>
-              <Grid item>
-                <ImgOrBlank
-                  imageSrc={row.productImage1}
-                  altLabel="Product 1"
-                  width="150px"
-                  height="150px"
-                />
-              </Grid>
-              <Grid item>
-                <ImgOrBlank
-                  imageSrc={row.productImage2}
-                  altLabel="Product 2"
-                  width="150px"
-                  height="150px"
-                />
-              </Grid>
-              <Grid item>
-                <ImgOrBlank
-                  imageSrc={row.productImage3}
-                  altLabel="Product 3"
-                  width="150px"
-                  height="150px"
-                />
-              </Grid>
-            </Grid>
+            <Stack spacing={3}>
+              <HeaderAndValue
+                header={row.campaignTitle}
+                value={row.campaignDescription}
+              />
+              <HeaderAndValue
+                header={row.productTitle}
+                value={row.productDescription}
+              />
+              <ImgOrBlank
+                imageSrc={row.productImage1}
+                altLabel="Product 1"
+                width="150px"
+                height="150px"
+              />
+            </Stack>
           </CardContent>
-          <CardActions sx={{ ml: "8px" }}>
+          <CardActions sx={{ ml: "8px", justifyContent: "space-between" }}>
             <Button
               variant="contained"
               size="small"
@@ -154,6 +179,12 @@ export const CampaignsTable = () => {
             >
               View
             </Button>
+            <Chip
+              label={row.campaignState}
+              sx={{
+                border: "1px solid ",
+              }}
+            />
           </CardActions>
         </Card>
       </Grid>

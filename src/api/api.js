@@ -1,8 +1,8 @@
 import { getToken } from "../context/UserContext";
 import { campaigns, image } from "./fake-api";
 
-const remote = "https://api.pinfluencer.link";
-// const remote = "https://3dgldh8a18.execute-api.eu-west-2.amazonaws.com";
+// const remote = "https://api.pinfluencer.link";
+const remote = "https://3dgldh8a18.execute-api.eu-west-2.amazonaws.com";
 
 // standardise token based header
 async function authenticatedHeader() {
@@ -25,12 +25,13 @@ async function actionRequest(action, payload) {
   if (payload) {
     request.body = payload;
   }
-
+  if (action === "PATCH") console.log("PATCH", request);
   return request;
 }
 
 // fetch call that only returns ok response, otherwise throws an exception
 async function executeFetch(url, action) {
+  console.log("Execute", url, action);
   const response = await fetch(url, action);
 
   if (response.ok) {
@@ -50,7 +51,6 @@ async function onboarding(payloadObject) {
 
 // send type data, then chain images
 export async function onboardingChain(data) {
-  console.log("onboard original data", data);
   // remove opposite type from object
   const ofType = omit(data, data.type === "brand" ? "influencer" : "brand");
 
@@ -213,12 +213,11 @@ export async function updateCampaign(data) {
   } else {
     const { productImage1, productImage2, productImage3, ...without } = data;
     const productImages = [productImage1, productImage2, productImage3];
-    // console.log("before", productImages);
-    const updateImages = productImages.filter(
-      (img) => !img.startsWith("https")
-    );
-    // console.log("after", updateImages);
-    data.productImageUpdate = updateImages;
+    console.log(productImages);
+    // const updateImages = productImages.filter(
+    //   (img) => !img.startsWith("https")
+    // );
+    // data.productImageUpdate = updateImages;
     const payload = JSON.stringify(without);
     const requestAction = await actionRequest("PUT", payload);
     const response = await executeFetch(
@@ -226,24 +225,23 @@ export async function updateCampaign(data) {
       requestAction
     );
     const json = await response.json();
-    let i = 1;
-    await Promise.all(
-      productImages.map(async (img) => {
-        if (data.productImageUpdate.includes(i)) {
-          await productImage(img, json.id, "product-image" + i++);
-        }
-      })
-    );
+    // let i = 1;
+    // await Promise.all(
+    //   productImages.map(async (img) => {
+    //     if (data.productImageUpdate.includes(i)) {
+    //       await productImage(img, json.id, "product-image" + i++);
+    //     }
+    //   })
+    // );
 
     return json;
   }
 }
 
 export async function updateCampaignState(id, state) {
-  const response = await executeFetch(
-    `${remote}/brands/me/campaigns/${id}/state`,
-    actionRequest("POST", { state: state })
-  );
+  const a = await actionRequest("PATCH", { state: state });
+  console.log("a", a);
+  const response = await executeFetch(`${remote}/brands/me/campaigns/${id}`, a);
   return await response.json();
 }
 
@@ -258,7 +256,6 @@ export async function newCampaignChain(data) {
     const productImages = [productImage1, productImage2, productImage3];
     const payload = JSON.stringify(without);
     const requestAction = await actionRequest("POST", payload);
-    // console.log(requestAction);
     const response = await executeFetch(
       `${remote}/brands/me/campaigns`,
       requestAction
@@ -309,4 +306,12 @@ export async function getCampaign(campaignId) {
 
     return await response.json();
   }
+}
+
+export async function getDetails() {
+  return Promise.resolve({
+    type: "brand",
+    name: "Dom",
+    brand: "Pig n Chicken",
+  });
 }

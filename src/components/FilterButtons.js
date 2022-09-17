@@ -3,13 +3,8 @@ import {
   ListItem,
   Stack,
   Divider,
-  ListItemText,
   Grid,
-  ListItemButton,
-  ListItemIcon,
-  Typography,
-  useTheme,
-  useMediaQuery,
+  ListItemText,
 } from "@mui/material";
 
 export default function FilterButtons({
@@ -19,11 +14,11 @@ export default function FilterButtons({
   setSearchParams,
   filterKey,
 }) {
-  const theme = useTheme();
-  const smScreen = useMediaQuery(theme.breakpoints.up("md"));
+  // const theme = useTheme();
+  // const smScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   const counts = {};
-  filters.forEach((filter) => (counts[filter.label] = 0));
+  filters.forEach((filter) => (counts[filter] = 0));
 
   data.forEach((item) => {
     counts[item[filterKey].toLowerCase()]++;
@@ -31,16 +26,50 @@ export default function FilterButtons({
   return (
     <Grid container item>
       <Grid item>
-        {!smScreen && (
-          <Typography sx={{ ml: "5px" }} variant="span">
-            Filters:
-          </Typography>
-        )}
         <Tooltip title="Filter Results" placement="top" arrow>
           <Stack
             direction="row"
             divider={<Divider orientation="vertical" flexItem />}
           >
+            {filters.map((i) => (
+              <ListItem
+                data-filter={i}
+                button
+                onClick={(event) => {
+                  const filter = event.target.parentNode.dataset.filter;
+                  setSearchParams({ filter });
+                }}
+                key={i}
+              >
+                <ListItemText
+                  data-filter={i}
+                  sx={{
+                    my: 0,
+                    whiteSpace: "nowrap",
+                    textTransform: "capitalize",
+                  }}
+                  primary={i + ` (${counts[i]})`}
+                  primaryTypographyProps={getColor(i)}
+                />
+              </ListItem>
+            ))}
+          </Stack>
+        </Tooltip>
+      </Grid>
+      <Grid item xs={12}>
+        <Divider />
+      </Grid>
+    </Grid>
+  );
+
+  function getColor(i) {
+    return {
+      color: searchParams.get("filter") == i ? "primary" : "black",
+    };
+  }
+}
+
+/*
             {filters.map((i) => (
               <ListItem
                 key={i.label}
@@ -90,40 +119,7 @@ export default function FilterButtons({
                   </ListItemButton>
                 )}
               </ListItem>
-
-              // <ListItem
-              //   data-filter={i.label}
-              //   button
-              //   onClick={(event) => {
-              //     const filter = event.target.parentNode.dataset.filter;
-              //     setSearchParams({ filter });
-              //   }}
-              //   key={i}
-              // >
-              //   <ListItemText
-              //     data-filter={i.label}
-              //     sx={{
-              //       my: 0,
-              //       whiteSpace: "nowrap",
-              //       textTransform: "capitalize",
-              //     }}
-              //     primary={i.label + ` (${counts[i.label]})`}
-              //     primaryTypographyProps={getColor(i.label)}
-              //   />
-              // </ListItem>
             ))}
-          </Stack>
-        </Tooltip>
-      </Grid>
-      <Grid item xs={12}>
-        <Divider />
-      </Grid>
-    </Grid>
-  );
 
-  function getColor(i) {
-    return {
-      color: searchParams.get("filter") == i ? "primary" : "black",
-    };
-  }
-}
+
+ */

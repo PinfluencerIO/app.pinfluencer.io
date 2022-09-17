@@ -36,7 +36,7 @@ export const TypeOfUser = ({ data, handleChange }) => {
           {title}
         </Typography>
         <Typography
-          variant="p"
+          variant="body1"
           data-value={dataValue}
           data-name={dataName}
           sx={{ mb: 1.5, display: { xs: "none", sm: "block" } }}

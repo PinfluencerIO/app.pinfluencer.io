@@ -10,7 +10,7 @@ export const HamburgerMenu = ({ handleDrawerToggle }) => {
       aria-label="open drawer"
       edge="start"
       onClick={handleDrawerToggle}
-      sx={{ mr: 2, display: { xs: "block", sm: "none" } }}
+      sx={{ mr: 2, display: "block" }}
     >
       <MenuIcon />
     </IconButton>

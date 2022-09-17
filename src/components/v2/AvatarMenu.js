@@ -1,7 +1,7 @@
 import { Box, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router";
-import UserContext from "../context/UserContext";
+import UserContext from "../../context/UserContext";
 import { InitialsAvatar } from "./InitialsAvatar";
 import LoginIcon from "@mui/icons-material/Login";
 
@@ -55,19 +55,15 @@ export const AvatarMenu = () => {
     return settings.unauthenticated;
   }
   return (
-    <React.Fragment>
+    <Box>
       <Tooltip title={determineTooltip()}>
         {user ? (
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+          <IconButton onClick={handleOpenUserMenu}>
             <InitialsAvatar user={user} />
           </IconButton>
         ) : (
           <IconButton onClick={() => signin()}>
-            <LoginIcon
-              sx={{
-                transform: { xs: "scale(1)", md: "scale(1.5)" },
-              }}
-            />
+            <LoginIcon />
           </IconButton>
         )}
       </Tooltip>
@@ -96,6 +92,6 @@ export const AvatarMenu = () => {
           </MenuItem>
         ))}
       </Menu>
-    </React.Fragment>
+    </Box>
   );
 };

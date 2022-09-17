@@ -2,7 +2,6 @@ import { Avatar } from "@mui/material";
 import React from "react";
 
 export const InitialsAvatar = ({ user }) => {
-  console.log(user);
   if (user)
     return user.picture ? (
       <Avatar

@@ -1,16 +1,22 @@
-import { Box, MenuItem, TextField, useMediaQuery } from "@mui/material";
-import React, { Fragment } from "react";
+import {
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import React from "react";
 import { OBJECTIVES } from "../../../api/data";
 
 export const ObjectivesFrame = ({ data, handleChange }) => {
   const matches = useMediaQuery("(min-width:600px)");
 
   return (
-    <Fragment>
-      <Box sx={{ py: 2, marginBottom: "-30px" }}>
-        <h3>Objectives</h3>
-        <p>Set your objectives and success criteria</p>
-      </Box>
+    <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
+      <Typography variant="h4">Objectives</Typography>
+      <Typography variant="body1">
+        Set your objectives and success criteria
+      </Typography>
       <TextField
         required
         sx={{}}
@@ -41,6 +47,6 @@ export const ObjectivesFrame = ({ data, handleChange }) => {
         multiline
         rows={8}
       />
-    </Fragment>
+    </Stack>
   );
 };

@@ -1,11 +1,12 @@
-import { Button, Chip, Grid, Paper, Typography } from "@mui/material";
+import { Button, Paper, Stack } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { Fragment, useState } from "react";
+import React from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { getCampaign, updateCampaignState } from "../../api/api";
 import { OBJECTIVES } from "../../api/data";
-import { ImgOrBlank } from "../../components/ImgOrBlank";
+import { CategoriesAndValues } from "../../components/ChipDisplay";
+import HeaderAndValue from "../../components/HeaderAndValue";
 import isValidUUID from "../../components/uuidUtils";
 import { BadUrl } from "../BadUrl";
 
@@ -13,8 +14,8 @@ export const ViewCampaign = () => {
   const nav = useNavigate();
   const { id } = useParams();
   const validId = isValidUUID(id);
-  const [campaign, setCampaign] = useState();
-  const [loading, setLoading] = useState(false);
+  const [campaign, setCampaign] = React.useState();
+  const [loading, setLoading] = React.useState(false);
   //TODO handle error
   useEffect(() => {
     getCampaign(id).then((c) => {
@@ -32,34 +33,15 @@ export const ViewCampaign = () => {
   }
 
   return (
-    <Grid container spacing={3}>
-      {/* Buttons */}
-      {actionButtons()}
-      {/* Top Left Grid*/}
-      {topLeftGrid()}
-      {/* Top Right Grid*/}
-      {topRightGrid()}
-      {/* Bottom Grid*/}
-      {bottomGrid()}
-    </Grid>
-  );
-
-  function actionButtons() {
-    return (
-      <Grid
-        item
-        xs={12}
-        display="flex"
-        justifyContent="flex-end"
-        sx={{ "& button": { ml: "15px" } }}
-      >
+    <Stack spacing={3}>
+      <Box display="flex" justifyContent="flex-end">
         {getAvailableActionsFor(campaign?.id, campaign?.status).map(
           (action) => {
             return (
               <Button
+                sx={{ marginLeft: 1 }}
                 key={action.label}
                 variant={action.variant}
-                color={action.color}
                 onClick={action.onClick}
               >
                 {action.label}
@@ -67,21 +49,153 @@ export const ViewCampaign = () => {
             );
           }
         )}
-      </Grid>
-    );
-  }
+      </Box>
+      <Stack
+        spacing={3}
+        direction={{ xs: "column", sm: "column", md: "row" }}
+        flexGrow={1}
+        flexBasis={0}
+        minWidth={0}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            p: { xs: 2, sm: 5, md: 5 },
+            flexGrow: 2,
+            flexBasis: 0,
+            minWidth: 0,
+          }}
+        >
+          <Stack spacing={3}>
+            <HeaderAndValue
+              header="Campaign Details"
+              value={campaign?.campaignTitle}
+            />
+            <HeaderAndValue
+              header="Description"
+              value={campaign?.campaignDescription}
+            />
+
+            <Stack
+              spacing={3}
+              direction={{ xs: "column", sm: "column", md: "row" }}
+              justifyContent="space-between"
+            >
+              <Stack spacing={3}>
+                <HeaderAndValue
+                  header="Product Link"
+                  value={campaign?.campaignProductLink}
+                />
+              </Stack>
+              <Stack spacing={3}>
+                <HeaderAndValue
+                  header="Discount code"
+                  value={campaign?.campaignDiscountCode}
+                />
+              </Stack>
+              <Stack spacing={3}>
+                <HeaderAndValue
+                  header="Hashtag"
+                  value={campaign?.campaignHashtag}
+                />
+              </Stack>
+            </Stack>
+            {/* <Stack
+              direction={{ xs: "column", sm: "column", md: "row" }}
+              spacing={{ sm: 3, md: 7 }}
+            >
+              <ChipDisplay
+                heading="Categories"
+                items={campaign?.campaignCategories}
+              />
+              <ChipDisplay heading="Values" items={campaign?.campaignValues} />
+            </Stack> */}
+          </Stack>
+        </Paper>
+        <CategoriesAndValues
+          categories={campaign.campaignCategories}
+          values={campaign.campaignValues}
+        />
+        <Paper
+          elevation={3}
+          sx={{
+            p: { xs: 2, sm: 5, md: 5 },
+            flexGrow: 1,
+            flexBasis: 0,
+            minWidth: 0,
+          }}
+        >
+          <Stack spacing={3}>
+            <HeaderAndValue
+              header="Campaign Objectives"
+              value={
+                OBJECTIVES.find((o) => o.key === campaign?.objective)?.label
+              }
+            />
+
+            <HeaderAndValue
+              header="What does success look like"
+              value={campaign?.successDescription}
+            />
+          </Stack>
+        </Paper>
+      </Stack>
+      <Paper
+        elevation={3}
+        sx={{
+          p: { xs: 2, sm: 5, md: 5 },
+          flexBasis: 0,
+          minWidth: 0,
+        }}
+      >
+        <Stack
+          spacing={3}
+          direction={{ xs: "column", sm: "column", md: "row" }}
+        >
+          <Stack
+            spacing={3}
+            sx={{
+              flexGrow: 2,
+              flexBasis: 0,
+              minWidth: 0,
+            }}
+          >
+            <HeaderAndValue header="Product" value={campaign?.productTitle} />
+
+            <HeaderAndValue
+              header="Description"
+              value={campaign?.productDescription}
+            />
+          </Stack>
+          <Box
+            sx={{
+              flexGrow: 1,
+              flexBasis: 0,
+              minWidth: 0,
+            }}
+          >
+            <img
+              alt="Product"
+              src={campaign?.productImage1}
+              width="250px"
+              height="250px"
+            />
+          </Box>
+        </Stack>
+      </Paper>
+    </Stack>
+  );
+
   function getAvailableActionsFor(id, status) {
     if (status === undefined) return [];
 
     const edit = {
       label: "Edit",
-      color: "secondary",
       variant: "contained",
       onClick: () => nav("edit"),
     };
     const draft = {
       label: "Launch",
-      color: "primary",
       variant: "contained",
       onClick: () => {
         updateCampaignState(id, "ACTIVE");
@@ -90,7 +204,6 @@ export const ViewCampaign = () => {
     };
     const deleteAction = {
       label: "Delete",
-      color: "red",
       variant: "outlined",
       onClick: () => {
         updateCampaignState(id, "DELETED");
@@ -99,7 +212,6 @@ export const ViewCampaign = () => {
     };
     const close = {
       label: "Close",
-      color: "black",
       variant: "contained",
       onClick: () => {
         updateCampaignState(id, "CLOSED");
@@ -124,143 +236,5 @@ export const ViewCampaign = () => {
       return i.status === status;
     });
     return response.actions;
-  }
-  function topLeftGrid() {
-    return (
-      <Grid item display="flex" lg={8} xs={12}>
-        <Paper sx={paperStyle()}>
-          <Typography className="lightLabel">Campaign Details</Typography>
-          <Typography variant="h5">{campaign?.campaignTitle}</Typography>
-          <Typography>Description</Typography>
-          <Typography className="lightLabel">
-            {campaign?.campaignDescription}
-          </Typography>
-
-          {linksTagsCodes()}
-
-          {chips("Categories", campaign?.campaignCategories)}
-          {chips("Values", campaign?.campaignValues)}
-        </Paper>
-      </Grid>
-    );
-  }
-  function topRightGrid() {
-    return (
-      <Grid item display="flex" lg={4} xs={12}>
-        <Paper sx={paperStyle()}>
-          <Typography className="lightLabel">Campaign Objectives</Typography>
-          <Typography variant="h5">
-            {OBJECTIVES.find((o) => o.key === campaign?.objective)?.label}
-          </Typography>
-          <Typography>What does success look like?</Typography>
-          <Typography className="lightLabel">
-            {campaign?.successDescription}
-          </Typography>
-        </Paper>
-      </Grid>
-    );
-  }
-  function linksTagsCodes() {
-    return (
-      <Grid container>
-        <Grid item lg={12} my={3}>
-          <Typography>Product Link</Typography>
-          <Typography className="lightLabel">
-            {campaign?.campaignProductLink}
-          </Typography>
-        </Grid>
-        <Grid item lg={6}>
-          <Typography>Discount code</Typography>
-          <Typography className="lightLabel">
-            {campaign?.campaignDiscountCode}
-          </Typography>
-        </Grid>
-        <Grid item lg={6}>
-          <Typography>Hashtag</Typography>
-          <Typography className="lightLabel">
-            {campaign?.campaignHashtag}
-          </Typography>
-        </Grid>
-      </Grid>
-    );
-  }
-  function chips(heading, items = []) {
-    return (
-      <Fragment>
-        <Box marginY={3}>
-          <Typography>{heading}</Typography>
-          <Grid container>
-            <Grid item>
-              {items.map((item) => {
-                return (
-                  <Chip
-                    key={item}
-                    label={item}
-                    sx={{
-                      m: "10px",
-                      border: "1px solid ",
-                    }}
-                  />
-                );
-              })}
-            </Grid>
-          </Grid>
-        </Box>
-      </Fragment>
-    );
-  }
-  function bottomGrid() {
-    return (
-      <Grid item lg={12} xs={12}>
-        <Paper sx={paperStyle()}>
-          <Typography className="lightLabel">Product</Typography>
-          <Typography variant="h5">{campaign?.productTitle}</Typography>
-          <Typography>Description</Typography>
-          <Typography className="lightLabel">
-            {campaign?.productDescription}
-          </Typography>
-          <Grid container spacing={3} mt={3}>
-            <Grid item>
-              <ImgOrBlank
-                imageSrc={campaign?.productImage1}
-                altLabel="Product 1"
-                width="150px"
-                height="150px"
-              />
-            </Grid>
-            <Grid item>
-              <ImgOrBlank
-                imageSrc={campaign?.productImage2}
-                altLabel="Product 2"
-                width="150px"
-                height="150px"
-              />
-            </Grid>
-            <Grid item>
-              <ImgOrBlank
-                imageSrc={campaign?.productImage3}
-                altLabel="Product 3"
-                width="150px"
-                height="150px"
-              />
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-    );
-  }
-  function paperStyle() {
-    return {
-      alignSelf: "stretch",
-      flexGrow: 1,
-      padding: "24px",
-      "& p": {
-        marginTop: "10px",
-      },
-      "& h5": {
-        marginY: "25px",
-      },
-      "& .lightLabel": { color: "lightText" },
-    };
   }
 };

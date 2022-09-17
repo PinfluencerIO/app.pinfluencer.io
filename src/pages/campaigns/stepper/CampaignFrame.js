@@ -1,14 +1,12 @@
-import { Box, TextField } from "@mui/material";
-import React, { Fragment } from "react";
+import { Stack, TextField, Typography } from "@mui/material";
+import React from "react";
 import { CATEGORIES, VALUES } from "../../../api/data";
 import { ChipSelectInput } from "../../../components/ChipSelectInput";
 
 export const CampaignFrame = ({ data, handleChange }) => {
   return (
-    <Fragment>
-      <Box sx={{ py: 2, marginBottom: "-30px" }}>
-        <h3>Campaign Details</h3>
-      </Box>
+    <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
+      <Typography variant="h4">Campaign Details</Typography>
       <TextField
         required
         sx={{}}
@@ -52,7 +50,7 @@ export const CampaignFrame = ({ data, handleChange }) => {
         label="Hashtag"
         onChange={handleChange}
       />
-      <Box display="flex" flexDirection={{ sm: "column", md: "row" }}>
+      <Stack spacing={3} direction={{ xs: "column", sm: "row", md: "row" }}>
         <TextField
           sx={{ flexGrow: 1, mr: { sm: 0, md: 5 }, mb: { sm: 2, md: 0 } }}
           id="campaignProductLink"
@@ -69,7 +67,7 @@ export const CampaignFrame = ({ data, handleChange }) => {
           label="DiscountCode"
           onChange={handleChange}
         />
-      </Box>
-    </Fragment>
+      </Stack>
+    </Stack>
   );
 };

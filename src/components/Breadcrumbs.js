@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import { useLocation } from "react-router";
 import { Typography } from "@mui/material";
-import { useTheme } from "@emotion/react";
 import isValidUUID from "./uuidUtils";
+import { useTheme } from "@emotion/react";
 
 // TODO How to directly use routes in App?? Breaks DRY
 const breadcrumbNameMap = {
@@ -25,22 +25,23 @@ export const BreadcrumbComponent = () => {
   return (
     <Breadcrumbs
       sx={{
-        mx: "24px",
-        minHeight: "45px",
+        display: pathnames.length == 0 ? "none" : "block",
+        "& a": {
+          textDecoration: "none",
+          color: theme.palette.primary.main,
+        },
+        "& a:hover": {
+          textDecoration: "underline",
+        },
+        "& p": {
+          color: theme.palette.active.main,
+        },
+        lineHeight: 1.75,
       }}
       aria-label="breadcrumb"
     >
-      <Link
-        underline="hover"
-        sx={{ display: "flex", alignItems: "center" }}
-        color="inherit"
-        to="/"
-      >
-        <HomeIcon
-          sx={{
-            color: theme.palette.pinfluencerGreen.main,
-          }}
-        />
+      <Link to="/">
+        <HomeIcon sx={{ marginTop: 0.6 }}></HomeIcon>
       </Link>
       {pathnames.map((value, index) => {
         const last = index === pathnames.length - 1;
@@ -54,23 +55,14 @@ export const BreadcrumbComponent = () => {
         const join = updated.join("/");
         const to = "/" + join;
         return last ? (
-          <Typography color="black" key={to}>
+          <Typography key={to}>
             {breadcrumbNameMap[to.toLowerCase()]}
           </Typography>
         ) : (
           // only include configured routes.
           // page will display BadUrl component
           breadcrumbNameMap[to.toLowerCase()] && (
-            <Link
-              style={{
-                textDecoration: "none",
-                color: theme.palette.pinfluencerGreen.main,
-              }}
-              underline="hover"
-              color="inherit"
-              to={slice.join("/")}
-              key={to}
-            >
+            <Link to={slice.join("/")} key={to}>
               {breadcrumbNameMap[to.toLowerCase()]}
             </Link>
           )

@@ -1,5 +1,6 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import React from "react";
+import HeaderAndValue from "./HeaderAndValue";
 const style = {
   position: "absolute",
   top: "50%",
@@ -20,23 +21,9 @@ export default function AreYouSureDialog({
   action,
 }) {
   return (
-    <Modal
-      open={open}
-      onClose={close}
-      aria-labelledby="modal-check-reject-modal-title"
-      aria-describedby="modal-check-reject-modal-description"
-    >
+    <Modal open={open} onClose={close}>
       <Box sx={style}>
-        <Typography
-          id="modal-check-reject-modal-title"
-          variant="h6"
-          component="h2"
-        >
-          {header}
-        </Typography>
-        <Typography id="modal-check-rejectmodal-description" sx={{ mt: 2 }}>
-          {description}
-        </Typography>
+        <HeaderAndValue header={header} value={description} />
         <Button onClick={cancel}>No</Button>
         <Button onClick={action}>Yes</Button>
       </Box>

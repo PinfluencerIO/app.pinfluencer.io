@@ -18,7 +18,8 @@ export const ImageUpload = ({
           onClick={() => document.getElementById(elementId).click()}
           aria-label="upload"
           sx={{
-            flexGrow: 1,
+            maxWidth: "200px",
+
             border: "1px solid",
             borderRadius: "5px",
             background: " url(" + imageSrc + ") center center no-repeat",
@@ -34,11 +35,12 @@ export const ImageUpload = ({
 
         <IconButton
           aria-label="delete image"
-          color="red"
+          color="error"
           onClick={() => {
             document.getElementById(elementId).value = null;
             setImageSrc(null);
           }}
+          sx={{ maxWidth: "200px" }}
         >
           <HighlightOffIcon
             sx={{

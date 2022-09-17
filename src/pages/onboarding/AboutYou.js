@@ -10,12 +10,13 @@ export const AboutYou = ({ data, handleChange }) => {
   return (
     <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
       <Typography variant="h4">Welcome to Pinfluencer</Typography>
-      <Typography variant="p">
+      <Typography variant="body1">
         To get you started, please complete this quick onboarding process
       </Typography>
 
       <TextField
         required
+        type="email"
         id="email"
         label="Email"
         name="email"

@@ -1,20 +1,33 @@
-import { Grid, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import { Box, Typography } from "@mui/material";
+import React from "react";
 
 export default function HeaderAndValue({ header, value }) {
-  if (value)
-    return (
-      <Grid item sx={{ pb: "20px" }}>
+  return (
+    <React.Fragment>
+      <Box height={100}>
         <Typography
+          aria-describedby="modal-check-reject-modal-description"
           sx={{
-            color: "lightText",
-            display: { xs: "none", sm: "block" },
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
+          variant="h6"
         >
           {header}
         </Typography>
-        <Typography variant="h5">{value}</Typography>
-      </Grid>
-    );
-  return <Fragment />;
+        <Typography
+          sx={{
+            display: "-webkit-box",
+            overflow: "hidden",
+            WebkitBoxOrient: "vertical",
+            WebkitLineClamp: 3,
+          }}
+          variant="body1"
+        >
+          {value}
+        </Typography>
+      </Box>
+    </React.Fragment>
+  );
 }

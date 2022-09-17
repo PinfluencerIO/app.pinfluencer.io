@@ -8,7 +8,7 @@ export const SmallScreenMenu = () => {
     <Box
       sx={{
         flexGrow: 1,
-        display: { xs: "flex", sm: "none" },
+        display: "flex",
         justifyContent: "center",
       }}
     >

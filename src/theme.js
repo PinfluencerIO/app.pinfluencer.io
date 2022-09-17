@@ -1,33 +1,72 @@
-import { createTheme, responsiveFontSizes } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
-const baseTheme = createTheme({
-  typography: {
-    allVariants: {
-      fontFamily:
-        "Comfortaa,Arial, Helvetica, Verdana, Trebuchet MS, Gill Sans",
-    },
-    fontFamily: "Comfortaa,Arial, Helvetica, Verdana, Trebuchet MS, Gill Sans",
-  },
+function createFontFamily(fontFamily) {
+  return {
+    fontFamily,
+    // [baseTheme.breakpoints.down("sm")]: {
+    //   fontSize: 16,
+    // },
+    // [baseTheme.breakpoints.up("sm")]: {
+    //   fontSize: 18,
+    // },
+    // [baseTheme.breakpoints.up("md")]: {
+    //   fontSize: 20,
+    // },
+    // [baseTheme.breakpoints.up("lg")]: {
+    //   fontSize: 24,
+    // },
+    h1: { fontFamily },
+    h2: { fontFamily },
+    h3: { fontFamily },
+    h4: { fontFamily },
+    h5: { fontFamily },
+    h6: { fontFamily },
+    subtitle1: { fontFamily },
+    subtitle2: { fontFamily },
+    body1: { fontFamily },
+    body2: { fontFamily },
+    button: { fontFamily },
+    caption: { fontFamily },
+    overline: { fontFamily },
+  };
+}
+
+const baseTheme = createTheme();
+const customTheme = createTheme(baseTheme, {
+  typography: createFontFamily("Comfortaa"),
   components: {
-    MuiButton: {
-      // styleOverrides: {
-      //   text: {
-      //     color: "#fcba03",
-      //   },
-      //   outlined: {
-      //     color: "#fcba03",
-      //   },
-      // },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          "& button": {
+            // [baseTheme.breakpoints.up("sm")]: {
+            //   minWidth: "90px",
+            // },
+            // [baseTheme.breakpoints.only("sm")]: {
+            //   minWidth: "80px",
+            //   fontSize: "small",
+            // },
+            // [baseTheme.breakpoints.only("xs")]: {
+            //   minWidth: "50px",
+            //   fontSize: "x-small",
+            // },
+          },
+        },
+      },
     },
   },
   palette: {
     primary: {
       main: "#000",
     },
-    secondary: {
-      main: "#FFF",
+
+    active: {
+      main: "#6DA66A",
     },
   },
+  drawerWidth: 197,
 });
 
-export default responsiveFontSizes(baseTheme);
+const pinfluencerTheme = responsiveFontSizes(customTheme);
+console.log(pinfluencerTheme);
+export default pinfluencerTheme;

@@ -60,7 +60,7 @@ export function AudiencePercentages({
               endAdornment={<InputAdornment position="end">%</InputAdornment>}
             />
             <div style={{ display: "inline", width: "70px", marginRight: 15 }}>
-              <Typography variant="p">{audience.label}</Typography>
+              <Typography variant="body1">{audience.label}</Typography>
             </div>
           </Box>
         ))}

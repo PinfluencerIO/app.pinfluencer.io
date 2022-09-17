@@ -15,6 +15,8 @@ import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
 import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
 import { Campaigns } from "./pages/campaigns/Campaigns";
 import { CollaborationsTable } from "./pages/collaborations/CollaborationsTable";
+import { BaseComponent } from "./pages/BaseComponent";
+import { Link, Stack } from "@mui/material";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -32,7 +34,6 @@ function App() {
   useEffect(() => {
     //  redirect if user is available and that user has not completed onboarding
     if (user && !("custom:usertype" in user)) {
-      // console.log(user);
       nav("Onboarding");
     } else if (user && redirect) {
       // if a user arrived pre authenticated to an authenticated route, redirect after authentication
@@ -45,6 +46,27 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
+        <Route
+          path="dev"
+          element={
+            <>
+              <Stack direction={{ xs: "column", sm: "column", md: "row" }}>
+                <BaseComponent>
+                  Some info may be visible to other people using Google
+                  services. <Link href="#">Find out more</Link>
+                </BaseComponent>
+                <BaseComponent>
+                  Some info may be visible to other people using Google
+                  services. <Link href="#">Find out more</Link>
+                </BaseComponent>
+              </Stack>
+              <BaseComponent>
+                Some info may be visible to other people using Google services.{" "}
+                <Link href="#">Find out more</Link>
+              </BaseComponent>
+            </>
+          }
+        />
         <Route path="onboarding" element={<OnboardingSteps />} />
         <Route path="profile" element={<Profile />} />
         <Route path="dashboard" element={<Dashboard />} />

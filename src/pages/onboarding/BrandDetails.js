@@ -30,7 +30,7 @@ export const BrandDetails = ({ data, handleChange }) => {
     <React.Fragment>
       <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
         <Typography variant="h4">Brand Details</Typography>
-        <Typography variant="p">
+        <Typography variant="body1">
           Exercitation ex est proident est laborum eiusmod nisi excepteur minim
           cillum velit officia. Qui et ut id minim veniam qui culpa excepteur.
           Id id amet amet Lorem dolore ullamco labore.

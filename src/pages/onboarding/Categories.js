@@ -7,7 +7,7 @@ export const Categories = ({ data, handleChange }) => {
   return (
     <Stack spacing={3} p={{ xs: 2, sm: 5, md: 5 }}>
       <Typography variant="h4">Categories *</Typography>
-      <Typography variant="p">
+      <Typography variant="body1">
         Aliqua aliqua veniam consectetur anim magna cupidatat cillum eiusmod ea
         tempor nisi.
       </Typography>

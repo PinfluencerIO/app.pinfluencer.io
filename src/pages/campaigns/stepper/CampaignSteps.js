@@ -1,4 +1,4 @@
-import { Alert, Paper, Step, StepLabel, Stepper } from "@mui/material";
+import { Alert, Step, StepLabel, Stepper } from "@mui/material";
 import { useEffect } from "react";
 import { Fragment, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -55,15 +55,13 @@ export function CampaignSteps() {
 
   return (
     <Fragment>
-      <Paper sx={{ my: 2, py: 2 }}>
-        <Stepper activeStep={activeStep} alternativeLabel>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </Paper>
+      <Stepper activeStep={activeStep} alternativeLabel sx={{ my: 3 }}>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
       <StepperFrame
         handleBack={handleBack}
         handleNext={handleNext}
