@@ -4,7 +4,12 @@ import { BaseComponent } from "./BaseComponent";
 
 export const HomePage = () => {
   return (
-    <BaseComponent heading="Welcome to Pinfluencer" disableBorder>
+    <BaseComponent
+      heading="Welcome to Pinfluencer"
+      disableBorder
+      disableGutter
+      variant="h4"
+    >
       <Typography variant="body1">
         This will be the home page with details about what&apos;s going on with
         Pinfluencer App

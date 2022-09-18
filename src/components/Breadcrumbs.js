@@ -12,6 +12,7 @@ const breadcrumbNameMap = {
   "/dashboard": "Dashboard",
   "/onboarding": "Onboarding",
   "/profile": "Profile",
+  "/profile/edit": "Edit",
   "/campaigns": "Campaigns",
   "/campaigns/new": "New",
   "/campaigns/:id": "View",
@@ -54,6 +55,7 @@ export const BreadcrumbComponent = () => {
         });
         const join = updated.join("/");
         const to = "/" + join;
+
         return last ? (
           <Typography key={to}>
             {breadcrumbNameMap[to.toLowerCase()]}
@@ -62,7 +64,7 @@ export const BreadcrumbComponent = () => {
           // only include configured routes.
           // page will display BadUrl component
           breadcrumbNameMap[to.toLowerCase()] && (
-            <Link to={slice.join("/")} key={to}>
+            <Link to={"/" + slice.join("/")} key={to}>
               {breadcrumbNameMap[to.toLowerCase()]}
             </Link>
           )

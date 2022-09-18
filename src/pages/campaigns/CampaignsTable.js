@@ -19,6 +19,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCampaigns } from "../../api/api";
 import HeaderAndValue from "../../components/HeaderAndValue";
 import { ImgOrBlank } from "../../components/ImgOrBlank";
+import { TopActions } from "../../components/v2/TopActions";
 
 const filters = ["all", "active", "draft", "closed"];
 export const CampaignsTable = () => {
@@ -81,6 +82,20 @@ export const CampaignsTable = () => {
 
   return (
     <Box>
+      <Box display="flex" justifyContent="space-between" marginBottom={2}>
+        <TopActions>
+          <Button
+            variant="contained"
+            onClick={() => nav("new")}
+            sx={{
+              bottom: isXSmall ? 3 : -3,
+              top: isXSmall ? 3 : -3,
+            }}
+          >
+            {buttonLabel()}
+          </Button>
+        </TopActions>
+      </Box>
       <Box
         sx={{
           borderBottom: isXSmall ? 0 : 1,
@@ -114,16 +129,6 @@ export const CampaignsTable = () => {
             />
           ))}
         </Tabs>
-        <Button
-          variant="contained"
-          onClick={() => nav("new")}
-          sx={{
-            bottom: isXSmall ? 3 : -3,
-            top: isXSmall ? 3 : -3,
-          }}
-        >
-          {buttonLabel()}
-        </Button>
       </Box>
       <Grid container spacing={3}>
         {rows.length === 0 ? emptyRows() : populatedRows()}

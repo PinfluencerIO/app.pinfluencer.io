@@ -5,7 +5,9 @@ import React from "react";
 export const BaseComponent = ({
   heading,
   disableBorder = false,
-  variant,
+  disableGutter = false,
+  variant = "h6",
+  color = "primary",
   children,
 }) => {
   return (
@@ -18,7 +20,7 @@ export const BaseComponent = ({
       flex={1}
       height="100%"
     >
-      <Box width="100%" display="flex" flexDirection="column" height="100%">
+      <Box display="flex" flexDirection="column" height="100%" width="100%">
         <Box
           display="flex"
           bgcolor="#fff"
@@ -28,17 +30,20 @@ export const BaseComponent = ({
           boxSizing="border-box"
           overflow="hidden"
           height="100%"
-          paddingX={disableBorder ? 0 : 3}
+          paddingX={disableGutter ? 0 : 3}
           sx={{ paddingY: { xs: 1, sm: 1, md: 2 } }}
         >
-          <Box>
-            <Box>
-              <Box component="header" diplay="flex">
-                <Box display="flex" flexDirection="column" flex="1 1 0">
-                  <Typography
-                    variant={variant ? variant : disableBorder ? "h6" : "h4"}
-                    color="primary"
-                  >
+          <Box height="100%" width="100%">
+            <Box height="100%" width="100%">
+              <Box component="header" diplay="flex" height="100%" width="100%">
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  flex="1 1 0"
+                  height="100%"
+                  width="100%"
+                >
+                  <Typography variant={variant} color={color}>
                     {heading}
                   </Typography>
                   <Box

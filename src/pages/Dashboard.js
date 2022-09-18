@@ -22,7 +22,8 @@ export const Dashboard = () => {
     <BaseComponent
       heading="Your Pinfluencer Dashboard"
       disableBorder
-      variant="h3"
+      disableGutter
+      variant="h4"
     >
       <Typography variant="body1">
         Hi {details.name} - This is details of what is going on with your

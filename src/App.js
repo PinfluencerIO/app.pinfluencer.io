@@ -1,23 +1,24 @@
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 
 import "./aws/aws";
 import UserContext from "./context/UserContext";
 import { Layout } from "./Layout";
+import { BadUrl } from "./pages/BadUrl";
+import { Campaigns } from "./pages/campaigns/Campaigns";
+import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
+import { CampaignSteps } from "./pages/campaigns/stepper/CampaignSteps";
+import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
+import { Collaborations } from "./pages/collaborations/Collaborations";
+import { CollaborationsTable } from "./pages/collaborations/CollaborationsTable";
 import { Dashboard } from "./pages/Dashboard";
 import { HomePage } from "./pages/HomePage";
-import { Collaborations } from "./pages/collaborations/Collaborations";
-import { Profile } from "./pages/Profile";
 import { OnboardingSteps } from "./pages/onboarding/OnboardingSteps";
-import { CampaignSteps } from "./pages/campaigns/stepper/CampaignSteps";
-import { BadUrl } from "./pages/BadUrl";
-import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
-import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
-import { Campaigns } from "./pages/campaigns/Campaigns";
-import { CollaborationsTable } from "./pages/collaborations/CollaborationsTable";
+import { Profile } from "./pages/Profile";
 
-import { Box, Stack } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { BaseComponent } from "./pages/BaseComponent";
+
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
   const nav = useNavigate();
@@ -49,30 +50,18 @@ function App() {
         <Route
           path="dev"
           element={
-            <Stack
-              direction={{ xs: "column", sm: "column", md: "row" }}
-              sx={{ border: "0px solid blue" }}
-            >
-              <Box flex={{ xs: 0, md: 1 }}>
-                <BaseComponent heading="About us">Text</BaseComponent>
+            <BaseComponent>
+              <Box display="flex" flexDirection="column">
+                <Box sx={{ border: "1px solid" }}>
+                  <TextField sx={{ width: "100%" }} />
+                </Box>
               </Box>
-              <Box flex={{ xs: 0, md: 2 }}>
-                <BaseComponent heading="Matching">
-                  <Stack direction="column">
-                    <BaseComponent disableBorder heading="Categories">
-                      Chips for categoires
-                    </BaseComponent>
-                    <BaseComponent disableBorder heading="Categories">
-                      Chips for categoires
-                    </BaseComponent>
-                  </Stack>
-                </BaseComponent>
-              </Box>
-            </Stack>
+            </BaseComponent>
           }
         />
         <Route path="onboarding" element={<OnboardingSteps />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile" element={<Profile />}></Route>
+        <Route path="profile/edit" element={<Profile />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="campaigns" element={<Campaigns />}>
           <Route index element={<CampaignsTable />} />

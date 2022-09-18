@@ -1,4 +1,12 @@
-import { Alert, Step, StepLabel, Stepper } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Step,
+  StepLabel,
+  Stepper,
+  useMediaQuery,
+} from "@mui/material";
 import { useEffect } from "react";
 import { Fragment, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -14,6 +22,7 @@ import {
 } from "../../../components/Alerts";
 import { StepperFrame } from "../../../components/StepperFrame";
 import isValidUUID from "../../../components/uuidUtils";
+import { TopActions } from "../../../components/v2/TopActions";
 import { BadUrl } from "../../BadUrl";
 import { CampaignFrame } from "./CampaignFrame";
 import { ObjectivesFrame } from "./ObjectivesFrame";
@@ -34,6 +43,9 @@ export function CampaignSteps() {
   // form data, can be filled for testing purposes via localstorage
   const [data, setData] = useState(fill(id, validId));
 
+  const isXSmall = useMediaQuery("(max-width:560px)");
+  const isSmall = useMediaQuery("(max-width:625px)");
+
   useEffect(() => {
     //TODO handle error
     id &&
@@ -52,9 +64,26 @@ export function CampaignSteps() {
   if (loading) {
     return <div>Loading...</div>;
   }
-
+  function buttonLabel() {
+    if (isSmall) return "New Campaign";
+    return "Create New Campaign";
+  }
   return (
     <Fragment>
+      <Box display="flex" justifyContent="space-between" marginBottom={2}>
+        <TopActions>
+          <Button
+            variant="contained"
+            onClick={() => nav("new")}
+            sx={{
+              bottom: isXSmall ? 3 : -3,
+              top: isXSmall ? 3 : -3,
+            }}
+          >
+            {buttonLabel()}
+          </Button>
+        </TopActions>
+      </Box>
       <Stepper activeStep={activeStep} alternativeLabel sx={{ my: 3 }}>
         {steps.map((label) => (
           <Step key={label}>

@@ -2,6 +2,8 @@ import { Autocomplete, Box, Chip, FormControl, TextField } from "@mui/material";
 import React, { Fragment } from "react";
 
 export const ChipSelectInput = ({ data, handleChange, values, id, label }) => {
+  console.log("data", data);
+  if (!data) data = [];
   const onDelete = (itemToBeDeleted) => () => {
     const updated = data[id].filter((item) => item !== itemToBeDeleted);
     handleChange({

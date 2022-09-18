@@ -1,19 +1,25 @@
-import { Box, Button, Stack } from "@mui/material";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import { Box, Stack } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import { getBrand } from "../api/api";
+import headerPlaceholder from "../assets/placeholder-header.jpg";
 import { Loading } from "../components/Loading";
-import { ChipDisplay } from "../components/v2/ChipDisplay";
+import { BrandNameAndDescription } from "../components/v2/BrandNameAndDescription";
 import { ExternalDashboardLinks } from "../components/v2/ExternalDashboardLinks";
 import { NameAndEmail } from "../components/v2/NameAndEmail";
+import { ProfileActions } from "../components/v2/ProfileActions";
+import { ProfileCategoryChips } from "../components/v2/ProfileCategoryChips";
+import { ProfileValueChips } from "../components/v2/ProfileValueChips";
 import { BaseComponent } from "./BaseComponent.js";
-import headerPlaceholder from "../assets/placeholder-header.jpg";
 
 export const Profile = () => {
   const [brand, setBrand] = useState({});
   const [loading, setLoading] = React.useState(true);
   const externalHeaderPlaceHolder =
     "https://dummyimage.com/1200x200/de18de/222a99.jpg&text=Header+Placeholder";
+
+  const location = useLocation();
+  const isEdit = location.pathname.includes("edit");
   //TODO handle error
   useEffect(() => {
     getBrand()
@@ -27,11 +33,12 @@ export const Profile = () => {
   return (
     <>
       <Box flex={{ xs: 0, md: 2 }} mb={3}>
-        <Box display="flex" justifyContent="end" marginBottom={2}>
-          <Button sx={{ width: 30 }} variant="contained">
-            Edit
-          </Button>
+        {/* Action row */}
+        <Box display="flex" justifyContent="space-between" marginBottom={2}>
+          <ProfileActions isEdit={isEdit} />
         </Box>
+
+        {/* Top Row Details */}
         <BaseComponent>
           <Box
             sx={{
@@ -42,6 +49,7 @@ export const Profile = () => {
                 ? `url(${externalHeaderPlaceHolder})`
                 : `url(${headerPlaceholder})`,
               backgroundSize: "cover",
+              borderRadius: "5px",
               "& .logoImg": {
                 width: { xs: 40, sm: 50, md: 60, lg: 80 },
                 height: { xs: 40, sm: 50, md: 60, lg: 80 },
@@ -59,36 +67,31 @@ export const Profile = () => {
             />
           </Box>
           <Stack direction={{ xs: "column", sm: "column", md: "row" }}>
-            <Box flex={{ xs: 0, md: 2 }} mr={{ xs: 0, sm: 0, md: 10 }}>
-              <BaseComponent heading={brand.brandName} disableBorder>
-                <BaseComponent disableBorder>
-                  {brand.brandDescription}
-                </BaseComponent>
-              </BaseComponent>
+            <Box
+              flex={{ xs: 0, md: 2 }}
+              mr={{ xs: 0, sm: 0, md: 10 }}
+              marginTop={1}
+            >
+              {<BrandNameAndDescription isEdit={isEdit} brand={brand} />}
             </Box>
             <Box flex={{ xs: 0, md: 1 }}>
-              <BaseComponent disableBorder heading="External Links">
-                <ExternalDashboardLinks brand={brand} />
-              </BaseComponent>
+              <ExternalDashboardLinks isEdit={isEdit} brand={brand} />
             </Box>
           </Stack>
         </BaseComponent>
       </Box>
+      {/* Bottom row details */}
       <Stack direction={{ xs: "column", sm: "column", md: "row" }} spacing={3}>
         <Box flex={{ xs: 0, md: 1 }}>
-          <BaseComponent heading="About us">
-            <NameAndEmail brand={brand} />
+          <BaseComponent heading={isEdit ? "" : "About us"}>
+            <NameAndEmail isEdit={isEdit} brand={brand} />
           </BaseComponent>
         </Box>
         <Box flex={{ xs: 0, md: 2 }}>
-          <BaseComponent heading="Matching">
+          <BaseComponent heading={isEdit ? "" : "Matching"}>
             <Stack direction="column">
-              <BaseComponent heading="Categories" disableBorder>
-                <ChipDisplay items={brand.categories} />
-              </BaseComponent>
-              <BaseComponent heading="Values" disableBorder>
-                <ChipDisplay items={brand.values} />
-              </BaseComponent>
+              <ProfileCategoryChips isEdit={isEdit} brand={brand} />
+              <ProfileValueChips isEdit={isEdit} brand={brand} />
             </Stack>
           </BaseComponent>
         </Box>
