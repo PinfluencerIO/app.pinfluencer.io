@@ -31,7 +31,6 @@ async function actionRequest(action, payload) {
 
 // fetch call that only returns ok response, otherwise throws an exception
 async function executeFetch(url, action) {
-  console.log("Execute", url, action);
   const response = await fetch(url, action);
 
   if (response.ok) {
@@ -47,6 +46,12 @@ async function onboarding(payloadObject) {
     `${remote}/${payloadObject.type}s/me`,
     requestAction
   );
+}
+
+export async function updateBrand(payloadObject) {
+  const payload = JSON.stringify(payloadObject);
+  const requestAction = await actionRequest("PUT", payload);
+  return await executeFetch(`${remote}/brands/me`, requestAction);
 }
 
 // send type data, then chain images

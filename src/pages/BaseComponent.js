@@ -24,7 +24,7 @@ export const BaseComponent = ({
         <Box
           display="flex"
           bgcolor="#fff"
-          borderRadius={disableBorder ? 0 : 4}
+          borderRadius={disableBorder ? 0 : "8px"}
           border={disableBorder ? 0 : 1}
           borderColor="rgb(218,220,224)"
           boxSizing="border-box"

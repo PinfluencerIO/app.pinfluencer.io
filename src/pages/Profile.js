@@ -8,8 +8,7 @@ import { BrandNameAndDescription } from "../components/v2/BrandNameAndDescriptio
 import { ExternalDashboardLinks } from "../components/v2/ExternalDashboardLinks";
 import { NameAndEmail } from "../components/v2/NameAndEmail";
 import { ProfileActions } from "../components/v2/ProfileActions";
-import { ProfileCategoryChips } from "../components/v2/ProfileCategoryChips";
-import { ProfileValueChips } from "../components/v2/ProfileValueChips";
+import { ProfileMatchingDetails } from "../components/v2/ProfileMatchingDetails";
 import { BaseComponent } from "./BaseComponent.js";
 
 export const Profile = () => {
@@ -27,6 +26,14 @@ export const Profile = () => {
       .then(setLoading(false));
   }, []);
 
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setBrand((currentState) => {
+      return { ...currentState, [name]: value };
+    });
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -35,7 +42,7 @@ export const Profile = () => {
       <Box flex={{ xs: 0, md: 2 }} mb={3}>
         {/* Action row */}
         <Box display="flex" justifyContent="space-between" marginBottom={2}>
-          <ProfileActions isEdit={isEdit} />
+          <ProfileActions isEdit={isEdit} brand={brand} />
         </Box>
 
         {/* Top Row Details */}
@@ -51,8 +58,8 @@ export const Profile = () => {
               backgroundSize: "cover",
               borderRadius: "5px",
               "& .logoImg": {
-                width: { xs: 40, sm: 50, md: 60, lg: 80 },
-                height: { xs: 40, sm: 50, md: 60, lg: 80 },
+                width: { xs: 40, sm: 50, md: 80, lg: 80 },
+                height: { xs: 40, sm: 50, md: 80, lg: 80 },
                 borderRadius: "5px",
                 top: 30,
                 left: 10,
@@ -69,13 +76,21 @@ export const Profile = () => {
           <Stack direction={{ xs: "column", sm: "column", md: "row" }}>
             <Box
               flex={{ xs: 0, md: 2 }}
-              mr={{ xs: 0, sm: 0, md: 10 }}
+              mr={{ xs: 0, sm: 0, md: 3 }}
               marginTop={1}
             >
-              {<BrandNameAndDescription isEdit={isEdit} brand={brand} />}
+              <BrandNameAndDescription
+                isEdit={isEdit}
+                brand={brand}
+                handleChange={handleChange}
+              />
             </Box>
-            <Box flex={{ xs: 0, md: 1 }}>
-              <ExternalDashboardLinks isEdit={isEdit} brand={brand} />
+            <Box flex={{ xs: 0, md: 1 }} marginTop={1}>
+              <ExternalDashboardLinks
+                isEdit={isEdit}
+                brand={brand}
+                handleChange={handleChange}
+              />
             </Box>
           </Stack>
         </BaseComponent>
@@ -84,15 +99,20 @@ export const Profile = () => {
       <Stack direction={{ xs: "column", sm: "column", md: "row" }} spacing={3}>
         <Box flex={{ xs: 0, md: 1 }}>
           <BaseComponent heading={isEdit ? "" : "About us"}>
-            <NameAndEmail isEdit={isEdit} brand={brand} />
+            <NameAndEmail
+              isEdit={isEdit}
+              brand={brand}
+              handleChange={handleChange}
+            />
           </BaseComponent>
         </Box>
         <Box flex={{ xs: 0, md: 2 }}>
           <BaseComponent heading={isEdit ? "" : "Matching"}>
-            <Stack direction="column">
-              <ProfileCategoryChips isEdit={isEdit} brand={brand} />
-              <ProfileValueChips isEdit={isEdit} brand={brand} />
-            </Stack>
+            <ProfileMatchingDetails
+              isEdit={isEdit}
+              brand={brand}
+              handleChange={handleChange}
+            />
           </BaseComponent>
         </Box>
       </Stack>

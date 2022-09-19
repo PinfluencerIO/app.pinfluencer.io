@@ -4,11 +4,11 @@ import { Box, Toolbar } from "@mui/material";
 
 import { Outlet } from "react-router";
 
-import UserContext from "./context/UserContext";
-import { Footer } from "./components/v2/Footer";
 import { ElevatedAppBar } from "./components/v2/ElevatedAppBar";
-import { SmallScreenFooter } from "./components/v2/SmallScreenFooter";
+import { Footer } from "./components/v2/Footer";
 import { LeftDrawNavLinks } from "./components/v2/LeftDrawNavLinks";
+import { SmallScreenFooter } from "./components/v2/SmallScreenFooter";
+import UserContext from "./context/UserContext";
 import { pagesForUserType } from "./pages/pagesForUserType";
 
 export const Layout = () => {
@@ -65,11 +65,11 @@ export const Layout = () => {
                 flexDirection: "column",
                 height: "100%",
                 mt: { xs: "50px", sm: "20px" },
-                maxWidth: "900px",
+                maxWidth: "1200px",
               }}
             >
               <Box
-                sx={{ flexBasis: "100%", px: { xs: 2, sm: 2.5, md: 3, lg: 4 } }}
+                sx={{ flexBasis: "100%", px: { xs: 2, sm: 2.5, md: 4, lg: 4 } }}
               >
                 <Outlet />
               </Box>

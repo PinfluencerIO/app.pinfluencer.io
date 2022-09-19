@@ -2,7 +2,6 @@ import { Autocomplete, Box, Chip, FormControl, TextField } from "@mui/material";
 import React, { Fragment } from "react";
 
 export const ChipSelectInput = ({ data, handleChange, values, id, label }) => {
-  console.log("data", data);
   if (!data) data = [];
   const onDelete = (itemToBeDeleted) => () => {
     const updated = data[id].filter((item) => item !== itemToBeDeleted);
@@ -36,7 +35,7 @@ export const ChipSelectInput = ({ data, handleChange, values, id, label }) => {
         </FormControl>
       </Box>
       <Box
-        mt={6}
+        mt={2}
         sx={{
           width: "100%",
           height: 100,
