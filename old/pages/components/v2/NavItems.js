@@ -21,6 +21,7 @@ export const NavItems = ({ navItems }) => {
         overflow: "hidden",
         height: 30,
         ml: -2,
+        mt: 1,
         "&::after": {
           content: '""',
           display: !matches ? "flex" : "none",
@@ -71,6 +72,8 @@ export const NavItems = ({ navItems }) => {
               <ListItemText
                 primary={page.label}
                 sx={{
+                  color: (theme) => theme.palette.common.black,
+                  whiteSpace: "nowrap",
                   borderBottomColor: (theme) => theme.palette.active.main,
                   borderBottomStyle: location.pathname
                     .toLowerCase()
@@ -78,7 +81,6 @@ export const NavItems = ({ navItems }) => {
                     ? "solid"
                     : "none",
                   marginTop: 1,
-                  color: (theme) => theme.palette.primary.main,
                 }}
               />
             </ListItemButton>

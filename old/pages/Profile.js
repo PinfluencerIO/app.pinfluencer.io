@@ -7,7 +7,6 @@ import { Loading } from "../components/Loading";
 import { BrandNameAndDescription } from "../components/v2/BrandNameAndDescription";
 import { ExternalDashboardLinks } from "../components/v2/ExternalDashboardLinks";
 import { NameAndEmail } from "../components/v2/NameAndEmail";
-import { ProfileActions } from "../components/v2/ProfileActions";
 import { ProfileMatchingDetails } from "../components/v2/ProfileMatchingDetails";
 import { BaseComponent } from "./BaseComponent.js";
 
@@ -41,10 +40,9 @@ export const Profile = () => {
     <>
       <Box flex={{ xs: 0, md: 2 }} mb={3}>
         {/* Action row */}
-        <Box display="flex" justifyContent="space-between" marginBottom={2}>
+        {/* <Box display="flex" justifyContent="space-between" marginBottom={2}>
           <ProfileActions isEdit={isEdit} brand={brand} />
-        </Box>
-
+        </Box> */}
         {/* Top Row Details */}
         <BaseComponent>
           <Box

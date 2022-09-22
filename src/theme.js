@@ -35,6 +35,23 @@ const baseTheme = createTheme();
 const customTheme = createTheme(baseTheme, {
   typography: createFontFamily("Comfortaa"),
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        },
+        "& #root": {
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        },
+        html: {
+          height: "100%",
+        },
+      },
+    },
     MuiTabs: {
       styleOverrides: {
         root: {

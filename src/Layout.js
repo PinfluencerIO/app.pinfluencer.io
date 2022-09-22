@@ -1,89 +1,112 @@
 import React from "react";
 
-import { Box, Toolbar } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { Outlet } from "react-router";
-
-import { ElevatedAppBar } from "./components/v2/ElevatedAppBar";
-import { Footer } from "./components/v2/Footer";
-import { LeftDrawNavLinks } from "./components/v2/LeftDrawNavLinks";
-import { SmallScreenFooter } from "./components/v2/SmallScreenFooter";
+import { Footer } from "./components/layout/Footer";
+import { Header } from "./components/layout/header/Header";
+import { MainSection } from "./components/layout/MainSection";
 import UserContext from "./context/UserContext";
-import { pagesForUserType } from "./pages/pagesForUserType";
 
 export const Layout = () => {
   const { user } = React.useContext(UserContext);
-
+  console.log("User", user);
   return (
-    <Box sx={{ height: "100vh" }}>
+    <>
+      <Header />
+      <MainSection flex="1" p={2} mt={15} />
+      <Footer flexShrink={0} p={2} backgroundColor="lightblue" />
+    </>
+  );
+};
+
+{
+  false && (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flexWrap: "nowrap",
+        justifyContent: "flex-start",
+        alignItems: "stretch",
+        alignContent: "stretch",
+        height: "calc(100% - 50px)",
+        border: "4px solid green",
+      }}
+    >
+      Second box green
+      <Box sx={{ border: "3px solid blue" }}>3rd box blue</Box>
       <Box
         sx={{
+          flex: "1 1 auto",
           display: "flex",
-          flexDirection: "column",
-          flexWrap: "nowrap",
-          justifyContent: "flex-start",
-          alignItems: "stretch",
-          alignContent: "stretch",
-          height: "calc(100% - 50px)",
         }}
       >
-        <Box>
-          <ElevatedAppBar navItems={pagesForUserType(user)} />
-          <Toolbar />
+        <Box
+          sx={{
+            flex: (theme) => "0 0 " + theme.drawerWidth,
+            display: { xs: "none", md: "flex" },
+            border: "3px solid pink",
+          }}
+        >
+          4th box pink
+          <Box
+            sx={{
+              border: "2px solid yellow",
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+            }}
+          >
+            5th box yellow
+            <Box sx={{ flexBasis: "100%", border: "2px solid cyan" }}>
+              6th box cyan
+            </Box>
+            <Box sx={{ border: "2px solid brown" }}>7th box brown</Box>
+          </Box>
         </Box>
         <Box
           sx={{
             flex: "1 1 auto",
-            display: "flex",
+            border: "2px solid orange",
           }}
         >
+          7th box orange
           <Box
             sx={{
-              flex: (theme) => "0 0 " + theme.drawerWidth,
-              display: { xs: "none", sm: "flex", md: "flex" },
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              mt: { xs: "50px", sm: "20px" },
+              maxWidth: "1200px",
+              border: "2px solid silver",
             }}
           >
-            <Box
-              sx={{ display: "flex", flexDirection: "column", height: "100%" }}
-            >
-              <Box sx={{ flexBasis: "100%" }}>
-                <LeftDrawNavLinks pages={pagesForUserType(user)} />
-              </Box>
-              <Box>
-                <Footer />
-              </Box>
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              flex: "1 1 auto",
-            }}
-          >
+            8th box brown
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-                mt: { xs: "50px", sm: "20px" },
-                maxWidth: "1200px",
+                border: "2px solid purple",
+                flexBasis: "100%",
+                px: { xs: 2, sm: 2.5, md: 4, lg: 4 },
               }}
             >
-              <Box
-                sx={{ flexBasis: "100%", px: { xs: 2, sm: 2.5, md: 4, lg: 4 } }}
-              >
-                <Outlet />
-              </Box>
-              <Box
-                sx={{
-                  display: { xs: "flex", sm: "none" },
-                }}
-              >
-                <SmallScreenFooter />
-              </Box>
+              9th box brown
+              <Outlet />
+            </Box>
+            <Box
+              sx={{
+                display: {
+                  border: "2px solid lightgreen",
+                  xs: "flex",
+                  sm: "none",
+                },
+              }}
+            >
+              10th box brown{" "}
             </Box>
           </Box>
         </Box>
       </Box>
     </Box>
   );
-};
+}

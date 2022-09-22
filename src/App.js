@@ -5,19 +5,7 @@ import "./aws/aws";
 import UserContext from "./context/UserContext";
 import { Layout } from "./Layout";
 import { BadUrl } from "./pages/BadUrl";
-import { Campaigns } from "./pages/campaigns/Campaigns";
-import { CampaignsTable } from "./pages/campaigns/CampaignsTable";
-import { CampaignSteps } from "./pages/campaigns/stepper/CampaignSteps";
-import { ViewCampaign } from "./pages/campaigns/ViewCampaign";
-import { Collaborations } from "./pages/collaborations/Collaborations";
-import { CollaborationsTable } from "./pages/collaborations/CollaborationsTable";
-import { Dashboard } from "./pages/Dashboard";
 import { HomePage } from "./pages/HomePage";
-import { OnboardingSteps } from "./pages/onboarding/OnboardingSteps";
-import { Profile } from "./pages/Profile";
-
-import { Box, TextField } from "@mui/material";
-import { BaseComponent } from "./pages/BaseComponent";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -47,7 +35,15 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route
+
+        {/* <Route path="dashboard" element={<Dashboard />} /> */}
+
+        {/* <Route path="profile" element={<Profile />} /> */}
+        {/* <Route path="profile/edit" element={<Profile />} /> */}
+
+        {/* <Route path="onboarding" element={<OnboardingSteps />} /> */}
+
+        {/* <Route
           path="dev"
           element={
             <BaseComponent>
@@ -58,22 +54,8 @@ function App() {
               </Box>
             </BaseComponent>
           }
-        />
-        <Route path="onboarding" element={<OnboardingSteps />} />
-        <Route path="profile" element={<Profile />}></Route>
-        <Route path="profile/edit" element={<Profile />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="campaigns" element={<Campaigns />}>
-          <Route index element={<CampaignsTable />} />
-          <Route path="new" element={<CampaignSteps />} />
-          <Route path=":id" element={<ViewCampaign />} />
-          <Route path=":id/edit" element={<CampaignSteps />} />
-        </Route>
-        <Route path="collaborations" element={<Collaborations />}>
-          <Route index element={<CollaborationsTable />} />
-          <Route path="new" element={"New Collaboration"} />
-          <Route path=":id" element={"View Collaboration"} />
-        </Route>
+        /> */}
+
         <Route path="*" element={<BadUrl />} />
       </Route>
     </Routes>

@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 import React from "react";
 
 export const InitialsAvatar = ({ user }) => {
@@ -7,16 +7,16 @@ export const InitialsAvatar = ({ user }) => {
       <Avatar
         src={user.picture}
         sx={{
-          width: 40,
-          height: 40,
+          width: 30,
+          height: 30,
         }}
       />
     ) : (
       <Avatar
         {...stringAvatar(user.given_name + " " + user.family_name)}
         sx={{
-          width: 40,
-          height: 40,
+          width: 30,
+          height: 30,
         }}
       />
     );
@@ -26,6 +26,10 @@ export const InitialsAvatar = ({ user }) => {
 
 function stringAvatar(name) {
   return {
-    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+    children: (
+      <Typography>
+        {`${name.split(" ")[0][0]}${name.split(" ")[1][0]}`}
+      </Typography>
+    ),
   };
 }

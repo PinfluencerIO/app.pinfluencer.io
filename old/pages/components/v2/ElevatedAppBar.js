@@ -29,7 +29,6 @@ export const ElevatedAppBar = ({ navItems, handleDrawerToggle }) => {
         component="nav"
         sx={{
           backgroundColor: (theme) => theme.palette.common.white,
-          borderBottom: 1,
           borderColor: "divider",
           zIndex: (theme) => theme.zIndex.drawer + 1,
         }}

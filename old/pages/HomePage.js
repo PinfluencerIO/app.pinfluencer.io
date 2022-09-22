@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import { BaseComponent } from "../components/displayTypes/BaseComponent";
+import { BaseComponent } from "./BaseComponent";
 
 export const HomePage = () => {
   return (
