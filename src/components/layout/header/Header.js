@@ -14,6 +14,7 @@ import { AvatarMenu } from "./AvatarMenu";
 import { HorizontalNavigation } from "./HorizontalNavigation";
 import { OnboardingHorizontalNavigation } from "./OnboardingHorizontalNavigation";
 
+//TODO md and beyond change padding and margin outside of design, fix this to requirements
 export const Header = (props) => {
   const theme = useTheme();
   const { isOnboarded, userType, isAuthenticated } = props;

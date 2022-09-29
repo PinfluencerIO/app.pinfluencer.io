@@ -27,7 +27,12 @@ function App() {
     if (!isAuthenticated(user) && location.pathname !== "/") {
       nav("/");
     } else if (isAuthenticated(user) && !isOnboarded(user)) {
-      nav("onboarding");
+      // allow home page
+      if (location.pathname === "/") return;
+      // all other pages redirect to onboarding
+      if (location.pathname !== "/onboarding") {
+        nav("onboarding");
+      }
     }
   }, [user, nav, location]);
 
@@ -43,7 +48,7 @@ function App() {
           />
         }
       >
-        <Route index element={<HomePage />} />
+        <Route index element={<HomePage isOnboarded={isOnboarded(user)} />} />
 
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="onboarding" element={<OnboardingSteps />} />
@@ -76,9 +81,9 @@ const isAuthenticated = (user) => {
 };
 
 const isOnboarded = (user) => {
-  return user && "custom:usertype" in user;
+  return false && isAuthenticated(user) && "custom:usertype" in user;
 };
 
 const userType = (user) => {
-  return user && user["custom:usertype"];
+  return isAuthenticated(user) && user["custom:usertype"];
 };
