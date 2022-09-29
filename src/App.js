@@ -10,8 +10,9 @@ import { HomePage } from "./pages/HomePage";
 import { OnboardingSteps } from "./pages/onboading/OnboardingSteps";
 
 function App() {
-  const { user, redirect, setRedirect } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const nav = useNavigate();
+
   // TODO: create custom hook for page title side effect
   const location = useLocation();
   useEffect(() => {
@@ -23,19 +24,25 @@ function App() {
   }, [location]);
 
   useEffect(() => {
-    //  redirect if user is available and that user has not completed onboarding
-    if (user && !("custom:usertype" in user)) {
-      nav("Onboarding");
-    } else if (user && redirect) {
-      // if a user arrived pre authenticated to an authenticated route, redirect after authentication
-      setRedirect();
-      nav(redirect);
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, nav, redirect]);
+    if (!isAuthenticated(user) && location.pathname !== "/") {
+      nav("/");
+    } else if (isAuthenticated(user) && !isOnboarded(user)) {
+      nav("onboarding");
+    }
+  }, [user, nav, location]);
 
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route
+        path="/"
+        element={
+          <Layout
+            isAuthenticated={isAuthenticated(user)}
+            isOnboarded={isOnboarded(user)}
+            userType={userType(user)}
+          />
+        }
+      >
         <Route index element={<HomePage />} />
 
         <Route path="dashboard" element={<Dashboard />} />
@@ -63,3 +70,15 @@ function App() {
 }
 
 export default App;
+
+const isAuthenticated = (user) => {
+  return user;
+};
+
+const isOnboarded = (user) => {
+  return user && "custom:usertype" in user;
+};
+
+const userType = (user) => {
+  return user && user["custom:usertype"];
+};

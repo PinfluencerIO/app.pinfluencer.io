@@ -12,9 +12,11 @@ import React from "react";
 import { LinkedToolTip } from "../../displayTypes/LinkedToolTip";
 import { AvatarMenu } from "./AvatarMenu";
 import { HorizontalNavigation } from "./HorizontalNavigation";
+import { OnboardingHorizontalNavigation } from "./OnboardingHorizontalNavigation";
 
 export const Header = (props) => {
   const theme = useTheme();
+  const { isOnboarded, userType, isAuthenticated } = props;
 
   return (
     <ElevationScroll {...props}>
@@ -35,7 +37,15 @@ export const Header = (props) => {
           <Box flex={1}></Box> {/**GapBox*/}
           <AvatarMenu />
         </Toolbar>
-        <HorizontalNavigation />
+        {isAuthenticated ? (
+          isOnboarded ? (
+            <HorizontalNavigation userType={userType} />
+          ) : (
+            <OnboardingHorizontalNavigation />
+          )
+        ) : (
+          <></>
+        )}
       </AppBar>
     </ElevationScroll>
   );

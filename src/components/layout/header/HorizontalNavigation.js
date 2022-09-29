@@ -10,12 +10,15 @@ import {
 } from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import UserContext from "../../../context/UserContext";
 
-export const HorizontalNavigation = () => {
-  const { user } = React.useContext(UserContext);
-
+export const HorizontalNavigation = ({ userType }) => {
   const nav = useNavigate();
+  const dashboardRef = useRef();
+  const campaignRef = useRef();
+  const collaborationRef = useRef();
+  const viewRef = useRef();
+  const isStartInView = useIsInViewport(viewRef, dashboardRef);
+  const isEndInView = useIsInViewport(viewRef, collaborationRef);
 
   function useIsInViewport(viewRef, ref) {
     const [isIntersecting, setIsIntersecting] = useState(false);
@@ -39,55 +42,9 @@ export const HorizontalNavigation = () => {
 
     return isIntersecting;
   }
-
-  const dashboardRef = useRef();
-  const campaignRef = useRef();
-  const collaborationRef = useRef();
-  const viewRef = useRef();
-  const isStartInView = useIsInViewport(viewRef, dashboardRef);
-  const isEndInView = useIsInViewport(viewRef, collaborationRef);
-
-  const pagesForUserType = () => {
-    //authenticated and onboarded, pull pages from data structure
-    if (user && "custom:usertype" in user) {
-      return pages.authenticated[user["custom:usertype"]];
-    }
-    //authenticated onboarded required
-    if (user) {
-      return pages.authenticated.onboarding;
-    }
-    // unauthenticated
-    return [];
-  };
-
-  useEffect(() => {
-    const pagesForUserType = () => {
-      //authenticated and onboarded, pull pages from data structure
-      if (user && "custom:usertype" in user) {
-        return pages.authenticated[user["custom:usertype"]];
-      }
-      //authenticated onboarded required
-      if (user) {
-        return pages.authenticated.onboarding;
-      }
-      // unauthenticated
-      return [];
-    };
-
-    const result = pagesForUserType().filter((page) => {
-      return location.pathname.toLowerCase().includes(page.path.toLowerCase());
-    });
-
-    result.length > 0 &&
-      result[0].ref.current.scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location, pagesForUserType, user]);
-
-  const pages = {
-    authenticated: {
+  // eslint-disable-next-line
+  let pages = useMemo(() => {
+    return {
       brand: [
         {
           label: "Dashboard",
@@ -122,9 +79,19 @@ export const HorizontalNavigation = () => {
           ref: collaborationRef,
         },
       ],
-      onboarding: [{ label: "Onboarding", path: "onboarding", icon: null }],
-    },
-  };
+    };
+  });
+
+  useEffect(() => {
+    const result = pages[userType].filter((page) => {
+      return location.pathname.toLowerCase().includes(page.path.toLowerCase());
+    });
+    result.length > 0 &&
+      result[0].ref.current.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+      });
+  }, [pages, userType]);
 
   return (
     <Box
@@ -151,7 +118,7 @@ export const HorizontalNavigation = () => {
           },
         }}
       >
-        {pagesForUserType().map((page) => (
+        {pages[userType].map((page) => (
           <ListItem
             ref={page.ref}
             key={page.path}
