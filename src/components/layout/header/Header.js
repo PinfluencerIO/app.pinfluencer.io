@@ -37,15 +37,12 @@ export const Header = (props) => {
           <Box flex={1}></Box> {/**GapBox*/}
           <AvatarMenu />
         </Toolbar>
-        {isAuthenticated ? (
-          isOnboarded ? (
+        {isAuthenticated &&
+          (isOnboarded ? (
             <HorizontalNavigation userType={userType} />
           ) : (
             <OnboardingHorizontalNavigation />
-          )
-        ) : (
-          <></>
-        )}
+          ))}
       </AppBar>
     </ElevationScroll>
   );
