@@ -5,7 +5,9 @@ import "./aws/aws";
 import UserContext from "./context/UserContext";
 import { Layout } from "./Layout";
 import { BadUrl } from "./pages/BadUrl";
+import { Dashboard } from "./pages/Dashboard";
 import { HomePage } from "./pages/HomePage";
+import { OnboardingSteps } from "./pages/onboading/OnboardingSteps";
 
 function App() {
   const { user, redirect, setRedirect } = useContext(UserContext);
@@ -36,12 +38,10 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
 
-        {/* <Route path="dashboard" element={<Dashboard />} /> */}
-
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="onboarding" element={<OnboardingSteps />} />
         {/* <Route path="profile" element={<Profile />} /> */}
         {/* <Route path="profile/edit" element={<Profile />} /> */}
-
-        {/* <Route path="onboarding" element={<OnboardingSteps />} /> */}
 
         {/* <Route
           path="dev"

@@ -6,16 +6,16 @@ import { Outlet } from "react-router";
 import { Footer } from "./components/layout/Footer";
 import { Header } from "./components/layout/header/Header";
 import { MainSection } from "./components/layout/MainSection";
-import UserContext from "./context/UserContext";
 
 export const Layout = () => {
-  const { user } = React.useContext(UserContext);
-  console.log("User", user);
   return (
     <>
       <Header />
-      <MainSection flex="1" p={2} mt={15} />
-      <Footer flexShrink={0} p={2} backgroundColor="lightblue" />
+      {/* Large top margin on MainSection to compensate for Nav menu */}
+      <MainSection flex="1" p={2} mt={12}>
+        <Outlet />
+      </MainSection>
+      <Footer flexShrink={0} p={2} />
     </>
   );
 };

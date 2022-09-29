@@ -1,19 +1,11 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import { BaseComponent } from "../components/displayTypes/BaseComponent";
 
 export const HomePage = () => {
   return (
-    <BaseComponent
-      heading="Welcome to Pinfluencer"
-      disableBorder
-      disableGutter
-      variant="h4"
-    >
-      <Typography variant="body1">
-        This will be the home page with details about what&apos;s going on with
-        Pinfluencer App
-      </Typography>
-    </BaseComponent>
+    <Typography variant="body1">
+      This will be the home page with details about what&apos;s going on with
+      Pinfluencer App
+    </Typography>
   );
 };
