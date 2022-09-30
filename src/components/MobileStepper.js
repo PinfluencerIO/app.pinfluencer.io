@@ -6,11 +6,18 @@ import MUIMobileStepper from "@mui/material/MobileStepper";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { AudienceAge } from "../pages/onboading/AudienceAge";
+import { AudienceGender } from "../pages/onboading/AudienceGender";
 import { BrandDescription } from "../pages/onboading/BrandDescription";
 import { BrandDetails } from "../pages/onboading/BrandDetails";
+import { BrandHeader } from "../pages/onboading/BrandHeader";
+import { BrandLogo } from "../pages/onboading/BrandLogo";
+import { Categories } from "../pages/onboading/Categories";
 import { InfluencerBio } from "../pages/onboading/InfluencerBio";
 import { InfluencerDetails } from "../pages/onboading/InfluencerDetails";
+import { ProfilePicture } from "../pages/onboading/ProfilePicture";
 import { UserType } from "../pages/onboading/UserType";
+import { Values } from "../pages/onboading/Values";
 import { YourDetails } from "../pages/onboading/YourDetails";
 
 export function MobileStepper() {
@@ -30,18 +37,33 @@ export function MobileStepper() {
   };
   const brandSteps = [
     {
-      label: "NameEmail",
+      label: "Name and Email",
       child: <YourDetails data={data} handleChange={handleDataChange} />,
     },
     {
-      label: "BrandDetails",
+      label: "Brand Details",
       child: <BrandDetails data={data} handleChange={handleDataChange} />,
     },
-    { label: <BrandDescription data={data} handleChange={handleDataChange} /> },
-    { label: "BrandLogo" },
-    { label: "BrandHeader" },
-    { label: "Values" },
-    { label: "Categories" },
+    {
+      label: "Brand Description",
+      child: <BrandDescription data={data} handleChange={handleDataChange} />,
+    },
+    {
+      label: "BrandLogo",
+      child: <BrandLogo data={data} handleChange={handleDataChange} />,
+    },
+    {
+      label: "BrandHeader",
+      child: <BrandHeader data={data} handleChange={handleDataChange} />,
+    },
+    {
+      label: "Values",
+      child: <Values data={data} handleChange={handleDataChange} />,
+    },
+    {
+      label: "Categories",
+      child: <Categories data={data} handleChange={handleDataChange} />,
+    },
   ];
   const influencerSteps = [
     {
@@ -56,11 +78,26 @@ export function MobileStepper() {
       label: "Bio",
       child: <InfluencerBio data={data} handleChange={handleDataChange} />,
     },
-    { label: "Picture" },
-    { label: "AudienceAge" },
-    { label: "AudienceGender" },
-    { label: "Values" },
-    { label: "Categories" },
+    {
+      label: "Picture",
+      child: <ProfilePicture data={data} handleChange={handleDataChange} />,
+    },
+    {
+      label: "AudienceAge",
+      child: <AudienceAge data={data} handleChange={handleDataChange} />,
+    },
+    {
+      label: "AudienceGender",
+      child: <AudienceGender data={data} handleChange={handleDataChange} />,
+    },
+    {
+      label: "Values",
+      child: <Values data={data} handleChange={handleDataChange} />,
+    },
+    {
+      label: "Categories",
+      child: <Categories data={data} handleChange={handleDataChange} />,
+    },
   ];
 
   const handleChange = (event) => {
