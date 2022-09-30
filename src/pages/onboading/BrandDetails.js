@@ -8,7 +8,7 @@ export const BrandDetails = ({ data, handleChange }) => {
         <TextField
           fullWidth
           id="brandName"
-          name="brandNane"
+          name="brandName"
           value={data.brandName}
           label="BrandName"
           variant="standard"

@@ -29,6 +29,18 @@ export function MobileStepper() {
     firstName: "",
     lastName: "",
     email: "",
+    brandName: "",
+    instaHandle: "",
+    website: "",
+    address: "",
+    bio: "",
+    profilePicture: "",
+    audienceAge: "",
+    audienceGender: "",
+    brandLogo: "",
+    brandHeader: "",
+    values: "",
+    categories: "",
   });
   const handleDataChange = (event) => {
     setData((currentState) => {
