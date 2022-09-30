@@ -14,6 +14,8 @@ export const BrandDescription = ({ data, handleChange }) => {
           variant="standard"
           aria-describedby="brand-description-helper"
           onChange={(event) => handleChange(event)}
+          rows={4}
+          multiline
         />
       </FormControl>
     </Box>

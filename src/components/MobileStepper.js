@@ -43,10 +43,12 @@ export function MobileStepper() {
     categories: "",
   });
   const handleDataChange = (event) => {
+    console.log("!", event);
     setData((currentState) => {
       return { ...currentState, [event.target.name]: event.target.value };
     });
   };
+  console.log("data", data);
   const brandSteps = [
     {
       label: "Name and Email",

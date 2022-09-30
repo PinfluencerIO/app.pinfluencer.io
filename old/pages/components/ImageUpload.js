@@ -1,7 +1,7 @@
-import { IconButton, Stack, Typography } from "@mui/material";
-import React, { Fragment, useState } from "react";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { IconButton, Stack, Typography } from "@mui/material";
+import React, { Fragment, useState } from "react";
 export const ImageUpload = ({
   data,
   elementId,
@@ -64,7 +64,7 @@ export const ImageUpload = ({
   function previewImage(elementId, updateStateFunction, tooLargeAlert) {
     const file = document.getElementById(elementId).files[0];
     if (file?.size > 2097152) {
-      tooLargeAlert();
+      false && tooLargeAlert();
       document.getElementById(elementId).value = null;
       return;
     }
