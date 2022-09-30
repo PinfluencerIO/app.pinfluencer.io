@@ -8,8 +8,8 @@ export const BrandHeader = ({ data, handleChange }) => {
       <ImageUpload
         data={data}
         elementId={"brandHeader"}
-        label={"Upload Header Image"}
-        sizeLabel={"1128 (w) x 191 (h) pixels"}
+        label={"Brand header image"}
+        sizeLabel={"1100 (w) x 200 (h) pixels"}
         handleChange={handleChange}
       />
     </Box>

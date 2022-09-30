@@ -6,19 +6,12 @@ import MUIMobileStepper from "@mui/material/MobileStepper";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { AudienceAge } from "../pages/onboading/AudienceAge";
-import { AudienceGender } from "../pages/onboading/AudienceGender";
-import { BrandDescription } from "../pages/onboading/BrandDescription";
-import { BrandDetails } from "../pages/onboading/BrandDetails";
-import { BrandHeader } from "../pages/onboading/BrandHeader";
-import { BrandLogo } from "../pages/onboading/BrandLogo";
-import { Categories } from "../pages/onboading/Categories";
-import { InfluencerBio } from "../pages/onboading/InfluencerBio";
-import { InfluencerDetails } from "../pages/onboading/InfluencerDetails";
-import { ProfilePicture } from "../pages/onboading/ProfilePicture";
+import {
+  brandSteps,
+  cleanDataOf,
+  influencerSteps,
+} from "../pages/onboading/steps";
 import { UserType } from "../pages/onboading/UserType";
-import { Values } from "../pages/onboading/Values";
-import { YourDetails } from "../pages/onboading/YourDetails";
 
 export function MobileStepper() {
   const theme = useTheme();
@@ -39,87 +32,48 @@ export function MobileStepper() {
     audienceGender: "",
     brandLogo: "",
     brandHeader: "",
-    values: "",
-    categories: "",
+    values: [],
+    categories: [],
   });
+
   const handleDataChange = (event) => {
-    console.log("!", event);
     setData((currentState) => {
       return { ...currentState, [event.target.name]: event.target.value };
     });
   };
-  console.log("data", data);
-  const brandSteps = [
-    {
-      label: "Name and Email",
-      child: <YourDetails data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "Brand Details",
-      child: <BrandDetails data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "Brand Description",
-      child: <BrandDescription data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "BrandLogo",
-      child: <BrandLogo data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "BrandHeader",
-      child: <BrandHeader data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "Values",
-      child: <Values data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "Categories",
-      child: <Categories data={data} handleChange={handleDataChange} />,
-    },
-  ];
-  const influencerSteps = [
-    {
-      label: "NameEmail",
-      child: <YourDetails data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "InfluencerDetails",
-      child: <InfluencerDetails data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "Bio",
-      child: <InfluencerBio data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "Picture",
-      child: <ProfilePicture data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "AudienceAge",
-      child: <AudienceAge data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "AudienceGender",
-      child: <AudienceGender data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "Values",
-      child: <Values data={data} handleChange={handleDataChange} />,
-    },
-    {
-      label: "Categories",
-      child: <Categories data={data} handleChange={handleDataChange} />,
-    },
-  ];
+
+  const handleListChange = (event, key) => {
+    setData((currentState) => {
+      const items = currentState[key];
+      if (items.includes(event)) {
+        var filtered = items.filter(function (value) {
+          return value !== event;
+        });
+        return {
+          ...currentState,
+          [key]: filtered,
+        };
+      }
+      return {
+        ...currentState,
+        [key]: items.concat(event),
+      };
+    });
+  };
+
+  const stepsForBrand = brandSteps(data, handleDataChange, handleListChange);
+  const stepsForInfluencers = influencerSteps(
+    data,
+    handleDataChange,
+    handleListChange
+  );
 
   const handleChange = (event) => {
     setType(event.currentTarget.dataset.value);
     setMaxSteps(
       event.currentTarget.dataset.value === "brand"
-        ? brandSteps.length + 1
-        : influencerSteps.length + 1
+        ? stepsForBrand.length + 1
+        : stepsForInfluencers.length + 1
     );
   };
 
@@ -132,11 +86,17 @@ export function MobileStepper() {
     }
 
     return type === "brand"
-      ? brandSteps[activeStep - 1]
-      : influencerSteps[activeStep - 1];
+      ? stepsForBrand[activeStep - 1]
+      : stepsForInfluencers[activeStep - 1];
   };
 
   const handleNext = () => {
+    if (activeStep + 1 == maxSteps) {
+      console.log("submit");
+      cleanDataOf(type, data);
+      console.log(data);
+      return;
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -173,12 +133,8 @@ export function MobileStepper() {
         position="static"
         activeStep={activeStep}
         nextButton={
-          <Button
-            size="small"
-            onClick={handleNext}
-            disabled={activeStep === maxSteps - 1}
-          >
-            Next
+          <Button size="small" onClick={handleNext}>
+            {activeStep === maxSteps - 1 ? "Submit" : "Next"}
             {theme.direction === "rtl" ? (
               <KeyboardArrowLeft />
             ) : (
@@ -196,6 +152,7 @@ export function MobileStepper() {
             Back
           </Button>
         }
+        sx={{ "& .MuiLinearProgress-root": { width: "44%" } }}
       />
     </Box>
   );

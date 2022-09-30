@@ -13,7 +13,6 @@ import {
 import React from "react";
 
 export const UserType = ({ data, handleChange }) => {
-  console.log(data);
   return (
     <Stack>
       <ToggleButtonGroup

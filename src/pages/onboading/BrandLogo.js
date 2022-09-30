@@ -8,7 +8,7 @@ export const BrandLogo = ({ data, handleChange }) => {
       <ImageUpload
         data={data}
         elementId={"brandLogo"}
-        label={"Product Image"}
+        label={"Logo"}
         sizeLabel={"Best 300 (w) x 300 (h) pixels"}
         handleChange={handleChange}
       />
