@@ -49,8 +49,9 @@ async function onboarding(payloadObject) {
 }
 
 export async function updateBrand(payloadObject) {
+  console.log("payload for update [patch] brand", payloadObject);
   const payload = JSON.stringify(payloadObject);
-  const requestAction = await actionRequest("PUT", payload);
+  const requestAction = await actionRequest("PATCH", payload);
   return await executeFetch(`${remote}/brands/me`, requestAction);
 }
 

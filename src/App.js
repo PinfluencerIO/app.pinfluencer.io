@@ -81,7 +81,7 @@ const isAuthenticated = (user) => {
 };
 
 const isOnboarded = (user) => {
-  return false && isAuthenticated(user) && "custom:usertype" in user;
+  return isAuthenticated(user) && "custom:usertype" in user;
 };
 
 const userType = (user) => {
