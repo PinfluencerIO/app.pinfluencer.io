@@ -27,12 +27,15 @@ function App() {
     if (!isAuthenticated(user) && location.pathname !== "/") {
       nav("/");
     } else if (isAuthenticated(user) && !isOnboarded(user)) {
-      // allow home page
-      if (location.pathname === "/") return;
-      // all other pages redirect to onboarding
       if (location.pathname !== "/onboarding") {
         nav("onboarding");
       }
+    } else if (
+      isAuthenticated(user) &&
+      isOnboarded(user) &&
+      location.pathname === "/onboarding"
+    ) {
+      nav("/");
     }
   }, [user, nav, location]);
 
