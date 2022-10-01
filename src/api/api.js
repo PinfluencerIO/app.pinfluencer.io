@@ -45,14 +45,10 @@ export async function updateBrand(payloadObject) {
 }
 
 export async function getBrand() {
-  if (localStorage.getItem("offline")) {
-    return campaigns;
-  } else {
-    const requestAction = await actionRequest("GET");
-    const response = await executeFetch(`${remote}/brands/me`, requestAction);
-    const json = await response.json();
-    return json;
-  }
+  const requestAction = await actionRequest("GET");
+  const response = await executeFetch(`${remote}/brands/me`, requestAction);
+  const json = await response.json();
+  return json;
 }
 
 export async function getCollaborations() {
