@@ -6,14 +6,17 @@ import MUIMobileStepper from "@mui/material/MobileStepper";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { useNavigate } from "react-router";
+import { onboardingChain } from "../api/onboarding";
 import {
   brandSteps,
-  cleanDataOf,
+  cleanDataForType,
   influencerSteps,
 } from "../pages/onboading/steps";
 import { UserType } from "../pages/onboading/UserType";
 
-export function MobileStepper() {
+export function MobileStepper({ onboard }) {
+  const nav = useNavigate();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [type, setType] = React.useState("");
@@ -92,9 +95,14 @@ export function MobileStepper() {
 
   const handleNext = () => {
     if (activeStep + 1 == maxSteps) {
-      console.log("submit");
-      cleanDataOf(type, data);
-      console.log(data);
+      cleanDataForType(data, type);
+      onboardingChain(data, type, onboard)
+        .then(() => {
+          nav("/dashboard");
+        })
+        .catch((err) => {
+          console.error("An error happened calling api", err);
+        });
       return;
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

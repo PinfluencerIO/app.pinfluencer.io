@@ -76,7 +76,7 @@ export const influencerSteps = (data, handleDataChange, handleListChange) => [
   },
 ];
 
-export const cleanDataOf = (type, data) => {
+export const cleanDataForType = (data, type) => {
   if (type === "brand") {
     delete data.bio;
     delete data.address;

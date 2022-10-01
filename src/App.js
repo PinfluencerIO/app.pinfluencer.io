@@ -10,7 +10,7 @@ import { HomePage } from "./pages/HomePage";
 import { OnboardingSteps } from "./pages/onboading/OnboardingSteps";
 
 function App() {
-  const { user } = useContext(UserContext);
+  const { user, onboard } = useContext(UserContext);
   const nav = useNavigate();
 
   // TODO: create custom hook for page title side effect
@@ -48,10 +48,21 @@ function App() {
           />
         }
       >
-        <Route index element={<HomePage isOnboarded={isOnboarded(user)} />} />
+        <Route
+          index
+          element={
+            <HomePage
+              isAuthenticated={isAuthenticated(user)}
+              isOnboarded={isOnboarded(user)}
+            />
+          }
+        />
 
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="onboarding" element={<OnboardingSteps />} />
+        <Route
+          path="onboarding"
+          element={<OnboardingSteps onboard={onboard} />}
+        />
         {/* <Route path="profile" element={<Profile />} /> */}
         {/* <Route path="profile/edit" element={<Profile />} /> */}
 

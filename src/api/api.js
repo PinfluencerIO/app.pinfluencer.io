@@ -2,7 +2,7 @@ import { getToken } from "../context/UserContext";
 import { campaigns, image } from "./fake-api";
 
 // const remote = "https://api.pinfluencer.link";
-const remote = "https://3dgldh8a18.execute-api.eu-west-2.amazonaws.com";
+export const remote = "https://3dgldh8a18.execute-api.eu-west-2.amazonaws.com";
 
 // standardise token based header
 async function authenticatedHeader() {
@@ -15,7 +15,7 @@ async function authenticatedHeader() {
 }
 
 // standardised request with optional payload
-async function actionRequest(action, payload) {
+export async function actionRequest(action, payload) {
   const headers = await authenticatedHeader();
   const request = {
     method: action,
@@ -25,12 +25,11 @@ async function actionRequest(action, payload) {
   if (payload) {
     request.body = payload;
   }
-  if (action === "PATCH") console.log("PATCH", request);
   return request;
 }
 
 // fetch call that only returns ok response, otherwise throws an exception
-async function executeFetch(url, action) {
+export async function executeFetch(url, action) {
   const response = await fetch(url, action);
 
   if (response.ok) {
@@ -39,74 +38,10 @@ async function executeFetch(url, action) {
   throw Error(await response.text());
 }
 
-async function onboarding(payloadObject) {
-  const payload = JSON.stringify(payloadObject);
-  const requestAction = await actionRequest("POST", payload);
-  return await executeFetch(
-    `${remote}/${payloadObject.type}s/me`,
-    requestAction
-  );
-}
-
 export async function updateBrand(payloadObject) {
-  console.log("payload for update [patch] brand", payloadObject);
   const payload = JSON.stringify(payloadObject);
   const requestAction = await actionRequest("PATCH", payload);
   return await executeFetch(`${remote}/brands/me`, requestAction);
-}
-
-// send type data, then chain images
-export async function onboardingChain(data) {
-  // remove opposite type from object
-  const ofType = omit(data, data.type === "brand" ? "influencer" : "brand");
-
-  // copy nested object type keys to root
-  const withoutNest = { ...ofType[data.type], ...ofType };
-
-  // remove nested key now its keys are at root level
-  delete withoutNest[data.type];
-
-  if (data.type === "brand") {
-    // copy out brand logo as it isn't sent with main brand payload
-    const logoSrc = withoutNest["brandLogo"];
-    delete withoutNest["brandLogo"];
-
-    // copy out brand header as it isn't sent with main brand payload
-    const headerSrc = withoutNest["brandHeader"];
-    delete withoutNest["brandHeader"];
-
-    const response = await onboarding(withoutNest);
-
-    const newBrand = await response.json();
-    if (logoSrc) await brandLogo({ imageBytes: logoSrc.split(",")[1] });
-    if (headerSrc) await brandHeader({ imageBytes: headerSrc.split(",")[1] });
-
-    return newBrand;
-  } else {
-    const response = await onboarding(withoutNest);
-    return await response.json();
-  }
-}
-
-function omit(obj, omitKey) {
-  return Object.keys(obj).reduce((result, key) => {
-    if (key !== omitKey) {
-      result[key] = obj[key];
-    }
-    return result;
-  }, {});
-}
-
-export async function brandLogo(data) {
-  const payload = JSON.stringify(data);
-  const requestAction = await actionRequest("POST", payload);
-  return await executeFetch(`${remote}/brands/me/logo`, requestAction);
-}
-
-export async function brandHeader(data) {
-  const payload = JSON.stringify(data);
-  const requestAction = await actionRequest("POST", payload);
-  return await executeFetch(`${remote}/brands/me/header-image`, requestAction);
 }
 
 export async function getBrand() {
