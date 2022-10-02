@@ -9,8 +9,8 @@ export const YourDetails = ({ data, handleChange, view }) => {
           inputProps={{ readOnly: view ? "readonly" : "" }}
           fullWidth
           id="first-name"
-          name={data.firstName ? "firstName" : "givenName"}
-          value={data.firstName || data.givenName}
+          name={"firstName" in data ? "firstName" : "givenName"}
+          value={"firstName" in data ? data.firstName : data.givenName}
           label="First name"
           variant="standard"
           aria-describedby="first-name-helper"
@@ -21,8 +21,8 @@ export const YourDetails = ({ data, handleChange, view }) => {
           inputProps={{ readOnly: view ? "readonly" : "" }}
           fullWidth
           id="last-name"
-          name={data.lastName ? "lastName" : "familyName"}
-          value={data.lastName || data.familyName}
+          name={"lastName" in data ? "lastName" : "familyName"}
+          value={"lastname" in data ? data.lastName : data.familyName}
           label="Last name"
           variant="standard"
           aria-describedby="last-name-helper"

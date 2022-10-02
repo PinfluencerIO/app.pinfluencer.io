@@ -11,11 +11,12 @@ export const InitialsAvatar = ({ user }) => {
     if (user && user.picture) {
       setAvatar(user.picture);
     } else {
-      getBrand().then((brand) => {
-        if (brand.logo) {
-          setAvatar(brand.logo);
-        }
-      });
+      "custom:usertype" in user &&
+        getBrand().then((brand) => {
+          if (brand.logo) {
+            setAvatar(brand.logo);
+          }
+        });
     }
   }, [user]);
 
