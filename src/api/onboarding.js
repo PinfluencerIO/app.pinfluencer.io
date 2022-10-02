@@ -1,4 +1,5 @@
 import { actionRequest, executeFetch, remote } from "./api";
+import { brandHeader, brandLogo } from "./brandApi";
 
 // send type data, then chain images
 export async function onboardingChain(data, type, onboard) {
@@ -33,17 +34,4 @@ export async function onboardingChain(data, type, onboard) {
 async function onboarding(payload, type) {
   const requestAction = await actionRequest("POST", JSON.stringify(payload));
   return await executeFetch(`${remote}/${type}s/me`, requestAction);
-}
-
-export async function brandLogo(imageBytes) {
-  const requestAction = await actionRequest("POST", JSON.stringify(imageBytes));
-  return await executeFetch(`${remote}/brands/me/images/logo`, requestAction);
-}
-
-export async function brandHeader(imageBytes) {
-  const requestAction = await actionRequest("POST", JSON.stringify(imageBytes));
-  return await executeFetch(
-    `${remote}/brands/me/images/header-image`,
-    requestAction
-  );
 }

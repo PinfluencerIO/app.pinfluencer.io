@@ -1,15 +1,16 @@
+import { BrandDescription } from "../../components/displayTypes/BrandDescription";
 import { AudienceAge } from "./AudienceAge";
 import { AudienceGender } from "./AudienceGender";
-import { BrandDescription } from "./BrandDescription";
-import { BrandDetails } from "./BrandDetails";
-import { BrandHeader } from "./BrandHeader";
-import { BrandLogo } from "./BrandLogo";
-import { Categories } from "./Categories";
+
+import { BrandDetails } from "../../components/displayTypes/BrandDetails";
+import { BrandHeader } from "../../components/displayTypes/BrandHeader";
+import { BrandLogo } from "../../components/displayTypes/BrandLogo";
+import { Categories } from "../../components/displayTypes/Categories";
+import { Values } from "../../components/displayTypes/Values";
+import { YourDetails } from "../../components/displayTypes/YourDetails";
 import { InfluencerBio } from "./InfluencerBio";
 import { InfluencerDetails } from "./InfluencerDetails";
 import { ProfilePicture } from "./ProfilePicture";
-import { Values } from "./Values";
-import { YourDetails } from "./YourDetails";
 
 export const brandSteps = (data, handleDataChange, handleListChange) => [
   {

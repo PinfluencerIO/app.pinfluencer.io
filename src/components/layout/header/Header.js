@@ -9,6 +9,7 @@ import {
 import PropTypes from "prop-types";
 
 import React from "react";
+import { useLocation } from "react-router";
 import { LinkedToolTip } from "../../displayTypes/LinkedToolTip";
 import { AvatarMenu } from "./AvatarMenu";
 import { HorizontalNavigation } from "./HorizontalNavigation";
@@ -17,6 +18,7 @@ import { OnboardingHorizontalNavigation } from "./OnboardingHorizontalNavigation
 //TODO md and beyond change padding and margin outside of design, fix this to requirements
 export const Header = (props) => {
   const theme = useTheme();
+  const location = useLocation();
   const { isOnboarded, userType, isAuthenticated } = props;
 
   return (
@@ -40,7 +42,11 @@ export const Header = (props) => {
         </Toolbar>
         {isAuthenticated &&
           (isOnboarded ? (
-            <HorizontalNavigation userType={userType} />
+            location.pathname.toLowerCase().includes("profile/edit") ? (
+              ""
+            ) : (
+              <HorizontalNavigation userType={userType} />
+            )
           ) : (
             <OnboardingHorizontalNavigation />
           ))}

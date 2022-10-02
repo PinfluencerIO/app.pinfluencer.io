@@ -1,6 +1,6 @@
 import { Avatar, Typography } from "@mui/material";
 import React from "react";
-import { getBrand } from "../../../api/api";
+import { getBrand } from "../../../api/brandApi";
 
 export const InitialsAvatar = ({ user }) => {
   const widthAndHeight = { width: 30, height: 30 };
@@ -12,7 +12,6 @@ export const InitialsAvatar = ({ user }) => {
       setAvatar(user.picture);
     } else {
       getBrand().then((brand) => {
-        console.log("brand", brand);
         if (brand.logo) {
           setAvatar(brand.logo);
         }

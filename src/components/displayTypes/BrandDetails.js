@@ -1,11 +1,12 @@
 import { Box, FormControl, TextField } from "@mui/material";
 import React from "react";
 
-export const BrandDetails = ({ data, handleChange }) => {
+export const BrandDetails = ({ data, handleChange, view }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
       <FormControl fullWidth margin="none">
         <TextField
+          inputProps={{ readOnly: view ? "readonly" : "" }}
           fullWidth
           id="brandName"
           name="brandName"
@@ -14,8 +15,10 @@ export const BrandDetails = ({ data, handleChange }) => {
           variant="standard"
           aria-describedby="brand-name-helper"
           onChange={(event) => handleChange(event)}
+          sx={{ mb: 1 }}
         />
         <TextField
+          inputProps={{ readOnly: view ? "readonly" : "" }}
           fullWidth
           id="instaHandle"
           name="instaHandle"
@@ -24,8 +27,10 @@ export const BrandDetails = ({ data, handleChange }) => {
           variant="standard"
           aria-describedby="instagram-helper"
           onChange={(event) => handleChange(event)}
+          sx={{ mb: 1 }}
         />
         <TextField
+          inputProps={{ readOnly: view ? "readonly" : "" }}
           fullWidth
           id="website"
           name="website"
@@ -35,6 +40,7 @@ export const BrandDetails = ({ data, handleChange }) => {
           aria-describedby="email-helper"
           type="url"
           onChange={(event) => handleChange(event)}
+          sx={{ mb: 1 }}
         />
       </FormControl>
     </Box>

@@ -38,19 +38,6 @@ export async function executeFetch(url, action) {
   throw Error(await response.text());
 }
 
-export async function updateBrand(payloadObject) {
-  const payload = JSON.stringify(payloadObject);
-  const requestAction = await actionRequest("PATCH", payload);
-  return await executeFetch(`${remote}/brands/me`, requestAction);
-}
-
-export async function getBrand() {
-  const requestAction = await actionRequest("GET");
-  const response = await executeFetch(`${remote}/brands/me`, requestAction);
-  const json = await response.json();
-  return json;
-}
-
 export async function getCollaborations() {
   return [
     {
