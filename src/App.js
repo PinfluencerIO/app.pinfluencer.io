@@ -17,6 +17,7 @@ import { HomePage } from "./pages/HomePage";
 import { OnboardingSteps } from "./pages/onboading/OnboardingSteps";
 import { Profile } from "./pages/profile/Profile";
 import { ProfileEditPanel } from "./pages/profile/ProfileEditPanel";
+import { PublicView } from "./pages/profile/PublicView";
 
 function App() {
   const { user, onboard } = useContext(UserContext);
@@ -75,7 +76,8 @@ function App() {
           path="onboarding"
           element={<OnboardingSteps onboard={onboard} />}
         />
-        <Route path="profile" element={<Profile />}></Route>
+        <Route path="profile" element={<Profile />} />
+        <Route path="profile/view" element={<PublicView />} />
         <Route
           path="profile/edit/yourdetails"
           element={

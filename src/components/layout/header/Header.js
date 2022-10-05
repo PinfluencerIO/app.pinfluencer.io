@@ -42,7 +42,7 @@ export const Header = (props) => {
         </Toolbar>
         {isAuthenticated &&
           (isOnboarded ? (
-            location.pathname.toLowerCase().includes("profile/edit") ? (
+            location.pathname.toLowerCase().includes("profile") ? (
               ""
             ) : (
               <HorizontalNavigation userType={userType} />

@@ -2,6 +2,7 @@ import { Box, Paper, Stack, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { getBrand } from "../../api/brandApi";
+import { BackLink } from "../../components/displayTypes/BackLink";
 import { BrandDescription } from "../../components/displayTypes/BrandDescription";
 import { BrandDetails } from "../../components/displayTypes/BrandDetails";
 import { BrandHeader } from "../../components/displayTypes/BrandHeader";
@@ -39,34 +40,37 @@ export const Profile = () => {
     );
   };
   return (
-    <Stack width="100%" rowGap={3}>
-      <ProfileCard title="Your Details">
-        <YourDetails data={data} view />
-      </ProfileCard>
+    <>
+      <Stack width="100%" rowGap={3} mt={-5}>
+        <BackLink />
+        <ProfileCard title="Your Details">
+          <YourDetails data={data} view />
+        </ProfileCard>
 
-      <ProfileCard title="Brand Details">
-        <BrandDetails data={data} view />
-      </ProfileCard>
+        <ProfileCard title="Brand Details">
+          <BrandDetails data={data} view />
+        </ProfileCard>
 
-      <ProfileCard title="Brand Description">
-        <BrandDescription data={data} view />
-      </ProfileCard>
+        <ProfileCard title="Brand Description">
+          <BrandDescription data={data} view />
+        </ProfileCard>
 
-      <ProfileCard title="Brand Logo">
-        <BrandLogo data={data} id="logo" view />
-      </ProfileCard>
+        <ProfileCard title="Brand Logo">
+          <BrandLogo data={data} id="logo" view />
+        </ProfileCard>
 
-      <ProfileCard title="Brand Header">
-        <BrandHeader data={data} id="headerImage" view />
-      </ProfileCard>
+        <ProfileCard title="Brand Header">
+          <BrandHeader data={data} id="headerImage" view />
+        </ProfileCard>
 
-      <ProfileCard title="Values">
-        <Values data={data} view />
-      </ProfileCard>
+        <ProfileCard title="Values">
+          <Values data={data} view />
+        </ProfileCard>
 
-      <ProfileCard title="Categories">
-        <Categories data={data} view />
-      </ProfileCard>
-    </Stack>
+        <ProfileCard title="Categories">
+          <Categories data={data} view />
+        </ProfileCard>
+      </Stack>
+    </>
   );
 };

@@ -1,7 +1,8 @@
-import { Box, Button, Link, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { getBrand, updateBrand } from "../../api/brandApi";
+import { BackLink } from "../../components/displayTypes/BackLink";
 
 export const ProfileEditPanel = ({ title, children }) => {
   const nav = useNavigate();
@@ -45,18 +46,8 @@ export const ProfileEditPanel = ({ title, children }) => {
 
   return (
     <Stack rowGap={3} width="100%" mt={-5}>
-      <Box display="flex" flexDirection="row">
-        <Link
-          underline="none"
-          onClick={() => {
-            nav("/profile");
-          }}
-          sx={{ marginLeft: -1 }}
-        >
-          ⬅
-        </Link>
-        <Typography ml={2}>{title}</Typography>
-      </Box>
+      <BackLink />
+      <Typography variant="h5">{title}</Typography>
       {children(data, handleChange)}
       <Button variant="outlined" onClick={submit}>
         Submit
