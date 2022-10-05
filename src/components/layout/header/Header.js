@@ -27,9 +27,6 @@ export const Header = (props) => {
         <Toolbar
           sx={{
             display: "flex",
-            margin: "auto",
-            maxWidth: theme.breakpoints.values.lg,
-            width: "100%",
           }}
         >
           <LinkedToolTip
