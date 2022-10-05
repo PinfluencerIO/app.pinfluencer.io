@@ -46,7 +46,7 @@ export const ProfileEditPanel = ({ title, children }) => {
 
   return (
     <Stack rowGap={3} width="100%" mt={-5}>
-      <BackLink />
+      <BackLink backLocation="/profile" />
       <Typography variant="h5">{title}</Typography>
       {children(data, handleChange)}
       <Button variant="outlined" onClick={submit}>

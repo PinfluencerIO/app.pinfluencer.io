@@ -16,7 +16,7 @@ export const PublicView = () => {
 
   return (
     <Stack width="100%" rowGap={2} mt={-5}>
-      <BackLink />
+      <BackLink backLocation="/profile" />
       <Box
         sx={{
           minHeight: "100px",

@@ -42,7 +42,7 @@ export const Profile = () => {
   return (
     <>
       <Stack width="100%" rowGap={3} mt={-5}>
-        <BackLink />
+        <BackLink backLocation=".." />
         <ProfileCard title="Your Details">
           <YourDetails data={data} view />
         </ProfileCard>

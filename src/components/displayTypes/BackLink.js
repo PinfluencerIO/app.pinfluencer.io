@@ -2,14 +2,14 @@ import { Box, Link } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router";
 
-export const BackLink = () => {
+export const BackLink = ({ backLocation = -1 }) => {
   const nav = useNavigate();
   return (
     <Box display="flex" flexDirection="row">
       <Link
         underline="none"
         onClick={() => {
-          nav(-1);
+          nav(backLocation);
         }}
         sx={{ marginLeft: -1 }}
       >

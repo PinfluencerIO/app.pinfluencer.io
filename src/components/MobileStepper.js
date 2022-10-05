@@ -6,105 +6,19 @@ import MUIMobileStepper from "@mui/material/MobileStepper";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { useNavigate } from "react-router";
-import { onboardingChain } from "../api/onboarding";
-import {
-  brandSteps,
-  cleanDataForType,
-  influencerSteps,
-} from "../pages/onboading/steps";
-import { UserType } from "../pages/onboading/UserType";
 
-//TODO this isn't generalised to steps, but specific for onboarding. Fix that so it can be used elsewhere.
-export function MobileStepper({ onboard }) {
-  const nav = useNavigate();
+export function MobileStepper({
+  step,
+  maxSteps,
+  activeStep,
+  setActiveStep,
+  executeFinal,
+}) {
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [type, setType] = React.useState("");
-  const [maxSteps, setMaxSteps] = React.useState(9);
-  const [data, setData] = React.useState({
-    givenName: "",
-    familyName: "",
-    email: "",
-    brandName: "",
-    instaHandle: "",
-    website: "",
-    address: "",
-    bio: "",
-    profilePicture: "",
-    audienceAge: "",
-    audienceGender: "",
-    brandLogo: "",
-    brandHeader: "",
-    values: [],
-    categories: [],
-  });
-
-  const handleDataChange = (event) => {
-    setData((currentState) => {
-      return { ...currentState, [event.target.name]: event.target.value };
-    });
-  };
-
-  const handleListChange = (event, key) => {
-    setData((currentState) => {
-      const items = currentState[key];
-      if (items.includes(event)) {
-        var filtered = items.filter(function (value) {
-          return value !== event;
-        });
-        return {
-          ...currentState,
-          [key]: filtered,
-        };
-      }
-      return {
-        ...currentState,
-        [key]: items.concat(event),
-      };
-    });
-  };
-
-  const stepsForBrand = brandSteps(data, handleDataChange, handleListChange);
-  const stepsForInfluencers = influencerSteps(
-    data,
-    handleDataChange,
-    handleListChange
-  );
-
-  const handleChange = (event) => {
-    setType(event.currentTarget.dataset.value);
-    setMaxSteps(
-      event.currentTarget.dataset.value === "brand"
-        ? stepsForBrand.length + 1
-        : stepsForInfluencers.length + 1
-    );
-  };
-
-  const step = () => {
-    if (activeStep === 0) {
-      return {
-        label: "Type",
-        child: <UserType data={type} handleChange={handleChange} />,
-      };
-    }
-
-    return type === "brand"
-      ? stepsForBrand[activeStep - 1]
-      : stepsForInfluencers[activeStep - 1];
-  };
 
   const handleNext = () => {
     if (activeStep + 1 == maxSteps) {
-      cleanDataForType(data, type);
-      onboardingChain(data, type, onboard)
-        .then(() => {
-          nav("/dashboard");
-        })
-        .catch((err) => {
-          console.error("An error happened calling api", err);
-        });
-      return;
+      return executeFinal();
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
