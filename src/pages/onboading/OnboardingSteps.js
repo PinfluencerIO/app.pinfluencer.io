@@ -5,16 +5,17 @@ import { MobileStepper } from "../../components/MobileStepper";
 import { brandSteps, cleanDataForType, influencerSteps } from "./steps";
 import { UserType } from "./UserType";
 
-export const OnboardingSteps = ({ onboard }) => {
+export const OnboardingSteps = ({ onboard, user }) => {
+  console.log(user);
   const nav = useNavigate();
 
   const [maxSteps, setMaxSteps] = React.useState(9);
   const [type, setType] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = React.useState({
-    givenName: "",
-    familyName: "",
-    email: "",
+    givenName: user.given_name,
+    familyName: user.family_name,
+    email: user.email,
     brandName: "",
     instaHandle: "",
     website: "",

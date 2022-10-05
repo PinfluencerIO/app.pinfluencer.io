@@ -74,7 +74,7 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route
           path="onboarding"
-          element={<OnboardingSteps onboard={onboard} />}
+          element={<OnboardingSteps onboard={onboard} user={user} />}
         />
         <Route path="profile" element={<Profile />} />
         <Route path="profile/view" element={<PublicView />} />
