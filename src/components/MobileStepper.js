@@ -15,6 +15,7 @@ import {
 } from "../pages/onboading/steps";
 import { UserType } from "../pages/onboading/UserType";
 
+//TODO this isn't generalised to steps, but specific for onboarding. Fix that so it can be used elsewhere.
 export function MobileStepper({ onboard }) {
   const nav = useNavigate();
   const theme = useTheme();
@@ -22,8 +23,8 @@ export function MobileStepper({ onboard }) {
   const [type, setType] = React.useState("");
   const [maxSteps, setMaxSteps] = React.useState(9);
   const [data, setData] = React.useState({
-    firstName: "",
-    lastName: "",
+    givenName: "",
+    familyName: "",
     email: "",
     brandName: "",
     instaHandle: "",

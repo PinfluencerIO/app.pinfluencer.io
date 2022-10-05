@@ -1,11 +1,11 @@
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LanguageIcon from "@mui/icons-material/Language";
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { getBrand } from "../../api/brandApi";
 import { BackLink } from "../../components/displayTypes/BackLink";
-import { BrandDetails } from "../../components/displayTypes/BrandDetails";
 import { Categories } from "../../components/displayTypes/Categories";
 import { Values } from "../../components/displayTypes/Values";
-
 export const PublicView = () => {
   const [data, setData] = React.useState();
   useEffect(() => {
@@ -61,11 +61,25 @@ export const PublicView = () => {
       <Box>
         <Paper sx={{ padding: 2 }} variant="outlined">
           <Typography variant="h5">Products</Typography>
+          <Typography variant="body1">
+            Campaigns view not implemented yet
+          </Typography>
         </Paper>
       </Box>
       <Box>
         <Paper sx={{ padding: 2 }} variant="outlined">
-          <BrandDetails data={data} view />
+          <Box display="flex" flexDirection="row" mb={1}>
+            <InstagramIcon />
+            <Typography ml={1} variant="body1">
+              {data.instaHandle}
+            </Typography>
+          </Box>
+          <Box display="flex" flexDirection="row">
+            <LanguageIcon />
+            <Typography ml={1} variant="body1">
+              {data.website}
+            </Typography>
+          </Box>
         </Paper>
       </Box>
       <Box>
