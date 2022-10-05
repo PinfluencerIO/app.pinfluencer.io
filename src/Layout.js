@@ -1,3 +1,4 @@
+import { Container } from "@mui/material";
 import React from "react";
 
 import { Outlet } from "react-router";
@@ -7,7 +8,7 @@ import { MainSection } from "./components/layout/MainSection";
 
 export const Layout = ({ isAuthenticated, isOnboarded, userType }) => {
   return (
-    <>
+    <Container>
       <Header
         isAuthenticated={isAuthenticated}
         isOnboarded={isOnboarded}
@@ -18,6 +19,6 @@ export const Layout = ({ isAuthenticated, isOnboarded, userType }) => {
         <Outlet />
       </MainSection>
       <Footer flexShrink={0} p={2} />
-    </>
+    </Container>
   );
 };

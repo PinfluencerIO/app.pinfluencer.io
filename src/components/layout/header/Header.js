@@ -23,8 +23,15 @@ export const Header = (props) => {
 
   return (
     <ElevationScroll {...props}>
-      <AppBar component="nav">
-        <Toolbar sx={{ display: "flex" }}>
+      <AppBar component="nav" sx={{}}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            margin: "auto",
+            maxWidth: theme.breakpoints.values.lg,
+            width: "100%",
+          }}
+        >
           <LinkedToolTip
             title="Home"
             route="/"
