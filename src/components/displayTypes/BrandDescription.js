@@ -13,7 +13,6 @@ export const BrandDescription = ({ data, handleChange, view }) => {
           value={data.brandDescription}
           label="Brand Description"
           variant="standard"
-          aria-describedby="brand-description-helper"
           onChange={(event) => handleChange(event)}
           rows={4}
           multiline

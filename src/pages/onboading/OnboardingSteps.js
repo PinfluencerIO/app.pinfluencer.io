@@ -6,7 +6,6 @@ import { brandSteps, cleanDataForType, influencerSteps } from "./steps";
 import { UserType } from "./UserType";
 
 export const OnboardingSteps = ({ onboard, user }) => {
-  console.log(user);
   const nav = useNavigate();
 
   const [maxSteps, setMaxSteps] = React.useState(9);
@@ -21,9 +20,16 @@ export const OnboardingSteps = ({ onboard, user }) => {
     website: "",
     address: "",
     bio: "",
-    profilePicture: "",
-    audienceAge: "",
-    audienceGender: "",
+    profilePicture: user.picture,
+    audienceAge13To17Split: undefined,
+    audienceAge18To24Split: undefined,
+    audienceAge25To34Split: undefined,
+    audienceAge35To44Split: undefined,
+    audienceAge45To54Split: undefined,
+    audienceAge55To64Split: undefined,
+    audienceAge65PlusSplit: undefined,
+    audienceFemaleSplit: undefined,
+    audienceMaleSplit: undefined,
     brandLogo: "",
     brandHeader: "",
     values: [],
@@ -40,6 +46,7 @@ export const OnboardingSteps = ({ onboard, user }) => {
   };
 
   const handleDataChange = (event) => {
+    console.log("handleDataChange", event.target.name, event.target.value);
     setData((currentState) => {
       return { ...currentState, [event.target.name]: event.target.value };
     });

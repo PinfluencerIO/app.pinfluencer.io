@@ -13,7 +13,6 @@ export const BrandDetails = ({ data, handleChange, view }) => {
           value={data.brandName}
           label="BrandName"
           variant="standard"
-          aria-describedby="brand-name-helper"
           onChange={(event) => handleChange(event)}
           sx={{ mb: 1 }}
         />
@@ -25,7 +24,6 @@ export const BrandDetails = ({ data, handleChange, view }) => {
           value={data.instaHandle}
           label="Instagram"
           variant="standard"
-          aria-describedby="instagram-helper"
           onChange={(event) => handleChange(event)}
           sx={{ mb: 1 }}
         />
@@ -37,7 +35,6 @@ export const BrandDetails = ({ data, handleChange, view }) => {
           value={data.website}
           label="Website"
           variant="standard"
-          aria-describedby="email-helper"
           type="url"
           onChange={(event) => handleChange(event)}
           sx={{ mb: 1 }}

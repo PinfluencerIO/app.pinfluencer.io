@@ -12,8 +12,10 @@ export const InfluencerBio = ({ data, handleChange }) => {
           value={data.influencerBio}
           label="Influencer Bio"
           variant="standard"
-          aria-describedby="influencer-bio-helper"
           onChange={(event) => handleChange(event)}
+          rows={4}
+          multiline
+          sx={{ mb: 1 }}
         />
       </FormControl>
     </Box>

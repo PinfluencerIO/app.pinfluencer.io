@@ -1,21 +1,12 @@
-import { Box, FormControl, TextField } from "@mui/material";
 import React from "react";
+import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
 
-export const AudienceAge = ({ data, handleChange }) => {
+export const AudienceAge = ({ data, handleChange, collection }) => {
   return (
-    <Box component="form" noValidate autoComplete="off">
-      <FormControl fullWidth margin="none">
-        <TextField
-          fullWidth
-          id="audienceAge"
-          name="audienceAge"
-          value={data.audienceAge}
-          label="Audience Age"
-          variant="standard"
-          aria-describedby="audience-age-helper"
-          onChange={(event) => handleChange(event)}
-        />
-      </FormControl>
-    </Box>
+    <AudiencePercentages
+      data={data}
+      handleChange={handleChange}
+      collection={collection}
+    />
   );
 };

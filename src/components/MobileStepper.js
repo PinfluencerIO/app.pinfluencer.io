@@ -42,7 +42,7 @@ export function MobileStepper({
       </Box>
       <Box
         sx={{
-          height: 255,
+          height: 270,
           maxWidth: 400,
           width: "100%",
           p: 2,
