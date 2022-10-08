@@ -1,7 +1,6 @@
 import { BrandDescription } from "../../components/displayTypes/BrandDescription";
-import { AudienceAge } from "./AudienceAge";
-import { AudienceGender } from "./AudienceGender";
 
+import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
 import { BrandDetails } from "../../components/displayTypes/BrandDetails";
 import { BrandHeader } from "../../components/displayTypes/BrandHeader";
 import { BrandLogo } from "../../components/displayTypes/BrandLogo";
@@ -62,7 +61,7 @@ export const influencerSteps = (data, handleDataChange, handleListChange) => [
   {
     label: "Audience Age",
     child: (
-      <AudienceAge
+      <AudiencePercentages
         data={data}
         handleChange={handleDataChange}
         collection={audienceAges}
@@ -71,7 +70,13 @@ export const influencerSteps = (data, handleDataChange, handleListChange) => [
   },
   {
     label: "AudienceGender",
-    child: <AudienceGender data={data} handleChange={handleDataChange} />,
+    child: (
+      <AudiencePercentages
+        data={data}
+        handleChange={handleDataChange}
+        collection={audienceGenders}
+      />
+    ),
   },
   {
     label: "Values",
@@ -126,5 +131,16 @@ const audienceAges = [
   {
     id: "audienceAge65PlusSplit",
     label: "64+",
+  },
+];
+const audienceGenders = [
+  {
+    id: "audienceFemaleSplit",
+    label: "Female",
+  },
+
+  {
+    id: "audienceMaleSplit",
+    label: "Male",
   },
 ];
