@@ -3,8 +3,8 @@ import { BrandDescription } from "../../components/displayTypes/BrandDescription
 import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
 import { BrandDetails } from "../../components/displayTypes/BrandDetails";
 import { BrandHeader } from "../../components/displayTypes/BrandHeader";
-import { BrandLogo } from "../../components/displayTypes/BrandLogo";
 import { Categories } from "../../components/displayTypes/Categories";
+import { Image } from "../../components/displayTypes/Image";
 import { ProfilePicture } from "../../components/displayTypes/ProfilePicture";
 import { Values } from "../../components/displayTypes/Values";
 import { YourDetails } from "../../components/displayTypes/YourDetails";
@@ -26,7 +26,7 @@ export const brandSteps = (data, handleDataChange, handleListChange) => [
   },
   {
     label: "BrandLogo",
-    child: <BrandLogo data={data} handleChange={handleDataChange} />,
+    child: <Image data={data} handleChange={handleDataChange} />,
   },
   {
     label: "BrandHeader",

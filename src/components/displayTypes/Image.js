@@ -1,8 +1,16 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { ImageUpload } from "../../components/ImageUpload";
+import { ImageUpload } from "../ImageUpload";
 
-export const BrandLogo = ({ data, handleChange, id = "brandLogo", view }) => {
+export const Image = ({
+  data,
+  handleChange,
+  id = "brandLogo",
+  view,
+  label = "Logo",
+  sizeLabel = "Best 300 (w) x 300 (h) pixels",
+}) => {
+  console.log(id, data);
   return (
     <Box component="form" noValidate autoComplete="off">
       {view ? (
@@ -19,8 +27,8 @@ export const BrandLogo = ({ data, handleChange, id = "brandLogo", view }) => {
         <ImageUpload
           data={data}
           elementId={id}
-          label={"Logo"}
-          sizeLabel={"Best 300 (w) x 300 (h) pixels"}
+          label={label}
+          sizeLabel={sizeLabel}
           handleChange={handleChange}
         />
       )}

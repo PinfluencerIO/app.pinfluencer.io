@@ -5,8 +5,8 @@ import "./aws/aws";
 import { BrandDescription } from "./components/displayTypes/BrandDescription";
 import { BrandDetails } from "./components/displayTypes/BrandDetails";
 import { BrandHeader } from "./components/displayTypes/BrandHeader";
-import { BrandLogo } from "./components/displayTypes/BrandLogo";
 import { Categories } from "./components/displayTypes/Categories";
+import { Image } from "./components/displayTypes/Image";
 import { Values } from "./components/displayTypes/Values";
 import { YourDetails } from "./components/displayTypes/YourDetails";
 import UserContext from "./context/UserContext";
@@ -76,7 +76,7 @@ function App() {
           path="onboarding"
           element={<OnboardingSteps onboard={onboard} user={user} />}
         />
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile" element={<Profile type={userType(user)} />} />
         <Route path="profile/view" element={<PublicView />} />
         <Route
           path="profile/edit/yourdetails"
@@ -125,11 +125,27 @@ function App() {
           element={
             <ProfileEditPanel title="Brand Logo">
               {(data, handleChange) => (
-                <BrandLogo
+                <Image
                   id="logo"
                   data={data}
                   sx={{ mx: 1 }}
                   handleChange={handleChange}
+                />
+              )}
+            </ProfileEditPanel>
+          }
+        />
+        <Route
+          path="profile/edit/images"
+          element={
+            <ProfileEditPanel title="Profile Picture" type={userType(user)}>
+              {(data, handleChange) => (
+                <Image
+                  id="image"
+                  data={data}
+                  sx={{ mx: 1 }}
+                  handleChange={handleChange}
+                  label="Profile Picture"
                 />
               )}
             </ProfileEditPanel>

@@ -2,16 +2,19 @@ import { Button, Stack, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { getBrand, updateBrand } from "../../api/brandApi";
+import { getInfluencer, updateInfluencer } from "../../api/influencerApi";
 import { BackLink } from "../../components/displayTypes/BackLink";
 
-export const ProfileEditPanel = ({ title, children }) => {
+export const ProfileEditPanel = ({ title, type, children }) => {
   const nav = useNavigate();
 
   const [data, setData] = React.useState();
 
   useEffect(() => {
-    getBrand().then((brand) => setData(brand));
-  }, []);
+    let api;
+    type === "brand" ? (api = getBrand) : (api = getInfluencer);
+    api().then((u) => setData(u));
+  }, [type]);
 
   const handleChange = (event, key) => {
     if (!event.target) {
@@ -39,7 +42,8 @@ export const ProfileEditPanel = ({ title, children }) => {
   };
 
   const submit = () => {
-    updateBrand(data).then(() => nav("/profile"));
+    if (type === "brand") updateBrand(data).then(() => nav("/profile"));
+    else updateInfluencer(data).then(() => nav("/profile"));
   };
 
   if (!data) return "loading...";
