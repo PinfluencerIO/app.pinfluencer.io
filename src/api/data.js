@@ -52,3 +52,45 @@ export const OBJECTIVES = [
   },
   { key: "OTHER", label: "Other", shortLabel: "" },
 ];
+
+export const audienceAges = [
+  {
+    id: "audienceAge13To17Split",
+    label: "13 to 17",
+  },
+  {
+    id: "audienceAge18To24Split",
+    label: "18 to 24",
+  },
+  {
+    id: "audienceAge25To34Split",
+    label: "25 to 34",
+  },
+  {
+    id: "audienceAge35To44Split",
+    label: "35 to 44",
+  },
+  {
+    id: "audienceAge45To54Split",
+    label: "45 to 55",
+  },
+  {
+    id: "audienceAge55To64Split",
+    label: "55 to 64",
+  },
+  {
+    id: "audienceAge65PlusSplit",
+    label: "64+",
+  },
+];
+export const audienceGenders = [
+  {
+    id: "audienceFemaleSplit",
+    label: "Female",
+  },
+
+  {
+    id: "audienceMaleSplit",
+    label: "Male",
+  },
+];

@@ -1,4 +1,6 @@
 import React from "react";
+import { audienceAges, audienceGenders } from "../../api/data";
+import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
 import { Categories } from "../../components/displayTypes/Categories";
 import { Image } from "../../components/displayTypes/Image";
 import { InfluencerDetails } from "../../components/displayTypes/InfluencerDetails";
@@ -22,11 +24,11 @@ export const InfluencerProfile = ({ data }) => {
       </ProfileCard>
 
       <ProfileCard title="Audience Age Details">
-        <YourDetails data={data} view />
+        <AudiencePercentages data={data} view collection={audienceAges} />
       </ProfileCard>
 
       <ProfileCard title="Audience Gender Details">
-        <YourDetails data={data} view />
+        <AudiencePercentages data={data} view collection={audienceGenders} />
       </ProfileCard>
 
       <ProfileCard title="Values">

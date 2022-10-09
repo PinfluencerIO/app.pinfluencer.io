@@ -1,12 +1,15 @@
 import { useContext, useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { audienceAges, audienceGenders } from "./api/data";
 
 import "./aws/aws";
+import { AudiencePercentages } from "./components/displayTypes/AudiencePercentages";
 import { BrandDescription } from "./components/displayTypes/BrandDescription";
 import { BrandDetails } from "./components/displayTypes/BrandDetails";
 import { BrandHeader } from "./components/displayTypes/BrandHeader";
 import { Categories } from "./components/displayTypes/Categories";
 import { Image } from "./components/displayTypes/Image";
+import { InfluencerDetails } from "./components/displayTypes/InfluencerDetails";
 import { Values } from "./components/displayTypes/Values";
 import { YourDetails } from "./components/displayTypes/YourDetails";
 import UserContext from "./context/UserContext";
@@ -98,6 +101,50 @@ function App() {
             <ProfileEditPanel title="Brand Details">
               {(data, handleChange) => (
                 <BrandDetails
+                  data={data}
+                  sx={{ mx: 1 }}
+                  handleChange={handleChange}
+                />
+              )}
+            </ProfileEditPanel>
+          }
+        />
+        <Route
+          path="profile/edit/influencerdetails"
+          element={
+            <ProfileEditPanel title="Influencer Details">
+              {(data, handleChange) => (
+                <InfluencerDetails
+                  data={data}
+                  sx={{ mx: 1 }}
+                  handleChange={handleChange}
+                />
+              )}
+            </ProfileEditPanel>
+          }
+        />
+        <Route
+          path="profile/edit/audienceagedetails"
+          element={
+            <ProfileEditPanel title="Audience Age Details">
+              {(data, handleChange) => (
+                <AudiencePercentages
+                  collection={audienceAges}
+                  data={data}
+                  sx={{ mx: 1 }}
+                  handleChange={handleChange}
+                />
+              )}
+            </ProfileEditPanel>
+          }
+        />
+        <Route
+          path="profile/edit/audiencegenderdetails"
+          element={
+            <ProfileEditPanel title="Audience Gender Details">
+              {(data, handleChange) => (
+                <AudiencePercentages
+                  collection={audienceGenders}
                   data={data}
                   sx={{ mx: 1 }}
                   handleChange={handleChange}

@@ -1,15 +1,16 @@
 import { BrandDescription } from "../../components/displayTypes/BrandDescription";
 
+import { audienceAges, audienceGenders } from "../../api/data";
 import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
 import { BrandDetails } from "../../components/displayTypes/BrandDetails";
 import { BrandHeader } from "../../components/displayTypes/BrandHeader";
 import { Categories } from "../../components/displayTypes/Categories";
 import { Image } from "../../components/displayTypes/Image";
+import { InfluencerDetails } from "../../components/displayTypes/InfluencerDetails";
 import { ProfilePicture } from "../../components/displayTypes/ProfilePicture";
 import { Values } from "../../components/displayTypes/Values";
 import { YourDetails } from "../../components/displayTypes/YourDetails";
 import { InfluencerBio } from "./InfluencerBio";
-import { InfluencerDetails } from "./InfluencerDetails";
 
 export const brandSteps = (data, handleDataChange, handleListChange) => [
   {
@@ -102,45 +103,3 @@ export const cleanDataForType = (data, type) => {
     delete data.brandHeader;
   }
 };
-
-const audienceAges = [
-  {
-    id: "audienceAge13To17Split",
-    label: "13 to 17",
-  },
-  {
-    id: "audienceAge18To24Split",
-    label: "18 to 24",
-  },
-  {
-    id: "audienceAge25To34Split",
-    label: "25 to 34",
-  },
-  {
-    id: "audienceAge35To44Split",
-    label: "35 to 44",
-  },
-  {
-    id: "audienceAge45To54Split",
-    label: "45 to 55",
-  },
-  {
-    id: "audienceAge55To64Split",
-    label: "55 to 64",
-  },
-  {
-    id: "audienceAge65PlusSplit",
-    label: "64+",
-  },
-];
-const audienceGenders = [
-  {
-    id: "audienceFemaleSplit",
-    label: "Female",
-  },
-
-  {
-    id: "audienceMaleSplit",
-    label: "Male",
-  },
-];
