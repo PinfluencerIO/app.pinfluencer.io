@@ -27,7 +27,21 @@ export async function onboardingChain(data, type, onboard) {
 
     return newBrand;
   } else {
-    throw new Error("Influencer create is not yet implemented");
+    // copy out brand logo as it isn't sent with main brand payload
+    const profilePicture = data.profilePicture;
+    delete data.profilePicture;
+
+    const response = await onboarding(data, type);
+
+    const newInfluencer = await response.json();
+
+    await onboard();
+
+    if (profilePicture) {
+      await profilePicture({ imageBytes: profilePicture.split(",")[1] });
+    }
+
+    return newInfluencer;
   }
 }
 

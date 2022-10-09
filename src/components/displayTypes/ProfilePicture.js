@@ -2,12 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { ImageUpload } from "../ImageUpload";
 
-export const ProfilePicture = ({
-  data,
-  handleChange,
-  id = "profilePicture",
-  view,
-}) => {
+export const ProfilePicture = ({ data, handleChange, id = "image", view }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
       {view ? (

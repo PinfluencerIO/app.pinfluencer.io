@@ -8,8 +8,8 @@ export const InfluencerBio = ({ data, handleChange }) => {
         <TextField
           fullWidth
           id="influencerBio"
-          name="influencerBio"
-          value={data.influencerBio}
+          name="bio"
+          value={data.bio}
           label="Influencer Bio"
           variant="standard"
           onChange={(event) => handleChange(event)}

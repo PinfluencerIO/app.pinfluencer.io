@@ -94,7 +94,7 @@ export const cleanDataForType = (data, type) => {
     delete data.address;
     delete data.audienceAge;
     delete data.audienceGender;
-    delete data.profilePicture;
+    delete data.image;
   } else {
     delete data.brandName;
     delete data.brandDescription;
