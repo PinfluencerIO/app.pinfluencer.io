@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { getBrand } from "../../api/brandApi";
 import { getInfluencer } from "../../api/influencerApi";
 import { BrandPublicView } from "./BrandPublicView";
+import { InfluencerPublicView } from "./InfluencerPublicView";
 export const PublicView = ({ type }) => {
   const [data, setData] = React.useState();
   useEffect(() => {
@@ -11,5 +12,9 @@ export const PublicView = ({ type }) => {
 
   if (!data) return "Loading...";
 
-  return type === "brand" ? <BrandPublicView data={data} /> : "inf";
+  return type === "brand" ? (
+    <BrandPublicView data={data} />
+  ) : (
+    <InfluencerPublicView data={data} />
+  );
 };
