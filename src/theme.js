@@ -85,5 +85,4 @@ const customTheme = createTheme(baseTheme, {
 });
 
 const pinfluencerTheme = responsiveFontSizes(customTheme);
-console.log(pinfluencerTheme);
 export default pinfluencerTheme;

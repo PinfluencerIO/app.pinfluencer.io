@@ -129,43 +129,40 @@ export async function getCampaigns() {
 }
 
 //TODO too much copy/paste from newcampaign
-export async function updateCampaign(data) {
-  if (localStorage.getItem("offline")) {
-    const camapign = campaigns.find((c) => c.id === data.id);
-    Object.assign(camapign, data);
-    return data;
-  } else {
-    const { productImage1, productImage2, productImage3, ...without } = data;
-    const productImages = [productImage1, productImage2, productImage3];
-    console.log(productImages);
-    // const updateImages = productImages.filter(
-    //   (img) => !img.startsWith("https")
-    // );
-    // data.productImageUpdate = updateImages;
-    const payload = JSON.stringify(without);
-    const requestAction = await actionRequest("PUT", payload);
-    const response = await executeFetch(
-      `${remote}/brands/me/campaigns/${data.id}`,
-      requestAction
-    );
-    const json = await response.json();
-    // let i = 1;
-    // await Promise.all(
-    //   productImages.map(async (img) => {
-    //     if (data.productImageUpdate.includes(i)) {
-    //       await productImage(img, json.id, "product-image" + i++);
-    //     }
-    //   })
-    // );
-
-    return json;
-  }
+export async function updateCampaign() {
+  // if (localStorage.getItem("offline")) {
+  //   const camapign = campaigns.find((c) => c.id === data.id);
+  //   Object.assign(camapign, data);
+  //   return data;
+  // } else {
+  // const updateImages = productImages.filter(
+  //   (img) => !img.startsWith("https")
+  // );
+  // data.productImageUpdate = updateImages;
+  // const payload = JSON.stringify(without);
+  // const requestAction = await actionRequest("PUT", payload);
+  // const response = await executeFetch(
+  //   `${remote}/brands/me/campaigns/${data.id}`,
+  //   requestAction
+  // );
+  // const json = await response.json();
+  // let i = 1;
+  // await Promise.all(
+  //   productImages.map(async (img) => {
+  //     if (data.productImageUpdate.includes(i)) {
+  //       await productImage(img, json.id, "product-image" + i++);
+  //     }
+  //   })
+  // );
+  //   return json; d
 }
 
 export async function updateCampaignState(id, state) {
-  const a = await actionRequest("PATCH", { state: state });
-  console.log("a", a);
-  const response = await executeFetch(`${remote}/brands/me/campaigns/${id}`, a);
+  const action = await actionRequest("PATCH", { state: state });
+  const response = await executeFetch(
+    `${remote}/brands/me/campaigns/${id}`,
+    action
+  );
   return await response.json();
 }
 
@@ -206,10 +203,7 @@ export async function productImage(img, id, ref) {
     requestAction
   );
 
-  console.log(
-    "product image " + ref + " for campaign id" + id,
-    response.statusText
-  );
+  return response;
 }
 
 export async function getCampaign(campaignId) {
