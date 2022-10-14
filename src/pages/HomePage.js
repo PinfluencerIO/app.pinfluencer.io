@@ -8,11 +8,11 @@ export const HomePage = ({ isAuthenticated, isOnboarded }) => {
     <Stack rowGap={2}>
       <Typography variant="body1">
         This will be the home page with details about what&apos;s going on with
-        Pinfluencer App.
+        Pinfluencer App 👋
       </Typography>
       {isAuthenticated && !isOnboarded && (
         <Typography>
-          To get the best out of Pinfluencer, please complete{" "}
+          To get the best out of Pinfluencer, please complete!!!{" "}
           <Link
             underline="hover"
             color="blue"
