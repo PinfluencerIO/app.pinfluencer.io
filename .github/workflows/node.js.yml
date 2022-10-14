@@ -44,5 +44,5 @@ jobs:
           folder: build
           bucket: ${{ secrets.S3_BUCKET }}
           bucket-region: ${{ env.AWS_REGION }}
-          dist-id: ${{ secret.DISTRIBUTION_ID}}
+          dist-id: ${{ secrets.DISTRIBUTION_ID }}
           delete-removed: true
