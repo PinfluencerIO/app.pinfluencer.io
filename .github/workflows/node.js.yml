@@ -9,16 +9,27 @@ on:
   pull_request:
     branches: ["main"]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      AWS_REGION: eu-west-2
 
     strategy:
       matrix:
-        node-version: [16.x, 17.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [17.x]
 
     steps:
+      - name: configureawscredentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::324303852622:role/github-actions-role
+          role-session-name: samplerolesession
+          aws-region: ${{env.AWS_REGION}}
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -26,5 +37,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
-      - run: npm run build --if-present
       - run: npm test
+      - run: npm run build --if-present
+      - uses: reggionick/s3-deploy@v3
+        with:
+          folder: build
+          bucket: ${{ secrets.S3_BUCKET }}
+          bucket-region: ${{ env.AWS_REGION }}
+          dist-id: ${{ secret.DISTRIBUTION_ID}}
+          delete-removed: true
