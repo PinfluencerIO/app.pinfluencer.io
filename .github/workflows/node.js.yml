@@ -38,11 +38,4 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm test
-      - run: npm run build --if-present
-      - uses: reggionick/s3-deploy@v3
-        with:
-          folder: build
-          bucket: ${{ secrets.S3_BUCKET }}
-          bucket-region: ${{ env.AWS_REGION }}
-          dist-id: ${{ secrets.DISTRIBUTION_ID }}
-          delete-removed: true
+      - run: npm run deploy
