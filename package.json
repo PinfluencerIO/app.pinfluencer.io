@@ -11,7 +11,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
-    "deploy": "npm run build; aws s3 sync build s3://app.pinfluencer.link; aws --profile pinfluencer cloudfront create-invalidation --distribution-id EU2RNNCCOPUY0 --paths \"/*\" --no-cli-pager"
+    "deploy": "npm run build; aws s3 sync build s3://app.pinfluencer.link; aws cloudfront create-invalidation --distribution-id EU2RNNCCOPUY0 --paths \"/*\" --no-cli-pager"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
