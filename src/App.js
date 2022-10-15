@@ -30,7 +30,7 @@ function App() {
   const location = useLocation();
   useEffect(() => {
     if (location.pathname === "/") {
-      document.title = "Pinfuencer - Home";
+      document.title = "Pinfluencer - Home";
     } else {
       document.title = "Pinfluencer - " + location.pathname.substring(1);
     }
@@ -39,10 +39,12 @@ function App() {
   useEffect(() => {
     if (!isAuthenticated(user) && location.pathname !== "/") {
       nav("/");
-    } else if (isAuthenticated(user) && !isOnboarded(user)) {
-      if (location.pathname !== "/onboarding") {
-        nav("onboarding");
-      }
+    } else if (
+      isAuthenticated(user) &&
+      !isOnboarded(user) &&
+      location.pathname !== "/onboarding"
+    ) {
+      nav("onboarding");
     } else if (
       isAuthenticated(user) &&
       isOnboarded(user) &&

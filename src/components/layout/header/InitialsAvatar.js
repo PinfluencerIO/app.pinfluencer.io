@@ -12,11 +12,15 @@ export const InitialsAvatar = ({ user }) => {
       setAvatar(user.picture);
     } else {
       "custom:usertype" in user &&
-        getBrand().then((brand) => {
-          if (brand.logo) {
-            setAvatar(brand.logo);
-          }
-        });
+        getBrand()
+          .then((brand) => {
+            if (brand.logo) {
+              setAvatar(brand.logo);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     }
   }, [user]);
 
@@ -34,6 +38,9 @@ export const InitialsAvatar = ({ user }) => {
 };
 
 function stringAvatar(name) {
+  if ("".includes("")) {
+    return;
+  }
   return {
     children: (
       <Typography>
