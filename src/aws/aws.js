@@ -45,8 +45,8 @@ const aws = {
     scope: ["email", "openid", "profile", "aws.cognito.signin.user.admin"],
     // redirectSignIn: "http://localhost:3000/,https://app.pinfluencer.io/",
     // redirectSignOut: "http://localhost:3000/,https://app.pinfluencer.io/",
-    redirectSignIn: "http://localhost:3000,https://app.pinfluencer.link",
-    redirectSignOut: "http://localhost:3000,https://app.pinfluencer.link",
+    redirectSignIn: "http://localhost:3000,https://pinfluencer.link",
+    redirectSignOut: "http://localhost:3000,https://pinfluencer.link",
     responseType: "code",
   },
 };
