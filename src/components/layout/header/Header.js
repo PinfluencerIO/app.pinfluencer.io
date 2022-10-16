@@ -44,20 +44,27 @@ export const Header = (props) => {
           <Box flex={1}></Box> {/**GapBox*/}
           <AvatarMenu />
         </Toolbar>
-        {isAuthenticated &&
-          (isOnboarded ? (
-            location.pathname.toLowerCase().includes("profile") ? (
-              ""
-            ) : (
-              <HorizontalNavigation userType={userType} />
-            )
-          ) : (
-            <OnboardingHorizontalNavigation />
-          ))}
+        {getNav(isAuthenticated, isOnboarded, userType, location)}
       </AppBar>
     </ElevationScroll>
   );
 };
+
+function getNav(isAuthenticated, isOnboarded, userType, location) {
+  if (!isAuthenticated) return;
+
+  if (isOnboarded) {
+    return getNavForOnboardedUsers(userType, location);
+  }
+
+  return <OnboardingHorizontalNavigation />;
+}
+
+function getNavForOnboardedUsers(userType, location) {
+  if (!location.pathname.toLowerCase().includes("profile")) {
+    return <HorizontalNavigation userType={userType} />;
+  }
+}
 
 function ElevationScroll(props) {
   const { children } = props;
