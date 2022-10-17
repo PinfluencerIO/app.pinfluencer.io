@@ -82,7 +82,10 @@ function App() {
           element={<OnboardingSteps onboard={onboard} user={user} />}
         />
         <Route path="profile" element={<Profile type={userType(user)} />} />
-        <Route path="profile/view" element={<PublicView />} />
+        <Route
+          path="profile/view"
+          element={<PublicView type={userType(user)} />}
+        />
         <Route
           path="profile/edit/yourdetails"
           element={
