@@ -24,12 +24,14 @@ jobs:
         node-version: [17.x]
 
     steps:
-      - name: configureawscredentials
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::324303852622:role/github-actions-role
           role-session-name: samplerolesession
           aws-region: ${{env.AWS_REGION}}
+
+      - name: Checkout
       - uses: actions/checkout@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
@@ -38,25 +40,20 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - name: Clean and install
-      - run: npm ci
+      # - name: Clean and install
+      # - run: npm ci
 
-      - name: Test with coverage
-      - run: npm test -- --coverage --watchAll=false
+      # - name: Test with coverage
+      # - run: npm test -- --coverage --watchAll=false
 
-      - name: Build for production
-      - run: npm run build
+      # - name: Build for production
+      # - run: npm run build
 
-      - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl public-read --follow-symlinks --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
-          AWS_REGION: ${{env.AWS_REGION}}
-          SOURCE_DIR: "build"
-
-      # - name: Upload coverage to Codecov
-      #   - uses: codecov/codecov-action@v3
-      # - name: Deploy to S3, and invalidate distribution cache
-      # - run: npm run deploy
+      # - name: Deploy to S3
+      #   uses: jakejarvis/s3-sync-action@master
+      #   with:
+      #     args: --acl public-read --follow-symlinks --delete
+      #   env:
+      #     AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
+      #     AWS_REGION: ${{env.AWS_REGION}}
+      #     SOURCE_DIR: "build"
