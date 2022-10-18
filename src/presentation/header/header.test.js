@@ -1,7 +1,9 @@
+import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import "intersection-observer";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import Header from ".";
+
 import underTest from "../../test/underTest";
 
 test("should display onboarding nav when authenticated user has not completed onboarding", () => {
@@ -16,7 +18,7 @@ test("should display onboarding nav when authenticated user has not completed on
       <Header isAuthenticated={true} isOnboarded={false} />
     ),
     {
-      wrapper: BrowserRouter,
+      wrapper: HashRouter,
     }
   );
   expect(screen.getByText("Onboarding")).toBeTruthy();
@@ -36,4 +38,12 @@ test("should display usertype nav when authenticated user has completed onboardi
     { wrapper: BrowserRouter }
   );
   expect(screen.getByText("Dashboard")).toBeTruthy();
+});
+
+test("should have home link", async () => {
+  render(underTest(undefined, <Header />), { wrapper: HashRouter });
+  expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute(
+    "href",
+    "#/"
+  );
 });

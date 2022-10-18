@@ -6,7 +6,7 @@ export const LinkedToolTip = (props) => {
   const { title, route, style, children } = props;
   return (
     <Tooltip title={title}>
-      <Link to={route} style={style}>
+      <Link to={route} style={style} role="link">
         {children}
       </Link>
     </Tooltip>
