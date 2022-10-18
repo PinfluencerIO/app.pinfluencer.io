@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { getBrand, updateBrand } from "../../api/brandApi";
 import { getInfluencer, updateInfluencer } from "../../api/influencerApi";
 import { BackLink } from "../../components/displayTypes/BackLink";
+import { typeSwitch } from "./typeSwitch";
 
 export const ProfileEditPanel = ({ title, type, children }) => {
   const nav = useNavigate();
@@ -11,8 +12,7 @@ export const ProfileEditPanel = ({ title, type, children }) => {
   const [data, setData] = React.useState();
 
   useEffect(() => {
-    let api;
-    type === "brand" ? (api = getBrand) : (api = getInfluencer);
+    const api = typeSwitch(type, getBrand, getInfluencer);
     api().then((u) => setData(u));
   }, [type]);
 
@@ -42,8 +42,8 @@ export const ProfileEditPanel = ({ title, type, children }) => {
   };
 
   const submit = () => {
-    if (type === "brand") updateBrand(data).then(() => nav("/profile"));
-    else updateInfluencer(data).then(() => nav("/profile"));
+    const update = typeSwitch(type, updateBrand, updateInfluencer);
+    update(data).then(() => nav("/profile"));
   };
 
   if (!data) return "loading...";

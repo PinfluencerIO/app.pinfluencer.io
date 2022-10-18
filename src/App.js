@@ -89,7 +89,7 @@ function App() {
         <Route
           path="profile/edit/yourdetails"
           element={
-            <ProfileEditPanel title="Your Details">
+            <ProfileEditPanel title="Your Details" type={userType(user)}>
               {(data, handleChange) => (
                 <YourDetails
                   data={data}
@@ -103,7 +103,7 @@ function App() {
         <Route
           path="profile/edit/branddetails"
           element={
-            <ProfileEditPanel title="Brand Details">
+            <ProfileEditPanel title="Brand Details" type={userType(user)}>
               {(data, handleChange) => (
                 <BrandDetails
                   data={data}
@@ -117,7 +117,7 @@ function App() {
         <Route
           path="profile/edit/influencerdetails"
           element={
-            <ProfileEditPanel title="Influencer Details">
+            <ProfileEditPanel title="Influencer Details" type={userType(user)}>
               {(data, handleChange) => (
                 <InfluencerDetails
                   data={data}
@@ -131,7 +131,10 @@ function App() {
         <Route
           path="profile/edit/audienceagedetails"
           element={
-            <ProfileEditPanel title="Audience Age Details">
+            <ProfileEditPanel
+              title="Audience Age Details"
+              type={userType(user)}
+            >
               {(data, handleChange) => (
                 <AudiencePercentages
                   collection={audienceAges}
@@ -146,7 +149,10 @@ function App() {
         <Route
           path="profile/edit/audiencegenderdetails"
           element={
-            <ProfileEditPanel title="Audience Gender Details">
+            <ProfileEditPanel
+              title="Audience Gender Details"
+              type={userType(user)}
+            >
               {(data, handleChange) => (
                 <AudiencePercentages
                   collection={audienceGenders}
@@ -161,7 +167,7 @@ function App() {
         <Route
           path="profile/edit/branddescription"
           element={
-            <ProfileEditPanel title="Brand Description">
+            <ProfileEditPanel title="Brand Description" type={userType(user)}>
               {(data, handleChange) => (
                 <BrandDescription
                   data={data}
@@ -175,7 +181,7 @@ function App() {
         <Route
           path="profile/edit/brandlogo"
           element={
-            <ProfileEditPanel title="Brand Logo">
+            <ProfileEditPanel title="Brand Logo" type={userType(user)}>
               {(data, handleChange) => (
                 <Image
                   id="logo"
@@ -206,7 +212,7 @@ function App() {
         <Route
           path="profile/edit/brandheader"
           element={
-            <ProfileEditPanel title="Brand Header">
+            <ProfileEditPanel title="Brand Header" type={userType(user)}>
               {(data, handleChange) => (
                 <BrandHeader
                   id="headerImage"
@@ -221,7 +227,7 @@ function App() {
         <Route
           path="profile/edit/values"
           element={
-            <ProfileEditPanel title="Values">
+            <ProfileEditPanel title="Values" type={userType(user)}>
               {(data, handleChange) => (
                 <Values
                   data={data}
@@ -235,7 +241,7 @@ function App() {
         <Route
           path="profile/edit/categories"
           element={
-            <ProfileEditPanel title="Categories">
+            <ProfileEditPanel title="Categories" type={userType(user)}>
               {(data, handleChange) => (
                 <Categories
                   data={data}
