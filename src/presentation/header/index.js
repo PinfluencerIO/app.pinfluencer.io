@@ -10,10 +10,10 @@ import PropTypes from "prop-types";
 
 import React from "react";
 import { useLocation } from "react-router";
-import { LinkedToolTip } from "../../components/displayTypes/LinkedToolTip";
 import { AvatarMenu } from "../../components/layout/header/AvatarMenu";
 import { HorizontalNavigation } from "../../components/layout/header/HorizontalNavigation";
 import { OnboardingHorizontalNavigation } from "../../components/layout/header/OnboardingHorizontalNavigation";
+import LinkedToolTip from "../linkedToolTip";
 
 export default function Header(props) {
   const theme = useTheme();
