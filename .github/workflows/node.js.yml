@@ -40,17 +40,17 @@ jobs:
       - name: Clean and install
         run: npm ci
 
-      # - name: Test with coverage
-      # - run: npm test -- --coverage --watchAll=false
+      - name: Test with coverage
+        run: npm test -- --coverage --watchAll=false
 
-      # - name: Build for production
-      # - run: npm run build
+      - name: Build for production
+        run: npm run build
 
-      # - name: Deploy to S3
-      #   uses: jakejarvis/s3-sync-action@master
-      #   with:
-      #     args: --acl public-read --follow-symlinks --delete
-      #   env:
-      #     AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
-      #     AWS_REGION: ${{env.AWS_REGION}}
-      #     SOURCE_DIR: "build"
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          AWS_REGION: ${{env.AWS_REGION}}
+          SOURCE_DIR: "build"
