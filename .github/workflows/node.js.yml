@@ -1,4 +1,4 @@
-name: Build
+name: Build, test, deploy, invalidate
 
 on:
   push:
@@ -37,8 +37,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      # - name: Clean and install
-      # - run: npm ci
+      - name: Clean and install
+        run: npm ci
 
       # - name: Test with coverage
       # - run: npm test -- --coverage --watchAll=false
