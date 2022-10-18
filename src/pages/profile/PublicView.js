@@ -7,7 +7,7 @@ import { typeSwitch } from "./typeSwitch";
 export const PublicView = ({ type }) => {
   const [data, setData] = React.useState();
   useEffect(() => {
-    typeSwitch(type, getBrand, getInfluencer).then((u) => setData(u));
+    typeSwitch(type, getBrand, getInfluencer)().then((u) => setData(u));
   }, [type]);
 
   if (!data) return "Loading...";
