@@ -47,4 +47,4 @@ jobs:
         run: npm run build
 
       - name: Copy to s3
-        run: aws s3 sync --delete --acl public-read --follow-symlinks build s3://${{ secred.BUCKET_NAME }}
+        run: aws s3 sync --delete --acl public-read --follow-symlinks build s3://${{ secrets.S3_BUCKET }}
