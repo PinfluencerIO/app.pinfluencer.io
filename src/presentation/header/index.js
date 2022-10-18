@@ -10,15 +10,16 @@ import PropTypes from "prop-types";
 
 import React from "react";
 import { useLocation } from "react-router";
-import { AvatarMenu } from "../../components/layout/header/AvatarMenu";
 import { HorizontalNavigation } from "../../components/layout/header/HorizontalNavigation";
 import { OnboardingHorizontalNavigation } from "../../components/layout/header/OnboardingHorizontalNavigation";
+import AvatarMenu from "../avatarMenu";
 import LinkedToolTip from "../linkedToolTip";
 
 export default function Header(props) {
   const theme = useTheme();
   const location = useLocation();
-  const { isOnboarded, userType, isAuthenticated } = props;
+  const { isOnboarded, userType, isAuthenticated, user, signin, signout } =
+    props;
 
   return (
     <ElevationScroll {...props}>
@@ -41,7 +42,7 @@ export default function Header(props) {
             </Typography>
           </LinkedToolTip>
           <Box flex={1}></Box> {/**GapBox*/}
-          <AvatarMenu />
+          <AvatarMenu user={user} signin={signin} signout={signout} />
         </Toolbar>
         {getNav(isAuthenticated, isOnboarded, userType, location)}
       </AppBar>

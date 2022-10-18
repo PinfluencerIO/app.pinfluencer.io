@@ -23,7 +23,7 @@ import { PublicView } from "./pages/profile/PublicView";
 import Layout from "./presentation/layout";
 
 function App() {
-  const { user, onboard } = useContext(UserContext);
+  const { user, signin, signout, onboard } = useContext(UserContext);
   const nav = useNavigate();
 
   // TODO: create custom hook for page title side effect
@@ -63,6 +63,9 @@ function App() {
             isAuthenticated={isAuthenticated(user)}
             isOnboarded={isOnboarded(user)}
             userType={userType(user)}
+            user={user}
+            signin={signin}
+            signout={signout}
           />
         }
       >
