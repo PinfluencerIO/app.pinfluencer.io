@@ -1,15 +1,11 @@
-import { ThemeProvider } from "@mui/material";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import pinfluencerTheme from "../../../theme";
+import underTest from "../../../test/underTest";
 import { OnboardingHorizontalNavigation } from "./OnboardingHorizontalNavigation";
 
 test("should have onboarding menu item", () => {
-  render(
-    <ThemeProvider theme={pinfluencerTheme}>
-      <OnboardingHorizontalNavigation />
-    </ThemeProvider>,
-    { wrapper: BrowserRouter }
-  );
+  render(underTest(null, <OnboardingHorizontalNavigation />), {
+    wrapper: BrowserRouter,
+  });
   expect(screen.getByText("Onboarding")).toBeTruthy();
 });

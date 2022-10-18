@@ -13,7 +13,6 @@ import { InfluencerDetails } from "./components/displayTypes/InfluencerDetails";
 import { Values } from "./components/displayTypes/Values";
 import { YourDetails } from "./components/displayTypes/YourDetails";
 import UserContext from "./context/UserContext";
-import { Layout } from "./Layout";
 import { BadUrl } from "./pages/BadUrl";
 import { Dashboard } from "./pages/Dashboard";
 import { HomePage } from "./pages/HomePage";
@@ -21,6 +20,7 @@ import { OnboardingSteps } from "./pages/onboading/OnboardingSteps";
 import { Profile } from "./pages/profile/Profile";
 import { ProfileEditPanel } from "./pages/profile/ProfileEditPanel";
 import { PublicView } from "./pages/profile/PublicView";
+import Layout from "./presentation/layout";
 
 function App() {
   const { user, onboard } = useContext(UserContext);

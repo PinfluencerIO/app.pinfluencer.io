@@ -1,11 +1,12 @@
 import React from "react";
 
 import { Outlet } from "react-router";
-import { Footer } from "./components/layout/Footer";
-import { Header } from "./components/layout/header/Header";
-import { MainSection } from "./components/layout/MainSection";
 
-export const Layout = ({ isAuthenticated, isOnboarded, userType }) => {
+import { Footer } from "../../components/layout/Footer";
+import { MainSection } from "../../components/layout/MainSection";
+import Header from "../header/";
+
+export default function Layout({ isAuthenticated, isOnboarded, userType }) {
   return (
     <>
       <Header
@@ -20,4 +21,4 @@ export const Layout = ({ isAuthenticated, isOnboarded, userType }) => {
       <Footer flexShrink={0} p={2} />
     </>
   );
-};
+}

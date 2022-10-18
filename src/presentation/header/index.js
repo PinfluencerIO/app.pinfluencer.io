@@ -10,20 +10,19 @@ import PropTypes from "prop-types";
 
 import React from "react";
 import { useLocation } from "react-router";
-import { LinkedToolTip } from "../../displayTypes/LinkedToolTip";
-import { AvatarMenu } from "./AvatarMenu";
-import { HorizontalNavigation } from "./HorizontalNavigation";
-import { OnboardingHorizontalNavigation } from "./OnboardingHorizontalNavigation";
+import { LinkedToolTip } from "../../components/displayTypes/LinkedToolTip";
+import { AvatarMenu } from "../../components/layout/header/AvatarMenu";
+import { HorizontalNavigation } from "../../components/layout/header/HorizontalNavigation";
+import { OnboardingHorizontalNavigation } from "../../components/layout/header/OnboardingHorizontalNavigation";
 
-//TODO md and beyond change padding and margin outside of design, fix this to requirements
-export const Header = (props) => {
+export default function Header(props) {
   const theme = useTheme();
   const location = useLocation();
   const { isOnboarded, userType, isAuthenticated } = props;
 
   return (
     <ElevationScroll {...props}>
-      <AppBar component="nav" sx={{}}>
+      <AppBar role="navigation" component="nav">
         <Toolbar
           sx={{
             display: "flex",
@@ -48,7 +47,7 @@ export const Header = (props) => {
       </AppBar>
     </ElevationScroll>
   );
-};
+}
 
 function getNav(isAuthenticated, isOnboarded, userType, location) {
   if (!isAuthenticated) return;

@@ -10,8 +10,6 @@ const numbersBetween0and100 = new RegExp("^\\b([0-9]|[1-9][0-9]|100)\\b$");
 
 export function AudiencePercentages({ collection, data, handleChange }) {
   const numberCheck = (event) => {
-    console.log("number check", event.target.name, data[event.target.name]);
-
     if (
       numbersBetween0and100.test(event.target.value) ||
       event.target.value === ""

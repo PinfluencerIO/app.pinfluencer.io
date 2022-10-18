@@ -1,28 +1,20 @@
-import { ThemeProvider } from "@mui/material";
 import { render, screen } from "@testing-library/react";
 import "intersection-observer";
 import { BrowserRouter } from "react-router-dom";
-import UserContext from "../../../context/UserContext";
-import pinfluencerTheme from "../../../theme";
+import underTest from "../../../test/underTest";
 import { HorizontalNavigation } from "./HorizontalNavigation";
 
 test("brands should have dashboard, campiagns and collaborations", () => {
-  const underTest = (user) => {
-    return (
-      <ThemeProvider theme={pinfluencerTheme}>
-        <UserContext.Provider value={{ user: user, onboard: null }}>
-          <HorizontalNavigation userType="brand" />
-        </UserContext.Provider>
-      </ThemeProvider>
-    );
-  };
   render(
-    underTest({
-      givenName: "given",
-      familyName: "family",
-      email: "email@domain.tld",
-      "custom:usertype": "brand",
-    }),
+    underTest(
+      {
+        givenName: "given",
+        familyName: "family",
+        email: "email@domain.tld",
+        "custom:usertype": "brand",
+      },
+      <HorizontalNavigation userType="brand" />
+    ),
     { wrapper: BrowserRouter }
   );
   expect(screen.getByText("Dashboard")).toBeTruthy();
@@ -31,22 +23,16 @@ test("brands should have dashboard, campiagns and collaborations", () => {
 });
 
 test("influencers should have dashboard, collaborations", () => {
-  const underTest = (user) => {
-    return (
-      <ThemeProvider theme={pinfluencerTheme}>
-        <UserContext.Provider value={{ user: user, onboard: null }}>
-          <HorizontalNavigation userType="influencer" />
-        </UserContext.Provider>
-      </ThemeProvider>
-    );
-  };
   render(
-    underTest({
-      givenName: "given",
-      familyName: "family",
-      email: "email@domain.tld",
-      "custom:usertype": "influencer",
-    }),
+    underTest(
+      {
+        givenName: "given",
+        familyName: "family",
+        email: "email@domain.tld",
+        "custom:usertype": "influencer",
+      },
+      <HorizontalNavigation userType="influencer" />
+    ),
     { wrapper: BrowserRouter }
   );
   expect(screen.getByText("Dashboard")).toBeTruthy();
