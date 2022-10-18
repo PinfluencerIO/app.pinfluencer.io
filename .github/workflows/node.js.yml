@@ -48,3 +48,6 @@ jobs:
 
       - name: Copy to s3
         run: aws s3 sync --delete build s3://${{ secrets.S3_BUCKET }}
+
+      - name: Cache invalidation
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths \"/*\" --no-cli-pager
