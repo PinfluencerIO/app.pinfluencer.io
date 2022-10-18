@@ -40,6 +40,8 @@ jobs:
       - run: npm ci
       - run: npm test -- --coverage --watchAll=false
 
+      - name: build
+      - run: npm run build
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
