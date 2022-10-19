@@ -1,7 +1,3 @@
-import "@fontsource/comfortaa/300.css";
-import "@fontsource/comfortaa/400.css";
-import "@fontsource/comfortaa/500.css";
-import "@fontsource/comfortaa/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import * as React from "react";
