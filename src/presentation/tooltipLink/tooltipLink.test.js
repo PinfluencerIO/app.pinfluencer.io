@@ -1,13 +1,13 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { HashRouter } from "react-router-dom";
-import LinkedToolTip from ".";
+import TooltipLink from "../tooltipLink/TooltipLink";
 
 test("should pass on tooltip text, route, and render children", () => {
   render(
-    <LinkedToolTip title="Home" route="/">
+    <TooltipLink title="Home" route="/">
       <h3>Label</h3>
-    </LinkedToolTip>,
+    </TooltipLink>,
     {
       wrapper: HashRouter,
     }

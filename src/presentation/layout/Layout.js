@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 
 import { Footer } from "../../components/layout/Footer";
 import { MainSection } from "../../components/layout/MainSection";
-import Header from "../header/";
+import Header from "../header/Header";
 
 export default function Layout({
   isAuthenticated,

@@ -20,7 +20,8 @@ import { OnboardingSteps } from "./pages/onboading/OnboardingSteps";
 import { Profile } from "./pages/profile/Profile";
 import { ProfileEditPanel } from "./pages/profile/ProfileEditPanel";
 import { PublicView } from "./pages/profile/PublicView";
-import Layout from "./presentation/layout";
+import Layout from "./presentation/layout/Layout";
+import { Dev } from "./test/Dev";
 
 function App() {
   const { user, signin, signout, onboard } = useContext(UserContext);
@@ -38,7 +39,7 @@ function App() {
 
   useEffect(() => {
     if (!isAuthenticated(user) && location.pathname !== "/") {
-      nav("/");
+      console.log(location);
     } else if (
       isAuthenticated(user) &&
       !isOnboarded(user) &&
@@ -56,6 +57,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path="dev" element={<Dev />} />
       <Route
         path="/"
         element={

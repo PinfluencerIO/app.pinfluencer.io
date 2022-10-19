@@ -8,18 +8,41 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 
+import LoginIcon from "@mui/icons-material/Login";
 import React from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { HorizontalNavigation } from "../../components/layout/header/HorizontalNavigation";
+import { InitialsAvatar } from "../../components/layout/header/InitialsAvatar";
 import { OnboardingHorizontalNavigation } from "../../components/layout/header/OnboardingHorizontalNavigation";
-import AvatarMenu from "../avatarMenu";
-import LinkedToolTip from "../linkedToolTip";
+import IconMenu from "../iconMenu/IconMenu";
+import LinkedToolTip from "../tooltipLink/TooltipLink";
 
 export default function Header(props) {
+  const nav = useNavigate();
   const theme = useTheme();
   const location = useLocation();
   const { isOnboarded, userType, isAuthenticated, user, signin, signout } =
     props;
+
+  function menuForUserType() {
+    if (userType) {
+      return [
+        {
+          key: "profile",
+          label: "Profile",
+          action: () => {
+            nav("Profile");
+          },
+        },
+        { key: "signout", label: "Sign Out", action: signout },
+      ];
+    }
+    if (user) {
+      // only return sign out for users that haven't completed onboarding
+      return [{ key: "signout", label: "Sign Out", action: signout }];
+    }
+    return [{ key: "signin", label: "Sign In", action: signin }];
+  }
 
   return (
     <ElevationScroll {...props}>
@@ -42,7 +65,21 @@ export default function Header(props) {
             </Typography>
           </LinkedToolTip>
           <Box flex={1}></Box> {/**GapBox*/}
-          <AvatarMenu user={user} signin={signin} signout={signout} />
+          <IconMenu
+            icon={user ? <InitialsAvatar user={user} /> : <LoginIcon />}
+            clickHandlerOverride={user ? undefined : signin}
+            items={menuForUserType()}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            sx={{ marginTop: 4 }}
+            name={user ? undefined : "Sign in"}
+          />
         </Toolbar>
         {getNav(isAuthenticated, isOnboarded, userType, location)}
       </AppBar>
