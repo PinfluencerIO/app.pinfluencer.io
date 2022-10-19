@@ -33,7 +33,7 @@ function createFontFamily(fontFamily) {
 
 const baseTheme = createTheme();
 const customTheme = createTheme(baseTheme, {
-  typography: createFontFamily("Comfortaa"),
+  typography: createFontFamily(["Comfortaa", "Arial", "sans-serif"]),
   components: {
     MuiCssBaseline: {
       styleOverrides: {
