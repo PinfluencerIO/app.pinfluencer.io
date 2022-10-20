@@ -1,4 +1,3 @@
-import CampaignIcon from "@mui/icons-material/Campaign";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import {
@@ -14,12 +13,17 @@ import { useNavigate } from "react-router";
 export const HorizontalNavigation = ({ userType }) => {
   const nav = useNavigate();
   const dashboardRef = useRef();
-  const campaignRef = useRef();
   const collaborationRef = useRef();
   const viewRef = useRef();
   const isStartInView = useIsInViewport(viewRef, dashboardRef);
   const isEndInView = useIsInViewport(viewRef, collaborationRef);
 
+  const isActive = (page) => {
+    console.log("page", page);
+    console.log("location", location);
+    const r = location.hash.toLowerCase().includes(page.path.toLowerCase());
+    return r;
+  };
   function useIsInViewport(viewRef, ref) {
     const [isIntersecting, setIsIntersecting] = useState(false);
 
@@ -52,12 +56,7 @@ export const HorizontalNavigation = ({ userType }) => {
           icon: <DashboardIcon />,
           ref: dashboardRef,
         },
-        {
-          label: "Campaigns",
-          path: "campaigns",
-          icon: <CampaignIcon />,
-          ref: campaignRef,
-        },
+
         {
           label: "Collaborations",
           path: "collaborations",
@@ -163,11 +162,7 @@ export const HorizontalNavigation = ({ userType }) => {
               >
                 <Box
                   sx={{
-                    border: location.pathname
-                      .toLowerCase()
-                      .includes(page.path.toLowerCase())
-                      ? "solid 3px"
-                      : "none 0px",
+                    border: isActive(page) ? "solid 3px" : "none 0px",
                     borderColor: (theme) => theme.palette.active.main,
                     borderRadius: "3px",
                     minWidth: "24px",
