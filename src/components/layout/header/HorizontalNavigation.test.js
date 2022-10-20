@@ -18,7 +18,6 @@ test("brands should have dashboard, campiagns and collaborations", () => {
     { wrapper: BrowserRouter }
   );
   expect(screen.getByText("Dashboard")).toBeTruthy();
-  expect(screen.getByText("Campaigns")).toBeTruthy();
   expect(screen.getByText("Collaborations")).toBeTruthy();
 });
 

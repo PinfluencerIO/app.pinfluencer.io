@@ -1,4 +1,7 @@
 import React from "react";
+import { ProposalStep1 } from "../presentation/proposal/ProposalStep1";
+import { ProposalStep2 } from "../presentation/proposal/ProposalStep2";
+import { ProposalStep3 } from "../presentation/proposal/ProposalStep3";
 import { MobileStepper } from "../presentation/stepper/MobileStepper";
 
 export const NewCollaborationProposal = () => {
@@ -7,15 +10,15 @@ export const NewCollaborationProposal = () => {
   const steps = [
     {
       label: "Step 1",
-      child: "Step 1",
+      child: <ProposalStep1 />,
     },
     {
       label: "Step 2",
-      child: "Step 2",
+      child: <ProposalStep2 />,
     },
     {
       label: "Step 3",
-      child: "step 3",
+      child: <ProposalStep3 />,
     },
   ];
 
