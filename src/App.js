@@ -81,7 +81,7 @@ function App() {
           }
         />
 
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard user={user} />} />
         <Route
           path="onboarding"
           element={<OnboardingSteps onboard={onboard} user={user} />}
