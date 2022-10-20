@@ -19,10 +19,7 @@ export const HorizontalNavigation = ({ userType }) => {
   const isEndInView = useIsInViewport(viewRef, collaborationRef);
 
   const isActive = (page) => {
-    console.log("page", page);
-    console.log("location", location);
-    const r = location.hash.toLowerCase().includes(page.path.toLowerCase());
-    return r;
+    return location.hash.toLowerCase().includes(page.path.toLowerCase());
   };
   function useIsInViewport(viewRef, ref) {
     const [isIntersecting, setIsIntersecting] = useState(false);

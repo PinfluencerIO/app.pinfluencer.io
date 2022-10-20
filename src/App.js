@@ -13,6 +13,7 @@ import { InfluencerDetails } from "./components/displayTypes/InfluencerDetails";
 import { Values } from "./components/displayTypes/Values";
 import { YourDetails } from "./components/displayTypes/YourDetails";
 import { Dashboard } from "./containers/Dashboard";
+import { NewCollaborationProposal } from "./containers/NewCollaborationProposal";
 import UserContext from "./context/UserContext";
 import { BadUrl } from "./pages/BadUrl";
 import { HomePage } from "./pages/HomePage";
@@ -82,6 +83,7 @@ function App() {
         />
 
         <Route path="dashboard" element={<Dashboard user={user} />} />
+        <Route path="proposal/new" element={<NewCollaborationProposal />} />
         <Route
           path="onboarding"
           element={<OnboardingSteps onboard={onboard} user={user} />}

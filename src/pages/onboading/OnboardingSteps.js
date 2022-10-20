@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { onboardingChain } from "../../api/onboarding";
-import { MobileStepper } from "../../components/MobileStepper";
+import { MobileStepper } from "../../presentation/stepper/MobileStepper";
 import { brandSteps, cleanDataForType, influencerSteps } from "./steps";
 import { UserType } from "./UserType";
 
