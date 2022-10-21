@@ -1,28 +1,28 @@
 import { useContext, useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { audienceAges, audienceGenders } from "./api/data";
+import { audienceAges, audienceGenders } from "../api/data";
 
-import "./aws/aws";
-import { AudiencePercentages } from "./components/displayTypes/AudiencePercentages";
-import { BrandDescription } from "./components/displayTypes/BrandDescription";
-import { BrandDetails } from "./components/displayTypes/BrandDetails";
-import { BrandHeader } from "./components/displayTypes/BrandHeader";
-import { Categories } from "./components/displayTypes/Categories";
-import { Image } from "./components/displayTypes/Image";
-import { InfluencerDetails } from "./components/displayTypes/InfluencerDetails";
-import { Values } from "./components/displayTypes/Values";
-import { YourDetails } from "./components/displayTypes/YourDetails";
-import { Dashboard } from "./containers/Dashboard";
-import { NewCollaborationProposal } from "./containers/NewCollaborationProposal";
-import UserContext from "./context/UserContext";
-import { BadUrl } from "./pages/BadUrl";
-import { HomePage } from "./pages/HomePage";
-import { OnboardingSteps } from "./pages/onboading/OnboardingSteps";
-import { Profile } from "./pages/profile/Profile";
-import { ProfileEditPanel } from "./pages/profile/ProfileEditPanel";
-import { PublicView } from "./pages/profile/PublicView";
-import Layout from "./presentation/layout/Layout";
-import { Dev } from "./test/Dev";
+import "../aws/aws";
+import { AudiencePercentages } from "../components/displayTypes/AudiencePercentages";
+import { BrandDescription } from "../components/displayTypes/BrandDescription";
+import { BrandDetails } from "../components/displayTypes/BrandDetails";
+import { BrandHeader } from "../components/displayTypes/BrandHeader";
+import { Image } from "../components/displayTypes/Image";
+import { InfluencerDetails } from "../components/displayTypes/InfluencerDetails";
+import { YourDetails } from "../components/displayTypes/YourDetails";
+import UserContext from "../context/UserContext";
+import { BadUrl } from "../pages/BadUrl";
+import { HomePage } from "../pages/HomePage";
+import { OnboardingSteps } from "../pages/onboading/OnboardingSteps";
+import { Profile } from "../pages/profile/Profile";
+import { ProfileEditPanel } from "../pages/profile/ProfileEditPanel";
+import { PublicView } from "../pages/profile/PublicView";
+import { Categories } from "../presentation/categories/Categories";
+import Layout from "../presentation/layout/Layout";
+import { Values } from "../presentation/values/Values";
+import { Dev } from "../test/Dev";
+import { Dashboard } from "./Dashboard";
+import { NewCollaborationProposal } from "./NewCollaborationProposal";
 
 function App() {
   const { user, signin, signout, onboard } = useContext(UserContext);
@@ -267,14 +267,14 @@ function App() {
 
 export default App;
 
-const isAuthenticated = (user) => {
+export const isAuthenticated = (user) => {
   return user;
 };
 
-const isOnboarded = (user) => {
+export const isOnboarded = (user) => {
   return isAuthenticated(user) && "custom:usertype" in user;
 };
 
-const userType = (user) => {
+export const userType = (user) => {
   return isAuthenticated(user) && user["custom:usertype"];
 };

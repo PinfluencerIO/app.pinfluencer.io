@@ -1,14 +1,36 @@
-import { Box, Stack } from "@mui/material";
+import { Box, FormControl, TextField } from "@mui/material";
 import React from "react";
 
-export const ProposalStep1 = () => {
+export const ProposalStep1 = ({ data, handleChange, view }) => {
   return (
-    <Stack spacing={2}>
-      <Box>Title [Short text description]</Box>
-      <Box>
-        Objective [Longer description of what the Brand is looking for. Eg. Wear
-        a halloween costume while drinking our new autumn cocktail]
-      </Box>
-    </Stack>
+    <Box component="form" noValidate autoComplete="off">
+      <FormControl fullWidth margin="none">
+        <TextField
+          inputProps={{ readOnly: view ? "readonly" : "" }}
+          fullWidth
+          id="title"
+          name={"title"}
+          value={data.title}
+          label="Title"
+          variant="standard"
+          onChange={(event) => handleChange(event)}
+          sx={{ mb: 2 }}
+        />
+
+        <TextField
+          inputProps={{ readOnly: view ? "readonly" : "" }}
+          fullWidth
+          id="creativeGuidance"
+          name="creativeGuidance"
+          value={data.creativeGuidance}
+          label="Creative Guidance"
+          variant="standard"
+          onChange={(event) => handleChange(event)}
+          sx={{ mb: 1 }}
+          multiline
+          rows={5}
+        />
+      </FormControl>
+    </Box>
   );
 };

@@ -46,7 +46,6 @@ export const OnboardingSteps = ({ onboard, user }) => {
   };
 
   const handleDataChange = (event) => {
-    console.log("handleDataChange", event.target.name, event.target.value);
     setData((currentState) => {
       return { ...currentState, [event.target.name]: event.target.value };
     });

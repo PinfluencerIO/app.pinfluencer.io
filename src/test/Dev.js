@@ -1,90 +1,49 @@
-import { Avatar, Box, IconButton, MenuItem } from "@mui/material";
-import Menu from "@mui/material/Menu";
-import React from "react";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Avatar, Box } from "@mui/material";
+import { proposals } from "../api/data";
 
 export const Dev = () => {
-  return (
-    <IconMenu
-      icon={<Avatar sx={{ width: 32, height: 32 }}>M</Avatar>}
-      items={[
-        {
-          label: "first",
-          key: 1,
-          action: () => {
-            console.log("f1 called");
-          },
-        },
-        {
-          label: "second",
-          key: 2,
-          action: () => {
-            console.log("f2 called");
-          },
-        },
-        {
-          label: "third",
-          key: 3,
-          action: () => {
-            console.log("f3 called");
-          },
-        },
-      ]}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      sx={{
-        marginTop: 4,
-      }}
-    />
-  );
-};
-
-const IconMenu = ({
-  icon,
-  items,
-  clickHandlerOverride,
-  anchorOrigin,
-  transformOrigin,
-  sx,
-}) => {
-  const [anchorElement, setAnchorElement] = React.useState(null);
-  const handleClose = () => {
-    setAnchorElement(null);
+  const text = {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   };
-  const handleClick = (event) => {
-    if (clickHandlerOverride) clickHandlerOverride();
-    else setAnchorElement(event.currentTarget);
-  };
-  const open = Boolean(anchorElement);
   return (
-    <Box margin="0 auto">
-      <IconButton onClick={handleClick}>{icon}</IconButton>
-      <Menu
-        sx={sx}
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        anchorEl={anchorElement}
-        anchorOrigin={anchorOrigin}
-        transformOrigin={transformOrigin}
-      >
-        {items.map((item) => (
-          <MenuItem
-            key={item.key}
-            onClick={(event) => {
-              handleClose();
-              item.action(event);
+    <Box display="flex" flex={1}>
+      <Box sx={{ flex: "1 0 100%" }}>
+        {proposals.map((p) => (
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "nowrap",
+              maxWidth: "600px",
+              alignItems: "center",
+              padding: "15px",
+              marginBottom: "10px",
+              marginRight: "20px",
             }}
+            key={p.title}
           >
-            <Box textAlign="center">{item.label}</Box>
-          </MenuItem>
+            <div style={{ whiteSpace: "nowrap", marginRight: "20px" }}>
+              <Avatar src={p.image} />
+            </div>
+            <div
+              style={{
+                minWidth: "100px",
+                overflow: "hidden",
+                flexGrow: 1,
+                marginRight: "20px",
+              }}
+            >
+              <div style={text}>{p.title}</div>
+              <div style={text}>{p.name}</div>
+            </div>
+            <div>
+              <MoreVertIcon />
+            </div>
+          </div>
         ))}
-      </Menu>
+      </Box>
     </Box>
   );
 };

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { ImageUpload } from "../ImageUpload";
+import { ImageUpload } from "../../presentation/image/ImageUpload";
 
 export const Image = ({
   data,

@@ -3,7 +3,7 @@ import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import * as React from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter } from "react-router-dom";
-import App from "./App";
+import App from "./containers/App";
 import { UserProvider } from "./context/UserContext";
 import pinfluencerTheme from "./style/theme";
 

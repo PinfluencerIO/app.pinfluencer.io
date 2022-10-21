@@ -4,12 +4,12 @@ import { audienceAges, audienceGenders } from "../../api/data";
 import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
 import { BrandDetails } from "../../components/displayTypes/BrandDetails";
 import { BrandHeader } from "../../components/displayTypes/BrandHeader";
-import { Categories } from "../../components/displayTypes/Categories";
 import { Image } from "../../components/displayTypes/Image";
 import { InfluencerDetails } from "../../components/displayTypes/InfluencerDetails";
 import { ProfilePicture } from "../../components/displayTypes/ProfilePicture";
-import { Values } from "../../components/displayTypes/Values";
 import { YourDetails } from "../../components/displayTypes/YourDetails";
+import { Categories } from "../../presentation/categories/Categories";
+import { Values } from "../../presentation/values/Values";
 import { InfluencerBio } from "./InfluencerBio";
 
 export const brandSteps = (data, handleDataChange, handleListChange) => [

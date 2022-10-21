@@ -94,3 +94,23 @@ export const audienceGenders = [
     label: "Male",
   },
 ];
+
+export const proposals = [
+  {
+    title:
+      "Ipsum ipsum do qui Lorem ex proident consectetur do deserunt adipisicing ipsum. Reprehenderit duis magna do culpa non adipisicing dolore labore enim qui incididunt nisi anim. Occaecat anim enim velit occaecat aliqua pariatur id nisi. Esse esse ex laborum voluptate sit. Pariatur dolore occaecat et dolor ex.",
+    creativeGuidance: "guidance",
+    name: "name",
+    image: "https://dummyimage.com/300",
+    values: [],
+    categories: [],
+  },
+  {
+    title: "short",
+    creativeGuidance: "guidance",
+    name: "Culpa nostrud eiusmod excepteur incididunt sint ea veniam incididunt ullamco quis ut amet amet veniam. Eiusmod ad eiusmod velit aliquip. Ipsum fugiat labore laborum eiusmod duis ex eu laboris incididunt non pariatur. Minim aliquip pariatur officia Lorem aliquip culpa anim occaecat duis labore laborum esse in minim.",
+    image: "https://dummyimage.com/300",
+    values: [],
+    categories: [],
+  },
+];

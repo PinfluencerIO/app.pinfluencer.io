@@ -34,8 +34,8 @@ export function MobileStepper({
           display: "flex",
           alignItems: "center",
           height: 50,
-          pl: 2,
           bgcolor: "background.default",
+          px: 2.5,
         }}
       >
         <Typography>{step(activeStep).label}</Typography>
@@ -43,9 +43,9 @@ export function MobileStepper({
       <Box
         sx={{
           height: 270,
-          maxWidth: 400,
+          maxWidth: 450,
           width: "100%",
-          p: 2,
+          px: 2.5,
         }}
       >
         {step(activeStep).child}
@@ -75,7 +75,9 @@ export function MobileStepper({
             Back
           </Button>
         }
-        sx={{ "& .MuiLinearProgress-root": { width: "44%" } }}
+        sx={{
+          "& .MuiLinearProgress-root": { width: "44%" },
+        }}
       />
     </Box>
   );

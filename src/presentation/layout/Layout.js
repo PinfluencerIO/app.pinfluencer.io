@@ -25,7 +25,7 @@ export default function Layout({
         signout={signout}
       />
       {/* Large top margin on MainSection to compensate for Nav menu */}
-      <MainSection flex="1" p={2} mt={isAuthenticated ? 12 : 8}>
+      <MainSection p={2} mt={isAuthenticated ? 12 : 8}>
         <Outlet />
       </MainSection>
       <Footer flexShrink={0} p={2} />

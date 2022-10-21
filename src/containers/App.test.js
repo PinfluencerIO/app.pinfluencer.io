@@ -2,8 +2,8 @@ import { render } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 
 import "intersection-observer";
+import underTest from "../test/underTest";
 import App from "./App";
-import underTest from "./test/underTest";
 
 test("should stay on home page for unauthenticated users", async () => {
   render(underTest(null, <App />), { wrapper: BrowserRouter });

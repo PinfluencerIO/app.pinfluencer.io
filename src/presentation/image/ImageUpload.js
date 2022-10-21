@@ -19,11 +19,13 @@ export const ImageUpload = ({
         onClick={() => document.getElementById(elementId).click()}
         aria-label="upload"
         sx={{
-          minHeight: "200px",
           border: "1px solid",
           borderRadius: "5px",
           background: "url(" + imageSrc + ") center center no-repeat",
           backgroundSize: "cover",
+          width: 180,
+          height: 180,
+          margin: "0 auto",
         }}
       >
         <Stack

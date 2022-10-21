@@ -4,13 +4,7 @@ import React from "react";
 export const MainSection = (props) => {
   const { children } = props;
   return (
-    <Box
-      component="main"
-      {...props}
-      display="flex"
-      // alignItems="center"
-      justifyContent="center"
-    >
+    <Box component="main" {...props}>
       {children}
     </Box>
   );
