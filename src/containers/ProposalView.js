@@ -20,32 +20,19 @@ export const ProposalView = () => {
     <Stack spacing={2} mt={-5}>
       <BackLink />
 
-      <ProfileCard
-        title="Details"
-        urlPrefix={`/proposal/edit/${params.id}/`}
-        view
-      >
+      <ProfileCard title="Details" urlPrefix={`/proposal/edit/${params.id}/`}>
         <ProposalStep1 data={proposal} view />
       </ProfileCard>
-      <ProfileCard
-        title="Product"
-        urlPrefix={`/proposal/edit/${params.id}/`}
-        view
-      >
+      <ProfileCard title="Product" urlPrefix={`/proposal/edit/${params.id}/`}>
         <ProposalStep2 data={proposal} view id="image" />
       </ProfileCard>
       <ProfileCard
         title="Categories"
         urlPrefix={`/proposal/edit/${params.id}/`}
-        view
       >
         <ProposalStep3 data={proposal} view />
       </ProfileCard>
-      <ProfileCard
-        title="Values"
-        urlPrefix={`/proposal/edit/${params.id}/`}
-        view
-      >
+      <ProfileCard title="Values" urlPrefix={`/proposal/edit/${params.id}/`}>
         <ProposalStep4 data={proposal} view />
       </ProfileCard>
     </Stack>

@@ -10,7 +10,6 @@ export const Image = ({
   label = "Logo",
   sizeLabel = "Best 300 (w) x 300 (h) pixels",
 }) => {
-  console.log(id, data);
   return (
     <Box component="form" noValidate autoComplete="off">
       {view ? (
