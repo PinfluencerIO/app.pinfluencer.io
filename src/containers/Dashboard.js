@@ -1,12 +1,5 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import {
-  Avatar,
-  Button,
-  Paper,
-  Popper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Paper, Popper, Stack, Typography } from "@mui/material";
 
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -50,106 +43,47 @@ export const Dashboard = () => {
 
       <Paper variant="outlined" sx={{ padding: 1 }}>
         <Typography variant="h5">Proposals ({proposals.length})</Typography>
-        {proposals.map((p) => (
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "nowrap",
-              maxWidth: "600px",
-              alignItems: "center",
-              marginTop: "10px",
-              justifyContent: "space-between",
-            }}
-            key={p.title}
-          >
-            <div style={{ whiteSpace: "nowrap", marginRight: "10px" }}>
-              <Avatar src={p.image} />
-            </div>
+        <Box sx={{ overflow: "auto", height: "200px" }}>
+          {proposals.map((p) => (
             <div
               style={{
-                minWidth: "100px",
-                overflow: "hidden",
-                flexGrow: 2,
-                marginRight: "10px",
+                display: "flex",
+                // flexWrap: "nowrap",
+                // maxWidth: "600px",
+                alignItems: "center",
+                marginTop: "10px",
+                justifyContent: "space-between",
               }}
+              key={p.title}
             >
-              <div style={text}>{p.title}</div>
-              <div style={text}>{p.name}</div>
+              <div style={{ whiteSpace: "nowrap", marginRight: "10px" }}>
+                <Avatar src={p.image} />
+              </div>
+              <div
+                style={{
+                  minWidth: "100px",
+                  overflow: "hidden",
+                  flexGrow: 2,
+                  marginRight: "10px",
+                }}
+              >
+                <div style={text}>{p.title}</div>
+                <div style={text}>{p.name}</div>
+              </div>
+              <Box sx={{ border: "1px solid" }}>
+                <MoreVertIcon onClick={handleClick} />
+              </Box>
             </div>
-            <div style={{ marginLeft: "auto" }}>
-              <MoreVertIcon onClick={handleClick} />
-            </div>
-          </div>
-        ))}
+          ))}
+        </Box>
       </Paper>
       <Popper id={id} open={open} anchorEl={anchorEl} placement="left-start">
-        <Paper>
-          <Stack>
-            <Button
-              variant="outlined"
-              onClick={(event) => {
-                console.log(event);
-              }}
-            >
-              View
-            </Button>
-            <Button
-              variant="outlined"
-              onClick={(event) => {
-                console.log(event);
-              }}
-            >
-              Archive
-            </Button>
-          </Stack>
+        <Paper sx={{ padding: 3 }}>
+          <Box>Some info</Box>
+          <Box>Some details of something</Box>
+          <Box>Action | Action | Action</Box>
         </Paper>
       </Popper>
     </Stack>
   );
 };
-
-/*
-
-<Stack
-                    spacing={2}
-                    direction="row"
-                    sx={{
-                      "& p": { textTransform: "capitalize" },
-                      border: "1px solid blue",
-                    }}
-                    alignItems="center"
-                  >
-                    <Avatar src={p.image} />
-                    <Box
-                      sx={{
-                        border: "1px solid green",
-                        overflow: "hidden",
-                        width: "35vw",
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                        fontWeight={800}
-                      >
-                        {p.title}
-                      </Typography>
-
-                      <Typography
-                        sx={{
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {p.name}
-                      </Typography>
-                    </Box>
-                    <Typography sx={{ textAlign: "right" }}>
-                      <MoreVertIcon onClick={handleClick} />
-                    </Typography>
-                  </Stack>
- */
