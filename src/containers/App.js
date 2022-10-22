@@ -19,10 +19,16 @@ import { ProfileEditPanel } from "../pages/profile/ProfileEditPanel";
 import { PublicView } from "../pages/profile/PublicView";
 import { Categories } from "../presentation/categories/Categories";
 import Layout from "../presentation/layout/Layout";
+import { ProposalEditPanel } from "../presentation/proposal/ProposalEditPanel";
+import { ProposalStep1 } from "../presentation/proposal/ProposalStep1";
+import { ProposalStep2 } from "../presentation/proposal/ProposalStep2";
+import { ProposalStep3 } from "../presentation/proposal/ProposalStep3";
+import { ProposalStep4 } from "../presentation/proposal/ProposalStep4";
 import { Values } from "../presentation/values/Values";
 import { Dev } from "../test/Dev";
 import { Dashboard } from "./Dashboard";
 import { NewCollaborationProposal } from "./NewCollaborationProposal";
+import { ProposalView } from "./ProposalView";
 
 function App() {
   const { user, signin, signout, onboard } = useContext(UserContext);
@@ -84,6 +90,47 @@ function App() {
 
         <Route path="dashboard" element={<Dashboard user={user} />} />
         <Route path="proposal/new" element={<NewCollaborationProposal />} />
+        <Route path="proposal/view/:id" element={<ProposalView />} />
+        <Route
+          path="proposal/edit/:id/details"
+          element={
+            <ProposalEditPanel title="Details">
+              {(data, handleChange) => (
+                <ProposalStep1 data={data} handleChange={handleChange} />
+              )}
+            </ProposalEditPanel>
+          }
+        />
+        <Route
+          path="proposal/edit/:id/product"
+          element={
+            <ProposalEditPanel title="Product">
+              {(data, handleChange) => (
+                <ProposalStep2 data={data} handleChange={handleChange} />
+              )}
+            </ProposalEditPanel>
+          }
+        />
+        <Route
+          path="proposal/edit/:id/categories"
+          element={
+            <ProposalEditPanel title="Categories">
+              {(data, handleChange) => (
+                <ProposalStep3 data={data} handleChange={handleChange} />
+              )}
+            </ProposalEditPanel>
+          }
+        />
+        <Route
+          path="proposal/edit/:id/values"
+          element={
+            <ProposalEditPanel title="Values">
+              {(data, handleChange) => (
+                <ProposalStep4 data={data} handleChange={handleChange} />
+              )}
+            </ProposalEditPanel>
+          }
+        />
         <Route
           path="onboarding"
           element={<OnboardingSteps onboard={onboard} user={user} />}

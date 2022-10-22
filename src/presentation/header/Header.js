@@ -98,9 +98,15 @@ function getNav(isAuthenticated, isOnboarded, userType, location) {
 }
 
 function getNavForOnboardedUsers(userType, location) {
-  if (!location.pathname.toLowerCase().includes("profile")) {
-    return <HorizontalNavigation userType={userType} />;
-  }
+  const noMenuRoutes = ["profile", "proposal"];
+  let showMenu = true;
+  noMenuRoutes.forEach((route) => {
+    if (location.pathname.toLowerCase().includes(route) == true) {
+      showMenu = false;
+    }
+  });
+
+  return showMenu && <HorizontalNavigation userType={userType} />;
 }
 
 function ElevationScroll(props) {

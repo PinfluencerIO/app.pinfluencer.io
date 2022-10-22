@@ -1,30 +1,33 @@
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Avatar, Box, Paper, Popper, Stack, Typography } from "@mui/material";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { proposals as data } from "../api/data";
 import UserContext from "../context/UserContext";
 import { userType } from "./App";
 
 export const Dashboard = () => {
+  const nav = useNavigate();
   const { user } = useContext(UserContext);
   const [proposals, setProposals] = React.useState([]);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
+  const handleClick = (proposal) => {
+    nav("/proposal/view/" + proposal.id);
   };
-  false && handleClick;
   useEffect(() => {
-    console.log("proposals", data);
     const useType = userType(user);
     if (useType === "brand") {
       setProposals(data);
     }
   }, [user]);
-  const open = Boolean(anchorEl);
 
-  const id = open ? "simple-popper" : undefined;
   const text = {
     whiteSpace: "nowrap",
     overflow: "hidden",
@@ -50,7 +53,7 @@ export const Dashboard = () => {
                 display: "flex",
                 // flexWrap: "nowrap",
                 // maxWidth: "600px",
-                alignItems: "center",
+                alignItems: "flex-start",
                 marginTop: "10px",
                 justifyContent: "space-between",
               }}
@@ -70,20 +73,15 @@ export const Dashboard = () => {
                 <div style={text}>{p.title}</div>
                 <div style={text}>{p.name}</div>
               </div>
-              <Box sx={{ border: "1px solid" }}>
-                <MoreVertIcon onClick={handleClick} />
+              <Box>
+                <IconButton onClick={() => handleClick(p)}>
+                  <KeyboardArrowRightIcon />
+                </IconButton>
               </Box>
             </div>
           ))}
         </Box>
       </Paper>
-      <Popper id={id} open={open} anchorEl={anchorEl} placement="left-start">
-        <Paper sx={{ padding: 3 }}>
-          <Box>Some info</Box>
-          <Box>Some details of something</Box>
-          <Box>Action | Action | Action</Box>
-        </Paper>
-      </Popper>
     </Stack>
   );
 };

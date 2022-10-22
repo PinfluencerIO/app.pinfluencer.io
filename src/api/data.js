@@ -97,20 +97,33 @@ export const audienceGenders = [
 
 export const proposals = [
   {
+    id: 1,
     title:
       "Ipsum ipsum do qui Lorem ex proident consectetur do deserunt adipisicing ipsum. Reprehenderit duis magna do culpa non adipisicing dolore labore enim qui incididunt nisi anim. Occaecat anim enim velit occaecat aliqua pariatur id nisi. Esse esse ex laborum voluptate sit. Pariatur dolore occaecat et dolor ex.",
-    creativeGuidance: "guidance",
+    creativeGuidance:
+      "Exercitation elit quis duis excepteur velit labore in sit Lorem in Lorem.",
     name: "name",
     image: "https://dummyimage.com/300",
-    values: [],
-    categories: [],
+    values: ["ORGANIC"],
+    categories: ["FOOD"],
   },
   {
-    title: "short",
-    creativeGuidance: "guidance",
+    id: 2,
+    title: "Proident quis esse sunt",
+    creativeGuidance:
+      "Cupidatat cillum ad deserunt sunt aliquip Lorem nostrud in non elit est amet in.",
     name: "Culpa nostrud eiusmod excepteur incididunt sint ea veniam incididunt ullamco quis ut amet amet veniam. Eiusmod ad eiusmod velit aliquip. Ipsum fugiat labore laborum eiusmod duis ex eu laboris incididunt non pariatur. Minim aliquip pariatur officia Lorem aliquip culpa anim occaecat duis labore laborum esse in minim.",
     image: "https://dummyimage.com/300",
-    values: [],
-    categories: [],
+    values: ["ORGANIC"],
+    categories: ["FOOD"],
+  },
+  {
+    id: 3,
+    title: "Culpa nostrud",
+    creativeGuidance: "Minim occaecat nisi veniam in nisi veniam nostrud.",
+    name: "Culpa nostrud eiusmod excepteur incididunt sint ea ",
+    image: "https://dummyimage.com/300",
+    values: ["ORGANIC"],
+    categories: ["FOOD"],
   },
 ];

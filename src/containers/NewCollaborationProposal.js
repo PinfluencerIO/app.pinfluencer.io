@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import { v4 as uuid } from "uuid";
 import { proposals } from "../api/data";
 import { ProposalStep1 } from "../presentation/proposal/ProposalStep1";
 import { ProposalStep2 } from "../presentation/proposal/ProposalStep2";
@@ -12,6 +13,7 @@ export const NewCollaborationProposal = () => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const [data, setData] = React.useState({
+    id: uuid(),
     title: "",
     creativeGuidance: "",
     name: "",
