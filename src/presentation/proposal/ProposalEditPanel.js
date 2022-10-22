@@ -16,7 +16,7 @@ export const ProposalEditPanel = ({ title, children }) => {
   const params = useParams();
 
   const proposal = proposals.filter((p) => {
-    return p.id === parseInt(params.id);
+    return p.id === params.id || p.id === parseInt(params.id);
   })[0];
 
   const [data, setData] = React.useState(proposal);

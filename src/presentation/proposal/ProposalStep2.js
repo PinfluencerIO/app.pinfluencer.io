@@ -2,7 +2,15 @@ import { Box, FormControl, TextField } from "@mui/material";
 import React from "react";
 import { ImageUpload } from "../image/ImageUpload";
 
-export const ProposalStep2 = ({ data, handleChange, view, id }) => {
+export const ProposalStep2 = ({
+  data,
+  handleChange,
+  view,
+  id = "image",
+  width = 200,
+  height = 200,
+  margin = "0 auto",
+}) => {
   return (
     <Box noValidate autoComplete="off">
       <FormControl fullWidth margin="none">
@@ -21,11 +29,13 @@ export const ProposalStep2 = ({ data, handleChange, view, id }) => {
           {view ? (
             <Box
               sx={{
-                minHeight: "200px",
                 border: "1px solid",
                 borderRadius: "5px",
                 background: "url(" + data[id] + ") center center no-repeat",
                 backgroundSize: "cover",
+                width: { width },
+                height: { height },
+                margin: { margin },
               }}
             ></Box>
           ) : (

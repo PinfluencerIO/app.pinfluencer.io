@@ -9,7 +9,7 @@ import { Values } from "../../presentation/values/Values";
 export const BrandPublicView = ({ data }) => {
   return (
     <Stack width="100%" rowGap={2} mt={-5}>
-      <BackLink backLocation="/profile" />
+      <BackLink />
       <Box
         sx={{
           minHeight: "100px",

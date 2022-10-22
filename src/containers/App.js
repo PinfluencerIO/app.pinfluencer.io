@@ -106,7 +106,11 @@ function App() {
           element={
             <ProposalEditPanel title="Product">
               {(data, handleChange) => (
-                <ProposalStep2 data={data} handleChange={handleChange} />
+                <ProposalStep2
+                  data={data}
+                  handleChange={handleChange}
+                  id="image"
+                />
               )}
             </ProposalEditPanel>
           }

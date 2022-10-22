@@ -13,7 +13,7 @@ export const ProposalView = () => {
   // 👇️ get ID from url
   const params = useParams();
   const proposal = proposals.filter((p) => {
-    return p.id === parseInt(params.id);
+    return p.id === params.id || p.id === parseInt(params.id);
   })[0];
 
   return (
@@ -32,21 +32,21 @@ export const ProposalView = () => {
         urlPrefix={`/proposal/edit/${params.id}/`}
         view
       >
-        <ProposalStep2 data={proposal} />
+        <ProposalStep2 data={proposal} view id="image" />
       </ProfileCard>
       <ProfileCard
         title="Categories"
         urlPrefix={`/proposal/edit/${params.id}/`}
         view
       >
-        <ProposalStep3 data={proposal} />
+        <ProposalStep3 data={proposal} view />
       </ProfileCard>
       <ProfileCard
         title="Values"
         urlPrefix={`/proposal/edit/${params.id}/`}
         view
       >
-        <ProposalStep4 data={proposal} />
+        <ProposalStep4 data={proposal} view />
       </ProfileCard>
     </Stack>
   );

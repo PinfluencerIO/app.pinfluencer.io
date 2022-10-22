@@ -19,7 +19,7 @@ export const Profile = ({ type }) => {
   return (
     <>
       <Stack width="100%" rowGap={2} mt={-5}>
-        <BackLink backLocation=".." />
+        <BackLink />
         {typeSwitch(
           type,
           <BrandProfile data={data} />,

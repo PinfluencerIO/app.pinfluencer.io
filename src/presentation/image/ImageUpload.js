@@ -10,9 +10,11 @@ export const ImageUpload = ({
   sizeLabel,
   tooLargeAlert,
   handleChange,
+  width = 200,
+  height = 200,
+  margin = "0 auto",
 }) => {
   const [imageSrc, setImageSrc] = useState(data[elementId]);
-
   return (
     <Stack>
       <IconButton
@@ -23,9 +25,9 @@ export const ImageUpload = ({
           borderRadius: "5px",
           background: "url(" + imageSrc + ") center center no-repeat",
           backgroundSize: "cover",
-          width: 180,
-          height: 180,
-          margin: "0 auto",
+          width: { width },
+          height: { height },
+          margin: { margin },
         }}
       >
         <Stack
