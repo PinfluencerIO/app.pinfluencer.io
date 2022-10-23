@@ -3,6 +3,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 import { IconButton, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { ImageBox } from "./ImageBox";
 export const ImageUpload = ({
   data,
   elementId,
@@ -10,37 +11,40 @@ export const ImageUpload = ({
   sizeLabel,
   tooLargeAlert,
   handleChange,
-  width = 200,
-  height = 200,
-  margin = "0 auto",
+  width,
+  height,
+  margin,
 }) => {
   const [imageSrc, setImageSrc] = useState(data[elementId]);
   return (
     <Stack>
       <IconButton
+        disableRipple={true}
         onClick={() => document.getElementById(elementId).click()}
         aria-label="upload"
         sx={{
-          border: "1px solid",
-          borderRadius: "5px",
-          background: "url(" + imageSrc + ") center center no-repeat",
-          backgroundSize: "cover",
-          width: { width },
-          height: { height },
-          margin: { margin },
+          "&:hover": { backgroundColor: "transparent" },
         }}
       >
-        <Stack
-          spacing={1}
-          sx={{ alignItems: "center", display: imageSrc ? "none" : "block" }}
+        <ImageBox
+          imageSrc={imageSrc}
+          width={width}
+          height={height}
+          margin={margin}
         >
-          <FileUploadIcon sx={{ fontSize: "5rem" }} />
-          <Typography component="p">{label}</Typography>
-          <Typography component="p">{sizeLabel}</Typography>
-        </Stack>
+          <Stack
+            spacing={1}
+            sx={{ alignItems: "center", display: imageSrc ? "none" : "block" }}
+          >
+            <FileUploadIcon sx={{ fontSize: "5rem" }} />
+            <Typography component="p">{label}</Typography>
+            <Typography component="p">{sizeLabel}</Typography>
+          </Stack>
+        </ImageBox>
       </IconButton>
 
       <IconButton
+        disableRipple={true}
         aria-label="delete image"
         color="error"
         onClick={() => {
@@ -48,15 +52,15 @@ export const ImageUpload = ({
           handleChange({ target: { name: elementId, value: null } });
           setImageSrc(null);
         }}
+        sx={{
+          "&:hover": { backgroundColor: "transparent" },
+          visibility:
+            imageSrc && !imageSrc.includes("default_product_image")
+              ? "visible"
+              : "hidden",
+        }}
       >
-        <HighlightOffIcon
-          sx={{
-            visibility:
-              imageSrc && !imageSrc.includes("default_product_image")
-                ? "visible"
-                : "hidden",
-          }}
-        />
+        <HighlightOffIcon />
       </IconButton>
       <input
         type="file"

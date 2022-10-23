@@ -1,10 +1,9 @@
 import React from "react";
 import { BrandDescription } from "../../components/displayTypes/BrandDescription";
 import { BrandDetails } from "../../components/displayTypes/BrandDetails";
-import { BrandHeader } from "../../components/displayTypes/BrandHeader";
-import { Image } from "../../components/displayTypes/Image";
 import { YourDetails } from "../../components/displayTypes/YourDetails";
 import { Categories } from "../../presentation/categories/Categories";
+import { Image } from "../../presentation/image/Image";
 import { Values } from "../../presentation/values/Values";
 import { ProfileCard } from "./ProfileCard";
 
@@ -28,7 +27,7 @@ export const BrandProfile = ({ data }) => {
       </ProfileCard>
 
       <ProfileCard title="Brand Header">
-        <BrandHeader data={data} id="headerImage" view />
+        <Image data={data} id="headerImage" view />
       </ProfileCard>
 
       <ProfileCard title="Values">

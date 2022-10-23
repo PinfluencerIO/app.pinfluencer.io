@@ -3,12 +3,10 @@ import { BrandDescription } from "../../components/displayTypes/BrandDescription
 import { audienceAges, audienceGenders } from "../../api/data";
 import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
 import { BrandDetails } from "../../components/displayTypes/BrandDetails";
-import { BrandHeader } from "../../components/displayTypes/BrandHeader";
-import { Image } from "../../components/displayTypes/Image";
 import { InfluencerDetails } from "../../components/displayTypes/InfluencerDetails";
-import { ProfilePicture } from "../../components/displayTypes/ProfilePicture";
 import { YourDetails } from "../../components/displayTypes/YourDetails";
 import { Categories } from "../../presentation/categories/Categories";
+import { Image } from "../../presentation/image/Image";
 import { Values } from "../../presentation/values/Values";
 import { InfluencerBio } from "./InfluencerBio";
 
@@ -26,12 +24,14 @@ export const brandSteps = (data, handleDataChange, handleListChange) => [
     child: <BrandDescription data={data} handleChange={handleDataChange} />,
   },
   {
-    label: "BrandLogo",
-    child: <Image data={data} handleChange={handleDataChange} />,
+    label: "Brand Logo",
+    child: <Image data={data} handleChange={handleDataChange} id="logo" />,
   },
   {
-    label: "BrandHeader",
-    child: <BrandHeader data={data} handleChange={handleDataChange} />,
+    label: "Brand Header",
+    child: (
+      <Image data={data} handleChange={handleDataChange} id="headerImage" />
+    ),
   },
   {
     label: "Values",
@@ -44,11 +44,11 @@ export const brandSteps = (data, handleDataChange, handleListChange) => [
 ];
 export const influencerSteps = (data, handleDataChange, handleListChange) => [
   {
-    label: "NameEmail",
+    label: "Name Email",
     child: <YourDetails data={data} handleChange={handleDataChange} />,
   },
   {
-    label: "InfluencerDetails",
+    label: "Influencer Details",
     child: <InfluencerDetails data={data} handleChange={handleDataChange} />,
   },
   {
@@ -57,7 +57,7 @@ export const influencerSteps = (data, handleDataChange, handleListChange) => [
   },
   {
     label: "Picture",
-    child: <ProfilePicture data={data} handleChange={handleDataChange} />,
+    child: <Image data={data} handleChange={handleDataChange} id="image" />,
   },
   {
     label: "Audience Age",
@@ -70,7 +70,7 @@ export const influencerSteps = (data, handleDataChange, handleListChange) => [
     ),
   },
   {
-    label: "AudienceGender",
+    label: "Audience Gender",
     child: (
       <AudiencePercentages
         data={data}

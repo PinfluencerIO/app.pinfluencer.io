@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { ImageBox } from "../../presentation/image/ImageBox";
 import { ImageUpload } from "../../presentation/image/ImageUpload";
 
 export const BrandHeader = ({
@@ -9,15 +10,7 @@ export const BrandHeader = ({
   view,
 }) => {
   return view ? (
-    <Box
-      sx={{
-        minHeight: "200px",
-        border: "1px solid",
-        borderRadius: "5px",
-        background: "url(" + data[id] + ") center center no-repeat",
-        backgroundSize: "cover",
-      }}
-    ></Box>
+    <ImageBox imageSrc={data[id]} />
   ) : (
     <Box component="form" noValidate autoComplete="off">
       <ImageUpload

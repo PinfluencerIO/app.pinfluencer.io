@@ -1,10 +1,10 @@
 import React from "react";
 import { audienceAges, audienceGenders } from "../../api/data";
 import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
-import { Image } from "../../components/displayTypes/Image";
 import { InfluencerDetails } from "../../components/displayTypes/InfluencerDetails";
 import { YourDetails } from "../../components/displayTypes/YourDetails";
 import { Categories } from "../../presentation/categories/Categories";
+import { Image } from "../../presentation/image/Image";
 import { Values } from "../../presentation/values/Values";
 import { ProfileCard } from "./ProfileCard";
 

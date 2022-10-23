@@ -1,49 +1,21 @@
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Avatar, Box } from "@mui/material";
-import { proposals } from "../api/data";
+import { Image } from "../presentation/image/Image";
 
 export const Dev = () => {
-  const text = {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
+  const data = {
+    image: "data:image/jpeg;base64,",
+  };
+  const handleChange = (event) => {
+    console.log("DEV: handle change", event);
   };
   return (
-    <Box display="flex" flex={1}>
-      <Box sx={{ flex: "1 0 100%" }}>
-        {proposals.map((p) => (
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "nowrap",
-              maxWidth: "600px",
-              alignItems: "center",
-              padding: "15px",
-              marginBottom: "10px",
-              marginRight: "20px",
-            }}
-            key={p.title}
-          >
-            <div style={{ whiteSpace: "nowrap", marginRight: "20px" }}>
-              <Avatar src={p.image} />
-            </div>
-            <div
-              style={{
-                minWidth: "100px",
-                overflow: "hidden",
-                flexGrow: 1,
-                marginRight: "20px",
-              }}
-            >
-              <div style={text}>{p.title}</div>
-              <div style={text}>{p.name}</div>
-            </div>
-            <div>
-              <MoreVertIcon />
-            </div>
-          </div>
-        ))}
-      </Box>
-    </Box>
+    <Image
+      id="image"
+      data={data}
+      handleChange={handleChange}
+      label="The Label"
+      sizeLabel="The size label"
+      width={200}
+      height={75}
+    />
   );
 };

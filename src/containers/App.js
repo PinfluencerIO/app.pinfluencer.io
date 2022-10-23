@@ -6,8 +6,6 @@ import "../aws/aws";
 import { AudiencePercentages } from "../components/displayTypes/AudiencePercentages";
 import { BrandDescription } from "../components/displayTypes/BrandDescription";
 import { BrandDetails } from "../components/displayTypes/BrandDetails";
-import { BrandHeader } from "../components/displayTypes/BrandHeader";
-import { Image } from "../components/displayTypes/Image";
 import { InfluencerDetails } from "../components/displayTypes/InfluencerDetails";
 import { YourDetails } from "../components/displayTypes/YourDetails";
 import UserContext from "../context/UserContext";
@@ -18,6 +16,7 @@ import { Profile } from "../pages/profile/Profile";
 import { ProfileEditPanel } from "../pages/profile/ProfileEditPanel";
 import { PublicView } from "../pages/profile/PublicView";
 import { Categories } from "../presentation/categories/Categories";
+import { Image } from "../presentation/image/Image";
 import Layout from "../presentation/layout/Layout";
 import { ProposalEditPanel } from "../presentation/proposal/ProposalEditPanel";
 import { ProposalStep1 } from "../presentation/proposal/ProposalStep1";
@@ -241,12 +240,7 @@ function App() {
           element={
             <ProfileEditPanel title="Brand Logo" type={userType(user)}>
               {(data, handleChange) => (
-                <Image
-                  id="logo"
-                  data={data}
-                  sx={{ mx: 1 }}
-                  handleChange={handleChange}
-                />
+                <Image id="logo" data={data} handleChange={handleChange} />
               )}
             </ProfileEditPanel>
           }
@@ -259,7 +253,6 @@ function App() {
                 <Image
                   id="image"
                   data={data}
-                  sx={{ mx: 1 }}
                   handleChange={handleChange}
                   label="Profile Picture"
                 />
@@ -272,10 +265,15 @@ function App() {
           element={
             <ProfileEditPanel title="Brand Header" type={userType(user)}>
               {(data, handleChange) => (
-                <BrandHeader
+                // <BrandHeader
+                //   id="headerImage"
+                //   data={data}
+                //   sx={{ mx: 1 }}
+                //   handleChange={handleChange}
+                // />
+                <Image
                   id="headerImage"
                   data={data}
-                  sx={{ mx: 1 }}
                   handleChange={handleChange}
                 />
               )}

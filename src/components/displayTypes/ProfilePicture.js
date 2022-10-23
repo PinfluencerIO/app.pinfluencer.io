@@ -1,20 +1,13 @@
 import { Box } from "@mui/material";
 import React from "react";
+import { ImageBox } from "../../presentation/image/ImageBox";
 import { ImageUpload } from "../../presentation/image/ImageUpload";
 
 export const ProfilePicture = ({ data, handleChange, id = "image", view }) => {
   return (
     <Box component="form" noValidate autoComplete="off">
       {view ? (
-        <Box
-          sx={{
-            minHeight: "200px",
-            border: "1px solid",
-            borderRadius: "5px",
-            background: "url(" + data[id] + ") center center no-repeat",
-            backgroundSize: "cover",
-          }}
-        ></Box>
+        <ImageBox imageSrc={data[id]} />
       ) : (
         <ImageUpload
           data={data}
