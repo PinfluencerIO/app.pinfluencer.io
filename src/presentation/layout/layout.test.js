@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 
 import { BrowserRouter } from "react-router-dom";
-import Layout from ".";
+import Layout from "../layout/Layout";
 import underTest from "../../test/underTest";
 
 test("should have nav main footer layout structure", async () => {

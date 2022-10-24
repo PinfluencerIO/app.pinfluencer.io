@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import "intersection-observer";
 import { BrowserRouter, HashRouter } from "react-router-dom";
-import Header from ".";
+import Header from "../header/Header";
 
 import underTest from "../../test/underTest";
 
