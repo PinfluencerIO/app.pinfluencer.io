@@ -25,12 +25,30 @@ export const brandSteps = (data, handleDataChange, handleListChange) => [
   },
   {
     label: "Brand Logo",
-    child: <Image data={data} handleChange={handleDataChange} id="logo" />,
+    child: (
+      <Image
+        data={data}
+        handleChange={handleDataChange}
+        id="logo"
+        width={170}
+        height={170}
+        label="Logo"
+        sizeLabel="Best 300 (w) x 300 (h) pixels"
+      />
+    ),
   },
   {
     label: "Brand Header",
     child: (
-      <Image data={data} handleChange={handleDataChange} id="headerImage" />
+      <Image
+        data={data}
+        handleChange={handleDataChange}
+        id="headerImage"
+        label={"Brand header image"}
+        sizeLabel={"1100 (w) x 200 (h) pixels"}
+        width={250}
+        height={130}
+      />
     ),
   },
   {
@@ -57,7 +75,17 @@ export const influencerSteps = (data, handleDataChange, handleListChange) => [
   },
   {
     label: "Picture",
-    child: <Image data={data} handleChange={handleDataChange} id="image" />,
+    child: (
+      <Image
+        data={data}
+        handleChange={handleDataChange}
+        id="image"
+        label="Profile Picture"
+        width={170}
+        height={170}
+        sizeLabel="Best 300 (w) x 300 (h) pixels"
+      />
+    ),
   },
   {
     label: "Audience Age",

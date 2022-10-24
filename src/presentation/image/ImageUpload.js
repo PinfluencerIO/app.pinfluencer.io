@@ -36,7 +36,7 @@ export const ImageUpload = ({
             spacing={1}
             sx={{ alignItems: "center", display: imageSrc ? "none" : "block" }}
           >
-            <FileUploadIcon sx={{ fontSize: "5rem" }} />
+            <FileUploadIcon sx={{ fontSize: "4rem" }} />
             <Typography component="p">{label}</Typography>
             <Typography component="p">{sizeLabel}</Typography>
           </Stack>

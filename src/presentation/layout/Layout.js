@@ -2,9 +2,9 @@ import React from "react";
 
 import { Outlet } from "react-router";
 
-import { Footer } from "../../components/layout/Footer";
-import { MainSection } from "../../components/layout/MainSection";
 import Header from "../header/Header";
+import Footer from "./Footer";
+import MainSection from "./MainSection";
 
 export default function Layout({
   isAuthenticated,
@@ -25,7 +25,12 @@ export default function Layout({
         signout={signout}
       />
       {/* Large top margin on MainSection to compensate for Nav menu */}
-      <MainSection flex="1" p={2} mt={isAuthenticated ? 12 : 8}>
+      <MainSection
+        flex="1"
+        p={2}
+        margin={`${isAuthenticated ? 12 : 8}px auto 8px`}
+        mt={isAuthenticated ? 12 : 8}
+      >
         <Outlet />
       </MainSection>
       <Footer flexShrink={0} p={2} />

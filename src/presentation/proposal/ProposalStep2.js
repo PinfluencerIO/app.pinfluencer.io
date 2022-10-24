@@ -17,7 +17,15 @@ export const ProposalStep2 = ({ data, handleChange, view, id }) => {
           onChange={(event) => handleChange(event)}
           sx={{ mb: 3 }}
         />
-        <Image id={id} data={data} handleChange={handleChange} />
+        <Image
+          id={id}
+          data={data}
+          handleChange={handleChange}
+          label="Product Image"
+          width={170}
+          height={170}
+          sizeLabel="Best 300 (w) x 300 (h) pixels"
+        />
       </FormControl>
     </Box>
   );

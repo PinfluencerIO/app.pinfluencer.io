@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 
-export const MainSection = (props) => {
+const MainSection = (props) => {
   const { children } = props;
   return (
     <Box component="main" {...props}>
@@ -9,3 +9,4 @@ export const MainSection = (props) => {
     </Box>
   );
 };
+export default MainSection;

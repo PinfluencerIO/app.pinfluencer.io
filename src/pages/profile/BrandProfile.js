@@ -23,11 +23,27 @@ export const BrandProfile = ({ data }) => {
       </ProfileCard>
 
       <ProfileCard title="Brand Logo">
-        <Image data={data} id="logo" view />
+        <Image
+          data={data}
+          id="logo"
+          view
+          width={170}
+          height={170}
+          label="Logo"
+          sizeLabel="Best 300 (w) x 300 (h) pixels"
+        />
       </ProfileCard>
 
       <ProfileCard title="Brand Header">
-        <Image data={data} id="headerImage" view />
+        <Image
+          data={data}
+          id="headerImage"
+          view
+          label={"Brand header image"}
+          sizeLabel={"1100 (w) x 200 (h) pixels"}
+          width={250}
+          height={130}
+        />
       </ProfileCard>
 
       <ProfileCard title="Values">

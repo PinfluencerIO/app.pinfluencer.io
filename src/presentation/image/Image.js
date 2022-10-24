@@ -43,4 +43,3 @@ export const Image = (props) => {
     </Box>
   );
 };
-//Best 300 (w) x 300 (h) pixels

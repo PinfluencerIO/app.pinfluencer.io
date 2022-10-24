@@ -240,7 +240,15 @@ function App() {
           element={
             <ProfileEditPanel title="Brand Logo" type={userType(user)}>
               {(data, handleChange) => (
-                <Image id="logo" data={data} handleChange={handleChange} />
+                <Image
+                  id="logo"
+                  data={data}
+                  handleChange={handleChange}
+                  width={170}
+                  height={170}
+                  label="Logo"
+                  sizeLabel="Best 300 (w) x 300 (h) pixels"
+                />
               )}
             </ProfileEditPanel>
           }
@@ -255,6 +263,9 @@ function App() {
                   data={data}
                   handleChange={handleChange}
                   label="Profile Picture"
+                  width={170}
+                  height={170}
+                  sizeLabel="Best 300 (w) x 300 (h) pixels"
                 />
               )}
             </ProfileEditPanel>
@@ -265,16 +276,14 @@ function App() {
           element={
             <ProfileEditPanel title="Brand Header" type={userType(user)}>
               {(data, handleChange) => (
-                // <BrandHeader
-                //   id="headerImage"
-                //   data={data}
-                //   sx={{ mx: 1 }}
-                //   handleChange={handleChange}
-                // />
                 <Image
                   id="headerImage"
                   data={data}
                   handleChange={handleChange}
+                  label={"Brand header image"}
+                  sizeLabel={"1100 (w) x 200 (h) pixels"}
+                  width={250}
+                  height={130}
                 />
               )}
             </ProfileEditPanel>

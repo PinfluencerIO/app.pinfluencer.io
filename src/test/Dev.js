@@ -15,7 +15,7 @@ export const Dev = () => {
       label="The Label"
       sizeLabel="The size label"
       width={200}
-      height={75}
+      height={200}
     />
   );
 };

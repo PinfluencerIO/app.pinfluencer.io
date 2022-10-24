@@ -19,8 +19,16 @@ export const InfluencerProfile = ({ data }) => {
         <InfluencerDetails data={data} view />
       </ProfileCard>
 
-      <ProfileCard title="Images">
-        <Image data={data} view id="image" />
+      <ProfileCard title="Profile Image">
+        <Image
+          data={data}
+          view
+          id="image"
+          label="Profile Picture"
+          width={170}
+          height={170}
+          sizeLabel="Best 300 (w) x 300 (h) pixels"
+        />
       </ProfileCard>
 
       <ProfileCard title="Audience Age Details">
