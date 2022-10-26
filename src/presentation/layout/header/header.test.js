@@ -4,7 +4,7 @@ import "intersection-observer";
 import { BrowserRouter, HashRouter } from "react-router-dom";
 import Header from "../header/Header";
 
-import underTest from "../../test/underTest";
+import underTest from "../../../test/underTest";
 
 test("should display onboarding nav when authenticated user has not completed onboarding", () => {
   render(

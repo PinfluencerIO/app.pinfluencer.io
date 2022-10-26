@@ -1,10 +1,10 @@
 import React from "react";
-import { BrandDescription } from "../../components/displayTypes/BrandDescription";
-import { BrandDetails } from "../../components/displayTypes/BrandDetails";
-import { YourDetails } from "../../components/displayTypes/YourDetails";
+import { BrandDescription } from "../../presentation/BrandDescription";
+import { BrandDetails } from "../../presentation/BrandDetails";
 import { Categories } from "../../presentation/categories/Categories";
 import { Image } from "../../presentation/image/Image";
 import { Values } from "../../presentation/values/Values";
+import { YourDetails } from "../../presentation/YourDetails";
 import { ProfileCard } from "./ProfileCard";
 
 export const BrandProfile = ({ data }) => {

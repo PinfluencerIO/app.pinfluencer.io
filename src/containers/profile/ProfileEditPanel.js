@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { getBrand, updateBrand } from "../../api/brandApi";
 import { getInfluencer, updateInfluencer } from "../../api/influencerApi";
-import { BackLink } from "../../components/displayTypes/BackLink";
+import { BackLink } from "../../presentation/BackLink";
 import { typeSwitch } from "./typeSwitch";
 
 export const ProfileEditPanel = ({ title, type, children }) => {

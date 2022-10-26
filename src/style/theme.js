@@ -3,18 +3,6 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 function createFontFamily(fontFamily) {
   return {
     fontFamily,
-    // [baseTheme.breakpoints.down("sm")]: {
-    //   fontSize: 16,
-    // },
-    // [baseTheme.breakpoints.up("sm")]: {
-    //   fontSize: 18,
-    // },
-    // [baseTheme.breakpoints.up("md")]: {
-    //   fontSize: 20,
-    // },
-    // [baseTheme.breakpoints.up("lg")]: {
-    //   fontSize: 24,
-    // },
     h1: { fontFamily },
     h2: { fontFamily },
     h3: { fontFamily },
@@ -33,41 +21,22 @@ function createFontFamily(fontFamily) {
 
 const baseTheme = createTheme();
 const customTheme = createTheme(baseTheme, {
-  typography: createFontFamily(["Comfortaa", "Arial", "sans-serif"]),
+  typography: createFontFamily("Comfortaa, Arial, sans-serif"),
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        body: {
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-        },
+        body: {},
         "& #root": {
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
+          minWidth: "320px",
+          maxWidth: "1024px",
+          margin: "0 auto",
+          padding: 0,
         },
         html: {
-          height: "100%",
-        },
-      },
-    },
-    MuiTabs: {
-      styleOverrides: {
-        root: {
-          "& button": {
-            // [baseTheme.breakpoints.up("sm")]: {
-            //   minWidth: "90px",
-            // },
-            // [baseTheme.breakpoints.only("sm")]: {
-            //   minWidth: "80px",
-            //   fontSize: "small",
-            // },
-            // [baseTheme.breakpoints.only("xs")]: {
-            //   minWidth: "50px",
-            //   fontSize: "x-small",
-            // },
-          },
+          minWidth: "320px",
+          maxWidth: "1024px",
+          margin: "0 auto",
+          padding: 0,
         },
       },
     },

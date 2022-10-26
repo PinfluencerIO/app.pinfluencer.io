@@ -1,7 +1,7 @@
 import LanguageIcon from "@mui/icons-material/Language";
 import { Box, Paper, Stack, Typography } from "@mui/material";
 import React from "react";
-import { BackLink } from "../../components/displayTypes/BackLink";
+import { BackLink } from "../../presentation/BackLink";
 import { Categories } from "../../presentation/categories/Categories";
 import { Values } from "../../presentation/values/Values";
 

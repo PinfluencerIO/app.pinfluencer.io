@@ -11,11 +11,11 @@ import PropTypes from "prop-types";
 import LoginIcon from "@mui/icons-material/Login";
 import React from "react";
 import { useLocation, useNavigate } from "react-router";
-import { HorizontalNavigation } from "../../components/layout/header/HorizontalNavigation";
-import { InitialsAvatar } from "../../components/layout/header/InitialsAvatar";
-import { OnboardingHorizontalNavigation } from "../../components/layout/header/OnboardingHorizontalNavigation";
-import IconMenu from "../iconMenu/IconMenu";
-import LinkedToolTip from "../tooltipLink/TooltipLink";
+import IconMenu from "../../iconMenu/IconMenu";
+import LinkedToolTip from "../../tooltipLink/TooltipLink";
+import HorizontalNavigation from "./HorizontalNavigation";
+import InitialsAvatar from "./InitialsAvatar";
+import OnboardingHorizontalNavigation from "./OnboardingHorizontalNavigation";
 
 export default function Header(props) {
   const nav = useNavigate();
@@ -48,8 +48,13 @@ export default function Header(props) {
     <ElevationScroll {...props}>
       <AppBar role="navigation" component="nav">
         <Toolbar
+          disableGutters
           sx={{
+            maxWidth: 1024,
+            margin: "0 auto",
+            width: "100%",
             display: "flex",
+            paddingX: 2,
           }}
         >
           <LinkedToolTip
@@ -106,7 +111,7 @@ function getNavForOnboardedUsers(userType, location) {
     }
   });
 
-  return showMenu && <HorizontalNavigation userType={userType} />;
+  return showMenu && <HorizontalNavigation />;
 }
 
 function ElevationScroll(props) {
@@ -123,6 +128,7 @@ function ElevationScroll(props) {
       borderBottom: (theme) =>
         trigger ? "" : "1px solid " + theme.palette.divider,
       color: (theme) => theme.palette.primary.main,
+      position: "sticky",
     },
     elevation: trigger ? 1 : 0,
   });

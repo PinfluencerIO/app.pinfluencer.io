@@ -2,7 +2,7 @@ import { Avatar, Typography } from "@mui/material";
 import React from "react";
 import { getBrand } from "../../../api/brandApi";
 
-export const InitialsAvatar = ({ user }) => {
+const InitialsAvatar = ({ user }) => {
   const widthAndHeight = { width: 30, height: 30 };
 
   const [avatar, setAvatar] = React.useState();
@@ -47,3 +47,5 @@ function stringAvatar(name) {
     ),
   };
 }
+
+export default InitialsAvatar;

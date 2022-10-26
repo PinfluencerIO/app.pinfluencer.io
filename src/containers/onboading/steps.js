@@ -1,10 +1,10 @@
-import { BrandDescription } from "../../components/displayTypes/BrandDescription";
+import { BrandDescription } from "../../presentation/BrandDescription";
 
 import { audienceAges, audienceGenders } from "../../api/data";
-import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
-import { BrandDetails } from "../../components/displayTypes/BrandDetails";
-import { InfluencerDetails } from "../../components/displayTypes/InfluencerDetails";
-import { YourDetails } from "../../components/displayTypes/YourDetails";
+import { AudiencePercentages } from "../../presentation/AudiencePercentages";
+import { BrandDetails } from "../../presentation/BrandDetails";
+import { InfluencerDetails } from "../../presentation/InfluencerDetails";
+import { YourDetails } from "../../presentation/YourDetails";
 import { Categories } from "../../presentation/categories/Categories";
 import { Image } from "../../presentation/image/Image";
 import { Values } from "../../presentation/values/Values";

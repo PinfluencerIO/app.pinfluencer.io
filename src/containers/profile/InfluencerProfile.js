@@ -1,11 +1,11 @@
 import React from "react";
 import { audienceAges, audienceGenders } from "../../api/data";
-import { AudiencePercentages } from "../../components/displayTypes/AudiencePercentages";
-import { InfluencerDetails } from "../../components/displayTypes/InfluencerDetails";
-import { YourDetails } from "../../components/displayTypes/YourDetails";
+import { AudiencePercentages } from "../../presentation/AudiencePercentages";
 import { Categories } from "../../presentation/categories/Categories";
 import { Image } from "../../presentation/image/Image";
+import { InfluencerDetails } from "../../presentation/InfluencerDetails";
 import { Values } from "../../presentation/values/Values";
+import { YourDetails } from "../../presentation/YourDetails";
 import { ProfileCard } from "./ProfileCard";
 
 export const InfluencerProfile = ({ data }) => {

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import "intersection-observer";
 import { BrowserRouter } from "react-router-dom";
 import underTest from "../../../test/underTest";
-import { HorizontalNavigation } from "./HorizontalNavigation";
+import HorizontalNavigation from "./HorizontalNavigation";
 
 test("brands should have dashboard, campiagns and collaborations", () => {
   render(
@@ -13,7 +13,7 @@ test("brands should have dashboard, campiagns and collaborations", () => {
         email: "email@domain.tld",
         "custom:usertype": "brand",
       },
-      <HorizontalNavigation userType="brand" />
+      <HorizontalNavigation />
     ),
     { wrapper: BrowserRouter }
   );

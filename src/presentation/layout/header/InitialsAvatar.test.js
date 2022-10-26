@@ -4,7 +4,7 @@ import { rest } from "msw";
 import { setupServer } from "msw/node";
 import React from "react";
 import { remote } from "../../../api/api";
-import { InitialsAvatar } from "./InitialsAvatar";
+import InitialsAvatar from "./InitialsAvatar";
 
 const server = setupServer(
   rest.get(`/${remote}/brands/me`, (req, res, ctx) => {

@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate, useParams } from "react-router";
 import { proposals } from "../../api/data";
-import { BackLink } from "../../components/displayTypes/BackLink";
+import { BackLink } from "../../presentation/BackLink";
 
 export const ProposalEditPanel = ({ title, children }) => {
   const nav = useNavigate();
