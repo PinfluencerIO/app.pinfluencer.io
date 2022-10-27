@@ -15,7 +15,7 @@ export const Categories = ({ data, handleChange, view }) => {
     );
   };
   return (
-    <Grid container spacing={1} marginTop={2}>
+    <Grid container spacing={1} margin="0 auto 0">
       {view
         ? data.categories.map((c) => {
             return renderChip(c);

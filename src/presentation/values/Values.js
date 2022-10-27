@@ -15,7 +15,7 @@ export const Values = ({ data, handleChange, view }) => {
     );
   };
   return (
-    <Grid container spacing={1} marginTop={2}>
+    <Grid container spacing={1} margin="0 auto 0">
       {view
         ? data.values.map((v) => {
             return renderChip(v);
