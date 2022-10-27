@@ -1,6 +1,6 @@
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import Box from "@mui/material/Box";
+import { Box, Paper } from "@mui/material";
 import Button from "@mui/material/Button";
 import MUIMobileStepper from "@mui/material/MobileStepper";
 import { useTheme } from "@mui/material/styles";
@@ -28,28 +28,26 @@ export function MobileStepper({
   };
 
   return (
-    <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          height: 50,
-          bgcolor: "background.default",
-          px: 2.5,
-        }}
+    <Paper
+      variant="outlined"
+      sx={{
+        margin: "0 auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        maxWidth: "600px",
+        height: "450px",
+        p: 2,
+      }}
+    >
+      <Typography
+        variant="h5"
+        sx={{ margin: "0 auto 48px", border: "0px pink solid" }}
       >
-        <Typography>{step(activeStep).label}</Typography>
-      </Box>
-      <Box
-        sx={{
-          height: 270,
-          maxWidth: 450,
-          width: "100%",
-          px: 2.5,
-        }}
-      >
-        {step(activeStep).child}
-      </Box>
+        {step(activeStep).label}
+      </Typography>
+      {step(activeStep).child}
+      <Box sx={{ flexGrow: 1 }}></Box>
       <MUIMobileStepper
         variant="progress"
         steps={maxSteps}
@@ -75,10 +73,7 @@ export function MobileStepper({
             Back
           </Button>
         }
-        sx={{
-          "& .MuiLinearProgress-root": { width: "44%" },
-        }}
       />
-    </Box>
+    </Paper>
   );
 }

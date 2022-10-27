@@ -69,12 +69,15 @@ export const OnboardingSteps = ({ onboard, user }) => {
       };
     });
   };
+
   const stepsForBrand = brandSteps(data, handleDataChange, handleListChange);
+
   const stepsForInfluencers = influencerSteps(
     data,
     handleDataChange,
     handleListChange
   );
+
   const step = () => {
     if (activeStep === 0) {
       return {
@@ -99,7 +102,7 @@ export const OnboardingSteps = ({ onboard, user }) => {
       });
     return;
   };
-  // This object will come into play when mobile AND full is completed
+
   return (
     <MobileStepper
       step={step}

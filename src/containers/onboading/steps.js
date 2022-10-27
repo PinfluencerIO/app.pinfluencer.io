@@ -1,13 +1,14 @@
 import { BrandDescription } from "../../presentation/BrandDescription";
 
+import { Box } from "@mui/material";
 import { audienceAges, audienceGenders } from "../../api/data";
 import { AudiencePercentages } from "../../presentation/AudiencePercentages";
 import { BrandDetails } from "../../presentation/BrandDetails";
-import { InfluencerDetails } from "../../presentation/InfluencerDetails";
-import { YourDetails } from "../../presentation/YourDetails";
 import { Categories } from "../../presentation/categories/Categories";
 import { Image } from "../../presentation/image/Image";
+import { InfluencerDetails } from "../../presentation/InfluencerDetails";
 import { Values } from "../../presentation/values/Values";
+import { YourDetails } from "../../presentation/YourDetails";
 import { InfluencerBio } from "./InfluencerBio";
 
 export const brandSteps = (data, handleDataChange, handleListChange) => [
@@ -30,8 +31,6 @@ export const brandSteps = (data, handleDataChange, handleListChange) => [
         data={data}
         handleChange={handleDataChange}
         id="logo"
-        width={170}
-        height={170}
         label="Logo"
         sizeLabel="Best 300 (w) x 300 (h) pixels"
       />
@@ -46,18 +45,26 @@ export const brandSteps = (data, handleDataChange, handleListChange) => [
         id="headerImage"
         label={"Brand header image"}
         sizeLabel={"1100 (w) x 200 (h) pixels"}
-        width={250}
-        height={130}
+        width={350}
+        height={140}
       />
     ),
   },
   {
     label: "Values",
-    child: <Values data={data} handleChange={handleListChange} />,
+    child: (
+      <Box sx={{ border: "0px solid", paddingLeft: 3.5 }}>
+        <Values data={data} handleChange={handleListChange} />
+      </Box>
+    ),
   },
   {
     label: "Categories",
-    child: <Categories data={data} handleChange={handleListChange} />,
+    child: (
+      <Box sx={{ border: "0px solid", paddingLeft: 3.5 }}>
+        <Categories data={data} handleChange={handleListChange} />
+      </Box>
+    ),
   },
 ];
 export const influencerSteps = (data, handleDataChange, handleListChange) => [
@@ -90,21 +97,25 @@ export const influencerSteps = (data, handleDataChange, handleListChange) => [
   {
     label: "Audience Age",
     child: (
-      <AudiencePercentages
-        data={data}
-        handleChange={handleDataChange}
-        collection={audienceAges}
-      />
+      <Box sx={{ m: "0 auto" }}>
+        <AudiencePercentages
+          data={data}
+          handleChange={handleDataChange}
+          collection={audienceAges}
+        />
+      </Box>
     ),
   },
   {
     label: "Audience Gender",
     child: (
-      <AudiencePercentages
-        data={data}
-        handleChange={handleDataChange}
-        collection={audienceGenders}
-      />
+      <Box sx={{ m: "0 auto" }}>
+        <AudiencePercentages
+          data={data}
+          handleChange={handleDataChange}
+          collection={audienceGenders}
+        />
+      </Box>
     ),
   },
   {

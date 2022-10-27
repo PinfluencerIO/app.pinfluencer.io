@@ -28,9 +28,9 @@ export function AudiencePercentages({ collection, data, handleChange }) {
   };
 
   return (
-    <Grid container spacing={1} rowGap={1} justifyContent="space-between">
+    <Grid container spacing={3} rowGap={1}>
       {collection.map((audience) => (
-        <Grid item key={audience.id} xs={6}>
+        <Grid item key={audience.id}>
           <FormControl
             sx={{
               width: 120,
