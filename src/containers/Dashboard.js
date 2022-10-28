@@ -34,7 +34,7 @@ export const Dashboard = () => {
     textOverflow: "ellipsis",
   };
   return (
-    <Stack rowGap={2} maxWidth={700}>
+    <Stack rowGap={2}>
       <Typography variant="body1">
         Hi {user.given_name} - This is where details of what is going on with
         your Pinfluencer account. Widgets with metrics and all that good stuff.
@@ -51,8 +51,6 @@ export const Dashboard = () => {
             <div
               style={{
                 display: "flex",
-                // flexWrap: "nowrap",
-                // maxWidth: "600px",
                 alignItems: "flex-start",
                 marginTop: "10px",
                 justifyContent: "space-between",

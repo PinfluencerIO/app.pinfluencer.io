@@ -11,15 +11,15 @@ import PropTypes from "prop-types";
 import LoginIcon from "@mui/icons-material/Login";
 import React from "react";
 import { useLocation, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import IconMenu from "../../iconMenu/IconMenu";
-import LinkedToolTip from "../../tooltipLink/TooltipLink";
 import HorizontalNavigation from "./HorizontalNavigation";
 import InitialsAvatar from "./InitialsAvatar";
 import OnboardingHorizontalNavigation from "./OnboardingHorizontalNavigation";
 
 export default function Header(props) {
-  const nav = useNavigate();
   const theme = useTheme();
+  const nav = useNavigate();
   const location = useLocation();
   const { isOnboarded, userType, isAuthenticated, user, signin, signout } =
     props;
@@ -50,25 +50,28 @@ export default function Header(props) {
         <Toolbar
           disableGutters
           sx={{
-            maxWidth: 1024,
+            maxWidth: (theme) => {
+              theme.maxWidth;
+            },
             margin: "0 auto",
             width: "100%",
             display: "flex",
             paddingX: 2,
           }}
         >
-          <LinkedToolTip
-            title="Home"
-            route="/"
+          <Link
+            to="/"
             style={{
               textDecoration: "none",
               color: theme.palette.primary.main,
             }}
+            role="link"
+            title="Home"
           >
             <Typography variant="h6" component="div">
               Pinfluencer
             </Typography>
-          </LinkedToolTip>
+          </Link>
           <Box flex={1}></Box> {/**GapBox*/}
           <IconMenu
             icon={user ? <InitialsAvatar user={user} /> : <LoginIcon />}

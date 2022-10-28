@@ -18,7 +18,7 @@ function createFontFamily(fontFamily) {
     overline: { fontFamily },
   };
 }
-
+const maxWidth = 900;
 const baseTheme = createTheme();
 const customTheme = createTheme(baseTheme, {
   typography: createFontFamily("Comfortaa, Arial, sans-serif"),
@@ -28,13 +28,13 @@ const customTheme = createTheme(baseTheme, {
         body: {},
         "& #root": {
           minWidth: "320px",
-          maxWidth: "1024px",
+          maxWidth: maxWidth,
           margin: "0 auto",
           padding: 0,
         },
         html: {
           minWidth: "320px",
-          maxWidth: "1024px",
+          maxWidth: maxWidth,
           margin: "0 auto",
           padding: 0,
         },
@@ -50,7 +50,7 @@ const customTheme = createTheme(baseTheme, {
       main: "#6DA66A",
     },
   },
-  drawerWidth: 197,
+  maxWidth: maxWidth,
 });
 
 const pinfluencerTheme = responsiveFontSizes(customTheme);

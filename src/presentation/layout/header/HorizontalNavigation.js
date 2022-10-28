@@ -13,7 +13,7 @@ const HorizontalNavigation = () => {
     <Box display="flex">
       <Box
         px={2}
-        sx={{ width: "fit-content" }}
+        sx={{ width: "fit-content", cursor: "pointer" }}
         onClick={() => nav("dashboard")}
       >
         Dashboard
@@ -40,7 +40,7 @@ const HorizontalNavigation = () => {
       </Box>
       <Box
         px={2}
-        sx={{ width: "fit-content" }}
+        sx={{ width: "fit-content", cursor: "pointer" }}
         onClick={() => nav("collaborations")}
       >
         Collaborations
