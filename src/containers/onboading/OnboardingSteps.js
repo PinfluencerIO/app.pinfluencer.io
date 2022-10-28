@@ -15,6 +15,7 @@ export const OnboardingSteps = ({ onboard, user }) => {
     familyName: user.family_name,
     email: user.email,
     brandName: "",
+    brandDescription: "",
     instaHandle: "",
     website: "",
     address: "",
@@ -29,8 +30,8 @@ export const OnboardingSteps = ({ onboard, user }) => {
     audienceAge65PlusSplit: 0,
     audienceFemaleSplit: 0,
     audienceMaleSplit: 0,
-    brandLogo: "",
-    brandHeader: "",
+    brandLogo: undefined,
+    brandHeader: undefined,
     values: [],
     categories: [],
   });
@@ -84,6 +85,8 @@ export const OnboardingSteps = ({ onboard, user }) => {
     function defineFeedback(data, activeStep) {
       if (activeStep === 0 && type === "") {
         setFeedback("A type is required");
+        setDisabledNext(true);
+
         return;
       }
       if (
@@ -96,8 +99,19 @@ export const OnboardingSteps = ({ onboard, user }) => {
         return;
       }
 
-      if (activeStep === 2 && (!data.instaHandle || !data.address)) {
+      if (
+        activeStep === 2 &&
+        type === "influencer" &&
+        (!data.instaHandle || !data.address)
+      ) {
         setFeedback("Instagram and Address are required");
+        setDisabledNext(true);
+
+        return;
+      }
+
+      if (activeStep === 2 && type === "brand" && !data.brandName) {
+        setFeedback("Brand name is required");
         setDisabledNext(true);
 
         return;
@@ -105,6 +119,13 @@ export const OnboardingSteps = ({ onboard, user }) => {
 
       if (activeStep === 3 && type === "influencer" && !data.bio) {
         setFeedback("A nice bio is required");
+        setDisabledNext(true);
+
+        return;
+      }
+
+      if (activeStep === 3 && type === "brand" && !data.brandDescription) {
+        setFeedback("Brand description is required");
         setDisabledNext(true);
 
         return;

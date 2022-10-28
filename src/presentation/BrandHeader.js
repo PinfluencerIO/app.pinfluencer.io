@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
-import { ImageBox } from "../../presentation/image/ImageBox";
-import { ImageUpload } from "../../presentation/image/ImageUpload";
+import { ImageBox } from "./image/ImageBox";
+import { ImageUpload } from "./image/ImageUpload";
 
 export const BrandHeader = ({
   data,

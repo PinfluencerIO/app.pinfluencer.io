@@ -15,6 +15,7 @@ export const Image = ({
   margin = "0 auto",
 }) => {
   if (!id) return "id is required";
+  console.log("id", id);
 
   return (
     <Box autoComplete="off">

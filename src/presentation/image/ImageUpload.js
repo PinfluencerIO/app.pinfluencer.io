@@ -3,6 +3,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 import { IconButton, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { ImageBox } from "./ImageBox";
 export const ImageUpload = ({
   data,
@@ -15,8 +16,14 @@ export const ImageUpload = ({
   height,
   margin,
 }) => {
+  console.log({ data });
   const [msg, setMsg] = React.useState("");
-  const [imageSrc, setImageSrc] = useState(data[elementId]);
+  const [imageSrc, setImageSrc] = useState(undefined);
+
+  useEffect(() => {
+    setImageSrc(data[elementId]);
+  }, [data, elementId]);
+
   return (
     <Stack>
       <IconButton

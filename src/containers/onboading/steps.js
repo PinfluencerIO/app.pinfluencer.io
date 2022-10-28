@@ -30,7 +30,7 @@ export const brandSteps = (data, handleDataChange, handleListChange) => [
       <Image
         data={data}
         handleChange={handleDataChange}
-        id="logo"
+        id="brandLogo"
         label="Logo"
         sizeLabel="Best 300 (w) x 300 (h) pixels"
       />
