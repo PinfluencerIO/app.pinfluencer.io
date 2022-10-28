@@ -22,7 +22,6 @@ export const ImageUpload = ({
       <IconButton
         disableRipple={true}
         onClick={() => {
-          console.log(document.getElementById(elementId));
           document.getElementById(elementId).click();
         }}
         aria-label="upload"
@@ -53,7 +52,6 @@ export const ImageUpload = ({
         aria-label="delete image"
         color="error"
         onClick={() => {
-          console.log("onClick", document.getElementById(elementId).value);
           document.getElementById(elementId).value = null;
           handleChange({ target: { name: elementId, value: null } });
           setImageSrc(null);
@@ -89,7 +87,6 @@ export const ImageUpload = ({
     const file = document.getElementById(elementId).files[0];
     if (file?.size > 2097152) {
       setMsg(tooLargeAlert);
-      console.log("Too large");
       document.getElementById(elementId).value = null;
       return;
     } else {

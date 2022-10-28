@@ -18,6 +18,7 @@ export const ProposalStep2 = ({ data, handleChange, view, id }) => {
           sx={{ mb: 3 }}
         />
         <Image
+          view={view}
           id={id}
           data={data}
           handleChange={handleChange}
