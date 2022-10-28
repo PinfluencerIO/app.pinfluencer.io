@@ -2,7 +2,7 @@ import { Image } from "../presentation/image/Image";
 
 export const Dev = () => {
   const data = {
-    image: "data:image/jpeg;base64,",
+    image: undefined,
   };
   const handleChange = (event) => {
     console.log("DEV: handle change", event);

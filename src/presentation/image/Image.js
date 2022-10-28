@@ -3,21 +3,18 @@ import React from "react";
 import { ImageBox } from "./ImageBox";
 import { ImageUpload } from "./ImageUpload";
 
-export const Image = (props) => {
-  const {
-    id,
-    data,
-    handleChange,
-    view,
-    label = "Not Set",
-    sizeLabel = "Not Set",
-    width = 200,
-    height = 200,
-    margin = "0  auto",
-  } = props;
+export const Image = ({
+  id,
+  data,
+  handleChange,
+  view,
+  label = "Not Set",
+  sizeLabel = "Not Set",
+  width = 200,
+  height = 200,
+  margin = "0 auto",
+}) => {
   if (!id) return "id is required";
-
-  console.log(props);
 
   return (
     <Box autoComplete="off">

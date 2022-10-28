@@ -13,6 +13,8 @@ export function MobileStepper({
   activeStep,
   setActiveStep,
   executeFinal,
+  disabledNext,
+  feedback,
 }) {
   const theme = useTheme();
 
@@ -54,7 +56,7 @@ export function MobileStepper({
         position="static"
         activeStep={activeStep}
         nextButton={
-          <Button size="small" onClick={handleNext}>
+          <Button size="small" onClick={handleNext} disabled={disabledNext}>
             {activeStep === maxSteps - 1 ? "Submit" : "Next"}
             {theme.direction === "rtl" ? (
               <KeyboardArrowLeft />
@@ -74,6 +76,9 @@ export function MobileStepper({
           </Button>
         }
       />
+      <Typography variant="subtitle1" sx={{ margin: "0 auto" }}>
+        {feedback}
+      </Typography>
     </Paper>
   );
 }

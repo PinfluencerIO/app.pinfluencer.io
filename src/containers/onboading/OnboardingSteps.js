@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { onboardingChain } from "../../api/onboarding";
 import { MobileStepper } from "../../presentation/stepper/MobileStepper";
@@ -7,7 +7,6 @@ import { UserType } from "./UserType";
 
 export const OnboardingSteps = ({ onboard, user }) => {
   const nav = useNavigate();
-
   const [maxSteps, setMaxSteps] = React.useState(9);
   const [type, setType] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(0);
@@ -20,7 +19,7 @@ export const OnboardingSteps = ({ onboard, user }) => {
     website: "",
     address: "",
     bio: "",
-    image: user.picture,
+    image: undefined,
     audienceAge13To17Split: 0,
     audienceAge18To24Split: 0,
     audienceAge25To34Split: 0,
@@ -35,6 +34,9 @@ export const OnboardingSteps = ({ onboard, user }) => {
     values: [],
     categories: [],
   });
+
+  const [feedback, setFeedback] = React.useState(null);
+  const [disabledNext, setDisabledNext] = React.useState(false);
 
   const handleChange = (event) => {
     setType(event.currentTarget.dataset.value);
@@ -78,6 +80,90 @@ export const OnboardingSteps = ({ onboard, user }) => {
     handleListChange
   );
 
+  useEffect(() => {
+    function defineFeedback(data, activeStep) {
+      if (activeStep === 0 && type === "") {
+        setFeedback("A type is required");
+        return;
+      }
+      if (
+        activeStep === 1 &&
+        (!data.familyName || !data.givenName || !data.email)
+      ) {
+        console.log("invalid step 1");
+        setFeedback("All fields are required");
+        setDisabledNext(true);
+        return;
+      }
+
+      if (activeStep === 2 && (!data.instaHandle || !data.address)) {
+        setFeedback("Instagram and Address are required");
+        setDisabledNext(true);
+
+        return;
+      }
+
+      if (activeStep === 3 && type === "influencer" && !data.bio) {
+        setFeedback("A nice bio is required");
+        setDisabledNext(true);
+
+        return;
+      }
+
+      if (activeStep === 4 && type === "influencer" && !data.image) {
+        setFeedback("A picture is required");
+        setDisabledNext(true);
+
+        return;
+      }
+      if (activeStep === 5 && type === "influencer" && !validAge(data)) {
+        setFeedback("Make sure it all adds up to 100 🙏");
+        setDisabledNext(true);
+
+        return;
+      }
+      if (activeStep === 6 && type === "influencer" && !validGenderData(data)) {
+        setFeedback("Make sure it all adds up to 100 👌");
+        setDisabledNext(true);
+
+        return;
+      }
+      if (
+        activeStep === 7 &&
+        type === "influencer" &&
+        !data.values.length > 0
+      ) {
+        setFeedback("Add all your important values");
+        setDisabledNext(true);
+
+        return;
+      }
+      if (
+        activeStep === 8 &&
+        type === "influencer" &&
+        data.categories.length == 0
+      ) {
+        setFeedback("Add all your categories");
+        setDisabledNext(true);
+
+        return;
+      }
+      if (
+        activeStep === 8 &&
+        type === "influencer" &&
+        data.categories.length > 0
+      ) {
+        setFeedback("When ready, submit your onboarding");
+        setDisabledNext(false);
+
+        return;
+      }
+      setFeedback("When ready, go to next step");
+      setDisabledNext(false);
+    }
+    defineFeedback(data, activeStep);
+  }, [type, data, activeStep]);
+
   const step = () => {
     if (activeStep === 0) {
       return {
@@ -91,18 +177,18 @@ export const OnboardingSteps = ({ onboard, user }) => {
       : stepsForInfluencers[activeStep - 1];
   };
 
-  const executeFinal = () => {
+  const executeFinal = async () => {
+    setFeedback("Processing...");
     cleanDataForType(data, type);
-    onboardingChain(data, type, onboard)
-      .then(() => {
-        nav("/dashboard");
-      })
-      .catch((err) => {
-        console.error("An error happened calling api", err);
-      });
-    return;
-  };
+    const response = await onboardingChain(data, type, onboard);
+    if (typeof response == "boolean") {
+      console.error("api return boolean not influencer object");
+      setFeedback("Sorry, something didn't work. Contact Pinfluencer 🙏");
+      return;
+    }
 
+    nav("/dashboard");
+  };
   return (
     <MobileStepper
       step={step}
@@ -110,6 +196,16 @@ export const OnboardingSteps = ({ onboard, user }) => {
       activeStep={activeStep}
       setActiveStep={setActiveStep}
       executeFinal={executeFinal}
+      disabledNext={disabledNext}
+      feedback={feedback}
     />
   );
+
+  function validAge(data) {
+    return data && true;
+  }
+
+  function validGenderData(data) {
+    return data && true;
+  }
 };

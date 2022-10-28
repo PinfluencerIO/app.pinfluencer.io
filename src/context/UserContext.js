@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from "react";
 import { Auth, Hub } from "aws-amplify";
+import { createContext, useEffect, useState } from "react";
 import { config } from "../aws/aws";
 
 // Initialise the User Context
@@ -38,7 +38,9 @@ export function UserProvider({ children }) {
       if (payload.event === "signIn") {
         console.log("SignIn event");
         Auth.currentUserPoolUser({ bypassCache: true }).then((u) => {
+          u.attributes["custom:usertype"] = "influencer"; // TODO REMOVE WHEN API IS FIXED
           setUser(u.attributes);
+          console.log("Current USER is FAKE");
         });
       }
       if (payload.event === "customOAuthState") {

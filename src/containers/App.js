@@ -44,21 +44,35 @@ function App() {
   }, [location]);
 
   useEffect(() => {
-    if (!isAuthenticated(user) && location.pathname !== "/") {
-      console.log(location);
-    } else if (
-      isAuthenticated(user) &&
-      !isOnboarded(user) &&
-      location.pathname !== "/onboarding"
-    ) {
-      nav("onboarding");
-    } else if (
-      isAuthenticated(user) &&
-      isOnboarded(user) &&
-      location.pathname === "/onboarding"
-    ) {
-      nav("/");
+    if (!user && location.pathname !== "/") {
+      if (location.pathname !== "/dev") {
+        console.log("go on then. redirect to root");
+        nav("/");
+        return;
+      }
     }
+
+    if (user && !isOnboarded(user) && location.pathname !== "/onboarding") {
+      nav("onboarding");
+    }
+    // console.log("Effect");
+    // if (!isAuthenticated(user) && location.pathname !== "/") {
+    //   console.log("User not auth and location not root");
+    //   nav("/#");
+    // } else if (
+    //   isAuthenticated(user) &&
+    //   !isOnboarded(user) &&
+    //   location.pathname !== "/onboarding"
+    // ) {
+    //   nav("onboarding");
+    // } else if (
+    //   isAuthenticated(user) &&
+    //   isOnboarded(user) &&
+    //   location.pathname === "/onboarding"
+    // ) {
+    //   console.log("default");
+    //   nav("/#");
+    // }
   }, [user, nav, location]);
 
   return (
