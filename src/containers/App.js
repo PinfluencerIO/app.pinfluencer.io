@@ -55,6 +55,14 @@ function App() {
     if (user && !isOnboarded(user) && location.pathname !== "/onboarding") {
       nav("onboarding");
     }
+
+    if (
+      user &&
+      isOnboarded(user) &&
+      location.pathname.toLowerCase() === "/onboarding"
+    ) {
+      nav("/");
+    }
     // console.log("Effect");
     // if (!isAuthenticated(user) && location.pathname !== "/") {
     //   console.log("User not auth and location not root");
