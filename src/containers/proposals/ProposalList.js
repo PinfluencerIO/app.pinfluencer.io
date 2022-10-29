@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Avatar, Box, IconButton, Paper, Typography } from "@mui/material";
 import React, { useEffect } from "react";
@@ -9,6 +10,7 @@ const text = {
   textOverflow: "ellipsis",
 };
 export const ProposalList = () => {
+  const theme = useTheme();
   const nav = useNavigate();
 
   const [proposals, setProposals] = React.useState([]);
@@ -22,7 +24,14 @@ export const ProposalList = () => {
   return (
     <Box>
       <Typography variant="body1">
-        Create a <Link to="/proposal/new">New Collaboration Proposal</Link>
+        Create a{" "}
+        <Link
+          to="/proposal/new"
+          title="new collaboration proposal"
+          style={{ color: theme.palette.primary.main }}
+        >
+          New Collaboration Proposal
+        </Link>
       </Typography>
       <Paper variant="outlined" sx={{ padding: 1 }}>
         <Typography variant="h5">Proposals ({proposals.length})</Typography>
