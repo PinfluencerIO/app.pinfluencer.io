@@ -49,7 +49,7 @@ export const ProfileEditPanel = ({ title, type, children }) => {
   if (!data) return "loading...";
 
   return (
-    <Stack rowGap={3} width="100%" mt={-5}>
+    <Stack rowGap={3} width="100%">
       <BackLink />
       <Typography variant="h5">{title}</Typography>
       {children(data, handleChange)}

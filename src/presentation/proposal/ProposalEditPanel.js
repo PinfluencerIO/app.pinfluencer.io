@@ -47,7 +47,7 @@ export const ProposalEditPanel = ({ title, children }) => {
   };
 
   return (
-    <Stack rowGap={3} width="100%" mt={-5}>
+    <Stack rowGap={3} width="100%">
       <BackLink />
       <Typography variant="h5">{title}</Typography>
       {children(data, handleChange)}

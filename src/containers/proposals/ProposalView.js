@@ -17,7 +17,7 @@ export const ProposalView = () => {
   })[0];
 
   return (
-    <Stack spacing={2} mt={-5}>
+    <Stack spacing={2} mt={0}>
       <BackLink />
 
       <ProfileCard title="Details" urlPrefix={`/proposal/edit/${params.id}/`}>

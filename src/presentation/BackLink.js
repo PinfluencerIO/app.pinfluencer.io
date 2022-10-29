@@ -11,7 +11,8 @@ export const BackLink = ({ backLocation = -1 }) => {
         onClick={() => {
           nav(backLocation);
         }}
-        sx={{ marginLeft: -1 }}
+        sx={{ marginLeft: -1, cursor: "pointer" }}
+        title="back"
       >
         ⬅ Back
       </Link>

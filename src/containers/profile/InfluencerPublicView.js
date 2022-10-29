@@ -7,7 +7,7 @@ import { Values } from "../../presentation/values/Values";
 
 export const InfluencerPublicView = ({ data }) => {
   return (
-    <Stack width="100%" rowGap={2} mt={-5}>
+    <Stack width="100%" rowGap={2}>
       <BackLink />
       <Box
         sx={{
