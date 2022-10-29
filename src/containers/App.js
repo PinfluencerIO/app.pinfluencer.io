@@ -25,9 +25,9 @@ import { YourDetails } from "../presentation/YourDetails";
 import { Dev } from "../test/Dev";
 import { Dashboard } from "./Dashboard";
 import HomePage from "./HomePage";
-import { NewCollaborationProposal } from "./NewCollaborationProposal";
 import { OnboardingSteps } from "./onboading/OnboardingSteps";
-import { ProposalView } from "./ProposalView";
+import { NewCollaborationProposal } from "./proposals/NewCollaborationProposal";
+import { ProposalView } from "./proposals/ProposalView";
 
 function App() {
   const { user, signin, signout, onboard } = useContext(UserContext);
