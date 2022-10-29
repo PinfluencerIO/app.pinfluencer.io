@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import { v4 as uuid } from "uuid";
 import { proposals } from "../../api/data";
+import { BackLink } from "../../presentation/BackLink";
 import { ProposalStep1 } from "../../presentation/proposal/ProposalStep1";
 import { ProposalStep2 } from "../../presentation/proposal/ProposalStep2";
 import { ProposalStep3 } from "../../presentation/proposal/ProposalStep3";
@@ -76,15 +77,18 @@ export const NewCollaborationProposal = () => {
   };
 
   return (
-    <MobileStepper
-      step={step}
-      maxSteps={4}
-      activeStep={activeStep}
-      setActiveStep={setActiveStep}
-      executeFinal={() => {
-        proposals.push(data);
-        nav("/dashboard");
-      }}
-    />
+    <>
+      <BackLink />
+      <MobileStepper
+        step={step}
+        maxSteps={4}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+        executeFinal={() => {
+          proposals.push(data);
+          nav("/dashboard");
+        }}
+      />
+    </>
   );
 };
