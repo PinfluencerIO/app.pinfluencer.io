@@ -1,7 +1,20 @@
-import { Box, FormControl, TextField } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
 import React from "react";
 
 export const ProposalStep1 = ({ data, handleChange, view }) => {
+  const updateYear = (event) => {
+    handleChange({ target: { name: "proposalMonth", value: "" } });
+    handleChange(event);
+  };
+
   return (
     <Box component="form" noValidate autoComplete="off">
       <FormControl fullWidth margin="none">
@@ -26,11 +39,96 @@ export const ProposalStep1 = ({ data, handleChange, view }) => {
           label="Creative Guidance"
           variant="standard"
           onChange={(event) => handleChange(event)}
-          sx={{ mb: 1 }}
+          sx={{ mb: 3 }}
           multiline
           rows={5}
         />
+        <Stack direction="row" gap={2}>
+          <FormControl fullWidth>
+            <InputLabel id="proposal-year-select-label">
+              Proposal Year
+            </InputLabel>
+            <Select
+              labelId="proposal-year-select-label"
+              id="proposal-year-select"
+              name={"proposalYear"}
+              value={data.proposalYear}
+              label="Proposal Year"
+              onChange={updateYear}
+            >
+              {getYears()}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel id="proposal-month-select-label">
+              Proposal Month
+            </InputLabel>
+            <Select
+              labelId="proposal-month-select-label"
+              id="proposal-month-select"
+              name={"proposalMonth"}
+              value={data.proposalMonth}
+              label="Proposal Month"
+              onChange={handleChange}
+            >
+              {getMonth(data.proposalYear)}
+            </Select>
+          </FormControl>
+        </Stack>
       </FormControl>
     </Box>
   );
 };
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+function getYears() {
+  const d = new Date();
+  const years = [];
+  const current = d.getFullYear();
+  years.push(
+    <MenuItem key={current} value={current}>
+      {current}
+    </MenuItem>
+  );
+  years.push(
+    <MenuItem key={current + 1} value={current + 1}>
+      {current + 1}
+    </MenuItem>
+  );
+
+  return years;
+}
+
+function getMonth(year) {
+  const d = new Date();
+  if (year === d.getFullYear()) {
+    const rest = months.slice(d.getMonth());
+    const result = rest.map((m) => (
+      <MenuItem key={m} value={m}>
+        {m}
+      </MenuItem>
+    ));
+    return result;
+  } else if (year === 2023) {
+    return months.map((m) => (
+      <MenuItem key={m} value={m}>
+        {m}
+      </MenuItem>
+    ));
+  } else {
+    return [];
+  }
+}

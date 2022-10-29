@@ -36,39 +36,41 @@ export const ProposalList = () => {
       <Paper variant="outlined" sx={{ padding: 1 }}>
         <Typography variant="h5">Proposals ({proposals.length})</Typography>
         <Box sx={{ overflow: "auto", height: "200px" }}>
-          {proposals.map((p) => (
-            <Box
-              key={p.id}
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                marginTop: "10px",
-                justifyContent: "space-between",
-                cursor: "pointer",
-              }}
-              onClick={() => handleClick(p)}
-            >
-              <Box style={{ whiteSpace: "nowrap", marginRight: "10px" }}>
-                <Avatar src={p.image} />
-              </Box>
+          {proposals
+            .sort((a, b) => Date.parse(b.created) - Date.parse(a.created))
+            .map((p) => (
               <Box
+                key={p.id}
                 style={{
-                  minWidth: "100px",
-                  overflow: "hidden",
-                  flexGrow: 2,
-                  marginRight: "10px",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  marginTop: "10px",
+                  justifyContent: "space-between",
+                  cursor: "pointer",
                 }}
+                onClick={() => handleClick(p)}
               >
-                <Box style={text}>{p.title}</Box>
-                <Box style={text}>{p.name}</Box>
+                <Box style={{ whiteSpace: "nowrap", marginRight: "10px" }}>
+                  <Avatar src={p.image} />
+                </Box>
+                <Box
+                  style={{
+                    minWidth: "100px",
+                    overflow: "hidden",
+                    flexGrow: 2,
+                    marginRight: "10px",
+                  }}
+                >
+                  <Box style={text}>{p.title}</Box>
+                  <Box style={text}>{p.name}</Box>
+                </Box>
+                <Box>
+                  <IconButton onClick={() => handleClick(p)}>
+                    <KeyboardArrowRightIcon />
+                  </IconButton>
+                </Box>
               </Box>
-              <Box>
-                <IconButton onClick={() => handleClick(p)}>
-                  <KeyboardArrowRightIcon />
-                </IconButton>
-              </Box>
-            </Box>
-          ))}
+            ))}
         </Box>
       </Paper>
     </Box>

@@ -14,8 +14,11 @@ export const NewCollaborationProposal = () => {
 
   const [data, setData] = React.useState({
     id: uuid(),
+    created: new Date(),
     title: "",
     creativeGuidance: "",
+    proposalMonth: "",
+    proposalYear: "",
     name: "",
     image: undefined,
     values: [],

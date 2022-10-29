@@ -106,6 +106,9 @@ export const proposals = [
     image: "https://dummyimage.com/300",
     values: ["ORGANIC"],
     categories: ["FOOD"],
+    created: "2022-10-24T01:02:02.012Z",
+    proposalMonth: "December",
+    proposalYear: "2022",
   },
   {
     id: 2,
@@ -116,6 +119,9 @@ export const proposals = [
     image: "https://dummyimage.com/300",
     values: ["ORGANIC"],
     categories: ["FOOD"],
+    created: "2022-10-29T11:22:32.012Z",
+    proposalMonth: "November",
+    proposalYear: "2022",
   },
   {
     id: 3,
@@ -125,5 +131,8 @@ export const proposals = [
     image: "https://dummyimage.com/300",
     values: ["ORGANIC"],
     categories: ["FOOD"],
+    created: "2022-09-29T09:22:32.012Z",
+    proposalMonth: "Januaray",
+    proposalYear: "2023",
   },
 ];
