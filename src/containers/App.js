@@ -63,24 +63,6 @@ function App() {
     ) {
       nav("/");
     }
-    // console.log("Effect");
-    // if (!isAuthenticated(user) && location.pathname !== "/") {
-    //   console.log("User not auth and location not root");
-    //   nav("/#");
-    // } else if (
-    //   isAuthenticated(user) &&
-    //   !isOnboarded(user) &&
-    //   location.pathname !== "/onboarding"
-    // ) {
-    //   nav("onboarding");
-    // } else if (
-    //   isAuthenticated(user) &&
-    //   isOnboarded(user) &&
-    //   location.pathname === "/onboarding"
-    // ) {
-    //   console.log("default");
-    //   nav("/#");
-    // }
   }, [user, nav, location]);
 
   return (
@@ -109,7 +91,10 @@ function App() {
           }
         />
 
-        <Route path="dashboard" element={<Dashboard user={user} />} />
+        <Route
+          path="dashboard"
+          element={<Dashboard userType={userType(user)} />}
+        />
         <Route path="proposal/new" element={<NewCollaborationProposal />} />
         <Route path="proposal/view/:id" element={<ProposalView />} />
         <Route

@@ -99,16 +99,17 @@ export const OnboardingSteps = ({ onboard, user }) => {
         return;
       }
 
-      if (
-        activeStep === 2 &&
-        type === "influencer" &&
-        (!data.instaHandle || !data.address)
-      ) {
-        setFeedback("Instagram and Address are required");
-        setDisabledNext(true);
+      if (activeStep === 1 && data.email)
+        if (
+          activeStep === 2 &&
+          type === "influencer" &&
+          (!data.instaHandle || !data.address)
+        ) {
+          setFeedback("Instagram and Address are required");
+          setDisabledNext(true);
 
-        return;
-      }
+          return;
+        }
 
       if (activeStep === 2 && type === "brand" && !data.brandName) {
         setFeedback("Brand name is required");

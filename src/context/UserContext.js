@@ -38,9 +38,7 @@ export function UserProvider({ children }) {
       if (payload.event === "signIn") {
         console.log("SignIn event");
         Auth.currentUserPoolUser({ bypassCache: true }).then((u) => {
-          u.attributes["custom:usertype"] = "brand"; // TODO REMOVE WHEN API IS FIXED
           setUser(u.attributes);
-          console.log("Current USER is FAKE");
         });
       }
       if (payload.event === "customOAuthState") {
