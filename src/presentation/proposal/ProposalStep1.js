@@ -43,38 +43,45 @@ export const ProposalStep1 = ({ data, handleChange, view }) => {
           multiline
           rows={5}
         />
-        <Stack direction="row" gap={2}>
-          <FormControl fullWidth>
-            <InputLabel id="proposal-year-select-label">
-              Proposal Year
-            </InputLabel>
-            <Select
-              labelId="proposal-year-select-label"
-              id="proposal-year-select"
-              name={"proposalYear"}
-              value={data.proposalYear}
-              label="Proposal Year"
-              onChange={updateYear}
-            >
-              {getYears()}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel id="proposal-month-select-label">
-              Proposal Month
-            </InputLabel>
-            <Select
-              labelId="proposal-month-select-label"
-              id="proposal-month-select"
-              name={"proposalMonth"}
-              value={data.proposalMonth}
-              label="Proposal Month"
-              onChange={handleChange}
-            >
-              {getMonth(data.proposalYear)}
-            </Select>
-          </FormControl>
-        </Stack>
+        {view ? (
+          <Stack direction="row" gap={2}>
+            <Box>Proposal Date:</Box> <Box>{data.proposalMonth}</Box>
+            <Box>{data.proposalYear}</Box>
+          </Stack>
+        ) : (
+          <Stack direction="row" gap={2}>
+            <FormControl fullWidth>
+              <InputLabel id="proposal-year-select-label">
+                Proposal Year
+              </InputLabel>
+              <Select
+                labelId="proposal-year-select-label"
+                id="proposal-year-select"
+                name={"proposalYear"}
+                value={data.proposalYear}
+                label="Proposal Year"
+                onChange={updateYear}
+              >
+                {getYears()}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel id="proposal-month-select-label">
+                Proposal Month
+              </InputLabel>
+              <Select
+                labelId="proposal-month-select-label"
+                id="proposal-month-select"
+                name={"proposalMonth"}
+                value={data.proposalMonth}
+                label="Proposal Month"
+                onChange={handleChange}
+              >
+                {getMonth(data.proposalYear)}
+              </Select>
+            </FormControl>
+          </Stack>
+        )}
       </FormControl>
     </Box>
   );
