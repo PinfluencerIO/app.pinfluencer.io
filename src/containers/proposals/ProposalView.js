@@ -30,7 +30,6 @@ export const ProposalView = () => {
     })[0];
     setProposal(proposal);
 
-    console.log("filted p", proposal);
     const collabs = collaborations.filter(
       (c) => c.proposal === parseInt(params.id)
     );
