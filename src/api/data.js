@@ -95,6 +95,54 @@ export const audienceGenders = [
   },
 ];
 
+export const collaborations = [
+  {
+    id: 1,
+    proposal: 1,
+    state: "APPLIED",
+    application: {
+      details: "Influencer 1 application details ",
+    },
+    influencer: 1,
+  },
+  {
+    id: 4,
+    proposal: 1,
+    state: "APPLIED",
+    application: {
+      details: "Influencer 4 application details ",
+    },
+    influencer: 4,
+  },
+  {
+    id: 5,
+    proposal: 1,
+    state: "APPLIED",
+    application: {
+      details: "Influencer 5 application details ",
+    },
+    influencer: 5,
+  },
+  {
+    id: 2,
+    proposal: 1,
+    state: "APPROVED",
+    application: {
+      details: "Influencer 2 application details",
+    },
+    influencer: 2,
+  },
+  {
+    id: 3,
+    proposal: 1,
+    state: "REJECTED",
+    application: {
+      details: "Influencer 3 application details",
+    },
+    influencer: 3,
+  },
+];
+
 export const proposals = [
   {
     id: 1,
