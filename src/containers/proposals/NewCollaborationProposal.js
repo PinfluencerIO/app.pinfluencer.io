@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router";
 import { v4 as uuid } from "uuid";
@@ -79,6 +80,9 @@ export const NewCollaborationProposal = () => {
   return (
     <>
       <BackLink />
+      <Box display="flex" justifyContent="center" mb={1}>
+        <Typography variant="h4">New Listing</Typography>
+      </Box>
       <MobileStepper
         step={step}
         maxSteps={4}

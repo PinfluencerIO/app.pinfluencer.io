@@ -1,24 +1,24 @@
-import { useTheme } from "@emotion/react";
 // import MailIcon from "@mui/icons-material/Mail";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import {
   Avatar,
   // Badge,
   Box,
+  Button,
   IconButton,
   Paper,
   Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { proposals as data } from "../../api/data";
+import { useNavigate } from "react-router-dom";
+import { collaborations, proposals as data } from "../../api/data";
+import { CollaborationsStateCounts } from "../../presentation/CollaborationsStateCounts";
 const text = {
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
 };
 export const ProposalList = () => {
-  const theme = useTheme();
   const nav = useNavigate();
 
   const [proposals, setProposals] = React.useState([]);
@@ -31,16 +31,11 @@ export const ProposalList = () => {
   }, []);
   return (
     <Box>
-      <Typography variant="body1">
-        Create a{" "}
-        <Link
-          to="/proposal/new"
-          title="new collaboration proposal"
-          style={{ color: theme.palette.primary.main }}
-        >
-          New Collaboration Proposal
-        </Link>
-      </Typography>
+      <Box display="flex" justifyContent="end" pb={1}>
+        <Button variant="outlined" onClick={() => nav("/proposal/new")}>
+          New Listing
+        </Button>
+      </Box>
       <Paper variant="outlined" sx={{ padding: 1 }}>
         <Typography variant="h5">My Listings ({proposals.length})</Typography>
         <Box sx={{ overflow: "auto", height: "200px" }}>
@@ -56,9 +51,11 @@ export const ProposalList = () => {
                   justifyContent: "space-between",
                   cursor: "pointer",
                 }}
-                onClick={() => handleClick(p)}
               >
-                <Box style={{ whiteSpace: "nowrap", marginRight: "10px" }}>
+                <Box
+                  onClick={() => handleClick(p)}
+                  style={{ whiteSpace: "nowrap", marginRight: "10px" }}
+                >
                   <Avatar src={p.image} />
                 </Box>
                 <Box
@@ -69,23 +66,19 @@ export const ProposalList = () => {
                     marginRight: "10px",
                   }}
                 >
-                  <Box style={text}>{p.title}</Box>
-                  <Box style={text}>{p.name}</Box>
+                  <Box onClick={() => handleClick(p)} style={text}>
+                    {p.title}
+                  </Box>
+                  <Box onClick={() => handleClick(p)} style={text}>
+                    {p.name}
+                  </Box>
+                  <CollaborationsStateCounts
+                    hideTitle
+                    collaborations={collaborations}
+                    proposalId={parseInt(p.id)}
+                  />
                 </Box>
-                {/* <Badge
-                  badgeContent={4}
-                  color="primary"
-                  sx={{
-                    "& .MuiBadge-badge": {
-                      fontSize: 9,
-                      height: 15,
-                      minWidth: 15,
-                    },
-                    mt: 1.5,
-                  }}
-                >
-                  <MailIcon fontSize="small" color="action" />
-                </Badge> */}
+
                 <IconButton onClick={() => handleClick(p)}>
                   <KeyboardArrowRightIcon />
                 </IconButton>

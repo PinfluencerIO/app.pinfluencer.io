@@ -23,6 +23,7 @@ import { ProposalStep4 } from "../presentation/proposal/ProposalStep4";
 import { Values } from "../presentation/values/Values";
 import { YourDetails } from "../presentation/YourDetails";
 import { Dev } from "../test/Dev";
+import { CollaborationList } from "./collaborations/CollaborationList";
 import { Dashboard } from "./Dashboard";
 import HomePage from "./HomePage";
 import { OnboardingSteps } from "./onboading/OnboardingSteps";
@@ -97,6 +98,18 @@ function App() {
         />
         <Route path="proposal/new" element={<NewCollaborationProposal />} />
         <Route path="proposal/view/:id" element={<ProposalView />} />
+        <Route
+          path="proposal/view/:id/collaborations/applied"
+          element={<CollaborationList state="APPLIED" />}
+        />
+        <Route
+          path="proposal/view/:id/collaborations/approved"
+          element={<CollaborationList state="APPROVED" />}
+        />
+        <Route
+          path="proposal/view/:id/collaborations/rejected"
+          element={<CollaborationList state="REJECTED" />}
+        />
         <Route
           path="proposal/edit/:id/details"
           element={
