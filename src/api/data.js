@@ -124,7 +124,7 @@ const influencer = () => {
     website: faker.internet.url(),
     address: faker.address.streetAddress(),
     bio: faker.random.words(45),
-    image: faker.image.abstract(300, 300, true),
+    image: faker.image.people(300, 300, true),
     audienceAge13To17Split: 10,
     audienceAge18To24Split: 10,
     audienceAge25To34Split: 10,
@@ -164,7 +164,7 @@ const proposal = () => {
     title: faker.random.words(),
     creativeGuidance: faker.random.words(10),
     name: `${faker.word.noun()} ${faker.word.noun()}`,
-    image: faker.image.abstract(300, 300, true),
+    image: faker.image.fashion(300, 300, true),
     values: randomSelection(
       VALUES,
       faker.random.numeric(1, { bannedDigits: ["6", "7", "8", "9"] })

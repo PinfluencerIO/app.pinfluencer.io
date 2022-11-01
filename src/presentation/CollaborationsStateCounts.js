@@ -51,7 +51,7 @@ export const CollaborationsStateCounts = (props) => {
           </Typography>
         </Link>
         <Link
-          to={`${baseUrl}/rejecfed`}
+          to={`${baseUrl}/rejected`}
           style={collaborationActionStyle}
           role="link"
           title="rejected collaborations"

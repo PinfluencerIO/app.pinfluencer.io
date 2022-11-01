@@ -3,20 +3,13 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import MovieIcon from "@mui/icons-material/Movie";
 
-import {
-  Avatar,
-  Box,
-  Button,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Grid, Paper, Stack, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { collaborations as data, influencers, proposals } from "../../api/data";
 import { BackLink } from "../../presentation/BackLink";
 import { Categories } from "../../presentation/categories/Categories";
+import { IconNumber } from "../../presentation/IconNumber";
 import { Image } from "../../presentation/image/Image";
 import { Values } from "../../presentation/values/Values";
 export const CollaborationList = ({ state }) => {
@@ -124,14 +117,14 @@ export const CollaborationList = ({ state }) => {
         Influencers that have {formatState(state)}
       </Typography>
 
-      <Paper variant="outlined" sx={{ p: 2, overflow: "auto" }}>
+      <Paper variant="outlined" sx={{ px: 2, overflow: "auto" }}>
         {collaborations.map((c) => {
           const creator = influencer(c.influencer);
           return (
             <Box
               key={c.id}
-              style={{
-                marginTop: "10px",
+              sx={{
+                my: "10px",
                 gap: 10,
               }}
             >
@@ -140,22 +133,28 @@ export const CollaborationList = ({ state }) => {
                 flexDirection="row"
                 alignItems="center"
                 gap={2}
-                flexGrow={1}
               >
                 <Avatar src={creator.image} />
                 <Box
-                  sx={{ fontWeight: 900 }}
+                  sx={{
+                    fontWeight: 900,
+                    flex: "0 0 150px",
+                    verticalAlign: "top",
+                  }}
                 >{`${creator.givenName} ${creator.familyName}`}</Box>
 
-                <Box display="flex" flexDirection="row">
-                  <CameraAltIcon />
-                  <Typography>{c.application.posts}</Typography>
+                <IconNumber
+                  icon={<CameraAltIcon sx={{ verticalAlign: "top" }} />}
+                  number={c.application.posts}
+                />
+                <IconNumber
+                  icon={<MovieIcon sx={{ verticalAlign: "top" }} />}
+                  number={c.application.reels}
+                />
+                <Box sx={text}>{c.application.details}</Box>
+                <Box flexGrow={1} display="flex" justifyContent="end">
+                  <KeyboardArrowRightIcon />
                 </Box>
-                <Box display="flex" flexDirection="row">
-                  <MovieIcon /> <Typography>{c.application.reels}</Typography>
-                </Box>
-
-                <Button variant="outlined">Details</Button>
               </Box>
             </Box>
           );
@@ -163,4 +162,11 @@ export const CollaborationList = ({ state }) => {
       </Paper>
     </>
   );
+};
+const text = {
+  overflow: "hidden",
+  flexGrpw: 1,
+  display: { md: "-webkit-box", sm: "-webkit-box", xs: "none" },
+  "-webkit-box-orient": "vertical",
+  "-webkit-line-clamp": "2",
 };
