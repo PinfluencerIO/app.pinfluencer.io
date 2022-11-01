@@ -3,7 +3,15 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import MovieIcon from "@mui/icons-material/Movie";
 
-import { Avatar, Box, Grid, Paper, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Grid,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { collaborations as data, influencers, proposals } from "../../api/data";
@@ -14,6 +22,9 @@ import { Image } from "../../presentation/image/Image";
 import { Values } from "../../presentation/values/Values";
 export const CollaborationList = ({ state }) => {
   const params = useParams();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [openListing, setOpenListing] = React.useState(true);
   const [collaborations, setCollaborations] = React.useState([]);
   const [proposal, setProposal] = React.useState(undefined);
@@ -44,9 +55,9 @@ export const CollaborationList = ({ state }) => {
   return (
     <>
       <BackLink />
-
+      {/* Listing heading and open/close control */}
       <Stack direction="row" alignItems="center" sx={{ mt: 1 }}>
-        <Typography variant="h5" sx={{ fontWeight: 700 }}>
+        <Typography variant="h5" sx={{ fontWeight: 800 }}>
           Listing Details
         </Typography>
         <Typography
@@ -58,6 +69,8 @@ export const CollaborationList = ({ state }) => {
           {openListing ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />}
         </Typography>
       </Stack>
+
+      {/* Listing details closed [summary]  */}
       <Paper
         variant="outlined"
         sx={{
@@ -65,12 +78,29 @@ export const CollaborationList = ({ state }) => {
           display: openListing ? "none" : "flex",
         }}
       >
-        <Box gap={3} display="flex" sx={{ alignItems: "center" }}>
+        <Box
+          gap={3}
+          display="flex"
+          sx={{
+            alignItems: "center",
+            "&>p": {
+              fontWeight: 600,
+              "&::first-letter": {
+                textTransform: "capitalize",
+              },
+            },
+          }}
+        >
           <Avatar src={proposal.image} />
-          <Typography sx={{ fontWeight: 800 }}>{proposal.title}</Typography>
-          <Typography sx={{ fontWeight: 800 }}>{proposal.name}</Typography>
+          <Typography>{proposal.title}</Typography>
+          <Typography>{proposal.name}</Typography>
+          <Typography>
+            {proposal.proposalMonth} {proposal.proposalYear}
+          </Typography>
         </Box>
       </Paper>
+
+      {/* Listing details open [full]  */}
       <Paper
         variant="outlined"
         sx={{ p: 2, display: openListing ? "block" : "none" }}
@@ -87,9 +117,25 @@ export const CollaborationList = ({ state }) => {
                   view
                 />
               </Box>
-              <Box display="flex" flexDirection="column" gap={1}>
-                <Box>{proposal.title}</Box>
-                <Box>{proposal.name}</Box>
+              <Box
+                display="flex"
+                flexDirection="column"
+                gap={1}
+                sx={{
+                  "&>p": {
+                    "&::first-letter": {
+                      textTransform: "capitalize",
+                    },
+                  },
+                }}
+              >
+                <Typography sx={{ fontSize: "1.1rem", fontWeight: 600 }}>
+                  {proposal.title}
+                </Typography>
+                <Typography>{proposal.name}</Typography>
+                <Typography>
+                  {proposal.proposalMonth} {proposal.proposalYear}
+                </Typography>
               </Box>
             </Box>
           </Grid>
@@ -113,10 +159,13 @@ export const CollaborationList = ({ state }) => {
           </Grid>
         </Grid>
       </Paper>
-      <Typography variant="h5" sx={{ my: 2, fontWeight: 700 }}>
+
+      {/* Collaboration heading  */}
+      <Typography variant="h5" sx={{ my: 2, fontWeight: 800 }}>
         Influencers that have {formatState(state)}
       </Typography>
 
+      {/* Collaboration table  */}
       <Paper variant="outlined" sx={{ px: 2, overflow: "auto" }}>
         {collaborations.map((c) => {
           const creator = influencer(c.influencer);
@@ -127,6 +176,7 @@ export const CollaborationList = ({ state }) => {
                 my: "10px",
                 gap: 10,
               }}
+              onClick={handleOpen}
             >
               <Box
                 display="flex"
@@ -153,13 +203,34 @@ export const CollaborationList = ({ state }) => {
                 />
                 <Box sx={text}>{c.application.details}</Box>
                 <Box flexGrow={1} display="flex" justifyContent="end">
-                  <KeyboardArrowRightIcon />
+                  {open ? (
+                    <KeyboardArrowDownIcon />
+                  ) : (
+                    <KeyboardArrowRightIcon />
+                  )}
                 </Box>
               </Box>
             </Box>
           );
         })}
       </Paper>
+
+      {/* Collaboration details [full]  */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Application Details
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            The full details will be displayed here
+          </Typography>
+        </Box>
+      </Modal>
     </>
   );
 };
@@ -167,6 +238,18 @@ const text = {
   overflow: "hidden",
   flexGrpw: 1,
   display: { md: "-webkit-box", sm: "-webkit-box", xs: "none" },
-  "-webkit-box-orient": "vertical",
-  "-webkit-line-clamp": "2",
+  WebkitLineClamp: "2",
+  WebkitBoxOrient: "vertical",
+};
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
 };

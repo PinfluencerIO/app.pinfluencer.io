@@ -164,7 +164,7 @@ const proposal = () => {
     title: faker.random.words(),
     creativeGuidance: faker.random.words(10),
     name: `${faker.word.noun()} ${faker.word.noun()}`,
-    image: faker.image.fashion(300, 300, true),
+    image: faker.image.food(300, 300, true),
     values: randomSelection(
       VALUES,
       faker.random.numeric(1, { bannedDigits: ["6", "7", "8", "9"] })
