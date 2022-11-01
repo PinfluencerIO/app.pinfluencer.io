@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import { v4 as uuid } from "uuid";
 
 export const CATEGORIES = [
   "FOOD",
@@ -97,214 +98,117 @@ export const audienceGenders = [
   },
 ];
 
-export const collaborations = [
-  {
-    id: 1,
-    proposal: 1,
-    state: "APPLIED",
-    application: {
-      details: faker.random.words(faker.random.numeric(2)),
-      posts: 2,
-      reels: 0,
-    },
-    influencer: 1,
-  },
-  {
-    id: 4,
-    proposal: 1,
-    state: "APPLIED",
-    application: {
-      details: faker.random.words(faker.random.numeric(2)),
-      posts: 0,
-      reels: 1,
-    },
-    influencer: 4,
-  },
-  {
-    id: 5,
-    proposal: 1,
-    state: "APPLIED",
-    application: {
-      details: faker.random.words(faker.random.numeric(2)),
-      posts: 1,
-      reels: 1,
-    },
-    influencer: 5,
-  },
-  {
-    id: 2,
-    proposal: 1,
-    state: "APPROVED",
-    application: {
-      details: faker.random.words(faker.random.numeric(2)),
-      posts: 3,
-      reels: 0,
-    },
-    influencer: 2,
-  },
-  {
-    id: 3,
-    proposal: 1,
-    state: "REJECTED",
-    application: {
-      details: faker.random.words(faker.random.numeric(2)),
-      posts: 0,
-      reels: 1,
-    },
-    influencer: 3,
-  },
-];
+export const COLLABORATION_STATES = ["APPLIED", "APPROVED", "REJECTED"];
 
+const randomSelection = (collection, numberOfItems) => {
+  if (numberOfItems === 1) {
+    return collection[Math.floor(Math.random() * collection.length)];
+  }
+  const result = [];
+  while (result.length < numberOfItems) {
+    const item = collection[Math.floor(Math.random() * collection.length)];
+    if (!result.includes(item)) {
+      result.push(item);
+    }
+  }
+  return result;
+};
+
+const influencer = () => {
+  return {
+    id: uuid(),
+    givenName: faker.name.firstName(),
+    familyName: faker.name.lastName(),
+    email: faker.internet.email(),
+    instaHandle: faker.name.middleName(),
+    website: faker.internet.url(),
+    address: faker.address.streetAddress(),
+    bio: faker.random.words(45),
+    image: faker.image.abstract(300, 300, true),
+    audienceAge13To17Split: 10,
+    audienceAge18To24Split: 10,
+    audienceAge25To34Split: 10,
+    audienceAge35To44Split: 20,
+    audienceAge45To54Split: 20,
+    audienceAge55To64Split: 20,
+    audienceAge65PlusSplit: 10,
+    audienceFemaleSplit: 50,
+    audienceMaleSplit: 50,
+    CATEGORIES: randomSelection(CATEGORIES, 4),
+    VALUES: randomSelection(
+      VALUES,
+      faker.random.numeric(1, { bannedDigits: ["6", "7", "8", "9"] })
+    ),
+  };
+};
+
+const collaboration = (proposal, influencer) => {
+  return {
+    id: uuid(),
+    proposal: proposal.id,
+    state: randomSelection(COLLABORATION_STATES, 1),
+    application: {
+      details: faker.random.words(faker.random.numeric(2)),
+      posts: faker.random.numeric(1),
+      reels: faker.random.numeric(1, {
+        bannedDigits: ["4", "5", "6", "7", "8", "9"],
+      }),
+    },
+    influencer: influencer.id,
+  };
+};
+
+const proposal = () => {
+  return {
+    id: uuid(),
+    title: faker.random.words(),
+    creativeGuidance: faker.random.words(10),
+    name: `${faker.word.noun()} ${faker.word.noun()}`,
+    image: faker.image.abstract(300, 300, true),
+    values: randomSelection(
+      VALUES,
+      faker.random.numeric(1, { bannedDigits: ["6", "7", "8", "9"] })
+    ),
+    categories: randomSelection(
+      CATEGORIES,
+      faker.random.numeric(1, { bannedDigits: ["6", "7", "8", "9"] })
+    ),
+    created: faker.date.past(),
+    proposalMonth: faker.date.month(),
+    proposalYear: faker.date.soon().getFullYear(),
+  };
+};
+
+const influencer1 = influencer();
+const influencer2 = influencer();
+const influencer3 = influencer();
+const proposal1 = proposal();
+const proposal2 = proposal();
+const proposal3 = proposal();
+const proposal4 = proposal();
+const proposal5 = proposal();
+const proposal6 = proposal();
+
+export const influencers = [influencer1, influencer2, influencer3];
 export const proposals = [
-  {
-    id: 1,
-    title: "Organic Cocktails",
-    creativeGuidance:
-      "advice or information aimed at resolving a problem or difficulty, especially as given by someone in authority. eg He looked to his father for inspiration and guidance",
-    name: "OrganiGin Cafe",
-    image: faker.image.abstract(300, 300, true),
-    values: ["SUSTAINABLE", "ORGANIC", "RECYCLED", "VEGAN"],
-    categories: ["FOOD", "FASHION", "FITNESS", "PET", "CATEGORY5"],
-    created: "2022-10-24T01:02:02.012Z",
-    proposalMonth: "December",
-    proposalYear: "2022",
-  },
-  {
-    id: 2,
-    title: "Proident quis esse sunt",
-    creativeGuidance:
-      "Cupidatat cillum ad deserunt sunt aliquip Lorem nostrud in non elit est amet in.",
-    name: "Culpa nostrud eiusmod excepteur incididunt sint ea veniam incididunt ullamco quis ut amet amet veniam. Eiusmod ad eiusmod velit aliquip. Ipsum fugiat labore laborum eiusmod duis ex eu laboris incididunt non pariatur. Minim aliquip pariatur officia Lorem aliquip culpa anim occaecat duis labore laborum esse in minim.",
-    image: "https://dummyimage.com/300",
-    values: ["ORGANIC"],
-    categories: ["FOOD"],
-    created: "2022-10-21T11:22:32.012Z",
-    proposalMonth: "November",
-    proposalYear: "2022",
-  },
-  {
-    id: 3,
-    title: "Culpa nostrud",
-    creativeGuidance: "Minim occaecat nisi veniam in nisi veniam nostrud.",
-    name: "Culpa nostrud eiusmod excepteur incididunt sint ea ",
-    image: "https://dummyimage.com/300",
-    values: ["ORGANIC"],
-    categories: ["FOOD"],
-    created: "2022-09-29T09:22:32.012Z",
-    proposalMonth: "Januaray",
-    proposalYear: "2023",
-  },
+  proposal1,
+  proposal2,
+  proposal3,
+  proposal4,
+  proposal5,
+  proposal6,
+];
+export const collaborations = [
+  collaboration(proposal1, influencer1),
+  collaboration(proposal1, influencer2),
+  collaboration(proposal1, influencer3),
+  collaboration(proposal2, influencer3),
+  collaboration(proposal3, influencer3),
+  collaboration(proposal3, influencer2),
+  collaboration(proposal4, influencer3),
+  collaboration(proposal5, influencer3),
+  collaboration(proposal5, influencer2),
+  collaboration(proposal5, influencer1),
 ];
 
-export const influencers = [
-  {
-    id: 1,
-    givenName: "Harry",
-    familyName: "Potter",
-    email: "hp@hogwarts.wiz",
-    instaHandle: "harry_scar",
-    website: "https://hp.hogwarts.wiz",
-    address: "4 Privit Drive, Surrey WD25 7LR",
-    bio: "Harry James[58] Potter (b. 31 July 1980)[1] was an English half-blood[2] wizard, and one of the most famous wizards of modern times. The only child and son of James and Lily Potter (née Evans), Harry's birth was overshadowed by a prophecy, naming either himself or Neville Longbottom as the one with the power to vanquish Lord Voldemort, the most powerful and feared Dark Wizard in the world. After half of the prophecy was reported to Voldemort, courtesy of Severus Snape, Harry was chosen as the target due to his many similarities with the Dark Lord. In turn, this caused the Potter family to go into hiding.",
-    image: faker.image.abstract(300, 300, true),
-    audienceAge13To17Split: 10,
-    audienceAge18To24Split: 10,
-    audienceAge25To34Split: 10,
-    audienceAge35To44Split: 20,
-    audienceAge45To54Split: 20,
-    audienceAge55To64Split: 20,
-    audienceAge65PlusSplit: 10,
-    audienceFemaleSplit: 50,
-    audienceMaleSplit: 50,
-    CATEGORIES: ["FOOD", "FASHION", "FITNESS"],
-    VALUES: ["SUSTAINABLE", "ORGANIC", "RECYCLED", "VEGAN"],
-  },
-  {
-    id: 2,
-    givenName: faker.name.firstName(),
-    familyName: faker.name.lastName(),
-    email: faker.internet.email(),
-    instaHandle: faker.name.middleName(),
-    website: faker.internet.url(),
-    address: faker.address.streetAddress(),
-    bio: faker.random.words(45),
-    image: faker.image.abstract(300, 300, true),
-    audienceAge13To17Split: 10,
-    audienceAge18To24Split: 10,
-    audienceAge25To34Split: 10,
-    audienceAge35To44Split: 20,
-    audienceAge45To54Split: 20,
-    audienceAge55To64Split: 20,
-    audienceAge65PlusSplit: 10,
-    audienceFemaleSplit: 50,
-    audienceMaleSplit: 50,
-    CATEGORIES: ["FOOD", "FASHION", "FITNESS"],
-    VALUES: ["SUSTAINABLE", "ORGANIC", "RECYCLED", "VEGAN"],
-  },
-  {
-    id: 3,
-    givenName: faker.name.firstName(),
-    familyName: faker.name.lastName(),
-    email: faker.internet.email(),
-    instaHandle: faker.name.middleName(),
-    website: faker.internet.url(),
-    address: faker.address.streetAddress(),
-    bio: faker.random.words(45),
-    image: faker.image.abstract(300, 300, true),
-    audienceAge13To17Split: 10,
-    audienceAge18To24Split: 10,
-    audienceAge25To34Split: 10,
-    audienceAge35To44Split: 20,
-    audienceAge45To54Split: 20,
-    audienceAge55To64Split: 20,
-    audienceAge65PlusSplit: 10,
-    audienceFemaleSplit: 50,
-    audienceMaleSplit: 50,
-    CATEGORIES: ["FOOD", "FASHION", "FITNESS"],
-    VALUES: ["SUSTAINABLE", "ORGANIC", "RECYCLED", "VEGAN"],
-  },
-  {
-    id: 4,
-    givenName: faker.name.firstName(),
-    familyName: faker.name.lastName(),
-    email: faker.internet.email(),
-    instaHandle: faker.name.middleName(),
-    website: faker.internet.url(),
-    address: faker.address.streetAddress(),
-    bio: faker.random.words(45),
-    image: faker.image.abstract(300, 300, true),
-    audienceAge13To17Split: 10,
-    audienceAge18To24Split: 10,
-    audienceAge25To34Split: 10,
-    audienceAge35To44Split: 20,
-    audienceAge45To54Split: 20,
-    audienceAge55To64Split: 20,
-    audienceAge65PlusSplit: 10,
-    audienceFemaleSplit: 50,
-    audienceMaleSplit: 50,
-    CATEGORIES: ["FOOD", "FASHION", "FITNESS"],
-    VALUES: ["SUSTAINABLE", "ORGANIC", "RECYCLED", "VEGAN"],
-  },
-  {
-    id: 5,
-    givenName: faker.name.firstName(),
-    familyName: faker.name.lastName(),
-    email: faker.internet.email(),
-    instaHandle: faker.name.middleName(),
-    website: faker.internet.url(),
-    address: faker.address.streetAddress(),
-    bio: faker.random.words(45),
-    image: faker.image.abstract(300, 300, true),
-    audienceAge13To17Split: 10,
-    audienceAge18To24Split: 10,
-    audienceAge25To34Split: 10,
-    audienceAge35To44Split: 20,
-    audienceAge45To54Split: 20,
-    audienceAge55To64Split: 20,
-    audienceAge65PlusSplit: 10,
-    audienceFemaleSplit: 50,
-    audienceMaleSplit: 50,
-    CATEGORIES: ["FOOD", "FASHION", "FITNESS"],
-    VALUES: ["SUSTAINABLE", "ORGANIC", "RECYCLED", "VEGAN"],
-  },
-];
+console.log(faker.random.numeric(1, { bannedDigits: ["6", "7", "8", "9"] }));

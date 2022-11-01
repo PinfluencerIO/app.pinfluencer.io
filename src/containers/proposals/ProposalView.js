@@ -17,7 +17,7 @@ export const ProposalView = () => {
 
   useEffect(() => {
     const proposal = proposals.filter((p) => {
-      return p.id === params.id || p.id === parseInt(params.id);
+      return p.id === params.id;
     })[0];
     setProposal(proposal);
   }, [params]);
@@ -31,7 +31,7 @@ export const ProposalView = () => {
       <CollaborationsStateCounts
         pl={2}
         collaborations={collaborations}
-        proposalId={parseInt(params.id)}
+        proposalId={params.id}
       />
 
       <ProfileCard title="Details" urlPrefix={`/proposal/edit/${params.id}/`}>

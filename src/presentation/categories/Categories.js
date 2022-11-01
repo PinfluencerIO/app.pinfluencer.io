@@ -15,11 +15,22 @@ export const Categories = ({ data, handleChange, view, size }) => {
       </Grid>
     );
   };
+  const renderDisplayChip = (v) => {
+    return (
+      <Grid key={v} item>
+        <Chip
+          sx={{ fontSize: size ? size : "", cursor: "default" }}
+          label={v.toLowerCase()}
+          color={data.categories.includes(v) ? "success" : "default"}
+        />
+      </Grid>
+    );
+  };
   return (
     <Grid container gap={1} margin="0 auto 0">
       {view
         ? data.categories.map((c) => {
-            return renderChip(c);
+            return renderDisplayChip(c);
           })
         : CATEGORIES.map((c) => {
             return renderChip(c);

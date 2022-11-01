@@ -75,7 +75,7 @@ export const ProposalList = () => {
                   <CollaborationsStateCounts
                     hideTitle
                     collaborations={collaborations}
-                    proposalId={parseInt(p.id)}
+                    proposalId={p.id}
                   />
                 </Box>
 

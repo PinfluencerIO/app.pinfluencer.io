@@ -1,7 +1,7 @@
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import MovieIcon from "@mui/icons-material/Movie";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import MovieIcon from "@mui/icons-material/Movie";
 
 import {
   Avatar,
@@ -26,11 +26,11 @@ export const CollaborationList = ({ state }) => {
   const [proposal, setProposal] = React.useState(undefined);
   useEffect(() => {
     const filtered = data.filter((c) => {
-      return parseInt(params.id) === c.proposal && c.state === state;
+      return params.id === c.proposal && c.state === state;
     });
     setCollaborations(filtered);
     const prop = proposals.find((p) => {
-      return p.id === parseInt(params.id);
+      return p.id === params.id;
     });
     setProposal(prop);
   }, [state, params]);
@@ -67,6 +67,19 @@ export const CollaborationList = ({ state }) => {
       </Stack>
       <Paper
         variant="outlined"
+        sx={{
+          p: 2,
+          display: openListing ? "none" : "flex",
+        }}
+      >
+        <Box gap={3} display="flex" sx={{ alignItems: "center" }}>
+          <Avatar src={proposal.image} />
+          <Typography sx={{ fontWeight: 800 }}>{proposal.title}</Typography>
+          <Typography sx={{ fontWeight: 800 }}>{proposal.name}</Typography>
+        </Box>
+      </Paper>
+      <Paper
+        variant="outlined"
         sx={{ p: 2, display: openListing ? "block" : "none" }}
       >
         <Grid container spacing={{ xs: 2, md: 3 }}>
@@ -76,8 +89,8 @@ export const CollaborationList = ({ state }) => {
                 <Image
                   id="image"
                   data={proposal}
-                  width="70px"
-                  height="70px"
+                  width="170px"
+                  height="170px"
                   view
                 />
               </Box>

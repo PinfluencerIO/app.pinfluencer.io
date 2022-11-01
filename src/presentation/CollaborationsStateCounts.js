@@ -18,9 +18,7 @@ export const CollaborationsStateCounts = (props) => {
   const [rejected, setRejected] = React.useState(0);
 
   React.useEffect(() => {
-    const collabs = collaborations.filter(
-      (c) => c.proposal === parseInt(proposalId)
-    );
+    const collabs = collaborations.filter((c) => c.proposal === proposalId);
     const counts = groupBy(collabs, "state");
 
     setApplied(counts.APPLIED.length);

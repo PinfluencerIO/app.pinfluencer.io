@@ -15,11 +15,22 @@ export const Values = ({ data, handleChange, view, size }) => {
       </Grid>
     );
   };
+  const renderDisplayChip = (v) => {
+    return (
+      <Grid key={v} item>
+        <Chip
+          sx={{ fontSize: size ? size : "", cursor: "default" }}
+          label={v.toLowerCase()}
+          color={data.values.includes(v) ? "success" : "default"}
+        />
+      </Grid>
+    );
+  };
   return (
     <Grid container gap={1} margin="0 auto 0">
       {view
         ? data.values.map((v) => {
-            return renderChip(v);
+            return renderDisplayChip(v);
           })
         : VALUES.map((v) => {
             return renderChip(v);
