@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { collaborations, proposals } from "../../api/data";
+import { collaborations, listings } from "../../api/data";
 import { BackLink } from "../../presentation/BackLink";
 import { CollaborationsStateCounts } from "../../presentation/CollaborationsStateCounts";
 import { ProposalStep1 } from "../../presentation/proposal/ProposalStep1";
@@ -13,16 +13,16 @@ import { ProfileCard } from "../profile/ProfileCard";
 export const ProposalView = () => {
   // 👇️ get ID from url
   const params = useParams();
-  const [proposal, setProposal] = React.useState(undefined);
+  const [listing, setListing] = React.useState(undefined);
 
   useEffect(() => {
-    const proposal = proposals.filter((p) => {
+    const listing = listings.filter((p) => {
       return p.id === params.id;
     })[0];
-    setProposal(proposal);
+    setListing(listing);
   }, [params]);
 
-  if (!proposal) return "Loading...";
+  if (!listing) return "Loading...";
 
   return (
     <Stack spacing={2} mt={0}>
@@ -31,23 +31,20 @@ export const ProposalView = () => {
       <CollaborationsStateCounts
         pl={2}
         collaborations={collaborations}
-        proposalId={params.id}
+        listingId={params.id}
       />
 
-      <ProfileCard title="Details" urlPrefix={`/proposal/edit/${params.id}/`}>
-        <ProposalStep1 data={proposal} view />
+      <ProfileCard title="Details" urlPrefix={`/listings/edit/${params.id}/`}>
+        <ProposalStep1 data={listing} view />
       </ProfileCard>
-      <ProfileCard title="Product" urlPrefix={`/proposal/edit/${params.id}/`}>
-        <ProposalStep2 data={proposal} view id="image" />
+      <ProfileCard title="Product" urlPrefix={`/listings/edit/${params.id}/`}>
+        <ProposalStep2 data={listing} view id="image" />
       </ProfileCard>
-      <ProfileCard
-        title="Categories"
-        urlPrefix={`/proposal/edit/${params.id}/`}
-      >
-        <ProposalStep3 data={proposal} view />
+      <ProfileCard title="Categories" urlPrefix={`/listing/edit/${params.id}/`}>
+        <ProposalStep3 data={listing} view />
       </ProfileCard>
-      <ProfileCard title="Values" urlPrefix={`/proposal/edit/${params.id}/`}>
-        <ProposalStep4 data={proposal} view />
+      <ProfileCard title="Values" urlPrefix={`/listings/edit/${params.id}/`}>
+        <ProposalStep4 data={listing} view />
       </ProfileCard>
     </Stack>
   );

@@ -11,7 +11,7 @@ import React from "react";
 
 export const ProposalStep1 = ({ data, handleChange, view }) => {
   const updateYear = (event) => {
-    handleChange({ target: { name: "proposalMonth", value: "" } });
+    handleChange({ target: { name: "listingMonth", value: "" } });
     handleChange(event);
   };
 
@@ -45,39 +45,39 @@ export const ProposalStep1 = ({ data, handleChange, view }) => {
         />
         {view ? (
           <Stack direction="row" gap={2}>
-            <Box>Proposal Date:</Box> <Box>{data.proposalMonth}</Box>
-            <Box>{data.proposalYear}</Box>
+            <Box>Proposal Date:</Box> <Box>{data.listingMonth}</Box>
+            <Box>{data.listingYear}</Box>
           </Stack>
         ) : (
           <Stack direction="row" gap={2}>
             <FormControl fullWidth>
-              <InputLabel id="proposal-year-select-label">
-                Proposal Year
+              <InputLabel id="listing-year-select-label">
+                Listing Year
               </InputLabel>
               <Select
-                labelId="proposal-year-select-label"
-                id="proposal-year-select"
-                name={"proposalYear"}
-                value={data.proposalYear}
-                label="Proposal Year"
+                labelId="listing-year-select-label"
+                id="listing-year-select"
+                name={"listingYear"}
+                value={data.listingYear}
+                label="Listing Year"
                 onChange={updateYear}
               >
                 {getYears()}
               </Select>
             </FormControl>
             <FormControl fullWidth>
-              <InputLabel id="proposal-month-select-label">
-                Proposal Month
+              <InputLabel id="listing-month-select-label">
+                Listing Month
               </InputLabel>
               <Select
-                labelId="proposal-month-select-label"
-                id="proposal-month-select"
-                name={"proposalMonth"}
-                value={data.proposalMonth}
-                label="Proposal Month"
+                labelId="listing-month-select-label"
+                id="listing-month-select"
+                name={"listingMonth"}
+                value={data.listingMonth}
+                label="Listing Month"
                 onChange={handleChange}
               >
-                {getMonth(data.proposalYear)}
+                {getMonth(data.listingYear)}
               </Select>
             </FormControl>
           </Stack>

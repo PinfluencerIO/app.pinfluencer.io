@@ -142,10 +142,10 @@ const influencer = () => {
   };
 };
 
-const collaboration = (proposal, influencer) => {
+const collaboration = (listing, influencer) => {
   return {
     id: uuid(),
-    proposal: proposal.id,
+    listing: listing.id,
     state: randomSelection(COLLABORATION_STATES, 1),
     application: {
       details: faker.random.words(faker.random.numeric(2)),
@@ -158,7 +158,7 @@ const collaboration = (proposal, influencer) => {
   };
 };
 
-const proposal = () => {
+const listing = () => {
   return {
     id: uuid(),
     title: faker.random.words(),
@@ -174,41 +174,39 @@ const proposal = () => {
       faker.random.numeric(1, { bannedDigits: ["6", "7", "8", "9"] })
     ),
     created: faker.date.past(),
-    proposalMonth: faker.date.month(),
-    proposalYear: faker.date.soon().getFullYear(),
+    listingMonth: faker.date.month(),
+    listingYear: faker.date.soon().getFullYear(),
   };
 };
 
 const influencer1 = influencer();
 const influencer2 = influencer();
 const influencer3 = influencer();
-const proposal1 = proposal();
-const proposal2 = proposal();
-const proposal3 = proposal();
-const proposal4 = proposal();
-const proposal5 = proposal();
-const proposal6 = proposal();
+const listing1 = listing();
+const listing2 = listing();
+const listing3 = listing();
+const listing4 = listing();
+const listing5 = listing();
+const listing6 = listing();
 
 export const influencers = [influencer1, influencer2, influencer3];
-export const proposals = [
-  proposal1,
-  proposal2,
-  proposal3,
-  proposal4,
-  proposal5,
-  proposal6,
+export const listings = [
+  listing1,
+  listing2,
+  listing3,
+  listing4,
+  listing5,
+  listing6,
 ];
 export const collaborations = [
-  collaboration(proposal1, influencer1),
-  collaboration(proposal1, influencer2),
-  collaboration(proposal1, influencer3),
-  collaboration(proposal2, influencer3),
-  collaboration(proposal3, influencer3),
-  collaboration(proposal3, influencer2),
-  collaboration(proposal4, influencer3),
-  collaboration(proposal5, influencer3),
-  collaboration(proposal5, influencer2),
-  collaboration(proposal5, influencer1),
+  collaboration(listing1, influencer1),
+  collaboration(listing1, influencer2),
+  collaboration(listing1, influencer3),
+  collaboration(listing2, influencer3),
+  collaboration(listing3, influencer3),
+  collaboration(listing3, influencer2),
+  collaboration(listing4, influencer3),
+  collaboration(listing5, influencer3),
+  collaboration(listing5, influencer2),
+  collaboration(listing5, influencer1),
 ];
-
-console.log(faker.random.numeric(1, { bannedDigits: ["6", "7", "8", "9"] }));

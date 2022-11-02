@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router";
 import { v4 as uuid } from "uuid";
-import { proposals } from "../../api/data";
+import { listings } from "../../api/data";
 import { BackLink } from "../../presentation/BackLink";
 import { ProposalStep1 } from "../../presentation/proposal/ProposalStep1";
 import { ProposalStep2 } from "../../presentation/proposal/ProposalStep2";
@@ -19,8 +19,8 @@ export const NewCollaborationProposal = () => {
     created: new Date(),
     title: "",
     creativeGuidance: "",
-    proposalMonth: "",
-    proposalYear: "",
+    listingMonth: "",
+    listingYear: "",
     name: "",
     image: undefined,
     values: [],
@@ -89,7 +89,7 @@ export const NewCollaborationProposal = () => {
         activeStep={activeStep}
         setActiveStep={setActiveStep}
         executeFinal={() => {
-          proposals.push(data);
+          listings.push(data);
           nav("/dashboard");
         }}
       />

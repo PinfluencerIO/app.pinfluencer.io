@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const CollaborationsStateCounts = (props) => {
-  const { hideTitle, collaborations, proposalId } = props;
+  const { hideTitle, collaborations, listingId } = props;
   const theme = useTheme();
   const collaborationActionStyle = {
     color: theme.palette.primary.main,
@@ -11,20 +11,20 @@ export const CollaborationsStateCounts = (props) => {
   const labelStyle = {
     fontSize: "0.6rem",
   };
-  const baseUrl = `/proposal/view/${proposalId}/collaborations`;
+  const baseUrl = `/listing/view/${listingId}/collaborations`;
 
   const [applied, setApplied] = React.useState(0);
   const [approved, setApproved] = React.useState(0);
   const [rejected, setRejected] = React.useState(0);
 
   React.useEffect(() => {
-    const collabs = collaborations.filter((c) => c.proposal === proposalId);
+    const collabs = collaborations.filter((c) => c.listing === listingId);
     const counts = groupBy(collabs, "state");
 
     setApplied(counts.APPLIED.length);
     setApproved(counts.APPROVED.length);
     setRejected(counts.REJECTED.length);
-  }, [collaborations, proposalId]);
+  }, [collaborations, listingId]);
 
   return (
     <Stack pl={props.pl}>

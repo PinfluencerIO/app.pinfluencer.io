@@ -28,6 +28,7 @@ import { Dashboard } from "./Dashboard";
 import HomePage from "./HomePage";
 import { OnboardingSteps } from "./onboading/OnboardingSteps";
 import { NewCollaborationProposal } from "./proposals/NewCollaborationProposal";
+import { ProposalList } from "./proposals/ProposalList";
 import { ProposalView } from "./proposals/ProposalView";
 
 function App() {
@@ -96,22 +97,23 @@ function App() {
           path="dashboard"
           element={<Dashboard userType={userType(user)} />}
         />
-        <Route path="proposal/new" element={<NewCollaborationProposal />} />
-        <Route path="proposal/view/:id" element={<ProposalView />} />
+        <Route path="listings" element={<ProposalList />} />
+        <Route path="listings/new" element={<NewCollaborationProposal />} />
+        <Route path="listings/view/:id" element={<ProposalView />} />
         <Route
-          path="proposal/view/:id/collaborations/applied"
+          path="listings/view/:id/collaborations/applied"
           element={<CollaborationList state="APPLIED" />}
         />
         <Route
-          path="proposal/view/:id/collaborations/approved"
+          path="listings/view/:id/collaborations/approved"
           element={<CollaborationList state="APPROVED" />}
         />
         <Route
-          path="proposal/view/:id/collaborations/rejected"
+          path="listings/view/:id/collaborations/rejected"
           element={<CollaborationList state="REJECTED" />}
         />
         <Route
-          path="proposal/edit/:id/details"
+          path="listings/edit/:id/details"
           element={
             <ProposalEditPanel title="Details">
               {(data, handleChange) => (
@@ -121,7 +123,7 @@ function App() {
           }
         />
         <Route
-          path="proposal/edit/:id/product"
+          path="listings/edit/:id/product"
           element={
             <ProposalEditPanel title="Product">
               {(data, handleChange) => (
@@ -135,7 +137,7 @@ function App() {
           }
         />
         <Route
-          path="proposal/edit/:id/categories"
+          path="listings/edit/:id/categories"
           element={
             <ProposalEditPanel title="Categories">
               {(data, handleChange) => (
@@ -145,7 +147,7 @@ function App() {
           }
         />
         <Route
-          path="proposal/edit/:id/values"
+          path="listings/edit/:id/values"
           element={
             <ProposalEditPanel title="Values">
               {(data, handleChange) => (

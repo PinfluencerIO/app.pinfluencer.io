@@ -106,7 +106,7 @@ function getNav(isAuthenticated, isOnboarded, userType, location) {
 }
 
 function getNavForOnboardedUsers(userType, location) {
-  const noMenuRoutes = ["profile", "proposal"];
+  const noMenuRoutes = ["profile"];
   let showMenu = true;
   noMenuRoutes.forEach((route) => {
     if (location.pathname.toLowerCase().includes(route) == true) {

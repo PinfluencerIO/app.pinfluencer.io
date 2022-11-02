@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { collaborations as data, influencers, proposals } from "../../api/data";
+import { collaborations as data, influencers, listings } from "../../api/data";
 import { BackLink } from "../../presentation/BackLink";
 import { Categories } from "../../presentation/categories/Categories";
 import { IconNumber } from "../../presentation/IconNumber";
@@ -27,21 +27,21 @@ export const CollaborationList = ({ state }) => {
   const handleClose = () => setOpen(false);
   const [openListing, setOpenListing] = React.useState(true);
   const [collaborations, setCollaborations] = React.useState([]);
-  const [proposal, setProposal] = React.useState(undefined);
+  const [listing, setListing] = React.useState(undefined);
   useEffect(() => {
     const filtered = data.filter((c) => {
-      return params.id === c.proposal && c.state === state;
+      return params.id === c.listing && c.state === state;
     });
     setCollaborations(filtered);
-    const prop = proposals.find((p) => {
+    const prop = listings.find((p) => {
       return p.id === params.id;
     });
-    setProposal(prop);
+    setListing(prop);
   }, [state, params]);
 
   if (collaborations.length === 0)
     return `No ${state} collaborations available`;
-  if (!proposal) return "Loading...";
+  if (!listing) return "Loading...";
   const influencer = (id) => {
     return influencers.find((f) => f.id === id);
   };
@@ -91,11 +91,11 @@ export const CollaborationList = ({ state }) => {
             },
           }}
         >
-          <Avatar src={proposal.image} />
-          <Typography>{proposal.title}</Typography>
-          <Typography>{proposal.name}</Typography>
+          <Avatar src={listing.image} />
+          <Typography>{listing.title}</Typography>
+          <Typography>{listing.name}</Typography>
           <Typography>
-            {proposal.proposalMonth} {proposal.proposalYear}
+            {listing.listingMonth} {listing.listingYear}
           </Typography>
         </Box>
       </Paper>
@@ -111,7 +111,7 @@ export const CollaborationList = ({ state }) => {
               <Box>
                 <Image
                   id="image"
-                  data={proposal}
+                  data={listing}
                   width="170px"
                   height="170px"
                   view
@@ -130,11 +130,11 @@ export const CollaborationList = ({ state }) => {
                 }}
               >
                 <Typography sx={{ fontSize: "1.1rem", fontWeight: 600 }}>
-                  {proposal.title}
+                  {listing.title}
                 </Typography>
-                <Typography>{proposal.name}</Typography>
+                <Typography>{listing.name}</Typography>
                 <Typography>
-                  {proposal.proposalMonth} {proposal.proposalYear}
+                  {listing.listingMonth} {listing.listingYear}
                 </Typography>
               </Box>
             </Box>
@@ -146,13 +146,13 @@ export const CollaborationList = ({ state }) => {
                   <Typography sx={{ fontWeight: 700 }} variant="body1">
                     Categories
                   </Typography>
-                  <Categories size="0.5rem" data={proposal} view />
+                  <Categories size="0.5rem" data={listing} view />
                 </Box>
                 <Box sx={{ mt: 1 }}>
                   <Typography sx={{ fontWeight: 700 }} variant="body1">
                     Values
                   </Typography>
-                  <Values size="0.5rem" data={proposal} view />
+                  <Values size="0.5rem" data={listing} view />
                 </Box>
               </Box>
             </Box>
