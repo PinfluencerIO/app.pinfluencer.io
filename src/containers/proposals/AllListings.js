@@ -17,6 +17,12 @@ const text = {
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
+  "&>p": {
+    fontWeight: 600,
+    "&::first-letter": {
+      textTransform: "capitalize",
+    },
+  },
 };
 export const AllListings = () => {
   const nav = useNavigate();
@@ -38,7 +44,7 @@ export const AllListings = () => {
       </Box>
       <Paper variant="outlined" sx={{ padding: 1 }}>
         <Typography variant="h5">My Listings ({listings.length})</Typography>
-        <Box sx={{ overflow: "auto", height: "200px" }}>
+        <Box sx={{ overflow: "auto", height: 350 }}>
           {listings
             .sort(
               (a, b) =>
@@ -71,10 +77,10 @@ export const AllListings = () => {
                     }}
                   >
                     <Box onClick={() => handleClick(p)} sx={text}>
-                      {p.title}
+                      <Typography>{p.title}</Typography>
                     </Box>
                     <Box onClick={() => handleClick(p)} sx={text}>
-                      {p.name}
+                      <Typography>{p.name}</Typography>
                     </Box>
                     <Box p={0} m={0}>
                       <CollaborationsStateCounts
