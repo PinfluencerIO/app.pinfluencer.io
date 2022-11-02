@@ -55,6 +55,78 @@ export const CollaborationList = ({ state }) => {
   return (
     <>
       <BackLink />
+      {/* Collaboration heading  */}
+      <Typography variant="h5" sx={{ my: 2, fontWeight: 800 }}>
+        Influencers that have {formatState(state)}
+      </Typography>
+
+      {/* Collaboration table  */}
+      <Paper variant="outlined" sx={{ px: 2, overflow: "auto" }}>
+        {collaborations.map((c) => {
+          const creator = influencer(c.influencer);
+          return (
+            <Box
+              key={c.id}
+              sx={{
+                my: "10px",
+                gap: 10,
+              }}
+              onClick={handleOpen}
+            >
+              <Box
+                display="flex"
+                flexDirection="row"
+                alignItems="center"
+                gap={2}
+              >
+                <Avatar src={creator.image} />
+                <Box
+                  sx={{
+                    fontWeight: 900,
+                    flex: "0 0 150px",
+                    verticalAlign: "top",
+                  }}
+                >{`${creator.givenName} ${creator.familyName}`}</Box>
+
+                <IconNumber
+                  icon={<CameraAltIcon sx={{ verticalAlign: "top" }} />}
+                  number={c.application.posts}
+                />
+                <IconNumber
+                  icon={<MovieIcon sx={{ verticalAlign: "top" }} />}
+                  number={c.application.reels}
+                />
+                <Box sx={text}>{c.application.details}</Box>
+                <Box flexGrow={1} display="flex" justifyContent="end">
+                  {open ? (
+                    <KeyboardArrowDownIcon />
+                  ) : (
+                    <KeyboardArrowRightIcon />
+                  )}
+                </Box>
+              </Box>
+            </Box>
+          );
+        })}
+      </Paper>
+
+      {/* Collaboration details [full]  */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Application Details
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            The full details will be displayed here
+          </Typography>
+        </Box>
+      </Modal>
+
       {/* Listing heading and open/close control */}
       <Stack direction="row" alignItems="center" sx={{ mt: 1 }}>
         <Typography variant="h5" sx={{ fontWeight: 800 }}>
@@ -159,78 +231,6 @@ export const CollaborationList = ({ state }) => {
           </Grid>
         </Grid>
       </Paper>
-
-      {/* Collaboration heading  */}
-      <Typography variant="h5" sx={{ my: 2, fontWeight: 800 }}>
-        Influencers that have {formatState(state)}
-      </Typography>
-
-      {/* Collaboration table  */}
-      <Paper variant="outlined" sx={{ px: 2, overflow: "auto" }}>
-        {collaborations.map((c) => {
-          const creator = influencer(c.influencer);
-          return (
-            <Box
-              key={c.id}
-              sx={{
-                my: "10px",
-                gap: 10,
-              }}
-              onClick={handleOpen}
-            >
-              <Box
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-                gap={2}
-              >
-                <Avatar src={creator.image} />
-                <Box
-                  sx={{
-                    fontWeight: 900,
-                    flex: "0 0 150px",
-                    verticalAlign: "top",
-                  }}
-                >{`${creator.givenName} ${creator.familyName}`}</Box>
-
-                <IconNumber
-                  icon={<CameraAltIcon sx={{ verticalAlign: "top" }} />}
-                  number={c.application.posts}
-                />
-                <IconNumber
-                  icon={<MovieIcon sx={{ verticalAlign: "top" }} />}
-                  number={c.application.reels}
-                />
-                <Box sx={text}>{c.application.details}</Box>
-                <Box flexGrow={1} display="flex" justifyContent="end">
-                  {open ? (
-                    <KeyboardArrowDownIcon />
-                  ) : (
-                    <KeyboardArrowRightIcon />
-                  )}
-                </Box>
-              </Box>
-            </Box>
-          );
-        })}
-      </Paper>
-
-      {/* Collaboration details [full]  */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Application Details
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            The full details will be displayed here
-          </Typography>
-        </Box>
-      </Modal>
     </>
   );
 };

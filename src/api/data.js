@@ -134,10 +134,13 @@ const influencer = () => {
     audienceAge65PlusSplit: 10,
     audienceFemaleSplit: 50,
     audienceMaleSplit: 50,
-    CATEGORIES: randomSelection(CATEGORIES, 4),
+    CATEGORIES: randomSelection(
+      CATEGORIES,
+      faker.random.numeric(1, { bannedDigits: ["5", "6", "7", "8", "9"] })
+    ),
     VALUES: randomSelection(
       VALUES,
-      faker.random.numeric(1, { bannedDigits: ["6", "7", "8", "9"] })
+      faker.random.numeric(1, { bannedDigits: ["5", "6", "7", "8", "9"] })
     ),
   };
 };

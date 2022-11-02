@@ -11,7 +11,7 @@ export const CollaborationsStateCounts = (props) => {
   const labelStyle = {
     fontSize: "0.6rem",
   };
-  const baseUrl = `/listing/view/${listingId}/collaborations`;
+  const baseUrl = `/collaborations/${listingId}`;
 
   const [applied, setApplied] = React.useState(0);
   const [approved, setApproved] = React.useState(0);
@@ -20,46 +20,46 @@ export const CollaborationsStateCounts = (props) => {
   React.useEffect(() => {
     const collabs = collaborations.filter((c) => c.listing === listingId);
     const counts = groupBy(collabs, "state");
-
     setApplied(counts.APPLIED.length);
     setApproved(counts.APPROVED.length);
     setRejected(counts.REJECTED.length);
   }, [collaborations, listingId]);
 
+  const item = (label, path, count) => {
+    return (
+      <Link
+        to={`${baseUrl}/${path}`}
+        style={collaborationActionStyle}
+        role="link"
+        title={label}
+      >
+        <Typography variant="subtitle1" sx={labelStyle}>
+          {label} ({count})
+        </Typography>
+      </Link>
+    );
+  };
+
   return (
     <Stack pl={props.pl}>
-      {!hideTitle && <Typography variant="h5">Collaborations</Typography>}
+      {!hideTitle && (
+        <Typography ml={-0.5} variant="h5">
+          Collaborations
+        </Typography>
+      )}
       <Stack direction="row" gap={3}>
-        <Link
-          to={`${baseUrl}/applied`}
-          style={collaborationActionStyle}
-          role="link"
-          title="applied collaborations"
+        <Typography
+          sx={{
+            display: { xs: "none", sm: hideTitle && "block" },
+            fontSize: "0.8rem",
+            fontWeight: 600,
+          }}
         >
-          <Typography variant="subtitle1" sx={labelStyle}>
-            Applied ({applied})
-          </Typography>
-        </Link>
-        <Link
-          to={`${baseUrl}/approved`}
-          style={collaborationActionStyle}
-          role="link"
-          title="approved collaborations"
-        >
-          <Typography variant="subtitle1" sx={labelStyle}>
-            Approved ({approved})
-          </Typography>
-        </Link>
-        <Link
-          to={`${baseUrl}/rejected`}
-          style={collaborationActionStyle}
-          role="link"
-          title="rejected collaborations"
-        >
-          <Typography variant="subtitle1" sx={labelStyle}>
-            Rejected ({rejected})
-          </Typography>
-        </Link>
+          Collaborations:
+        </Typography>
+        {item("Applied", "applied", applied)}
+        {item("Approved", "approved", approved)}
+        {item("Rejected", "rejected", rejected)}
       </Stack>
     </Stack>
   );

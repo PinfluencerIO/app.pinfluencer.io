@@ -45,7 +45,7 @@ export const ProposalStep1 = ({ data, handleChange, view }) => {
         />
         {view ? (
           <Stack direction="row" gap={2}>
-            <Box>Proposal Date:</Box> <Box>{data.listingMonth}</Box>
+            <Box>Listing Date:</Box> <Box>{data.listingMonth}</Box>
             <Box>{data.listingYear}</Box>
           </Stack>
         ) : (

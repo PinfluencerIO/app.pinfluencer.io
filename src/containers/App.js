@@ -27,8 +27,8 @@ import { CollaborationList } from "./collaborations/CollaborationList";
 import { Dashboard } from "./Dashboard";
 import HomePage from "./HomePage";
 import { OnboardingSteps } from "./onboading/OnboardingSteps";
+import { AllListings } from "./proposals/AllListings";
 import { NewCollaborationProposal } from "./proposals/NewCollaborationProposal";
-import { ProposalList } from "./proposals/ProposalList";
 import { ProposalView } from "./proposals/ProposalView";
 
 function App() {
@@ -97,19 +97,19 @@ function App() {
           path="dashboard"
           element={<Dashboard userType={userType(user)} />}
         />
-        <Route path="listings" element={<ProposalList />} />
+        <Route path="listings" element={<AllListings />} />
         <Route path="listings/new" element={<NewCollaborationProposal />} />
         <Route path="listings/view/:id" element={<ProposalView />} />
         <Route
-          path="listings/view/:id/collaborations/applied"
+          path="collaborations/:id/applied"
           element={<CollaborationList state="APPLIED" />}
         />
         <Route
-          path="listings/view/:id/collaborations/approved"
+          path="collaborations/:id/approved"
           element={<CollaborationList state="APPROVED" />}
         />
         <Route
-          path="listings/view/:id/collaborations/rejected"
+          path="collaborations/:id/rejected"
           element={<CollaborationList state="REJECTED" />}
         />
         <Route

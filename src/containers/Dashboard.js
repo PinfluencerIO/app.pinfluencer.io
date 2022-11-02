@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 
 import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
-import { ProposalList } from "./proposals/ProposalList";
+import { AllListings } from "./proposals/AllListings";
 
 export const Dashboard = ({ userType }) => {
   const { user } = useContext(UserContext);
@@ -13,7 +13,7 @@ export const Dashboard = ({ userType }) => {
         Hi {user.given_name} - This is where details of what is going on with
         your Pinfluencer account. Widgets with metrics and all that good stuff.
       </Typography>
-      {userType === "brand" && <ProposalList />}
+      {userType === "brand" && <AllListings />}
     </Stack>
   );
 };
