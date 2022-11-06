@@ -3,22 +3,32 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const CollaborationsStateCounts = (props) => {
-  const { hideTitle, collaborations, listingId } = props;
+  const { hideTitle, collaborations, listingId, queryType, active } = props;
   const theme = useTheme();
-  const collaborationActionStyle = {
-    color: theme.palette.primary.main,
+  const collaborationActionStyle = (path) => {
+    return {
+      color:
+        active === path
+          ? theme.palette.active.main
+          : theme.palette.primary.main,
+    };
   };
   const labelStyle = {
     fontSize: "0.6rem",
   };
-  const baseUrl = `/collaborations/${listingId}`;
+  const baseUrl = listingId
+    ? `/collaborations/${listingId}`
+    : "/collaborations";
 
   const [applied, setApplied] = React.useState(0);
   const [approved, setApproved] = React.useState(0);
   const [rejected, setRejected] = React.useState(0);
 
   React.useEffect(() => {
-    const collabs = collaborations.filter((c) => c.listing === listingId);
+    let collabs;
+    if (listingId)
+      collabs = collaborations.filter((c) => c.listing === listingId);
+    else collabs = collaborations;
     const counts = groupBy(collabs, "state");
     setApplied(counts.APPLIED.length);
     setApproved(counts.APPROVED.length);
@@ -28,8 +38,8 @@ export const CollaborationsStateCounts = (props) => {
   const item = (label, path, count) => {
     return (
       <Link
-        to={`${baseUrl}/${path}`}
-        style={collaborationActionStyle}
+        to={queryType ? `${baseUrl}?filter=${path}` : `${baseUrl}/${path}`}
+        style={collaborationActionStyle(path)}
         role="link"
         title={label}
       >
@@ -41,7 +51,7 @@ export const CollaborationsStateCounts = (props) => {
   };
 
   return (
-    <Stack pl={props.pl}>
+    <Stack pl={props.pl} pb={props.pb}>
       {!hideTitle && (
         <Typography ml={-0.5} variant="h5">
           Collaborations

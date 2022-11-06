@@ -1,21 +1,23 @@
-import { Image } from "../presentation/image/Image";
+import { Paper } from "@mui/material";
+import React from "react";
+import { listings } from "../api/data";
+import { ListingRow } from "../presentation/ListingRow";
 
-export const Dev = () => {
-  const data = {
-    image: undefined,
-  };
-  const handleChange = (event) => {
-    console.log("DEV: handle change", event);
-  };
+const Dev = () => {
   return (
-    <Image
-      id="image"
-      data={data}
-      handleChange={handleChange}
-      label="The Label"
-      sizeLabel="The size label"
-      width={200}
-      height={200}
-    />
+    <Paper variant="outlined" sx={{ padding: 1 }}>
+      <ListingRow
+        key={listings[1].id}
+        listingTitle={listings[1].title}
+        productName={listings[1].name}
+        month={listings[1].listingMonth}
+        year={listings[1].listingYear}
+        appliedCount={1}
+        approvedCount={2}
+        rejectedCount={0}
+      />
+    </Paper>
   );
 };
+
+export default Dev;

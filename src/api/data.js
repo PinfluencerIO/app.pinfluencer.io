@@ -161,12 +161,25 @@ const collaboration = (listing, influencer) => {
   };
 };
 
+const maxTwoDigits = (n) => {
+  let result = faker.random.numeric(2);
+  while (result > n) {
+    result = faker.random.numeric(2);
+  }
+
+  return result;
+};
+
+const capitalise = (s) => {
+  return s.charAt(0).toUpperCase() + s.toLowerCase().slice(1);
+};
+
 const listing = () => {
   return {
     id: uuid(),
-    title: faker.random.words(),
-    creativeGuidance: faker.random.words(10),
-    name: `${faker.word.noun()} ${faker.word.noun()}`,
+    title: capitalise(faker.random.words(maxTwoDigits(18))),
+    creativeGuidance: capitalise(faker.random.words(10)),
+    name: capitalise(faker.random.words(maxTwoDigits(18))),
     image: faker.image.food(300, 300, true),
     values: randomSelection(
       VALUES,

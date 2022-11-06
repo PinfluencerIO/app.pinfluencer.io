@@ -1,39 +1,26 @@
 // import MailIcon from "@mui/icons-material/Mail";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import {
-  Avatar,
   // Badge,
   Box,
   Button,
-  IconButton,
   Paper,
   Typography,
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { collaborations, listings as data } from "../../api/data";
-import { CollaborationsStateCounts } from "../../presentation/CollaborationsStateCounts";
-const text = {
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  "&>p": {
-    fontWeight: 600,
-    "&::first-letter": {
-      textTransform: "capitalize",
-    },
-  },
-};
+import { listings as data, collaborations as collabs } from "../../api/data";
+import { ListingRow } from "../../presentation/ListingRow";
+
 export const AllListings = () => {
   const nav = useNavigate();
 
   const [listings, setListings] = React.useState([]);
+  const [collaborations, setCollaborations] = React.useState([]);
 
-  const handleClick = (listing) => {
-    nav("/listings/view/" + listing.id);
-  };
+  //TODO: Fixme: this won't be the way an api is called
   useEffect(() => {
     setListings(data);
+    setCollaborations(collabs);
   }, []);
   return (
     <Box>
@@ -44,62 +31,38 @@ export const AllListings = () => {
       </Box>
       <Paper variant="outlined" sx={{ padding: 1 }}>
         <Typography variant="h5">My Listings ({listings.length})</Typography>
-        <Box sx={{ overflow: "auto", height: 350 }}>
+        <Box
+          sx={{ overflow: "auto", height: 550 }}
+          display="flex"
+          flexDirection="column"
+          gap={2}
+          mt={1}
+        >
           {listings
             .sort(
               (a, b) =>
                 Date.parse(`${a.listingMonth} 1, ${a.listingYear}`) -
                 Date.parse(`${b.listingMonth} 1, ${b.listingYear}`)
             )
-            .map((p) => {
+            .map((listing) => {
+              const c = collaborations.filter((c) => {
+                return c.listing === listing.id;
+              });
+
+              const counts = groupBy(c, "state");
               return (
-                <Box
-                  key={p.id}
-                  style={{
-                    display: "flex",
-                    marginTop: "10px",
-                    cursor: "pointer",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box
-                    onClick={() => handleClick(p)}
-                    style={{ whiteSpace: "nowrap", marginRight: "10px" }}
-                  >
-                    <Avatar src={p.image} />
-                  </Box>
-                  <Box
-                    style={{
-                      minWidth: "100px",
-                      overflow: "hidden",
-                      marginRight: "10px",
-                      flexGrow: 1,
-                    }}
-                  >
-                    <Box onClick={() => handleClick(p)} sx={text}>
-                      <Typography>{p.title}</Typography>
-                    </Box>
-                    <Box onClick={() => handleClick(p)} sx={text}>
-                      <Typography>{p.name}</Typography>
-                    </Box>
-                    <Box p={0} m={0}>
-                      <CollaborationsStateCounts
-                        hideTitle
-                        collaborations={collaborations}
-                        listingId={p.id}
-                      />
-                    </Box>
-                  </Box>
-                  <Box
-                    sx={{ display: { xs: "none", sm: "block" } }}
-                    alignSelf="center"
-                  >
-                    {p.listingMonth} {p.listingYear}
-                  </Box>
-                  <IconButton onClick={() => handleClick(p)}>
-                    <KeyboardArrowRightIcon />
-                  </IconButton>
-                </Box>
+                <ListingRow
+                  key={listing.id}
+                  id={listing.id}
+                  listingTitle={listing.title}
+                  productName={listing.name}
+                  productImage={listing.image}
+                  month={listing.listingMonth}
+                  year={listing.listingYear}
+                  appliedCount={counts.APPLIED.length}
+                  approvedCount={counts.APPROVED.length}
+                  rejectedCount={counts.REJECTED.length}
+                />
               );
             })}
         </Box>
@@ -107,3 +70,17 @@ export const AllListings = () => {
     </Box>
   );
 };
+
+function groupBy(objectArray, property) {
+  return objectArray.reduce(
+    function (acc, obj) {
+      var key = obj[property];
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(obj);
+      return acc;
+    },
+    { APPLIED: [], APPROVED: [], REJECTED: [] }
+  );
+}
