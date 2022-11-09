@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import underTest from "../../../test/underTest";
 import HorizontalNavigation from "./HorizontalNavigation";
 
-test("brands should have dashboard, campiagns and collaborations", () => {
+test("brands should have listings nav item", () => {
   render(
     underTest(
       {
@@ -17,25 +17,6 @@ test("brands should have dashboard, campiagns and collaborations", () => {
     ),
     { wrapper: BrowserRouter }
   );
-  expect(screen.getByText("Dashboard")).toBeTruthy();
+
   expect(screen.getByText("Listings")).toBeTruthy();
-  expect(screen.getByText("Collaborations")).toBeTruthy();
-});
-
-test("influencers should have dashboard, collaborations", () => {
-  render(
-    underTest(
-      {
-        givenName: "given",
-        familyName: "family",
-        email: "email@domain.tld",
-        "custom:usertype": "influencer",
-      },
-      <HorizontalNavigation userType="influencer" />
-    ),
-    { wrapper: BrowserRouter }
-  );
-  expect(screen.getByText("Dashboard")).toBeTruthy();
-
-  expect(screen.getByText("Collaborations")).toBeTruthy();
 });

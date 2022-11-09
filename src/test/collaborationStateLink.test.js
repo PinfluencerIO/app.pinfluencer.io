@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import { HashRouter } from "react-router-dom";
-import { DevComponent } from "./Dev";
+import DevComponent from "./Dev";
 import underTest from "./underTest";
 
 test("should render listing row", () => {
-  const output = render(
+  render(
     underTest(
       user,
       <DevComponent
@@ -22,7 +22,6 @@ test("should render listing row", () => {
       wrapper: HashRouter,
     }
   );
-  // output.debug();
 });
 
 const user = {

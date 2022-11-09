@@ -31,13 +31,13 @@ test("should display usertype nav when authenticated user has completed onboardi
         given_name: "given",
         family_name: "family",
         email: "email@domain.tld",
-        "custom:usertype": "influencer",
+        "custom:usertype": "brand",
       },
       <Header isAuthenticated={true} isOnboarded={true} userType="brand" />
     ),
     { wrapper: BrowserRouter }
   );
-  expect(screen.getByText("Dashboard")).toBeTruthy();
+  expect(screen.getByText("Listings")).toBeTruthy();
 });
 
 test("should have home link", async () => {
