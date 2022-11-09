@@ -13,7 +13,7 @@ export const ProposalStep2 = ({ data, handleChange, view, id }) => {
           name={"name"}
           value={data.name}
           label="Name"
-          variant="standard"
+          variant="outlined"
           onChange={(event) => handleChange(event)}
           sx={{ mb: 3 }}
         />

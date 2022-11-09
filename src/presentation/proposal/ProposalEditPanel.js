@@ -47,11 +47,11 @@ export const ProposalEditPanel = ({ title, children }) => {
   };
 
   return (
-    <Stack rowGap={3} width="100%">
+    <Stack rowGap={3} mx={1}>
       <BackLink />
       <Typography variant="h5">{title}</Typography>
       {children(data, handleChange)}
-      <Button variant="outlined" onClick={submit}>
+      <Button variant="outlined" onClick={submit} sx={{ width: "fit-content" }}>
         Submit
       </Button>
     </Stack>

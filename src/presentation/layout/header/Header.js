@@ -47,18 +47,7 @@ export default function Header(props) {
   return (
     <ElevationScroll {...props}>
       <AppBar role="navigation" component="nav">
-        <Toolbar
-          disableGutters
-          sx={{
-            maxWidth: (theme) => {
-              theme.maxWidth;
-            },
-            margin: "0 auto",
-            width: "100%",
-            display: "flex",
-            paddingX: 2,
-          }}
-        >
+        <Toolbar disableGutters>
           <Link
             to="/"
             style={{

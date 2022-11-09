@@ -1,7 +1,7 @@
 import { Box, Tooltip, Typography } from "@mui/material";
 import React from "react";
 
-const EllipsisTooltip = ({ label, labelColor, text, fontSize = "1rem" }) => {
+const EllipsisTooltip = ({ text, fontSize = "1rem", labelColor, label }) => {
   return (
     <Tooltip title={text}>
       <Box display="flex">

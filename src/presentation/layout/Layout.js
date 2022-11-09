@@ -24,18 +24,10 @@ export default function Layout({
         signin={signin}
         signout={signout}
       />
-      <Box component="main" p={2}>
-        <Box
-          sx={{
-            border: "0px solid pink",
-            maxWidth: (theme) => theme.maxWidth,
-            margin: "0 auto",
-          }}
-        >
-          <Outlet />
-        </Box>
+      <Box component="main" border={0} borderColor="blue" my={1}>
+        <Outlet />
       </Box>
-      <Footer flexShrink={0} p={2} />
+      <Footer />
     </>
   );
 }

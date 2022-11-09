@@ -1,15 +1,10 @@
 // import MailIcon from "@mui/icons-material/Mail";
-import {
-  // Badge,
-  Box,
-  Button,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { listings as data, collaborations as collabs } from "../../api/data";
+import { collaborations as collabs, listings as data } from "../../api/data";
 import { ListingRow } from "../../presentation/ListingRow";
+import groupBy from "../collaborations/groupByCollaborationState";
 
 export const AllListings = () => {
   const nav = useNavigate();
@@ -23,21 +18,35 @@ export const AllListings = () => {
     setCollaborations(collabs);
   }, []);
   return (
-    <Box>
-      <Box display="flex" justifyContent="end" pb={1}>
-        <Button variant="outlined" onClick={() => nav("/listings/new")}>
+    <Box mx={1}>
+      <Box display="flex" justifyContent="space-between" pb={0.3}>
+        <Typography
+          variant="h6"
+          sx={{
+            verticalAlign: "end",
+            fontWeight: 600,
+            position: "relative",
+            top: "5px",
+            left: "5px",
+          }}
+        >
+          My Listings ({listings.length})
+        </Typography>
+        <Button
+          size="small"
+          sx={{
+            fontSize: { xs: ".7rem", sm: ".9rem", md: "1rem" },
+            fontWeight: 600,
+          }}
+          variant="outlined"
+          onClick={() => nav("/listings/new")}
+        >
           New Listing
         </Button>
       </Box>
-      <Paper variant="outlined" sx={{ padding: 1 }}>
-        <Typography variant="h5">My Listings ({listings.length})</Typography>
-        <Box
-          sx={{ overflow: "auto", height: 550 }}
-          display="flex"
-          flexDirection="column"
-          gap={2}
-          mt={1}
-        >
+
+      <Paper variant="outlined" sx={{ padding: 2 }}>
+        <Box display="flex" flexDirection="column" gap={2} mt={0}>
           {listings
             .sort(
               (a, b) =>
@@ -70,17 +79,3 @@ export const AllListings = () => {
     </Box>
   );
 };
-
-function groupBy(objectArray, property) {
-  return objectArray.reduce(
-    function (acc, obj) {
-      var key = obj[property];
-      if (!acc[key]) {
-        acc[key] = [];
-      }
-      acc[key].push(obj);
-      return acc;
-    },
-    { APPLIED: [], APPROVED: [], REJECTED: [] }
-  );
-}

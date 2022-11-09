@@ -25,7 +25,7 @@ export const ProposalStep1 = ({ data, handleChange, view }) => {
           name={"title"}
           value={data.title}
           label="Title"
-          variant="standard"
+          variant="outlined"
           onChange={(event) => handleChange(event)}
           sx={{ mb: 2 }}
         />
@@ -37,7 +37,7 @@ export const ProposalStep1 = ({ data, handleChange, view }) => {
           name="creativeGuidance"
           value={data.creativeGuidance}
           label="Creative Guidance"
-          variant="standard"
+          variant="outlined"
           onChange={(event) => handleChange(event)}
           sx={{ mb: 3 }}
           multiline

@@ -29,8 +29,8 @@ import { Dashboard } from "./Dashboard";
 import HomePage from "./HomePage";
 import { OnboardingSteps } from "./onboading/OnboardingSteps";
 import { AllListings } from "./proposals/AllListings";
+import ListingView from "./proposals/ListingView";
 import { NewCollaborationProposal } from "./proposals/NewCollaborationProposal";
-import { ProposalView } from "./proposals/ProposalView";
 
 function App() {
   const { user, signin, signout, onboard } = useContext(UserContext);
@@ -113,7 +113,7 @@ function App() {
         />
         <Route path="listings" element={<AllListings />} />
         <Route path="listings/new" element={<NewCollaborationProposal />} />
-        <Route path="listings/view/:id" element={<ProposalView />} />
+        <Route path="listings/view/:id" element={<ListingView />} />
         <Route
           path="collaborations/:id/applied"
           element={<CollaborationList state="APPLIED" />}

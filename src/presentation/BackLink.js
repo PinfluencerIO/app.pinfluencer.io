@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 export const BackLink = ({ backLocation = -1 }) => {
   const nav = useNavigate();
   return (
-    <Box display="flex" flexDirection="row">
+    <Box display={{ xs: "flex", sm: "none" }} flexDirection="row">
       <Link
         underline="none"
         onClick={() => {

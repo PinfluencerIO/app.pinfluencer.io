@@ -3,22 +3,28 @@ import { Avatar, Box, IconButton, Paper, Typography } from "@mui/material";
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 import { collaborations as data, influencers, listings } from "../../api/data";
-import { CollaborationsStateCounts } from "../../presentation/CollaborationsStateCounts";
+import { DisplayCollaboration } from "../../presentation/DisplayCollaboration";
+import groupBy from "./groupByCollaborationState";
 
 export const AllCollaborations = () => {
   const [collaborations, setCollaborations] = React.useState([]);
+  const [counts, setCounts] = React.useState({
+    APPLIED: [],
+    APPROVED: [],
+    REJECTED: [],
+  });
   let [searchParams] = useSearchParams();
   React.useEffect(() => {
-    setCollaborations(
-      data.filter((c) => {
-        let filter = searchParams.get("filter");
-        if (filter) {
-          return c.state.toLowerCase() === filter;
-        }
+    const result = data.filter((c) => {
+      let filter = searchParams.get("filter");
+      if (filter) {
+        return c.state.toLowerCase() === filter;
+      }
 
-        return c;
-      })
-    );
+      return c;
+    });
+    setCollaborations(result);
+    setCounts(groupBy(data, "state"));
   }, [searchParams]);
 
   const handleClick = (c) => {
@@ -27,12 +33,16 @@ export const AllCollaborations = () => {
 
   return (
     <Paper variant="outlined" sx={{ p: 2 }}>
-      <CollaborationsStateCounts
-        pb={1}
-        collaborations={data}
-        queryType
-        active={searchParams.get("filter")}
-      />
+      <Box mb={2}>
+        <DisplayCollaboration
+          appliedCount={counts.APPLIED.length}
+          approvedCount={counts.APPROVED.length}
+          rejectedCount={counts.REJECTED.length}
+          path={(id, state) => {
+            return `/collaborations?filter=${state}`;
+          }}
+        />
+      </Box>
       {collaborations
         .sort((a, b) => {
           if (a.state < b.state) return -1;

@@ -18,7 +18,7 @@ function createFontFamily(fontFamily) {
     overline: { fontFamily },
   };
 }
-const maxWidth = 900;
+const maxWidth = 1300;
 const baseTheme = createTheme();
 const customTheme = createTheme(baseTheme, {
   typography: createFontFamily("Comfortaa, Arial, sans-serif"),
@@ -27,17 +27,13 @@ const customTheme = createTheme(baseTheme, {
       styleOverrides: {
         body: {},
         "& #root": {
-          minWidth: "320px",
+          minWidth: "375px",
           maxWidth: maxWidth,
           margin: "0 auto",
           padding: 0,
+          border: "0px red solid",
         },
-        html: {
-          minWidth: "320px",
-          maxWidth: maxWidth,
-          margin: "0 auto",
-          padding: 0,
-        },
+        html: {},
       },
     },
   },

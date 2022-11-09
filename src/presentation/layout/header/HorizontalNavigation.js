@@ -44,9 +44,9 @@ const HorizontalNavigation = () => {
 
   return (
     <Box display="flex">
-      {item("Dashboard", "dashboard")}
+      {/* {item("Dashboard", "dashboard")} */}
       {item("Listings", "listings")}
-      {item("Collaborations", "collaborations")}
+      {/* {item("Collaborations", "collaborations")} */}
     </Box>
   );
 };

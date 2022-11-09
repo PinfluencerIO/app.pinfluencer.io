@@ -162,9 +162,9 @@ const collaboration = (listing, influencer) => {
 };
 
 const maxTwoDigits = (n) => {
-  let result = faker.random.numeric(2);
+  let result = faker.random.numeric(1);
   while (result > n) {
-    result = faker.random.numeric(2);
+    result = faker.random.numeric(1);
   }
 
   return result;
@@ -177,9 +177,9 @@ const capitalise = (s) => {
 const listing = () => {
   return {
     id: uuid(),
-    title: capitalise(faker.random.words(maxTwoDigits(18))),
+    title: capitalise(faker.random.words(maxTwoDigits(10))),
     creativeGuidance: capitalise(faker.random.words(10)),
-    name: capitalise(faker.random.words(maxTwoDigits(18))),
+    name: capitalise(faker.random.words(maxTwoDigits(10))),
     image: faker.image.food(300, 300, true),
     values: randomSelection(
       VALUES,
@@ -201,26 +201,26 @@ const influencer3 = influencer();
 const listing1 = listing();
 const listing2 = listing();
 const listing3 = listing();
-const listing4 = listing();
-const listing5 = listing();
-const listing6 = listing();
-const listing7 = listing();
-const listing8 = listing();
-const listing9 = listing();
-const listing10 = listing();
+// const listing4 = listing();
+// const listing5 = listing();
+// const listing6 = listing();
+// const listing7 = listing();
+// const listing8 = listing();
+// const listing9 = listing();
+// const listing10 = listing();
 
 export const influencers = [influencer1, influencer2, influencer3];
 export const listings = [
   listing1,
   listing2,
   listing3,
-  listing4,
-  listing5,
-  listing6,
-  listing7,
-  listing8,
-  listing9,
-  listing10,
+  // listing4,
+  // listing5,
+  // listing6,
+  // listing7,
+  // listing8,
+  // listing9,
+  // listing10,
 ];
 export const collaborations = [
   collaboration(listing1, influencer1),
@@ -229,8 +229,8 @@ export const collaborations = [
   collaboration(listing2, influencer3),
   collaboration(listing3, influencer3),
   collaboration(listing3, influencer2),
-  collaboration(listing4, influencer3),
-  collaboration(listing5, influencer3),
-  collaboration(listing5, influencer2),
-  collaboration(listing5, influencer1),
+  // collaboration(listing4, influencer3),
+  // collaboration(listing5, influencer3),
+  // collaboration(listing5, influencer2),
+  // collaboration(listing5, influencer1),
 ];

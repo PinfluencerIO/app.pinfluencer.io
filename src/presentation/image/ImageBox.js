@@ -3,9 +3,9 @@ import React from "react";
 
 export const ImageBox = ({
   imageSrc,
-  width = 200,
-  height = 200,
-  margin = "0  auto",
+  width = { xs: 200 - 100, sm: 200 - 55, md: 200 },
+  height = { xs: 200 - 100, sm: 200 - 55, md: 200 },
+  margin = "0 auto",
   children,
 }) => {
   return (
@@ -15,9 +15,9 @@ export const ImageBox = ({
         borderRadius: "5px",
         background: "url(" + imageSrc + ") center center no-repeat",
         backgroundSize: "cover",
-        width: { width },
-        height: { height },
-        margin: { margin },
+        width: width,
+        height: height,
+        margin: margin,
       }}
     >
       {children}
