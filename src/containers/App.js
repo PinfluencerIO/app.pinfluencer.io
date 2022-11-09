@@ -23,9 +23,7 @@ import { ProposalStep4 } from "../presentation/proposal/ProposalStep4";
 import { Values } from "../presentation/values/Values";
 import { YourDetails } from "../presentation/YourDetails";
 import Dev from "../test/Dev";
-import { AllCollaborations } from "./collaborations/AllCollaborations";
 import { CollaborationList } from "./collaborations/CollaborationList";
-import { Dashboard } from "./Dashboard";
 import HomePage from "./HomePage";
 import { OnboardingSteps } from "./onboading/OnboardingSteps";
 import { AllListings } from "./proposals/AllListings";
@@ -92,24 +90,6 @@ function App() {
               isOnboarded={isOnboarded(user)}
             />
           }
-        />
-
-        <Route
-          path="dashboard"
-          element={<Dashboard userType={userType(user)} />}
-        />
-        <Route path="collaborations" element={<AllCollaborations />} />
-        <Route
-          path="collaborations/applied"
-          element={<CollaborationList state="APPLIED" />}
-        />
-        <Route
-          path="collaborations/approved"
-          element={<CollaborationList state="APPROVED" />}
-        />
-        <Route
-          path="collaborations/rejected"
-          element={<CollaborationList state="REJECTED" />}
         />
         <Route path="listings" element={<AllListings />} />
         <Route path="listings/new" element={<NewCollaborationProposal />} />

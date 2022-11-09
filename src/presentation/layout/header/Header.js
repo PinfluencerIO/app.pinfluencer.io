@@ -47,7 +47,7 @@ export default function Header(props) {
   return (
     <ElevationScroll {...props}>
       <AppBar role="navigation" component="nav">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters sx={{ borderRight: 0, borderLeft: 0 }}>
           <Link
             to="/"
             style={{
@@ -121,8 +121,9 @@ function ElevationScroll(props) {
         trigger ? "" : "1px solid " + theme.palette.divider,
       color: (theme) => theme.palette.primary.main,
       position: "sticky",
+      boxShadow: trigger && "0px 10px 5px -7px  rgb(0 0 0 / 40%)",
     },
-    elevation: trigger ? 1 : 0,
+    elevation: 0,
   });
 }
 

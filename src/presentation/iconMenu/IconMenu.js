@@ -20,7 +20,7 @@ const IconMenu = ({
   };
   const open = Boolean(anchorElement);
   return (
-    <Box margin="0 auto">
+    <Box>
       <IconButton onClick={handleClick} aria-label={name}>
         {icon}
       </IconButton>

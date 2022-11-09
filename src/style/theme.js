@@ -26,14 +26,14 @@ const customTheme = createTheme(baseTheme, {
     MuiCssBaseline: {
       styleOverrides: {
         body: {},
+        html: {},
         "& #root": {
           minWidth: "375px",
           maxWidth: maxWidth,
           margin: "0 auto",
-          padding: 0,
+          padding: "0",
           border: "0px red solid",
         },
-        html: {},
       },
     },
   },

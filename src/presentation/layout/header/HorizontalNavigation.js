@@ -13,7 +13,6 @@ const HorizontalNavigation = () => {
   const item = (label, path) => {
     return (
       <Box
-        px={2}
         sx={{ width: "fit-content", cursor: "pointer" }}
         onClick={() => nav(path)}
       >

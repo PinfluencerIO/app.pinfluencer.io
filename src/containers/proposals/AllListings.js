@@ -1,5 +1,5 @@
 // import MailIcon from "@mui/icons-material/Mail";
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { collaborations as collabs, listings as data } from "../../api/data";
@@ -18,20 +18,8 @@ export const AllListings = () => {
     setCollaborations(collabs);
   }, []);
   return (
-    <Box mx={1}>
-      <Box display="flex" justifyContent="space-between" pb={0.3}>
-        <Typography
-          variant="h6"
-          sx={{
-            verticalAlign: "end",
-            fontWeight: 600,
-            position: "relative",
-            top: "5px",
-            left: "5px",
-          }}
-        >
-          My Listings ({listings.length})
-        </Typography>
+    <Box>
+      <Box display="flex" justifyContent="flex-end" mb={1}>
         <Button
           size="small"
           sx={{
@@ -45,8 +33,8 @@ export const AllListings = () => {
         </Button>
       </Box>
 
-      <Paper variant="outlined" sx={{ padding: 2 }}>
-        <Box display="flex" flexDirection="column" gap={2} mt={0}>
+      <Paper variant="outlined" sx={{ px: 1, pt: 1 }}>
+        <Box display="flex" flexDirection="column" gap={2}>
           {listings
             .sort(
               (a, b) =>

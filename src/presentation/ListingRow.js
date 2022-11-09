@@ -24,6 +24,7 @@ export const ListingRow = ({
       justifyContent="space-between"
       borderBottom={1}
       pb={1}
+      pt={1}
     >
       <Box display="flex">
         <Box>
@@ -34,6 +35,7 @@ export const ListingRow = ({
           <Box
             maxWidth={{ xs: "450px", sm: "550px", md: "700px", lg: "1000px" }}
             mb={1}
+            fontSize={{ xs: "1rem", sm: "1.5rem" }}
           >
             {listingTitle}
           </Box>
@@ -43,10 +45,12 @@ export const ListingRow = ({
         </Box>
       </Box>
       <Box
-        my={1}
+        mt={{ xs: 3, sm: 0 }}
+        mb={{ xs: 3, sm: 0 }}
         display="flex"
         flexDirection={{ xs: "row", sm: "column" }}
-        gap={2}
+        rowGap={1}
+        columnGap={2}
       >
         {action("Applications", appliedCount, () => {
           console.log("applications");

@@ -201,8 +201,8 @@ const influencer3 = influencer();
 const listing1 = listing();
 const listing2 = listing();
 const listing3 = listing();
-// const listing4 = listing();
-// const listing5 = listing();
+const listing4 = listing();
+const listing5 = listing();
 // const listing6 = listing();
 // const listing7 = listing();
 // const listing8 = listing();
@@ -214,8 +214,8 @@ export const listings = [
   listing1,
   listing2,
   listing3,
-  // listing4,
-  // listing5,
+  listing4,
+  listing5,
   // listing6,
   // listing7,
   // listing8,
@@ -229,8 +229,8 @@ export const collaborations = [
   collaboration(listing2, influencer3),
   collaboration(listing3, influencer3),
   collaboration(listing3, influencer2),
-  // collaboration(listing4, influencer3),
-  // collaboration(listing5, influencer3),
-  // collaboration(listing5, influencer2),
-  // collaboration(listing5, influencer1),
+  collaboration(listing4, influencer3),
+  collaboration(listing5, influencer3),
+  collaboration(listing5, influencer2),
+  collaboration(listing5, influencer1),
 ];

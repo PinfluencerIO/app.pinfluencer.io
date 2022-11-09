@@ -15,7 +15,14 @@ export default function Layout({
   signout,
 }) {
   return (
-    <>
+    <Box
+      mx={2}
+      display="flex"
+      flexDirection="column"
+      border={0}
+      borderColor="red"
+      sx={{ minHeight: "100vh" }}
+    >
       <Header
         isAuthenticated={isAuthenticated}
         isOnboarded={isOnboarded}
@@ -24,10 +31,17 @@ export default function Layout({
         signin={signin}
         signout={signout}
       />
-      <Box component="main" border={0} borderColor="blue" my={1}>
+      <Box
+        component="main"
+        border={0}
+        borderColor="blue"
+        paddingY={1}
+        display="flex"
+        flexDirection="column"
+      >
         <Outlet />
       </Box>
-      <Footer />
-    </>
+      <Footer marginTop="auto" py={3} />
+    </Box>
   );
 }
