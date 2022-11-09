@@ -47,6 +47,7 @@ export const ListingRow = ({
       <Box
         mt={{ xs: 3, sm: 0 }}
         mb={{ xs: 3, sm: 0 }}
+        mr={{ xs: 0, sm: 0.8 }}
         display="flex"
         flexDirection={{ xs: "row", sm: "column" }}
         rowGap={1}
